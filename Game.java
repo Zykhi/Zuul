@@ -10,11 +10,19 @@ public class Game
         Room vLab  = new Room ("computing lab");
         Room vOffice = new Room ("computing admin");
 
-        vOutside.setExits(null, vTheatre, vPub, vLab);
-        vTheatre.setExits(null, null, vOutside, null);
-        vPub.setExits(null,vOutside,null,null);
-        vLab.setExits(vOutside, vOffice, null, null);
-        vOffice.setExits(null, vLab, null, null); 
+        vOutside.setExits("east", vTheatre);
+        vOutside.setExits("south", vLab);
+        vOutside.setExits("west", vPub);
+        
+        vTheatre.setExits("west", vOutside);
+        
+        vPub.setExits("east", vOutside);
+        
+        vLab.setExits("north", vOutside);
+        vLab.setExits("east", vOffice);
+        
+        vOffice.setExits("west", vLab);
+
 
         this.aCurrentRoom = vOutside;
     }

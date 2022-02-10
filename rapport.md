@@ -1,4 +1,4 @@
-<h1 style="text-align: center;">RAPPORT IPO</h1>
+<h1 align="center">RAPPORT IPO</h1>
 
 ![ESIEE PARIS](https://upload.wikimedia.org/wikipedia/fr/thumb/7/71/Logo_ESIEE_Paris.svg/1200px-Logo_ESIEE_Paris.svg.png)
 
@@ -11,7 +11,7 @@
   - [Scénario](#scénario)
   - [Plan](#plan)
   - [Scénario détaillé](#scénario-détaillé)
-  - [Détail des lieux, items, personnages](#détails-des-lieux,-items,-personnages)
+  - [Détail des lieux, items, personnages](#details-des-lieux)
   - [Situations gagnantes et perdantes](#situations-gagnantes-et-perdantes)
   - [Énigmes, mini-jeux, combats](#énigmes,-mini-jeux,-combats)
   - [Commentaires](#commentaires)
@@ -29,7 +29,19 @@ Groupe 1
 
 ### Thème
 
-- 
+### Scénario
+
+### Plan
+
+### Scénario détaillé
+
+### Détail des lieux, items, personnages
+
+### Situations gagnantes et perdantes
+
+### Énigmes, mini-jeux, combats
+
+### Commentaires
 
 ## Réponses aux exercices
 
