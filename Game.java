@@ -4,13 +4,15 @@ public class Game
     private Parser aParser;
     
     private void createRooms(){
-        Room vOutside = new Room("outside the dungeon");
-        Room vCatacombs = new Room("in the catacombs");
-        Room vLobby = new Room ("the main room of the dungeon");
-        Room vTreasure  = new Room ("an empty room"); //or not ;)
-        Room vBoss1Room = new Room ("boss room 1"); //need change desc of boss room
-        Room vBoss2Room = new Room ("boss room 2");
-        Room vBoss3Room = new Room ("boss room 3");
+        Room vOutside, vCatacombs, vLobby, vTreasure, vBoss1Room, vBoss2Room, vBoss3Room;
+        
+        vOutside = new Room("outside the dungeon");
+        vCatacombs = new Room("in the catacombs");
+        vLobby = new Room ("the main room of the dungeon");
+        vTreasure  = new Room ("an empty room"); //or not ;)
+        vBoss1Room = new Room ("boss room 1"); //need change desc of boss room
+        vBoss2Room = new Room ("boss room 2");
+        vBoss3Room = new Room ("boss room 3");
 
         vOutside.setExits("down", vLobby);
         

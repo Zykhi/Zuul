@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Set;
 
 public class Room
 {
@@ -26,7 +27,11 @@ public class Room
 
     public String getExitString()
     {
-        String vExit = "Exits : "+this.aExits;
-        return vExit;
+        String vReturnString = "Exits : ";
+        Set<String> vKeys = aExits.keySet();
+        for(String vExit : vKeys){
+            vReturnString += " " + vExit;
+        }
+        return vReturnString;
     }
 } // Room

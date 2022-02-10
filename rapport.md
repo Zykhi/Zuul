@@ -340,4 +340,40 @@ public class Game
 
 #### Exercice 7.8.1 
 
-L'ajout d'un deplacement vertical entre l'exterieur et le dongeon est ajouté. Les directions sont donc maintenant, `north` `east` `south` `west` et `down` 
+L'ajout d'un deplacement vertical entre l'exterieur et le dongeon est ajouté. Les directions sont donc maintenant, `north` `east` `south` `west` et `down`
+
+```java
+vOutside.setExits("down", vLobby);
+```
+
+#### Exercice 7.9
+La méthode keySet() permet d'associer des valeurs arbitraires à des clés. 
+```java
+import java.util.Set;
+```
+Ainsi, il peut associer le mot de commande à la clé qui ouvrira l'accès au HashMap contenant toutes les pièces. **Exemple :** pour le lobby, les sorties sont `north`, `east` et `west`. La clé nord sur la commande `go north` permettra d'accéder a la salle au nord du lobby.
+
+#### Exercice 7.10
+La methode `getExitString()` permet de récupérer toutes les sorties d'une pieces sous forme d'une `String` 
+
+```java
+        String vReturnString = "Exits : ";
+```
+Cette ligne crée une variable `vReturnString` de type `String` qui contient la chaine de caractères `"Exits : "`
+
+```java
+        Set<String> vKeys = aExits.keySet();
+```
+Celle-ci crée une variable `vKeys` de type `Set<String>`. Les éléments contenus sont les clés de la `HashMap aExits` sous forme d'une liste de `String` 
+
+```java
+        for(String vExit : vKeys){
+            vReturnString += " " + vExit;
+        }
+```
+Ce bout de code est une boucle `for each` qui parcours la liste des clés stockées. `vExit` est une variable qui prend la valeur de la prochaine clé de la `HashMap`à chaque fois que la bocule se répète, ce qui fait que `vReturnString` obtiens toutes les sorties disponibles dans le `String`. 
+
+```java
+        return vReturnString;
+```
+La derniere partie du code retourne la chaine de caractères possédant toutes les sorties de la salle.
