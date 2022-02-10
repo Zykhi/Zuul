@@ -29,19 +29,71 @@ Groupe 1
 
 ### Thème
 
+Un chevalier se retrouve coincé dans un donjon, il doit vaincre tout les boss pour s'échapper
+
 ### Scénario
+
+Edward se retrouve bloqué dans un dongeon après s'être caché pendant une bataille, si il veut sortir il va devoir resoudre les énigmes de ce mysterieux dongeon.
 
 ### Plan
 
 ### Scénario détaillé
 
+
+
 ### Détail des lieux, items, personnages
+
+- #### Lieux
+    - Lobby
+    - Salle du boss 1
+    - Salle du boss 2
+    - Salle du boss 3
+    - Catacombes
+    - Salle du trésor
+
+- #### Items
+    - Armure de Warmog
+    - Lame du Roi Déchu
+    - Gantelet cryopyrique
+    - Alliance de la défunte
+
+- #### Personnages
+    - Edward
+    - Warmog le Geant
+    - Viego le Roi Déchu
+    - Hazelgash le mage Cryopyrique
+    - Garret le marchant
+    - Loryna la défunte
+    - Wyatt le narrateur
 
 ### Situations gagnantes et perdantes
 
+- #### Situations gagnantes
+    - Rassembler les 3 artefacts 
+    - Rendre le marchant heureux
+
+- #### Situations perdantes
+    - Mourir contre un boss
+    - Faire quelque chose d'immoral
+    
+
 ### Énigmes, mini-jeux, combats
 
+- #### Enigmes
+    - Pourquoi le marchant est méchant au debut
+    -  
+
+- #### Mini-jeux
+    - lorem ipsum
+    - lorem ipsum
+
+- #### Combats
+    - Combat contre les boss
+    - 
+
 ### Commentaires
+
+Il y a encore beaucoup de travail pour tout finaliser 
 
 ## Réponses aux exercices
 
