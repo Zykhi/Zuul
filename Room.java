@@ -38,4 +38,30 @@ public class Room
         }
         return null;
     }
+
+    public String getExitString()
+    {
+        String vExit = "Exits : ";
+      
+        if (this.aNorthExit!=null)
+        {
+            vExit += "north ";
+        }
+        
+        if (this.aSouthExit!=null)
+        {
+            vExit += "south ";
+        }
+        
+        if (this.aEastExit!=null)
+        {
+            vExit += "east ";
+        }
+        
+        if (this.aWestExit!=null)
+        {
+            vExit += "west ";
+        }
+        return vExit;
+    }
 } // Room
