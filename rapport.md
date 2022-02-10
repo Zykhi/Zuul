@@ -226,3 +226,61 @@ private void printLocationInfo()
 ```
 
 #### Exercice 7.8
+
+Modification des attributs de la classe `Room` pour les metttres dans une hashmap, pour ce faire il faut écrire en haut de la classe `import java.util.HashMap;`et pour l'initialiser `private HashMap<String, Room> aExits;`. Le code de la classe `Room` est donc comme suit
+```java
+import java.util.HashMap;
+
+public class Room
+{    
+    private HashMap<String, Room> aExits;
+
+    [...]
+
+    public void setExits(final String pDirec, Room pNeighbor){
+        aExits.put(pDirec, pNeighbor);
+    }
+
+    public Room getExit(String pDirection){
+        return aExits.get(pDirection);
+    }
+
+    public String getExitString()
+    {
+        String vExit = "Exits : "+this.aExits;
+        return vExit;
+    }
+}
+```
+
+et des changements dans `Game` 
+```java
+public class Game
+{
+
+    [...]
+    
+    private void createRooms(){
+
+        [...]
+
+        vOutside.setExits("east", vTheatre);
+        vOutside.setExits("south", vLab);
+        vOutside.setExits("west", vPub);
+        
+        vTheatre.setExits("west", vOutside);
+        
+        vPub.setExits("east", vOutside);
+        
+        vLab.setExits("north", vOutside);
+        vLab.setExits("east", vOffice);
+        
+        vOffice.setExits("west", vLab);
+
+        [...]
+    }
+
+    [...]
+
+}
+```

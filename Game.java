@@ -23,7 +23,6 @@ public class Game
         
         vOffice.setExits("west", vLab);
 
-
         this.aCurrentRoom = vOutside;
     }
     
