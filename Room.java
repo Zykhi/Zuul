@@ -1,14 +1,14 @@
 public class Room
 {
-    private String aDescription;
-    public Room aNorthExit;
-    public Room aEastExit;
-    public Room aSouthExit;
-    public Room aWestExit;
+    private String   aDescription;
+    private Room     aNorthExit;
+    private Room     aEastExit;
+    private Room     aSouthExit;
+    private Room     aWestExit;
     
     public Room(final String pDescription)
     {
-    this.aDescription = pDescription;
+        this.aDescription = pDescription;
     }
     
     public String getDescription()
@@ -22,13 +22,20 @@ public class Room
         this.aEastExit = pEExit;
         this.aWestExit = pWExit;
     }
+    
+    public Room getExit(String pDirection){
+        if(pDirection.equals("north")){
+            return aNorthExit;
+        }
+        if(pDirection.equals("east")){
+            return aEastExit;
+        }
+        if(pDirection.equals("south")){
+            return aSouthExit;
+        }
+        if(pDirection.equals("west")){
+            return aWestExit;
+        }
+        return null;
+    }
 } // Room
-
-
-
-
-
-
-
-
-

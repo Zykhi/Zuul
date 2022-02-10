@@ -31,27 +31,9 @@ public class Game
              return;
         }
 
-            Room vNextRoom = null;
-            String vDirection = pDirection.getSecondWord();
             
-        if (vDirection.equals("north"))
-        {
-            vNextRoom=this.aCurrentRoom.aNorthExit;
-        }
-        else if (vDirection.equals("east"))
-        {
-            vNextRoom=this.aCurrentRoom.aEastExit;}
-        else if (vDirection.equals("west"))
-        {
-            vNextRoom=this.aCurrentRoom.aWestExit;}
-        else if (vDirection.equals("south"))
-        {
-            vNextRoom=this.aCurrentRoom.aSouthExit;}
-        else
-        {
-            System.out.println("\n" + "Unknown direction!");
-            return;
-        }
+            String vDirection = pDirection.getSecondWord();
+            Room vNextRoom = this.aCurrentRoom.getExit(vDirection);
         
         if(vNextRoom==null)
         {
@@ -129,17 +111,17 @@ public class Game
     {
         System.out.println("You are "+aCurrentRoom.getDescription());
         System.out.print("Exits : ");
-        if(aCurrentRoom.aNorthExit != null){
-            System.out.print("north");
+        if(aCurrentRoom.getExit("north") != null){
+            System.out.print("north ");
         }
-        if(aCurrentRoom.aEastExit != null){
-            System.out.print("east");
+        if(aCurrentRoom.getExit("east") != null){
+            System.out.print("east ");
         }
-        if(aCurrentRoom.aSouthExit != null){
-            System.out.print("south");
+        if(aCurrentRoom.getExit("south") != null){
+            System.out.print("south ");
         }
-        if(aCurrentRoom.aWestExit != null){
-            System.out.print("west");
+        if(aCurrentRoom.getExit("west") != null){
+            System.out.print("west ");
         }
         System.out.println();
     }
