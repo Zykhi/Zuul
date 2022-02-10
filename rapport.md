@@ -50,6 +50,7 @@ Edward se retrouve bloqué dans un dongeon après s'être caché pendant une bat
     - Salle du boss 3
     - Catacombes
     - Salle du trésor
+    - Exterieur (debut du jeu, cinematique ???)
 
 - #### Items
     - Armure de Warmog
@@ -75,7 +76,7 @@ Edward se retrouve bloqué dans un dongeon après s'être caché pendant une bat
 - #### Situations perdantes
     - Mourir contre un boss
     - Faire quelque chose d'immoral
-    
+
 
 ### Énigmes, mini-jeux, combats
 
@@ -89,7 +90,7 @@ Edward se retrouve bloqué dans un dongeon après s'être caché pendant une bat
 
 - #### Combats
     - Combat contre les boss
-    - 
+    - Combat contre le marchant ?? (pas sur)
 
 ### Commentaires
 
@@ -336,3 +337,6 @@ public class Game
 
 }
 ```
+
+#### Exercice 7.8.1 
+

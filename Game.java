@@ -4,24 +4,31 @@ public class Game
     private Parser aParser;
     
     private void createRooms(){
-        Room vOutside = new Room("outside the main entrance of the university");
-        Room vTheatre = new Room("in a lecture theatre");
-        Room vPub = new Room ("campus pub");
-        Room vLab  = new Room ("computing lab");
-        Room vOffice = new Room ("computing admin");
+        Room vOutside = new Room("outside the dungeon");
+        Room vCatacombs = new Room("in the catacombs");
+        Room vLobby = new Room ("the main room of the dungeon");
+        Room vTreasure  = new Room ("an empty room"); //or not ;)
+        Room vBoss1Room = new Room ("boss room 1"); //need change desc of boss room
+        Room vBoss2Room = new Room ("boss room 2");
+        Room vBoss3Room = new Room ("boss room 3");
 
-        vOutside.setExits("east", vTheatre);
-        vOutside.setExits("south", vLab);
-        vOutside.setExits("west", vPub);
+        vOutside.setExits("north", vLobby);
         
-        vTheatre.setExits("west", vOutside);
+        vCatacombs.setExits("west", vBoss2Room);
         
-        vPub.setExits("east", vOutside);
+        vLobby.setExits("north", vBoss1Room);
+        vLobby.setExits("east", vBoss2Room);
+        vLobby.setExits("west", vBoss3Room);
         
-        vLab.setExits("north", vOutside);
-        vLab.setExits("east", vOffice);
+        vTreasure.setExits("east", vBoss3Room);
         
-        vOffice.setExits("west", vLab);
+        vBoss1Room.setExits("south", vLobby);
+
+        vBoss2Room.setExits("east", vCatacombs);
+        vBoss2Room.setExits("west", vLobby);
+
+        vBoss3Room.setExits("west", vTreasure);
+        vBoss3Room.setExits("east", vLobby);
 
         this.aCurrentRoom = vOutside;
     }
@@ -56,16 +63,16 @@ public class Game
     
     private void printWelcome()
     {
-        System.out.println("Welcome to the World of Zuul !");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
+        System.out.println("Welcome to Zuul GOTY Edition !");
+        System.out.println("Zuul GOTY Edition is a new, incredibly and fantastic adventure game.");
         System.out.println("Type 'help' if you need help.");
         printLocationInfo();
     }
     
     private void printHelp()
     {
-        System.out.println("You are lost. You are alone.");
-        System.out.println("You wander around at the university.");
+        System.out.println("You are lost. You leave the fight.");
+        System.out.println("You wander around the dungeon.");
         System.out.println("");
         System.out.println("Your command words are:");
         System.out.println("go quit help");
@@ -111,7 +118,7 @@ public class Game
             vFinished=processCommand(vCommand);
  
         }
-        System.out.println("Goodbye");
+        System.out.println("Goodbye knight");
     }
     
     private void printLocationInfo()
