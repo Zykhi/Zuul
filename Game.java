@@ -12,7 +12,7 @@ public class Game
         Room vBoss2Room = new Room ("boss room 2");
         Room vBoss3Room = new Room ("boss room 3");
 
-        vOutside.setExits("north", vLobby);
+        vOutside.setExits("down", vLobby);
         
         vCatacombs.setExits("west", vBoss2Room);
         

@@ -340,3 +340,4 @@ public class Game
 
 #### Exercice 7.8.1 
 
+L'ajout d'un deplacement vertical entre l'exterieur et le dongeon est ajouté. Les directions sont donc maintenant, `north` `east` `south` `west` et `down` 
