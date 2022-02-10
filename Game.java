@@ -61,29 +61,7 @@ public class Game
         else
         {
             this.aCurrentRoom=vNextRoom;
-            System.out.println("\n" + "You are " +this.aCurrentRoom.getDescription());
-            System.out.print("Exits : ");
-        
-        if (this.aCurrentRoom.aNorthExit!=null)
-        {
-            System.out.print("north ");
-        }
-        
-        if (this.aCurrentRoom.aEastExit!=null)
-        {
-            System.out.print("east ");
-        }
-        
-        if (this.aCurrentRoom.aWestExit!=null)
-        {
-            System.out.print("west ");
-        }
-       
-        if (this.aCurrentRoom.aSouthExit!=null)
-        {
-            System.out.print("south ");
-        }
-        System.out.println();
+            printLocationInfo();
         }
     }
     
@@ -92,8 +70,7 @@ public class Game
         System.out.println("Welcome to the World of Zuul !");
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
         System.out.println("Type 'help' if you need help.");
-        System.out.println("You are "+this.aCurrentRoom.getDescription());
-        System.out.println("Exits : south east west ");
+        printLocationInfo();
     }
     
     private void printHelp()
@@ -147,5 +124,23 @@ public class Game
         }
         System.out.println("Goodbye");
     }
+    
+    private void printLocationInfo()
+    {
+        System.out.println("You are "+aCurrentRoom.getDescription());
+        System.out.print("Exits : ");
+        if(aCurrentRoom.aNorthExit != null){
+            System.out.print("north");
+        }
+        if(aCurrentRoom.aEastExit != null){
+            System.out.print("east");
+        }
+        if(aCurrentRoom.aSouthExit != null){
+            System.out.print("south");
+        }
+        if(aCurrentRoom.aWestExit != null){
+            System.out.print("west");
+        }
+        System.out.println();
+    }
 }//Game
-
