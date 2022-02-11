@@ -142,6 +142,10 @@ public class Game {
             this.look();
             return false;
         }
+        else if(pCommand.getCommandWord().equals("eat")){
+            this.eat();
+            return false;
+        }
         else{return false;}
     }
 
@@ -173,5 +177,9 @@ public class Game {
      */
     private void look(){
         printLocationInfo();
+    }
+
+    private void eat(){
+        System.out.println("You have eaten now and you are not hungry any more.");
     }
 }// Game

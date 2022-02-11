@@ -16,11 +16,12 @@ public class CommandWords {
      * Constructor - initialise the command words.
      */
     public CommandWords() {
-        this.aValidCommands = new String[4];
+        this.aValidCommands = new String[5];
         this.aValidCommands[0] = "go";
         this.aValidCommands[1] = "help";
         this.aValidCommands[2] = "quit";
         this.aValidCommands[3] = "look";
+        this.aValidCommands[4] = "eat";
     } // CommandWords()
 
     /**

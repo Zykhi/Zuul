@@ -432,4 +432,11 @@ Et pour que la methode fonctionne quand on la tape au clavier il faut ajouter
 ```
 dans `processCommand()`
 
-####
+#### Exercice 7.15
+On refait la meme chose pour eat 
+```java
+    private void eat(){
+        System.out.println("You have eaten now and you are not hungry any more.");
+    }
+```
+
