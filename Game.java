@@ -96,7 +96,7 @@ public class Game {
         System.out.println("You wander around the dungeon.");
         System.out.println("");
         System.out.println("Your command words are:");
-        System.out.println("go quit help");
+        aParser.showAll();
     }
 
     /**

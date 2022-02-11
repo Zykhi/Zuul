@@ -60,4 +60,8 @@ public class Parser {
             return new Command(null, null); // C'est surtout le premier null qui est important ici.
         }
     } // getCommand()
+
+    public void showAll(){
+        aValidCommands.showCommands();
+    }
 } // Parser

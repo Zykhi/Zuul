@@ -439,4 +439,33 @@ On refait la meme chose pour eat
         System.out.println("You have eaten now and you are not hungry any more.");
     }
 ```
+#### Exercice 7.16
 
+On crée une méthode `showCommands()` dans la classe `CommandWords` pour regrouper toutes les commandes dans un `String`
+
+```java
+    public void showCommands(){
+        for(String vCommand : aValidCommands){
+            System.out.print(vCommand + " ");
+        }
+        System.out.println();
+    }
+```
+
+Ensuite dans la classe `Parser` on crée une méthode `showAll` pour afficher tout
+
+```java
+    public void showAll(){
+        aValidCommands.showCommands();
+    }
+```
+Puis on remplace le texte écrit en dur par la methode `showAll()` 
+
+```java
+    private void printHelp() {
+        
+        [...]
+
+        System.out.println("Your command words are:");
+        aParser.showAll();
+    }   
