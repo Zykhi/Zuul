@@ -1,7 +1,27 @@
+/**
+ * This class is part of the "Zuul GOTY Edition" application.
+ * "Zuul GOTY Edition" is a very simple, text based adventure game.
+ * 
+ * This class is the main class of the game.
+ *
+ * @author Michael Kolling and David J. Barnes + D.Bureau + C.Diouy
+ * @version 2008.03.30 + 2019.09.25 + 2022.02.11
+ */
 public class Game {
     private Room aCurrentRoom;
     private Parser aParser;
 
+    /**
+     * This constructor create the game
+     */
+    public Game() {
+        this.createRooms();
+        this.aParser = new Parser();
+    }
+
+    /**
+     * This method init all the room of the game with the exits and the starting room
+     */
     private void createRooms() {
         Room vOutside, vCatacombs, vLobby, vTreasure, vBoss1Room, vBoss2Room, vBoss3Room;
 
@@ -34,11 +54,11 @@ public class Game {
         this.aCurrentRoom = vOutside;
     }
 
-    public Game() {
-        this.createRooms();
-        this.aParser = new Parser();
-    }
-
+    /**
+     * This method is used to move to another room
+     * 
+     * @param pDirection
+     */
     private void goRoom(final Command pDirection) {
         if (!pDirection.hasSecondWord()) {
             System.out.println("Go where ?");
@@ -58,6 +78,9 @@ public class Game {
         }
     }
 
+    /**
+     * This method is a text to say a welcome message to the player
+     */
     private void printWelcome() {
         System.out.println("Welcome to Zuul GOTY Edition !");
         System.out.println("Zuul GOTY Edition is a new, incredibly and fantastic adventure game.");
@@ -65,6 +88,9 @@ public class Game {
         printLocationInfo();
     }
 
+    /**
+     * This method is a text for help the player
+     */
     private void printHelp() {
         System.out.println("You are lost. You leave the fight.");
         System.out.println("You wander around the dungeon.");
@@ -73,6 +99,12 @@ public class Game {
         System.out.println("go quit help");
     }
 
+    /**
+     * This boolean check if the player quit the game
+     * 
+     * @param pQuit
+     * @return true or false
+     */
     private boolean quit(final Command pQuit) {
         if (pQuit.hasSecondWord() == true) {
             System.out.println("Quit what ?");
@@ -82,6 +114,12 @@ public class Game {
         }
     }
 
+    /**
+     * This boolean check enter command of the player
+     *  
+     * @param pCommand
+     * @return true or false
+     */
     private boolean processCommand(final Command pCommand) {
         if (pCommand.isUnknown() == true) {
             System.out.println("I don't know what you mean...");
@@ -101,6 +139,9 @@ public class Game {
         }
     }
 
+    /**
+     * This method start the game
+     */
     public void play() {
         printWelcome();
         boolean vFinished = false;
@@ -114,6 +155,9 @@ public class Game {
         System.out.println("Goodbye knight");
     }
 
+    /**
+     * This method print the info of the room with the exit
+     */
     private void printLocationInfo() {
         System.out.println("You are " + aCurrentRoom.getDescription());
         System.out.println(aCurrentRoom.getExitString());
