@@ -2,7 +2,6 @@
 
 ![ESIEE PARIS](https://upload.wikimedia.org/wikipedia/fr/thumb/7/71/Logo_ESIEE_Paris.svg/1200px-Logo_ESIEE_Paris.svg.png)
 
-
 ## Sommaire
 
 - [Information générales](#information-générales)
@@ -39,62 +38,64 @@ Edward se retrouve bloqué dans un dongeon après s'être caché pendant une bat
 
 ### Scénario détaillé
 
-
-
 ### Détail des lieux, items, personnages
 
 - #### Lieux
-    - Lobby
-    - Salle du boss 1
-    - Salle du boss 2
-    - Salle du boss 3
-    - Catacombes
-    - Salle du trésor
-    - Exterieur (debut du jeu, cinematique ???)
+
+  - Lobby
+  - Salle du boss 1
+  - Salle du boss 2
+  - Salle du boss 3
+  - Catacombes
+  - Salle du trésor
+  - Exterieur (debut du jeu, cinematique ???)
 
 - #### Items
-    - Armure de Warmog
-    - Lame du Roi Déchu
-    - Gantelet cryopyrique
-    - Alliance de la défunte
+
+  - Armure de Warmog
+  - Lame du Roi Déchu
+  - Gantelet cryopyrique
+  - Alliance de la défunte
 
 - #### Personnages
-    - Edward
-    - Warmog le Geant
-    - Viego le Roi Déchu
-    - Hazelgash le mage Cryopyrique
-    - Garret le marchant
-    - Loryna la défunte
-    - Wyatt le narrateur
+  - Edward
+  - Warmog le Geant
+  - Viego le Roi Déchu
+  - Hazelgash le mage Cryopyrique
+  - Garret le marchant
+  - Loryna la défunte
+  - Wyatt le narrateur
 
 ### Situations gagnantes et perdantes
 
 - #### Situations gagnantes
-    - Rassembler les 3 artefacts 
-    - Rendre le marchant heureux
+
+  - Rassembler les 3 artefacts
+  - Rendre le marchant heureux
 
 - #### Situations perdantes
-    - Mourir contre un boss
-    - Faire quelque chose d'immoral
-
+  - Mourir contre un boss
+  - Faire quelque chose d'immoral
 
 ### Énigmes, mini-jeux, combats
 
 - #### Enigmes
-    - Pourquoi le marchant est méchant au debut
-    -  
+
+  - Pourquoi le marchant est méchant au debut
+  -
 
 - #### Mini-jeux
-    - lorem ipsum
-    - lorem ipsum
+
+  - lorem ipsum
+  - lorem ipsum
 
 - #### Combats
-    - Combat contre les boss
-    - Combat contre le marchant ?? (pas sur)
+  - Combat contre les boss
+  - Combat contre le marchant ?? (pas sur)
 
 ### Commentaires
 
-Il y a encore beaucoup de travail pour tout finaliser 
+Il y a encore beaucoup de travail pour tout finaliser
 
 ## Réponses aux exercices
 
@@ -122,7 +123,9 @@ private void printLocationInfo()
         System.out.println();
 }
 ```
+
 Les modifications suivantes ont donc été effectué dans `goRoom()` et dans `printWelcome()`
+
 ```java
 public class Game
 {
@@ -242,26 +245,27 @@ public class Game
 #### Exercice 7.7
 
 La création de la méthode `getExitString()` doit etre crée dans la classe `Room` car celle ci gere tout ce qui refere aux salles. L'affichage se passe dans la classe `Game` avec la methode `printLocationInfo()` précédemment crée.
+
 ```java
 public String getExitString()
     {
         String vExit = "Exits : ";
-      
+
         if (this.aNorthExit!=null)
         {
             vExit += "north ";
         }
-        
+
         if (this.aSouthExit!=null)
         {
             vExit += "south ";
         }
-        
+
         if (this.aEastExit!=null)
         {
             vExit += "east ";
         }
-        
+
         if (this.aWestExit!=null)
         {
             vExit += "west ";
@@ -281,11 +285,12 @@ private void printLocationInfo()
 #### Exercice 7.8
 
 Modification des attributs de la classe `Room` pour les metttres dans une hashmap, pour ce faire il faut écrire en haut de la classe `import java.util.HashMap;`et pour l'initialiser `private HashMap<String, Room> aExits;`. Le code de la classe `Room` est donc comme suit
+
 ```java
 import java.util.HashMap;
 
 public class Room
-{    
+{
     private HashMap<String, Room> aExits;
 
     [...]
@@ -306,13 +311,14 @@ public class Room
 }
 ```
 
-et des changements dans `Game` 
+et des changements dans `Game`
+
 ```java
 public class Game
 {
 
     [...]
-    
+
     private void createRooms(){
 
         [...]
@@ -320,14 +326,14 @@ public class Game
         vOutside.setExits("east", vTheatre);
         vOutside.setExits("south", vLab);
         vOutside.setExits("west", vPub);
-        
+
         vTheatre.setExits("west", vOutside);
-        
+
         vPub.setExits("east", vOutside);
-        
+
         vLab.setExits("north", vOutside);
         vLab.setExits("east", vOffice);
-        
+
         vOffice.setExits("west", vLab);
 
         [...]
@@ -338,7 +344,7 @@ public class Game
 }
 ```
 
-#### Exercice 7.8.1 
+#### Exercice 7.8.1
 
 L'ajout d'un deplacement vertical entre l'exterieur et le dongeon est ajouté. Les directions sont donc maintenant, `north` `east` `south` `west` et `down`
 
@@ -347,23 +353,29 @@ vOutside.setExits("down", vLobby);
 ```
 
 #### Exercice 7.9
-La méthode keySet() permet d'associer des valeurs arbitraires à des clés. 
+
+La méthode keySet() permet d'associer des valeurs arbitraires à des clés.
+
 ```java
 import java.util.Set;
 ```
+
 Ainsi, il peut associer le mot de commande à la clé qui ouvrira l'accès au HashMap contenant toutes les pièces. **Exemple :** pour le lobby, les sorties sont `north`, `east` et `west`. La clé nord sur la commande `go north` permettra d'accéder a la salle au nord du lobby.
 
 #### Exercice 7.10
-La methode `getExitString()` permet de récupérer toutes les sorties d'une pieces sous forme d'une `String` 
+
+La methode `getExitString()` permet de récupérer toutes les sorties d'une pieces sous forme d'une `String`
 
 ```java
         String vReturnString = "Exits : ";
 ```
+
 Cette ligne crée une variable `vReturnString` de type `String` qui contient la chaine de caractères `"Exits : "`
 
 ```java
         Set<String> vKeys = aExits.keySet();
 ```
+
 Celle-ci crée une variable `vKeys` de type `Set<String>`. Les éléments contenus sont les clés de la `HashMap aExits` sous forme d'une liste de `String` qui ne peut pas comporter 2 fois le même élement.
 
 ```java
@@ -371,10 +383,11 @@ Celle-ci crée une variable `vKeys` de type `Set<String>`. Les éléments conten
             vReturnString += " " + vExit;
         }
 ```
-Ce bout de code est une boucle `for each` qui parcours la liste des clés stockées. `vExit` est une variable qui prend la valeur de la prochaine clé de la `HashMap`à chaque fois que la bocule se répète, ce qui fait que `vReturnString` obtiens toutes les sorties disponibles dans le `String`. 
+
+Ce bout de code est une boucle `for each` qui parcours la liste des clés stockées. `vExit` est une variable qui prend la valeur de la prochaine clé de la `HashMap`à chaque fois que la bocule se répète, ce qui fait que `vReturnString` obtiens toutes les sorties disponibles dans le `String`.
 
 ```java
         return vReturnString;
 ```
-La derniere partie du code retourne la chaine de caractères possédant toutes les sorties de la salle.
 
+La derniere partie du code retourne la chaine de caractères possédant toutes les sorties de la salle.

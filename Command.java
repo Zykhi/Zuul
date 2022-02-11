@@ -1,40 +1,25 @@
-public class Command
-{
+public class Command {
     private String aCommandWord;
     private String aSecondWord;
-    
-    public Command(final String pCommandWord, final String pSecondWord)
-    {
-    this.aCommandWord = pCommandWord;
-    this.aSecondWord = pSecondWord;
+
+    public Command(final String pCommandWord, final String pSecondWord) {
+        this.aCommandWord = pCommandWord;
+        this.aSecondWord = pSecondWord;
     }
-    
-    public String getCommandWord()
-    {
+
+    public String getCommandWord() {
         return this.aCommandWord;
     }
-    
-    public String getSecondWord()
-    {
+
+    public String getSecondWord() {
         return this.aSecondWord;
     }
-    
-    public boolean hasSecondWord()
-    {
-        /*if(this.aSecondWord == null)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }*/
+
+    public boolean hasSecondWord() {
         return this.aSecondWord != null;
     }
-    
-    public boolean isUnknown()
-    {
+
+    public boolean isUnknown() {
         return this.aCommandWord == null;
     }
 } // Command
-
