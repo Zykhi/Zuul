@@ -391,3 +391,21 @@ Ce bout de code est une boucle `for each` qui parcours la liste des clés stock�
 ```
 
 La derniere partie du code retourne la chaine de caractères possédant toutes les sorties de la salle.
+
+#### Exercice 7.11
+
+La fonction `getLongDescription()` retourne une chaine de caractères informant le joueur de sa position actuelle et des sorties de la salle
+
+```java
+    public String getLongDescription(){
+        return "You are " + aDescription + ".\n" + getExitString(); 
+    }
+```
+
+Dans la classe game on effectue donc des modifications
+
+```java
+    private void printLocationInfo() {
+        System.out.println(aCurrentRoom.getLongDescription());
+    }
+```

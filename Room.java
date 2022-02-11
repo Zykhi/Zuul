@@ -33,6 +33,15 @@ public class Room {
     }
 
     /**
+     * return a long description of the room
+     * 
+     * @return a description of the room with exits
+     */
+    public String getLongDescription(){
+        return "You are " + aDescription + ".\n" + getExitString(); 
+    }
+
+    /**
      * This method set the exits of the room
      * 
      * @param pDirection
