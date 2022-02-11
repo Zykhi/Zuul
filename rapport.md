@@ -364,7 +364,7 @@ Cette ligne crée une variable `vReturnString` de type `String` qui contient la 
 ```java
         Set<String> vKeys = aExits.keySet();
 ```
-Celle-ci crée une variable `vKeys` de type `Set<String>`. Les éléments contenus sont les clés de la `HashMap aExits` sous forme d'une liste de `String` 
+Celle-ci crée une variable `vKeys` de type `Set<String>`. Les éléments contenus sont les clés de la `HashMap aExits` sous forme d'une liste de `String` qui ne peut pas comporter 2 fois le même élement.
 
 ```java
         for(String vExit : vKeys){
@@ -377,3 +377,4 @@ Ce bout de code est une boucle `for each` qui parcours la liste des clés stock�
         return vReturnString;
 ```
 La derniere partie du code retourne la chaine de caractères possédant toutes les sorties de la salle.
+
