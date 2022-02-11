@@ -120,23 +120,29 @@ public class Game {
      * @param pCommand
      * @return true or false
      */
-    private boolean processCommand(final Command pCommand) {
-        if (pCommand.isUnknown() == true) {
+    private boolean processCommand(final Command pCommand)
+    {
+        if(pCommand.isUnknown()==true){
             System.out.println("I don't know what you mean...");
             return false;
         }
-
-        if (pCommand.getCommandWord().equals("quit")) {
+        
+        if(pCommand.getCommandWord().equals("quit")){
             return this.quit(pCommand);
-        } else if (pCommand.getCommandWord().equals("go")) {
+        }
+        else if(pCommand.getCommandWord().equals("go")){
             this.goRoom(pCommand);
             return false;
-        } else if (pCommand.getCommandWord().equals("help")) {
+        }
+        else if(pCommand.getCommandWord().equals("help")){
             this.printHelp();
             return false;
-        } else {
+        }
+        else if(pCommand.getCommandWord().equals("look")){
+            this.look();
             return false;
         }
+        else{return false;}
     }
 
     /**
@@ -156,9 +162,16 @@ public class Game {
     }
 
     /**
-     * This method print the info of the room with the exit
+     * This method print the info of the room with the exit when you enter on it
      */
     private void printLocationInfo() {
         System.out.println(aCurrentRoom.getLongDescription());
+    }
+
+    /**
+     * This method print the info of the room with the exit when you wrote in a chat
+     */
+    private void look(){
+        printLocationInfo();
     }
 }// Game

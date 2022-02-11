@@ -409,3 +409,27 @@ Dans la classe game on effectue donc des modifications
         System.out.println(aCurrentRoom.getLongDescription());
     }
 ```
+
+#### Exercice 7.14
+
+La commande look qu'on ajoute dans la classe `CommandWord` avec cette ligne 
+```java
+this.aValidCommands[3] = "look";
+```
+Une fois cela fait il faut creer une methode pour la commande look qui nous permettra d'avoir les informations sur la salle et ses sorties autant de fois qu'on veut
+
+```java
+    private void look(){
+        printLocationInfo();
+    }
+```
+
+Et pour que la methode fonctionne quand on la tape au clavier il faut ajouter 
+```java 
+    else if(pCommand.getCommandWord().equals("look")){
+        this.look();
+    }
+```
+dans `processCommand()`
+
+####
