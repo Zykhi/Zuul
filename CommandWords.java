@@ -39,10 +39,15 @@ public class CommandWords {
         return false;
     } // isCommand()
 
-    public void showAll(){
-        for(String vCommand : aValidCommands){
-            System.out.print(vCommand + " ");
+    /*
+     * returns a String of all valid commands.
+     */
+    public String getCommandList() 
+    {
+        StringBuilder sCommands = new StringBuilder();
+        for(int i = 0; i < aValidCommands.length; i++) {
+            sCommands.append( aValidCommands[i] + "  " );
         }
-        System.out.println();
+        return sCommands.toString();
     }
 } // CommandWords

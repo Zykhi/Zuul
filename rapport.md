@@ -293,7 +293,10 @@ public class Room
 {
     private HashMap<String, Room> aExits;
 
-    [...]
+    public Room(final String pDescription) {
+        this.aDescription = pDescription;
+        this.aExits = new HashMap<String,Room>();
+    }
 
     public void setExits(final String pDirec, Room pNeighbor){
         aExits.put(pDirec, pNeighbor);
@@ -469,3 +472,40 @@ Puis on remplace le texte écrit en dur par la methode `showCommands()`
         System.out.println("Your command words are:");
         aParser.showCommands();
     }   
+```
+
+#### Exercice 7.18 
+
+Dans la classe `CommandWords` la méthode `showAll()` devient la fonction `getCommandList()` et subis quelques modifications
+
+```java
+    public String getCommandList() 
+    {
+        StringBuilder sCommands = new StringBuilder();
+        for(int i = 0; i < aValidCommands.length; i++) {
+            sCommands.append( aValidCommands[i] + "  " );
+        }
+        return sCommands.toString();
+    }
+```
+
+La méthode `showCommands()` est aussi modifié par une fonction `getCommandString()`
+
+```java
+    public String getCommandString()
+    {
+        return this.aValidCommands.getCommandList();
+    } 
+```
+
+Les modifications sont légere dans `printHelp()` il y a juste à changer `aParser.showCommands()` par `aParser.getCommandString()`
+
+```java
+    private void printHelp() {
+        
+        [...]
+
+        aParser.getCommandString();
+    }
+```
+

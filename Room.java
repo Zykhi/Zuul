@@ -21,6 +21,7 @@ public class Room {
      */
     public Room(final String pDescription) {
         this.aDescription = pDescription;
+        this.aExits = new HashMap<String,Room>();
     }
 
     /**
