@@ -21,7 +21,7 @@ public class Parser {
     private Scanner aReader; // permettra de lire les commandes au clavier
 
     /**
-     * Constructeur par defaut qui cree les 2 objets prevus pour les attributs
+     * Create a new Parser.
      */
     public Parser() {
         this.aValidCommands = new CommandWords();
@@ -30,6 +30,9 @@ public class Parser {
     } // Parser()
 
     /**
+     * Get a new command from the user. The command is read by
+     * parsing the 'inputLine'.
+     * 
      * @return The next command from the user.
      */
     public Command getCommand() {

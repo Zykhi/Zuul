@@ -401,7 +401,7 @@ La fonction `getLongDescription()` retourne une chaine de caractères informant 
 
 ```java
     public String getLongDescription(){
-        return "You are " + aDescription + ".\n" + getExitString(); 
+        return "You are " + aDescription + ".\n" + getExitString();
     }
 ```
 
@@ -415,10 +415,12 @@ Dans la classe game on effectue donc des modifications
 
 #### Exercice 7.14
 
-La commande look qu'on ajoute dans la classe `CommandWord` avec cette ligne 
+La commande look qu'on ajoute dans la classe `CommandWord` avec cette ligne
+
 ```java
 this.aValidCommands[3] = "look";
 ```
+
 Une fois cela fait il faut creer une methode pour la commande look qui nous permettra d'avoir les informations sur la salle et ses sorties autant de fois qu'on veut
 
 ```java
@@ -427,21 +429,26 @@ Une fois cela fait il faut creer une methode pour la commande look qui nous perm
     }
 ```
 
-Et pour que la methode fonctionne quand on la tape au clavier il faut ajouter 
-```java 
+Et pour que la methode fonctionne quand on la tape au clavier il faut ajouter
+
+```java
     else if(pCommand.getCommandWord().equals("look")){
         this.look();
     }
 ```
+
 dans `processCommand()`
 
 #### Exercice 7.15
-On refait la meme chose pour eat 
+
+On refait la meme chose pour eat
+
 ```java
     private void eat(){
         System.out.println("You have eaten now and you are not hungry any more.");
     }
 ```
+
 #### Exercice 7.16
 
 On crée une méthode `showAll()` dans la classe `CommandWords` pour regrouper toutes les commandes dans un `String`
@@ -462,24 +469,25 @@ Ensuite dans la classe `Parser` on crée une méthode `showCommands` pour affich
         aValidCommands.showAll();
     }
 ```
-Puis on remplace le texte écrit en dur par la methode `showCommands()` 
+
+Puis on remplace le texte écrit en dur par la methode `showCommands()`
 
 ```java
     private void printHelp() {
-        
+
         [...]
 
         System.out.println("Your command words are:");
         aParser.showCommands();
-    }   
+    }
 ```
 
-#### Exercice 7.18 
+#### Exercice 7.18
 
 Dans la classe `CommandWords` la méthode `showAll()` devient la fonction `getCommandList()` et subis quelques modifications
 
 ```java
-    public String getCommandList() 
+    public String getCommandList()
     {
         StringBuilder sCommands = new StringBuilder();
         for(int i = 0; i < aValidCommands.length; i++) {
@@ -495,14 +503,14 @@ La méthode `showCommands()` est aussi modifié par une fonction `getCommandStri
     public String getCommandString()
     {
         return this.aValidCommands.getCommandList();
-    } 
+    }
 ```
 
 Les modifications sont légere dans `printHelp()` il y a juste à changer `aParser.showCommands()` par `aParser.getCommandString()`
 
 ```java
     private void printHelp() {
-        
+
         [...]
 
         aParser.getCommandString();
@@ -511,4 +519,4 @@ Les modifications sont légere dans `printHelp()` il y a juste à changer `aPars
 
 #### Exercice 7.18.1
 
-Les deux projets sont vraiment similaire ce qui est logique car tout les exercices ont été effectué.
+Les deux projets sont vraiment similaire ce qui est logique car tout les exercices ont été effectué.F

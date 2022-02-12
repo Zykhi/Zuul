@@ -42,11 +42,10 @@ public class CommandWords {
     /*
      * returns a String of all valid commands.
      */
-    public String getCommandList() 
-    {
+    public String getCommandList() {
         StringBuilder sCommands = new StringBuilder();
-        for(int i = 0; i < aValidCommands.length; i++) {
-            sCommands.append( aValidCommands[i] + "  " );
+        for (int i = 0; i < aValidCommands.length; i++) {
+            sCommands.append(aValidCommands[i] + "  ");
         }
         return sCommands.toString();
     }

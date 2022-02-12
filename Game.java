@@ -2,7 +2,12 @@
  * This class is part of the "Zuul GOTY Edition" application.
  * "Zuul GOTY Edition" is a very simple, text based adventure game.
  * 
- * This class is the main class of the game.
+ * To play this game, create an instance of this class and call the "play"
+ * method.
+ * 
+ * This main class creates and initialises all the others: it creates all
+ * rooms, creates the parser and starts the game. It also evaluates and
+ * executes the commands that the parser returns.
  *
  * @author Michael Kolling and David J. Barnes + D.Bureau + C.Diouy
  * @version 2008.03.30 + 2019.09.25 + 2022.02.11
@@ -12,7 +17,7 @@ public class Game {
     private Parser aParser;
 
     /**
-     * This constructor create the game
+     * Create the game and initialise its internal map.
      */
     public Game() {
         this.createRooms();
@@ -20,7 +25,7 @@ public class Game {
     }
 
     /**
-     * This method init all the room of the game with the exits and the starting room
+     * Create all the rooms and link their exits together.
      */
     private void createRooms() {
         Room vOutside, vCatacombs, vLobby, vTreasure, vBoss1Room, vBoss2Room, vBoss3Room;
@@ -55,7 +60,75 @@ public class Game {
     }
 
     /**
-     * This method is used to move to another room
+     * Main play routine. Loops until end of play.
+     */
+    public void play() {
+        printWelcome();
+        boolean vFinished = false;
+        Command vCommand;
+
+        while (!vFinished) {
+            vCommand = aParser.getCommand();
+            vFinished = processCommand(vCommand);
+
+        }
+        System.out.println("Goodbye knight");
+    }
+
+    /**
+     * Print out the opening message for the player.
+     */
+    private void printWelcome() {
+        System.out.println("Welcome to Zuul GOTY Edition !");
+        System.out.println("Zuul GOTY Edition is a new, incredibly and fantastic adventure game.");
+        System.out.println("Type 'help' if you need help.");
+        printLocationInfo();
+    }
+
+    /**
+     * This method print the info of the room with the exit when you enter on it
+     */
+    private void printLocationInfo() {
+        System.out.println(aCurrentRoom.getLongDescription());
+    }
+
+    /**
+     * Given a command, process (that is: execute) the command.
+     * 
+     * @param pCommand
+     * @return If this command ends the game, true is returned, otherwise false is
+     *         returned.
+     */
+    private boolean processCommand(final Command pCommand) {
+        if (pCommand.isUnknown() == true) {
+            System.out.println("I don't know what you mean...");
+            return false;
+        }
+
+        if (pCommand.getCommandWord().equals("quit")) {
+            return this.quit(pCommand);
+        } else if (pCommand.getCommandWord().equals("go")) {
+            this.goRoom(pCommand);
+            return false;
+        } else if (pCommand.getCommandWord().equals("help")) {
+            this.printHelp();
+            return false;
+        } else if (pCommand.getCommandWord().equals("look")) {
+            this.look();
+            return false;
+        } else if (pCommand.getCommandWord().equals("eat")) {
+            this.eat();
+            return false;
+        } else {
+            return false;
+        }
+    }
+
+    // implementations of user commands:
+
+    /**
+     * Try to go to one direction. If there is an exit, enter the new
+     * room, otherwise print an error message.
      * 
      * @param pDirection
      */
@@ -79,17 +152,9 @@ public class Game {
     }
 
     /**
-     * This method is a text to say a welcome message to the player
-     */
-    private void printWelcome() {
-        System.out.println("Welcome to Zuul GOTY Edition !");
-        System.out.println("Zuul GOTY Edition is a new, incredibly and fantastic adventure game.");
-        System.out.println("Type 'help' if you need help.");
-        printLocationInfo();
-    }
-
-    /**
-     * This method is a text for help the player
+     * Print out some help information.
+     * Here we print some stupid, cryptic message and a list of the
+     * command words.
      */
     private void printHelp() {
         System.out.println("You are lost. You leave the fight.");
@@ -100,10 +165,11 @@ public class Game {
     }
 
     /**
-     * This boolean check if the player quit the game
+     * "Quit" was entered. Check the rest of the command to see
+     * whether we really quit the game.
      * 
      * @param pQuit
-     * @return true or false
+     * @return true, if this command quits the game, false otherwise.
      */
     private boolean quit(final Command pQuit) {
         if (pQuit.hasSecondWord() == true) {
@@ -115,71 +181,13 @@ public class Game {
     }
 
     /**
-     * This boolean check enter command of the player
-     *  
-     * @param pCommand
-     * @return true or false
-     */
-    private boolean processCommand(final Command pCommand)
-    {
-        if(pCommand.isUnknown()==true){
-            System.out.println("I don't know what you mean...");
-            return false;
-        }
-        
-        if(pCommand.getCommandWord().equals("quit")){
-            return this.quit(pCommand);
-        }
-        else if(pCommand.getCommandWord().equals("go")){
-            this.goRoom(pCommand);
-            return false;
-        }
-        else if(pCommand.getCommandWord().equals("help")){
-            this.printHelp();
-            return false;
-        }
-        else if(pCommand.getCommandWord().equals("look")){
-            this.look();
-            return false;
-        }
-        else if(pCommand.getCommandWord().equals("eat")){
-            this.eat();
-            return false;
-        }
-        else{return false;}
-    }
-
-    /**
-     * This method start the game
-     */
-    public void play() {
-        printWelcome();
-        boolean vFinished = false;
-        Command vCommand;
-
-        while (!vFinished) {
-            vCommand = aParser.getCommand();
-            vFinished = processCommand(vCommand);
-
-        }
-        System.out.println("Goodbye knight");
-    }
-
-    /**
-     * This method print the info of the room with the exit when you enter on it
-     */
-    private void printLocationInfo() {
-        System.out.println(aCurrentRoom.getLongDescription());
-    }
-
-    /**
      * This method print the info of the room with the exit when you wrote in a chat
      */
-    private void look(){
+    private void look() {
         printLocationInfo();
     }
 
-    private void eat(){
+    private void eat() {
         System.out.println("You have eaten now and you are not hungry any more.");
     }
 }// Game
