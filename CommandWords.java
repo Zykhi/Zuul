@@ -39,7 +39,7 @@ public class CommandWords {
         return false;
     } // isCommand()
 
-    public void showCommands(){
+    public void showAll(){
         for(String vCommand : aValidCommands){
             System.out.print(vCommand + " ");
         }

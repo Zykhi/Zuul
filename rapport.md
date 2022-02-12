@@ -441,10 +441,10 @@ On refait la meme chose pour eat
 ```
 #### Exercice 7.16
 
-On crée une méthode `showCommands()` dans la classe `CommandWords` pour regrouper toutes les commandes dans un `String`
+On crée une méthode `showAll()` dans la classe `CommandWords` pour regrouper toutes les commandes dans un `String`
 
 ```java
-    public void showCommands(){
+    public void showAll(){
         for(String vCommand : aValidCommands){
             System.out.print(vCommand + " ");
         }
@@ -452,14 +452,14 @@ On crée une méthode `showCommands()` dans la classe `CommandWords` pour regrou
     }
 ```
 
-Ensuite dans la classe `Parser` on crée une méthode `showAll` pour afficher tout
+Ensuite dans la classe `Parser` on crée une méthode `showCommands` pour afficher toutes les commandes
 
 ```java
-    public void showAll(){
-        aValidCommands.showCommands();
+    public void showCommands(){
+        aValidCommands.showAll();
     }
 ```
-Puis on remplace le texte écrit en dur par la methode `showAll()` 
+Puis on remplace le texte écrit en dur par la methode `showCommands()` 
 
 ```java
     private void printHelp() {
@@ -467,5 +467,5 @@ Puis on remplace le texte écrit en dur par la methode `showAll()`
         [...]
 
         System.out.println("Your command words are:");
-        aParser.showAll();
+        aParser.showCommands();
     }   

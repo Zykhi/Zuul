@@ -61,7 +61,7 @@ public class Parser {
         }
     } // getCommand()
 
-    public void showAll(){
-        aValidCommands.showCommands();
+    public void showCommands(){
+        aValidCommands.showAll();
     }
 } // Parser
