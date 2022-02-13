@@ -47,16 +47,15 @@ public class Parser {
         // cherche jusqu'a 2 mots dans la ligne tapee
         Scanner vTokenizer = new Scanner(vInputLine);
         if (vTokenizer.hasNext()) {
-            vWord1 = vTokenizer.next(); // recupere le premier mot
+            vWord1 = vTokenizer.next(); // get first word
             if (vTokenizer.hasNext()) {
-                vWord2 = vTokenizer.next(); // recupere le deuxieme mot
-                // note : on ignore tout le reste de la ligne tapee !
+                vWord2 = vTokenizer.next(); // get second word
+                // note: we just ignore the rest of the input line.
             } // if
         } // if
 
-        // Veifie si le premier mot est une commande connue. Si oui, cree une Command
-        // avec.
-        // Sinon, cree une commande vide avec "null" (pour dire 'commande inconnue').
+        // Now check whether this word is known. If so, create a command
+        // with it. If not, create a "null" command (for unknown command).
         if (this.aValidCommands.isCommand(vWord1)) {
             return new Command(vWord1, vWord2);
         } else {

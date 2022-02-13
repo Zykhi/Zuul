@@ -101,7 +101,7 @@ Il y a encore beaucoup de travail pour tout finaliser
 
 #### Exercice 7.5
 
-La création de la methode `printLocationInfo()` dans la classe `Game` permet d'éviter la duplication de code. En effet il y a à 2 reprises le même segment de code (`goRoom()` et `printWelcome()`) pour informer le joueur de sa postion et les sorties disponibles. La création de `printLocationInfo()` permet de remplacer chaque occurence par un appel à la procedure, cela facilite aussi grandement les modifications futures car il y aura juste ce passage de code a modifier si on veut changer le texte pour les informations des salles.
+La création de la méthode `printLocationInfo()` dans la classe `Game` permet d'éviter la duplication de code. En effet, il y a, à 2 reprises, le même segment de code (`goRoom()` et `printWelcome()`) pour informer le joueur de sa postion et les sorties disponibles. La création de `printLocationInfo()` permet de remplacer chaque occurence par un appel à la procedure, cela facilite aussi grandement les modifications futures car il y aura juste ce passage de code a modifier si on veut changer le texte pour les informations des salles.
 
 ```java
 private void printLocationInfo()
@@ -124,7 +124,7 @@ private void printLocationInfo()
 }
 ```
 
-Les modifications suivantes ont donc été effectué dans `goRoom()` et dans `printWelcome()`
+Les modifications suivantes ont donc été effectuées dans `goRoom()` et dans `printWelcome()`
 
 ```java
 public class Game
@@ -202,7 +202,7 @@ public class Room
 }
 ```
 
-Il y a aussi des modifications a faire dans la classe `Game` qui sont
+Il y a aussi des modifications à faire dans la classe `Game` qui sont
 
 ```java
 public class Game
@@ -225,16 +225,16 @@ public class Game
     {
         System.out.println("You are "+aCurrentRoom.getDescription());
         System.out.print("Exits : ");
-        if(aCurrentRoom.getExit("north") != null){
+        if(aCurrentRoom.getExit("north") != null){  // précédemment if(aCurrentRoom.aNorthExit != null){
             System.out.print("north ");
         }
-        if(aCurrentRoom.getExit("east") != null){
+        if(aCurrentRoom.getExit("east") != null){   // précédemment if(aCurrentRoom.aEastExit != null){
             System.out.print("east ");
         }
-        if(aCurrentRoom.getExit("south") != null){
+        if(aCurrentRoom.getExit("south") != null){  // précédemment if(aCurrentRoom.aSouthExit != null){
             System.out.print("south ");
         }
-        if(aCurrentRoom.getExit("west") != null){
+        if(aCurrentRoom.getExit("west") != null){   // précédement if(aCurrentRoom.aWestExit != null){
             System.out.print("west ");
         }
         System.out.println();
@@ -244,7 +244,7 @@ public class Game
 
 #### Exercice 7.7
 
-La création de la méthode `getExitString()` doit etre crée dans la classe `Room` car celle ci gere tout ce qui refere aux salles. L'affichage se passe dans la classe `Game` avec la methode `printLocationInfo()` précédemment crée.
+La création de la méthode `getExitString()` doit être crée dans la classe `Room` car celle-ci gère tout ce qui réfère aux salles. L'affichage se passe dans la classe `Game` avec la methode `printLocationInfo()` précédemment crée.
 
 ```java
 public String getExitString()
@@ -284,7 +284,7 @@ private void printLocationInfo()
 
 #### Exercice 7.8
 
-Modification des attributs de la classe `Room` pour les metttres dans une hashmap, pour ce faire il faut écrire en haut de la classe `import java.util.HashMap;`et pour l'initialiser `private HashMap<String, Room> aExits;`. Le code de la classe `Room` est donc comme suit
+Modification des attributs de la classe `Room` pour les mettre dans une `HashMap`, pour ce faire il faut écrire en haut de la classe `import java.util.HashMap;`et pour l'initialiser `private HashMap<String, Room> aExits;`. Le code de la classe `Room` est donc comme suit
 
 ```java
 import java.util.HashMap;
@@ -349,7 +349,7 @@ public class Game
 
 #### Exercice 7.8.1
 
-L'ajout d'un deplacement vertical entre l'exterieur et le dongeon est ajouté. Les directions sont donc maintenant, `north` `east` `south` `west` et `down`
+L'ajout d'un déplacement vertical entre l'extérieur et le dongeon est réalisé. Les directions sont donc maintenant : `north`, `east`, `south`, `west` et `down`
 
 ```java
 vOutside.setExits("down", vLobby);
@@ -357,40 +357,40 @@ vOutside.setExits("down", vLobby);
 
 #### Exercice 7.9
 
-La méthode keySet() permet d'associer des valeurs arbitraires à des clés.
+La méthode `keySet()` permet d'associer des valeurs arbitraires à des clés.
 
 ```java
 import java.util.Set;
 ```
 
-Ainsi, il peut associer le mot de commande à la clé qui ouvrira l'accès au HashMap contenant toutes les pièces. **Exemple :** pour le lobby, les sorties sont `north`, `east` et `west`. La clé nord sur la commande `go north` permettra d'accéder a la salle au nord du lobby.
+Ainsi, il peut associer le mot de commande à la clé qui ouvrira l'accès à la `HashMap` contenant toutes les pièces. **Exemple :** pour le lobby, les sorties sont `north`, `east` et `west`. La clé nord sur la commande `go north` permettra d'accéder à la salle au nord du lobby.
 
 #### Exercice 7.10
 
-La methode `getExitString()` permet de récupérer toutes les sorties d'une pieces sous forme d'une `String`
+La methode `getExitString()` permet de récupérer toutes les sorties d'une pièce sous forme d'une `String`
 
 ```java
-        String vReturnString = "Exits : ";
+String vReturnString = "Exits : ";
 ```
 
 Cette ligne crée une variable `vReturnString` de type `String` qui contient la chaine de caractères `"Exits : "`
 
 ```java
-        Set<String> vKeys = aExits.keySet();
+Set<String> vKeys = aExits.keySet();
 ```
 
-Celle-ci crée une variable `vKeys` de type `Set<String>`. Les éléments contenus sont les clés de la `HashMap aExits` sous forme d'une liste de `String` qui ne peut pas comporter 2 fois le même élement.
+Celle-ci crée une variable `vKeys` de type `Set<String>`. Les éléments contenus sont les clés de la `HashMap aExits` sous forme d'une liste de `String` qui ne peut pas comporter 2 fois le même élément.
 
 ```java
-        for(String vExit : vKeys){
-            vReturnString += " " + vExit;
-        }
+for(String vExit : vKeys){
+    vReturnString += " " + vExit;
+}
 ```
 
-Ce bout de code est une boucle `for each` qui parcours la liste des clés stockées. `vExit` est une variable qui prend la valeur de la prochaine clé de la `HashMap`à chaque fois que la bocule se répète, ce qui fait que `vReturnString` obtiens toutes les sorties disponibles dans le `String`.
+Ce bout de code est une boucle `for each` qui parcours la liste des clés stockées. `vExit` est une variable qui prend la valeur de la prochaine clé de la `HashMap`à chaque fois que la bocule se répète, ce qui fait que `vReturnString` obtient toutes les sorties disponibles dans la `String`.
 
 ```java
-        return vReturnString;
+return vReturnString;
 ```
 
 La derniere partie du code retourne la chaine de caractères possédant toutes les sorties de la salle.
@@ -400,123 +400,135 @@ La derniere partie du code retourne la chaine de caractères possédant toutes l
 La fonction `getLongDescription()` retourne une chaine de caractères informant le joueur de sa position actuelle et des sorties de la salle
 
 ```java
-    public String getLongDescription(){
-        return "You are " + aDescription + ".\n" + getExitString();
-    }
+public String getLongDescription(){
+    return "You are " + aDescription + ".\n" + getExitString();
+}
 ```
 
-Dans la classe game on effectue donc des modifications
+Dans la classe `Game` on effectue donc des modifications
 
 ```java
-    private void printLocationInfo() {
-        System.out.println(aCurrentRoom.getLongDescription());
-    }
+private void printLocationInfo() {
+    System.out.println(aCurrentRoom.getLongDescription());
+}
 ```
 
 #### Exercice 7.14
 
-La commande look qu'on ajoute dans la classe `CommandWord` avec cette ligne
+On ajoute la commande `look` dans la classe `CommandWords` avec cette ligne
 
 ```java
 this.aValidCommands[3] = "look";
 ```
 
-Une fois cela fait il faut creer une methode pour la commande look qui nous permettra d'avoir les informations sur la salle et ses sorties autant de fois qu'on veut
+Une fois fait, il faut créer une methode pour la commande `look` qui nous permettra d'avoir les informations sur la salle et ses sorties autant de fois que nous le souhaitons
 
 ```java
-    private void look(){
-        printLocationInfo();
-    }
+private void look(){
+    printLocationInfo();
+}
 ```
 
-Et pour que la methode fonctionne quand on la tape au clavier il faut ajouter
+Nous devons ajouter les lignes de code ci-dessous dans la fonction `processCommand()` de la classe `Game` pour que la méthode fonctionne lorsqu'elle est saisie au clavier
 
 ```java
-    else if(pCommand.getCommandWord().equals("look")){
-        this.look();
-    }
+else if(pCommand.getCommandWord().equals("look")){
+    this.look();
+}
 ```
-
-dans `processCommand()`
 
 #### Exercice 7.15
 
-On refait la meme chose pour eat
+On refait la même chose pour la commande `eat`. C'est à dire ajout de la commande `eat` dans la classe `CommandWords`
 
 ```java
-    private void eat(){
-        System.out.println("You have eaten now and you are not hungry any more.");
-    }
+this.aValidCommands[4] = "eat";
+```
+
+Création d'une méthode pour la commande `eat`
+
+```java
+private void eat(){
+    System.out.println("You have eaten now and you are not hungry any more.");
+}
+```
+
+Ajout des lignes de code ci-dessous dans la fonction `processCommand()` de la classe `Game` pour que la méthode fonctionne lorsqu'elle est saisie au clavier
+
+```java
+else if(pCommand.getCommandWord().equals("eat")){
+    this.eat();
+}
 ```
 
 #### Exercice 7.16
 
-On crée une méthode `showAll()` dans la classe `CommandWords` pour regrouper toutes les commandes dans un `String`
+On crée une méthode `showAll()` dans la classe `CommandWords` pour regrouper toutes les commandes dans une `String`
 
 ```java
-    public void showAll(){
-        for(String vCommand : aValidCommands){
-            System.out.print(vCommand + " ");
-        }
-        System.out.println();
+public void showAll(){
+    for(String vCommand : aValidCommands){
+        System.out.print(vCommand + " ");
     }
+    System.out.println();
+}
 ```
 
-Ensuite dans la classe `Parser` on crée une méthode `showCommands` pour afficher toutes les commandes
+Ensuite, dans la classe `Parser`, on crée une méthode `showCommands()` pour afficher toutes les commandes
 
 ```java
-    public void showCommands(){
-        aValidCommands.showAll();
-    }
+public void showCommands(){
+    aValidCommands.showAll();
+}
 ```
 
-Puis on remplace le texte écrit en dur par la methode `showCommands()`
+Puis on remplace le texte écrit "en dur" par la methode `showCommands()` afin de le rendre dynamique. Lorsque nous voudrons ajouter d'autres commandes, il s'adaptera automatiquement
 
 ```java
-    private void printHelp() {
+private void printHelp() {
 
-        [...]
+    [...]
 
-        System.out.println("Your command words are:");
-        aParser.showCommands();
-    }
+    System.out.println("Your command words are:");
+    aParser.showCommands();
+}
 ```
 
 #### Exercice 7.18
 
-Dans la classe `CommandWords` la méthode `showAll()` devient la fonction `getCommandList()` et subis quelques modifications
+Dans la classe `CommandWords` la méthode `showAll()` devient la fonction `getCommandList()` et subit les modifications ci-dessous
 
 ```java
-    public String getCommandList()
-    {
-        StringBuilder sCommands = new StringBuilder();
-        for(int i = 0; i < aValidCommands.length; i++) {
-            sCommands.append( aValidCommands[i] + "  " );
-        }
-        return sCommands.toString();
+public String getCommandList()
+{
+    StringBuilder sCommands = new StringBuilder();
+    for(int i = 0; i < aValidCommands.length; i++) {
+        sCommands.append( aValidCommands[i] + "  " );
     }
+    return sCommands.toString();
+}
 ```
 
-La méthode `showCommands()` est aussi modifié par une fonction `getCommandString()`
+La méthode `showCommands()` est aussi modifiée par une fonction `getCommandString()`
 
 ```java
-    public String getCommandString()
-    {
-        return this.aValidCommands.getCommandList();
-    }
+public String getCommandString()
+{
+    return this.aValidCommands.getCommandList();
+}
 ```
 
-Les modifications sont légere dans `printHelp()` il y a juste à changer `aParser.showCommands()` par `aParser.getCommandString()`
+Les modifications sont légères dans `printHelp()` il y a juste à remplacer `aParser.showCommands()` par `aParser.getCommandString()`
 
 ```java
-    private void printHelp() {
+private void printHelp() {
 
-        [...]
+    [...]
 
-        aParser.getCommandString();
-    }
+    aParser.getCommandString();
+}
 ```
 
 #### Exercice 7.18.1
 
-Les deux projets sont vraiment similaire ce qui est logique car tout les exercices ont été effectué.F
+Les deux projets sont vraiment similaires ce qui est logique car j'ai suivi les exercices demandés. Néanmoins il faut noter deux differences notables qui sont l'ajout des commandes : `look` et `eat`  
