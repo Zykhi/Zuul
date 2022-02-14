@@ -48,7 +48,7 @@ Edward se retrouve bloqué dans un dongeon après s'être caché pendant une bat
 
 ### Scénario détaillé
 
-En cours de réalisation 
+En cours de réalisation
 
 ### Détail des lieux, items, personnages
 
@@ -99,7 +99,7 @@ En cours de réalisation
 - #### Mini-jeux
 
   - pas encore d'idée
-  - 
+  -
 
 - #### Combats
   - Combat contre les boss
@@ -260,7 +260,7 @@ public class Game
 
 #### Exercice 7.7
 
-La création de la méthode `getExitString()` doit être crée dans la classe `Room` car celle-ci gère tout ce qui réfère aux salles. L'affichage se passe dans la classe `Game` avec la methode `printLocationInfo()` précédemment crée.
+La création de la méthode `getExitString()` doit être crée dans la classe `Room` car celle-ci gère tout ce qui réfère aux salles.
 
 ```java
 public String getExitString()
@@ -289,6 +289,8 @@ public String getExitString()
         return vExit;
     }
 ```
+
+L'affichage se passe dans la classe `Game` avec la methode `printLocationInfo()` précédemment crée.
 
 ```java
 private void printLocationInfo()
@@ -429,6 +431,18 @@ private void printLocationInfo() {
 }
 ```
 
+#### Exercice 7.12
+
+Les objets crées au lancement du programme sont imagés dans ce diagramme
+
+<p align="center">
+  <img src="DiagrammeObjet.png" />
+</p>
+
+#### Exercice 7.13
+
+Lorsque la commande `go` est exécuté, l'objet courrant change, c'est a dire, passer d'une salle à l'autre
+
 #### Exercice 7.14
 
 On ajoute la commande `look` dans la classe `CommandWords` avec cette ligne
@@ -510,6 +524,16 @@ private void printHelp() {
 }
 ```
 
+#### Exercice 7.17
+
+Si nous voulons ajouter une autre commande il faudra modifier la classe `Game` en ajoutant la methode de la commande et ajouter la ligne permantant l'exécution dans `processCommand()`
+
+```java
+else if(pCommand.getCommandWord().equals("command")){
+    this.command(); // command signifie une commande générale pouvant être intégrée au jeu
+}
+```
+
 #### Exercice 7.18
 
 Dans la classe `CommandWords` la méthode `showAll()` devient la fonction `getCommandList()` et subit les modifications ci-dessous
@@ -547,4 +571,17 @@ private void printHelp() {
 
 #### Exercice 7.18.1
 
-Les deux projets sont vraiment similaires ce qui est logique car j'ai suivi les exercices demandés. Néanmoins il faut noter deux differences notables qui sont l'ajout des commandes : `look` et `eat`  
+Les deux projets sont vraiment similaires ce qui est logique car j'ai suivi les exercices demandés. Néanmoins il faut noter deux differences notables qui sont l'ajout des commandes : `look` et `eat`
+
+#### Exercice 7.18.2
+
+Objet mutable qui peut donc changer au cours du temps. On peut construire petit à petit une chaîne de caractère, avec la méthode `append()` qui ajoute des caractères à la suite des autres, et toString qui retourne la chaîne.
+[source](https://docs.oracle.com/javase/7/docs/api/java/lang/StringBuilder.html)
+
+#### Exercice 7.18.3
+
+La recherche d'images est plutôt compliquée pour trouver ce qui me plait. Je vais m'orienter vers la création des decors pour le jeu.
+
+#### Exercice 7.18.4
+
+Le titre du jeu est : Zuul GOTY Edition
