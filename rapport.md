@@ -1,6 +1,10 @@
 <h1 align="center">RAPPORT IPO</h1>
 
-![ESIEE PARIS](https://upload.wikimedia.org/wikipedia/fr/thumb/7/71/Logo_ESIEE_Paris.svg/1200px-Logo_ESIEE_Paris.svg.png)
+<p align="center">
+  <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/7/71/Logo_ESIEE_Paris.svg/1200px-Logo_ESIEE_Paris.svg.png" />
+</p>
+
+<h1 align="center">2022</h1>
 
 ## Sommaire
 
@@ -36,7 +40,13 @@ Edward se retrouve bloqué dans un dongeon après s'être caché pendant une bat
 
 ### Plan
 
+<p align="center">
+  <img src="plan.png" />
+</p>
+
 ### Scénario détaillé
+
+En cours de réalisation 
 
 ### Détail des lieux, items, personnages
 
