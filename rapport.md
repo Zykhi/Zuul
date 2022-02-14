@@ -20,7 +20,7 @@
   - [Situations gagnantes et perdantes](#situations-gagnantes-et-perdantes)
   - [Énigmes, mini-jeux, combats](#énigmes,-mini-jeux,-combats)
   - [Commentaires](#commentaires)
-- [Réponses aux exercices](#reponses-aux-exercices)
+- [Réponses aux exercices](#réponses-aux-exercices)
 - [Mode d'emploi](#)
 - [Déclaration anti-plagiat](#)
 
