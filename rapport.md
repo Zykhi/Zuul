@@ -5,8 +5,10 @@
 </p>
 
 <h1 align="center">2022</h1>
-
+<br>
 <h1 align="center"><a href="https://perso.esiee.fr/~diouyc/ZuulGOTYEdition"> Zuul GOTY Edition</a></h1>
+
+<div style="page-break-after: always;"></div>
 
 ## Sommaire
 
@@ -23,6 +25,8 @@
 - [Réponses aux exercices](#réponses-aux-exercices)
 - [Mode d'emploi](#)
 - [Déclaration anti-plagiat](#)
+
+<div style="page-break-after: always;"></div>
 
 ## Information générales
 
@@ -108,6 +112,8 @@ En cours de réalisation
 ### Commentaires
 
 Il y a encore beaucoup de travail pour tout finaliser
+
+<div style="page-break-after: always;"></div>
 
 ## Réponses aux exercices
 
