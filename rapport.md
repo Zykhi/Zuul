@@ -6,6 +6,8 @@
 
 <h1 align="center">2022</h1>
 
+<h1 align="center"><a href="https://perso.esiee.fr/~diouyc/ZuulGOTYEdition"> Zuul GOTY Edition</a></h1>
+
 ## Sommaire
 
 - [Information générales](#information-générales)
@@ -96,8 +98,8 @@ En cours de réalisation
 
 - #### Mini-jeux
 
-  - lorem ipsum
-  - lorem ipsum
+  - pas encore d'idée
+  - 
 
 - #### Combats
   - Combat contre les boss
@@ -108,6 +110,10 @@ En cours de réalisation
 Il y a encore beaucoup de travail pour tout finaliser
 
 ## Réponses aux exercices
+
+#### Exercice 7.0
+
+Réalisation du site internet pour Zuul a l'adresse suivante : [Zuul GOTY Edition](https://perso.esiee.fr/~diouyc/ZuulGOTYEdition)
 
 #### Exercice 7.5
 
