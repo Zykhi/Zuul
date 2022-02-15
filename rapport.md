@@ -308,7 +308,7 @@ private void printLocationInfo()
 
 #### Exercice 7.8
 
-Modification des attributs de la classe `Room` pour les mettre dans une `HashMap`, pour ce faire il faut écrire en haut de la classe `import java.util.HashMap;`et pour l'initialiser `private HashMap<String, Room> aExits;`. Le code de la classe `Room` est donc comme suit
+Modification des attributs de la classe `Room` pour les mettre dans une `HashMap`, pour ce faire il faut écrire en haut de la classe `import java.util.HashMap;`et pour la créer `private HashMap<String, Room> aExits;`. Le code de la classe `Room` est donc comme suit
 
 ```java
 import java.util.HashMap;
@@ -591,3 +591,29 @@ La recherche d'images est plutôt compliquée pour trouver ce qui me plait. Je v
 #### Exercice 7.18.4
 
 Le titre du jeu est : Zuul GOTY Edition
+
+#### Exercice 7.18.5
+
+Nous devons créer une `HashMap<>()` qui contiendra toutes les pieces
+
+```java
+private HashMap<String, Room> aRooms;
+```
+
+Nous l'initialisons ensuite dans `createRooms()`
+
+```java
+this.aRooms = new HashMap<String, Room>();
+```
+
+Puis nous devons ajouter les salles dedans avec `put()`
+
+```java
+aRooms.put("Outside", vOutside);
+aRooms.put("Catacombs", vCatacombs);
+aRooms.put("Lobby", vLobby);
+aRooms.put("Treasure", vTreasure);
+aRooms.put("Boss1Room", vBoss1Room);
+aRooms.put("Boss1Room", vBoss2Room);
+aRooms.put("Boss1Room", vBoss3Room);
+```

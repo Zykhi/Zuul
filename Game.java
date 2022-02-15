@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 /**
  * This class is part of the "Zuul GOTY Edition" application.
  * "Zuul GOTY Edition" is a very simple, text based adventure game.
@@ -15,7 +17,7 @@
 public class Game {
     private Room aCurrentRoom;
     private Parser aParser;
-
+    private HashMap<String, Room> aRooms;
     /**
      * Create the game and initialise its internal map.
      */
@@ -28,6 +30,9 @@ public class Game {
      * Create all the rooms and link their exits together.
      */
     private void createRooms() {
+
+        this.aRooms = new HashMap<String, Room>();
+        
         Room vOutside, vCatacombs, vLobby, vTreasure, vBoss1Room, vBoss2Room, vBoss3Room;
 
         vOutside = new Room("outside the dungeon");
@@ -37,6 +42,14 @@ public class Game {
         vBoss1Room = new Room("boss room 1"); // need change desc of boss room
         vBoss2Room = new Room("boss room 2");
         vBoss3Room = new Room("boss room 3");
+
+        aRooms.put("Outside", vOutside);
+        aRooms.put("Catacombs", vCatacombs);
+        aRooms.put("Lobby", vLobby);
+        aRooms.put("Treasure", vTreasure);
+        aRooms.put("Boss1Room", vBoss1Room);
+        aRooms.put("Boss1Room", vBoss2Room);
+        aRooms.put("Boss1Room", vBoss3Room);
 
         vOutside.setExits("down", vLobby);
 
