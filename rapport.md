@@ -47,7 +47,7 @@ Edward se retrouve bloqué dans un dongeon après s'être caché pendant une bat
 ### Plan
 
 <p align="center">
-  <img src="plan.png" />
+  <img src="images/plan.png" />
 </p>
 
 ### Scénario détaillé
@@ -442,7 +442,7 @@ private void printLocationInfo() {
 Les objets crées au lancement du programme sont imagés dans ce diagramme
 
 <p align="center">
-  <img src="DiagrammeObjet.png" />
+  <img src="images/DiagrammeObjet.png" />
 </p>
 
 #### Exercice 7.13
