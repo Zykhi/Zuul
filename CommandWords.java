@@ -1,6 +1,6 @@
 /**
- * This class is part of the "World of Zuul" application.
- * "World of Zuul" is a very simple, text based adventure game.
+ * This class is part of the "Zuul GOTY Edition" application.
+ * "Zuul GOTY Edition" is a very simple, text based adventure game.
  * 
  * This class holds an enumeration table of all command words known to the game.
  * It is used to recognise commands as they are typed in.
