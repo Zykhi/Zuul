@@ -18,6 +18,7 @@ public class Game {
     private Room aCurrentRoom;
     private Parser aParser;
     private HashMap<String, Room> aRooms;
+
     /**
      * Create the game and initialise its internal map.
      */
@@ -32,7 +33,7 @@ public class Game {
     private void createRooms() {
 
         this.aRooms = new HashMap<String, Room>();
-        
+
         Room vOutside, vCatacombs, vLobby, vTreasure, vBoss1Room, vBoss2Room, vBoss3Room;
 
         vOutside = new Room("outside the dungeon");
@@ -127,8 +128,13 @@ public class Game {
             this.printHelp();
             return false;
         } else if (pCommand.getCommandWord().equals("look")) {
-            this.look();
-            return false;
+            if (pCommand.hasSecondWord()) {
+                System.out.println("I don't know how to look here");
+                return false;
+            } else {
+                this.look();
+                return false;
+            }
         } else if (pCommand.getCommandWord().equals("eat")) {
             this.eat();
             return false;
