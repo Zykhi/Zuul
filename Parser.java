@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.StringTokenizer;
 
 /**
  * This class is part of the "Zuul GOTY Edition" application.
@@ -17,16 +17,14 @@ import java.util.Scanner;
  * @version 2008.03.30 + 2013.09.15
  */
 public class Parser {
-    private CommandWords aValidCommands; // (voir la classe CommandWords)
-    private Scanner aReader; // permettra de lire les commandes au clavier
+
+    private CommandWords aCommandWords; // holds all valid command words
 
     /**
      * Create a new Parser.
      */
     public Parser() {
-        this.aValidCommands = new CommandWords();
-        this.aReader = new Scanner(System.in);
-        // System.in designe le clavier, comme System.out designe l'ecran
+        this.aCommandWords = new CommandWords();
     } // Parser()
 
     /**
@@ -35,39 +33,39 @@ public class Parser {
      * 
      * @return The next command from the user.
      */
-    public Command getCommand() {
-        String vInputLine; // contiendra toute la ligne tapee
-        String vWord1 = null;
-        String vWord2 = null;
+    public Command getCommand(final String pInputLine) {
+        String vWord1;
+        String vWord2;
 
-        System.out.print("> "); // affiche le prompt (invite de commande)
+        StringTokenizer tokenizer = new StringTokenizer(pInputLine);
 
-        vInputLine = this.aReader.nextLine(); // lit la ligne tapee au clavier
+        if (tokenizer.hasMoreTokens())
+            vWord1 = tokenizer.nextToken(); // get first word
+        else
+            vWord1 = null;
 
-        // cherche jusqu'a 2 mots dans la ligne tapee
-        Scanner vTokenizer = new Scanner(vInputLine);
-        if (vTokenizer.hasNext()) {
-            vWord1 = vTokenizer.next(); // get first word
-            if (vTokenizer.hasNext()) {
-                vWord2 = vTokenizer.next(); // get second word
-                // note: we just ignore the rest of the input line.
-            } // if
-        } // if
+        if (tokenizer.hasMoreTokens())
+            vWord2 = tokenizer.nextToken(); // get second word
+        else
+            vWord2 = null;
+
+        // note: we just ignore the rest of the input line.
 
         // Now check whether this word is known. If so, create a command
         // with it. If not, create a "null" command (for unknown command).
-        if (this.aValidCommands.isCommand(vWord1)) {
+
+        if (this.aCommandWords.isCommand(vWord1))
             return new Command(vWord1, vWord2);
-        } else {
-            return new Command(null, null); // C'est surtout le premier null qui est important ici.
-        }
-    } // getCommand()
+        else
+            return new Command(null, vWord2);
+    } // getCommand(.)
 
     /**
      * Returns a String with valid command words.
      */
     public String getCommandString() // was showCommands()
     {
-        return this.aValidCommands.getCommandList();
+        return this.aCommandWords.getCommandList();
     } // getCommandString()
+
 } // Parser

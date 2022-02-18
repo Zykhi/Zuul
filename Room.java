@@ -15,17 +15,19 @@ import java.util.Set;
 public class Room {
     private String aDescription;
     private HashMap<String, Room> aExits;
+    private String aImageName;
 
     /**
-     * Create a room described by "aDescription".
+     * Create a room described by "aDescription" with a given image.
      * Initially, it has no exits. "aDescription" is something like
      * "in a kitchen" or "in an open court yard".
      * 
      * @param pDescription
      */
-    public Room(final String pDescription) {
+    public Room(final String pDescription, final String pImage) {
         this.aDescription = pDescription;
         this.aExits = new HashMap<String, Room>();
+        this.aImageName = pImage;
     }
 
     /**
@@ -47,6 +49,13 @@ public class Room {
      */
     public String getLongDescription() {
         return "You are " + aDescription + ".\n" + getExitString();
+    }
+
+    /**
+     * Return a string describing the room's image name
+     */
+    public String getImageName() {
+        return this.aImageName;
     }
 
     /**
