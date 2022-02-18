@@ -739,17 +739,96 @@ public void actionPerformed(final ActionEvent pE) {
 #### Exercice 7.19
 
 La mise en place du pattern **Model-View-Controller** (MVC) est un modèle dans la conception de logiciels. Cette séparation permet une meilleure répartition du travail et une maintenance améliorée. Ce modèle est découpé en 3 parties :
+
 - Model (modèle) : gère les données et la logique métier.
 - View (vue) : gère la disposition et l'affichage.
 - Controller (contrôleur) : achemine les commandes des parties "model" et "view".
 
 Utiliser le MVC permet donc d'avoir un programme plus propre, quitte à prendre plus de temps cela permet une évolution beaucoup plus simple car tout le programme est bien découpé en partie simple à comprendre.
 
-#### Exercice 7.19.1
-
 #### Exercice 7.19.2
 
 Toutes les images sont déplacées dans le dossier `gameImages` qui stockera toutes les images du jeu. Pour ajouter une image au jeu il faut maintenant rajouter le nom du fichier suivi d'un `/`
+
 ```java
 vOutside = new Room("outside the dungeon", "gameImages/outside.png");
+```
+
+#### Exercice 7.20
+
+Il nous faut créer une classe `Item` qui s'occupera des objets de notre jeux
+```java
+public class Item {
+    private String aName;
+    private double aPrice;
+    private double aWeight;
+    private String aDescription;
+
+    public Item(final String pName, final double pPrice, final double pWeight, final String pDescription) {
+        this.aName = pName;
+        this.aPrice = pPrice;
+        this.aWeight = pWeight;
+        this.aDescription = pDescription;
+    }
+}
+```
+les accesseurs sont aussi créé ils pourraient être utile par la suite.
+Ensuite dans la classe `Room`, car les objets y seront stockés, nous devons l'initialiser. Nous choisirons ici l'utilisation d'une `HashMap` pour facilité l'ajout de plusieurs objets dans le futur. Cette exercice demande l'ajout d'un seul objet, c'est donc ce que nous feront.
+```java  
+private HashMap<String, Item> aItems;
+
+public Room(..) {
+        
+        [...]
+
+        this.aItems = new HashMap<String, Item>();
+
+    }
+```
+Pour ajouter des objets il nous faut une methode pour le faire. Nous en créons une nommée `setItems()` 
+```java
+public void setItems(final String pName, final Item pItem){
+    aItems.put(pName, pItem);
+}
+```
+Nous ajoutons une fonction presque identique a `getExitString()` pour obtenir une chaine de caractère contenant tout les objets présents
+```java
+public String getItemString() {
+    String vReturnString = "Items : ";
+    Set<String> vKeys = aItems.keySet();
+    for (String vItem : vKeys) {
+        vReturnString += " " + vItem;
+    }
+    return vReturnString;
+} 
+```
+Une fois cela fait nous pouvons nous attaquer a la mise en place d'un objet dans une pièce, nous allons donc modifier la classe `GameEngine`. 
+Dans la méthode `createRoom()` nous allons pouvoir ajouter des objets grâce aux lignes ci-dessous 
+```java
+public void createRoom(){
+    Item vTest = new Item("TestItem", 10, 5, "This is a test item");
+    vOutside.setItems("Test", vTest);
+}
+```
+Ces deux lignes servent à créer un Item puis de le mettre dans la pièce en question, ici nous créons un objet `Test` que nous mettons dans la pièce `vOutside`
+Il faut maintenant modifier la fonction `getLongDescription()` de la classe `Room` pour afficher les objets disponibles dans la salle. Comment savoir si la piece contient un objet ? Nous utiliserons un `boolean isEmpty()`
+```java
+public boolean isEmpty() {
+    return this.aItems.isEmpty();
+}
+```
+D'après la javadoc cette méthode me parait être la plus simple pour savoir si un objet est présent ou pas car `*.isEmpty()` retourne `true` si la `HashMap` est vide. 
+La dernière étape est donc de modifier `getLongDescription()`
+```java
+public String getLongDescription() {
+    if (this.isEmpty()) {
+        return "You are " + aDescription + ".\n" +
+                getExitString() + "\n" +
+                "No item here.";
+    }else{
+        return "You are " + aDescription + ".\n" +
+                getExitString() + "\n" +
+                getItemString();
+    }
+}
 ```

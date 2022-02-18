@@ -17,6 +17,7 @@ import java.util.Set;
 public class Room {
     private String aDescription;
     private HashMap<String, Room> aExits;
+    private HashMap<String, Item> aItems;
     private String aImageName;
 
     /**
@@ -29,6 +30,7 @@ public class Room {
     public Room(final String pDescription, final String pImage) {
         this.aDescription = pDescription;
         this.aExits = new HashMap<String, Room>();
+        this.aItems = new HashMap<String, Item>();
         this.aImageName = pImage;
     }
 
@@ -50,7 +52,15 @@ public class Room {
      *         Exits: north west
      */
     public String getLongDescription() {
-        return "You are " + aDescription + ".\n" + getExitString();
+        if (this.isEmpty()) {
+            return "You are " + aDescription + ".\n" +
+                    getExitString() + "\n" +
+                    "No item here.";
+        }else{
+            return "You are " + aDescription + ".\n" +
+                    getExitString() + "\n" +
+                    getItemString();
+        }
     }
 
     /**
@@ -68,6 +78,16 @@ public class Room {
      */
     public void setExits(final String pDirection, Room pNeighbor) {
         aExits.put(pDirection, pNeighbor);
+    }
+
+    /**
+     * Define an item from this room.
+     * 
+     * @param pName
+     * @param pItem
+     */
+    public void setItems(final String pName, final Item pItem) {
+        aItems.put(pName, pItem);
     }
 
     /**
@@ -95,4 +115,24 @@ public class Room {
         }
         return vReturnString;
     }
+
+    /**
+     * This String get all the item in the String
+     * 
+     * @return a string describing the room's items, for example
+     *         "Items : sword shield"
+     */
+    public String getItemString() {
+        String vReturnString = "Items : ";
+        Set<String> vKeys = aItems.keySet();
+        for (String vItem : vKeys) {
+            vReturnString += " " + vItem;
+        }
+        return vReturnString;
+    }
+
+    public boolean isEmpty() {
+        return this.aItems.isEmpty();
+    }
+
 } // Room

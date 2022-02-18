@@ -58,6 +58,7 @@ public class GameEngine {
         aRooms.put("Boss1Room", vBoss2Room);
         aRooms.put("Boss1Room", vBoss3Room);
 
+        // exit
         vOutside.setExits("down", vLobby);
 
         vCatacombs.setExits("west", vBoss2Room);
@@ -75,6 +76,10 @@ public class GameEngine {
 
         vBoss3Room.setExits("west", vTreasure);
         vBoss3Room.setExits("east", vLobby);
+
+        // item
+        Item vTest = new Item("TestItem", 10, 5, "This is a test item"); // Name, price, weight, desc
+        vOutside.setItems("Test", vTest);
 
         this.aCurrentRoom = vOutside;
     }
