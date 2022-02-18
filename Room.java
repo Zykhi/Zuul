@@ -2,6 +2,8 @@ import java.util.HashMap;
 import java.util.Set;
 
 /**
+ * Class Room - a room in an adventure game.
+ * 
  * This class is part of the "Zuul GOTY Edition" application.
  * "Zuul GOTY Edition" is a very simple, text based adventure game.
  * 

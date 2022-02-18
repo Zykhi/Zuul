@@ -743,3 +743,12 @@ La mise en place du pattern **Model-View-Controller** (MVC) est un modèle dans 
 - Controller (contrôleur) : achemine les commandes des parties "model" et "view".
 
 Utiliser le MVC permet donc d'avoir un programme plus propre, quitte à prendre plus de temps cela permet une évolution beaucoup plus simple car tout le programme est bien découpé en partie simple à comprendre.
+
+#### Exercice 7.19.1
+
+#### Exercice 7.19.2
+
+Toutes les images sont déplacées dans le dossier `gameImages` qui stockera toutes les images du jeu. Pour ajouter une image au jeu il faut maintenant rajouter le nom du fichier suivi d'un `/`
+```java
+vOutside = new Room("outside the dungeon", "gameImages/outside.png");
+```

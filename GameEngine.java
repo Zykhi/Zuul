@@ -42,13 +42,13 @@ public class GameEngine {
 
         Room vOutside, vCatacombs, vLobby, vTreasure, vBoss1Room, vBoss2Room, vBoss3Room;
 
-        vOutside = new Room("outside the dungeon", "outside.png");
-        vCatacombs = new Room("in the catacombs", "catacombs.png");
-        vLobby = new Room("the main room of the dungeon", "lobby.png");
-        vTreasure = new Room("an empty room", "treasure.png"); // or not ;)
-        vBoss1Room = new Room("boss room 1", "boss1.png"); // need change desc of boss room
-        vBoss2Room = new Room("boss room 2", "boss2.png");
-        vBoss3Room = new Room("boss room 3", "boss3.png");
+        vOutside = new Room("outside the dungeon", "gameImages/outside.gif");
+        vCatacombs = new Room("in the catacombs", "gameImages/catacombs.gif");
+        vLobby = new Room("the main room of the dungeon", "gameImages/lobby.gif");
+        vTreasure = new Room("an empty room", "gameImages/treasure.gif"); // or not ;)
+        vBoss1Room = new Room("boss room 1", "gameImages/boss1.gif"); // need change desc of boss room
+        vBoss2Room = new Room("boss room 2", "gameImages/boss2.gif");
+        vBoss3Room = new Room("boss room 3", "gameImages/boss3.gif");
 
         aRooms.put("Outside", vOutside);
         aRooms.put("Catacombs", vCatacombs);
