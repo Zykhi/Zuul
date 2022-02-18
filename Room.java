@@ -56,39 +56,14 @@ public class Room {
             return "You are " + aDescription + ".\n" +
                     getExitString() + "\n" +
                     "No item here.";
-        }else{
+        } else {
             return "You are " + aDescription + ".\n" +
                     getExitString() + "\n" +
                     getItemString();
         }
     }
 
-    /**
-     * Return a string describing the room's image name
-     */
-    public String getImageName() {
-        return this.aImageName;
-    }
-
-    /**
-     * Define an exit from this room.
-     * 
-     * @param pDirection
-     * @param pNeighbor
-     */
-    public void setExits(final String pDirection, Room pNeighbor) {
-        aExits.put(pDirection, pNeighbor);
-    }
-
-    /**
-     * Define an item from this room.
-     * 
-     * @param pName
-     * @param pItem
-     */
-    public void setItems(final String pName, final Item pItem) {
-        aItems.put(pName, pItem);
-    }
+    // EXIT
 
     /**
      * this Room get exit
@@ -99,6 +74,16 @@ public class Room {
      */
     public Room getExit(String pDirection) {
         return aExits.get(pDirection);
+    }
+
+    /**
+     * Define an exit from this room.
+     * 
+     * @param pDirection
+     * @param pNeighbor
+     */
+    public void setExits(final String pDirection, Room pNeighbor) {
+        aExits.put(pDirection, pNeighbor);
     }
 
     /**
@@ -116,6 +101,18 @@ public class Room {
         return vReturnString;
     }
 
+    // ITEM
+
+    /**
+     * Define an item from this room.
+     * 
+     * @param pName
+     * @param pItem
+     */
+    public void setItems(final String pName, final Item pItem) {
+        aItems.put(pName, pItem);
+    }
+
     /**
      * This String get all the item in the String
      * 
@@ -123,7 +120,7 @@ public class Room {
      *         "Items : sword shield"
      */
     public String getItemString() {
-        String vReturnString = "Items : ";
+        String vReturnString = "Items :";
         Set<String> vKeys = aItems.keySet();
         for (String vItem : vKeys) {
             vReturnString += " " + vItem;
@@ -133,6 +130,15 @@ public class Room {
 
     public boolean isEmpty() {
         return this.aItems.isEmpty();
+    }
+
+    // IMAGE
+
+    /**
+     * Return a string describing the room's image name
+     */
+    public String getImageName() {
+        return this.aImageName;
     }
 
 } // Room

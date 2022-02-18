@@ -11,6 +11,13 @@ public class Item {
         this.aDescription = pDescription;
     }
 
+    @Override public String toString(){
+        return this.aName + 
+                ", price : "+ this.aPrice + 
+                ", weight : " +this.aWeight + "kg, " +
+                this.aDescription;
+    }
+
     /**
      * This String get a description
      * 
