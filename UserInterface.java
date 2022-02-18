@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JButton;
 
 /**
  * This class implements a simple graphical user interface with a text entry
@@ -29,6 +30,7 @@ public class UserInterface implements ActionListener {
     private JTextField aEntryField;
     private JTextArea aLog;
     private JLabel aImage;
+    private JButton aButton;
 
     /**
      * Construct a UserInterface. As a parameter, a Game Engine
@@ -89,6 +91,7 @@ public class UserInterface implements ActionListener {
     private void createGUI() {
         this.aMyFrame = new JFrame("Zuul GOTY Edition"); // change the title
         this.aEntryField = new JTextField(34);
+        this.aButton = new JButton("quit");
 
         this.aLog = new JTextArea();
         this.aLog.setEditable(false);
@@ -103,11 +106,13 @@ public class UserInterface implements ActionListener {
         vPanel.add(this.aImage, BorderLayout.NORTH);
         vPanel.add(vListScroller, BorderLayout.CENTER);
         vPanel.add(this.aEntryField, BorderLayout.SOUTH);
+        vPanel.add(this.aButton, BorderLayout.WEST);
 
         this.aMyFrame.getContentPane().add(vPanel, BorderLayout.CENTER);
 
         // add some event listeners to some components
         this.aEntryField.addActionListener(this);
+        this.aButton.addActionListener(this);
 
         // to end program when window is closed
         this.aMyFrame.addWindowListener(new WindowAdapter() {
@@ -125,9 +130,12 @@ public class UserInterface implements ActionListener {
      * Actionlistener interface for entry textfield.
      */
     public void actionPerformed(final ActionEvent pE) {
-        // no need to check the type of action at the moment
-        // because there is only one possible action (text input) :
-        this.processCommand(); // never suppress this line
+        // check the type of action
+        if (pE.getActionCommand() != null) {
+            this.aEngine.interpretCommand(pE.getActionCommand());
+        } else {
+            this.processCommand(); // never suppress this line
+        }
     } // actionPerformed(.)
 
     /**

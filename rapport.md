@@ -664,6 +664,7 @@ private void printLocationInfo() {
 
 La nouvelle classe `UserInterface` sert à créer une interface graphique pour le jeu, pour le moment elle contient une zone de texte, une zone d'affichage et une zone pour mettre une image.
 Nous effectuons quand même des modifications par rapport à la version qui nous est donnée pour les `import` et éviter les `*` on recherche tout ce qu'on doit importer. Faire cela allège le code car il n'a pas besoin de tout avoir de certains package.
+
 ```java
 import java.net.URL;
 
@@ -686,5 +687,50 @@ import javax.swing.JTextField;
 
 #### Exercice 7.18.7
 
-`addActionListener()` est une méthode qui ajoute un "listener", une interface qui permet de réagir (via des méthodes pour se déplacer par exemples) suite à un événement survenu dans le jeu. 
-La méthode `actionPerformed()` est appelée lorqu'une commande est entrée et appelle la méthode `processCommand()` pour l'exéctuer.
+`addActionListener()` est une méthode qui ajoute un "listener", une interface qui permet de réagir (via des méthodes pour se déplacer par exemples) suite à un événement survenu dans le jeu.
+La méthode `actionPerformed()` est appelée lorsqu'une commande est entrée et appelle la méthode `processCommand()` pour l'exéctuer.
+
+#### Exercice 7.18.8
+
+Nous devons créer un bouton pour cette exercice, pour cela il faut importer le package
+
+```java
+import javax.swing.JButton;
+```
+
+Il faut ensuite déclarer l'attribut
+
+```java
+private JButton aButton;
+```
+
+Puis nous l'initialisons dans la méthode `createGUI()` avec la ligne ci-dessous
+
+```java
+this.aButton = new JButton("quit"); // to create a quit button
+```
+
+Une fois cela fait il faut l'ajouter sur le `JPanel`. Pour se faire on doit écrire
+
+```java
+vPanel.add(this.aButton, BorderLayout.WEST); // EAST and WEST are available
+```
+
+Le bouton à juste une interface graphique pour le moment, il faut donc lui ajouter un `ActionListener()`
+
+```java
+this.aButton.addActionListener(this);
+```
+
+Pour finir il faut modifier la méthode `actionPerformed` pour que que le bouton exectute la commande qui lui est renseignée
+
+```java
+public void actionPerformed(final ActionEvent pE) {
+        // check the type of action
+        if (pE.getActionCommand() != null) {
+            this.aEngine.interpretCommand(pE.getActionCommand());
+        } else {
+            this.processCommand(); // never suppress this line
+        }
+    }
+```
