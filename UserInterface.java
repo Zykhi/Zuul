@@ -133,6 +133,7 @@ public class UserInterface implements ActionListener {
         // check the type of action
         if (pE.getActionCommand() != null) {
             this.aEngine.interpretCommand(pE.getActionCommand());
+            this.aEntryField.setText(""); // to reset entry field
         } else {
             this.processCommand(); // never suppress this line
         }
