@@ -617,3 +617,69 @@ aRooms.put("Boss1Room", vBoss1Room);
 aRooms.put("Boss1Room", vBoss2Room);
 aRooms.put("Boss1Room", vBoss3Room);
 ```
+
+#### Exercice 7.18.6
+
+Cette modification change beaucoup de chose dans le jeu car nous rajoutons une interface graphique. Nous ajoutons une fonction `getImageName()` et un attribut `aImageName` dans la classe `Room`.
+
+```java
+public class Room {
+
+    [...]
+
+    private String aImageName;
+
+    public Room(final String pDescription, final String pImage) {
+
+        [...]
+
+        this.aImageName = pImage;
+    }
+
+    [...]
+
+    public String getImageName() {
+        return this.aImageName;
+    }
+```
+
+Ensuite la classe `Parser` n'a plus besoin de `Scanner`
+
+La classe `Game` devient la classe `GameEngine`. Le changement majeur est qu'avec la nouvelle interface on "imprime" plus dans le terminal mais sur la fenêtre du jeu avec cette ligne
+
+```java
+this.aGui.println("exemple");
+```
+
+La méthode `printLocationInfo()` change pour afficher les images de la salle. Cela évite la duplication de code
+
+```java
+private void printLocationInfo() {
+        this.aGui.println(aCurrentRoom.getLongDescription());
+        if (this.aCurrentRoom.getImageName() != null) {
+            this.aGui.showImage(this.aCurrentRoom.getImageName());
+        }
+    }
+```
+
+La nouvelle classe `UserInterface` sert à créer une interface graphique pour le jeu, pour le moment elle contient une zone de texte, une zone d'affichage et une zone pour mettre une image.
+Nous effectuons quand même des modifications par rapport à la version qui nous est donnée pour les `import` et éviter les `*` on recherche tout ce qu'on doit importer. Faire cela allège le code car il n'a pas besoin de tout avoir de certains package.
+```java
+import java.net.URL;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+```
