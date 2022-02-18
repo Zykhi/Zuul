@@ -734,3 +734,12 @@ public void actionPerformed(final ActionEvent pE) {
         }
     }
 ```
+
+#### Exercice 7.19
+
+La mise en place du pattern **Model-View-Controller** (MVC) est un modèle dans la conception de logiciels. Cette séparation permet une meilleure répartition du travail et une maintenance améliorée. Ce modèle est découpé en 3 parties :
+- Model (modèle) : gère les données et la logique métier.
+- View (vue) : gère la disposition et l'affichage.
+- Controller (contrôleur) : achemine les commandes des parties "model" et "view".
+
+Utiliser le MVC permet donc d'avoir un programme plus propre, quitte à prendre plus de temps cela permet une évolution beaucoup plus simple car tout le programme est bien découpé en partie simple à comprendre.
