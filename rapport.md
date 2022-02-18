@@ -683,3 +683,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 ```
+
+#### Exercice 7.18.7
+
+`addActionListener()` est une méthode qui ajoute un "listener", une interface qui permet de réagir (via des méthodes pour se déplacer par exemples) suite à un événement survenu dans le jeu. 
+La méthode `actionPerformed()` est appelée lorqu'une commande est entrée et appelle la méthode `processCommand()` pour l'exéctuer.
