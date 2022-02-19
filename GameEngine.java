@@ -16,7 +16,6 @@ import java.util.HashMap;
  */
 public class GameEngine {
     private Room aCurrentRoom;
-    private Item aItem;
     private Parser aParser;
     private HashMap<String, Room> aRooms;
     private UserInterface aGui;
@@ -80,8 +79,24 @@ public class GameEngine {
 
         // item
         Item vTest = new Item("TestItem", 10, 5, "This is a test item"); // Name, price, weight, desc
+        Item vTest2 = new Item("TestItem2", 20, 10, "This is a test item 2"); // Name, price, weight, desc
         vOutside.addItem("Test", vTest);
+        vOutside.addItem("Test2", vTest2);
 
+        Item vWarmogArmor = new Item("Warmog's Armor", 0, 40, "This is the armor of Warmog the Giant");
+        vBoss1Room.addItem("Warmog's_Armor", vWarmogArmor);
+
+        Item vBOTRK = new Item("Blade Of The Ruined King", 0, 20,
+                "This is the blade of Viego, it weighs nothing compared to its burden");
+        vBoss2Room.addItem("Blade_Of_The_Ruined_King", vBOTRK);
+
+        Item vFrostFireGauntlet = new Item("Frostfire Gauntlet", 0, 10, "This is the last artefact of the dungeon");
+        vBoss3Room.addItem("Frostfire_Gauntlet", vFrostFireGauntlet);
+
+        Item vWeddingRing = new Item("Wedding Ring", 0, 0, "This is a wedding ring, it's will be usefull");
+        vCatacombs.addItem("Wedding_ring", vWeddingRing);
+
+        // starting room
         this.aCurrentRoom = vOutside;
     }
 

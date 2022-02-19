@@ -906,3 +906,31 @@ else if (vCommandWord.equals("look")) {
 #### Exercice 7.22
 
 La possibilité d'ajouter plusieurs objets avait déja été implémenté pendant les exercices précedents. La méthode qui permettait de placer les objets à juste changer de nom pour être conforme au cahier des charges, passant de `setItems()` à `addItem()`
+
+#### Exercice 7.22.1
+
+Une `HashMap` a été utilisé car c'est, à mon avis, le plus approprié pour réaliser cet exercice puisqu'elle nous permet d'ajouter un nombre infini d'objet, c'est dynamique (comparé a un tableau où nous aurions dû modifier la taille a chaque objet rajouté ou supprimé de la salle) et c'est aussi une collection que nous avons vu dans les exercices précédents. Tout cela ajouté au fait que nous pouvons retrouver directement grâce a la méthode `get()` étant donnée que les objets sont stocké sous une chaine de caractères qui est leur noms et d'une clé qui est l'objet.
+
+#### Exercice 7.22.2
+
+Tout les objets actuels du jeu ont été implémenté, 2 objets factices ont été rajouté pour répondre au cahier des charges
+
+```java
+Item vTest = new Item("TestItem", 10, 5, "This is a test item"); // Name, price, weight, desc
+Item vTest2 = new Item("TestItem2", 20, 10, "This is a test item 2"); // Name, price, weight, desc
+vOutside.addItem("Test", vTest);
+vOutside.addItem("Test2", vTest2);
+
+Item vWarmogArmor = new Item("Warmog's Armor", 0, 40, "This is the armor of Warmog the Giant");
+vBoss1Room.addItem("Warmog's_Armor", vWarmogArmor);
+
+Item vBOTRK = new Item("Blade Of The Ruined King", 0, 20,
+                        "This is the blade of Viego, it weighs nothing compared to its burden");
+vBoss2Room.addItem("Blade_Of_The_Ruined_King", vBOTRK);
+
+Item vFrostFireGauntlet = new Item("Frostfire Gauntlet", 0, 10, "This is the last artefact of the dungeon");
+vBoss3Room.addItem("Frostfire_Gauntlet", vFrostFireGauntlet);
+
+Item vWeddingRing = new Item("Wedding Ring", 0, 0, "This is a wedding ring, it's will be usefull");
+vCatacombs.addItem("Wedding_ring", vWeddingRing);
+```
