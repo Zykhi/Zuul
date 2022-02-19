@@ -934,3 +934,69 @@ vBoss3Room.addItem("Frostfire_Gauntlet", vFrostFireGauntlet);
 Item vWeddingRing = new Item("Wedding Ring", 0, 0, "This is a wedding ring, it's will be usefull");
 vCatacombs.addItem("Wedding_ring", vWeddingRing);
 ```
+
+#### Exercice 7.23
+
+Nous devons implémenter une nouvelle commande donc il faut commencer par l'ajouter dans la classe `CommandsWord`
+
+```java
+public CommandWords() {
+    this.aValidCommands = new String[6];
+
+    [...]
+
+    this.aValidCommands[5] = "back";
+}
+```
+
+Puis la crée dans la classe `Game`. Pour ce faire nous avons besoin de nous "souvenir" de la salle précédente, nous créons donc un attribut `aPreviousRoom`
+
+```java
+private Room aPreviousRoom;
+```
+
+Nous devons ensuite placer cette attribut pour qu'il prenne la valeur de la salle actuelle avant que nous changions de pièce dans la méthode `goRoom()`
+
+```java
+private void goRoom(.) {
+    if (.) {
+
+        [...]
+
+    }
+    aPreviousRoom = aCurrentRoom;
+
+    [...]
+
+    if (.)
+
+        [...]
+
+    else {
+
+        [...]
+
+    }
+}
+```
+
+L'avant dernière étape est de crée la méthode pour la commande `back`. La pièce actuelle prend la valeur de la pièce précédente qui nous permet donc de revenir en arrière. Pour finir la méthode nous affichons les informations de la salle.
+
+```java
+private void back(){
+    aCurrentRoom = aPreviousRoom;
+    printLocationInfo();
+}
+```
+
+Nous devons, pour finir cette implementation, ajouter la commande dans la méthode `interpretCommand()`
+
+```java
+else if (vCommandWord.equals("back")) {
+    if (vCommand.hasSecondWord()) {
+        this.aGui.println("it's impossible");;
+    } else {
+        this.back();
+    }
+}
+```

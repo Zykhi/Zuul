@@ -16,6 +16,7 @@ import java.util.HashMap;
  */
 public class GameEngine {
     private Room aCurrentRoom;
+    private Room aPreviousRoom;
     private Parser aParser;
     private HashMap<String, Room> aRooms;
     private UserInterface aGui;
@@ -154,6 +155,12 @@ public class GameEngine {
             }
         } else if (vCommandWord.equals("eat")) {
             this.eat();
+        } else if (vCommandWord.equals("back")) {
+            if (vCommand.hasSecondWord()) {
+                this.aGui.println("it's impossible");;
+            } else {
+                this.back();
+            }
         }
     }
 
@@ -176,6 +183,7 @@ public class GameEngine {
             this.aGui.println("Go where?");
             return;
         }
+        aPreviousRoom = aCurrentRoom;
 
         String vDirection = pCommand.getSecondWord();
 
@@ -223,5 +231,10 @@ public class GameEngine {
 
     private void eat() {
         this.aGui.println("You have eaten now and you are not hungry any more.");
+    }
+
+    private void back(){
+        aCurrentRoom = aPreviousRoom;
+        printLocationInfo();
     }
 }// Game
