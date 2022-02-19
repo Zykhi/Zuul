@@ -1023,3 +1023,51 @@ else if (vCommandWord.equals("back")) {
 #### Exercice 7.25 
 
 Quand on se déplace plusieurs fois et qu'on fait la commande `back` autant de fois. Cela nous ramène uniquement dans la salle précédente et pas a la première salle du jeu.
+
+#### Exercice 7.26
+
+Nous voulons donc régler le problème de l'exercice précédent, pour ce faire nous allons utiliser une nouvelle classe Java qui est `Stack<>()`. Pour la déclarer, comme d'habitude, en haut de la classe `GameEngine`
+```java
+private Stack<Room> aPreviousRooms;
+```
+
+Vu que c'est une classe Java il faut aussi l'importer 
+```java
+import java.util.Stack;
+```
+
+Ensuite on l'initialise dans le constructeur
+
+```java
+public GameEngine() {
+
+    [...]
+
+    this.aPreviousRooms = new Stack<Room>();
+    }
+```
+Puis on commence les modifications. Dans `goRoom()`
+```java
+aPreviousRooms.push(aCurrentRoom); 
+```
+Cette ligne permet de remplir la pile avec la salle actuelle et cela s'actualise avec chaque pièce car le code de `goRoom()` s'éxécute à chaque fois que nous changeons de salle. La dernière modification à effectuer est dans la méthode `back()`
+```java
+private void back(Command pCommand){
+    if (pCommand.hasSecondWord()) {
+        this.aGui.println("back doesn't need a second word");;
+    }else if(aPreviousRooms.empty()){
+        this.aGui.println("you can't back");
+    }else {
+        Room vPreviousRoom = aPreviousRooms.pop();
+        aCurrentRoom = vPreviousRoom;
+        printLocationInfo();
+    }    
+}
+```
+J'ai aussi effectué une modification dans `interpretCommand()` je trouvais cela plus logique de tout géré depuis la commande `back`. C'est à dire, le cas où il y a 2 mots et celui où il n'y a pas d'autre salle dans la pile, qu'on esssaye d'effectuer `back` au démarrage du jeu. Les modifications dans `interpretCommand()` sont donc les suivantes
+```java
+else if (vCommandWord.equals("back")) {
+    this.back(vCommand);
+}
+```
+Nous remplaçons tout le gros bloc par un appel à la méthode

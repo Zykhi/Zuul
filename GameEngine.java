@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Stack;
 
 /**
  * This class is part of the "Zuul GOTY Edition" application.
@@ -16,7 +17,7 @@ import java.util.HashMap;
  */
 public class GameEngine {
     private Room aCurrentRoom;
-    private Room aPreviousRoom;
+    private Stack<Room> aPreviousRooms;
     private Parser aParser;
     private HashMap<String, Room> aRooms;
     private UserInterface aGui;
@@ -27,6 +28,7 @@ public class GameEngine {
     public GameEngine() {
         this.createRooms();
         this.aParser = new Parser();
+        this.aPreviousRooms = new Stack<Room>();
     }
 
     public void setGUI(final UserInterface pUserInterface) {
@@ -156,13 +158,7 @@ public class GameEngine {
         } else if (vCommandWord.equals("eat")) {
             this.eat();
         } else if (vCommandWord.equals("back")) {
-            if (vCommand.hasSecondWord()) {
-                this.aGui.println("it's impossible");;
-            }else if(aPreviousRoom == null){ // add this if block to be sure previous room is not null
-                this.aGui.println("you cant do that"); // send to the player it's impossible to back here because it's the first room
-            }else {
-                this.back();
-            }
+                this.back(vCommand);
         }
     }
 
@@ -185,7 +181,7 @@ public class GameEngine {
             this.aGui.println("Go where?");
             return;
         }
-        aPreviousRoom = aCurrentRoom;
+        aPreviousRooms.push(aCurrentRoom);
 
         String vDirection = pCommand.getSecondWord();
 
@@ -235,8 +231,15 @@ public class GameEngine {
         this.aGui.println("You have eaten now and you are not hungry any more.");
     }
 
-    private void back(){
-        aCurrentRoom = aPreviousRoom;
-        printLocationInfo();
+    private void back(Command pCommand){
+        if (pCommand.hasSecondWord()) {
+            this.aGui.println("it's impossible");;
+        }else if(aPreviousRooms.empty()){
+            this.aGui.println("you cant back");
+        }else {
+            Room vPreviousRoom = aPreviousRooms.pop();
+            aCurrentRoom = vPreviousRoom;
+            printLocationInfo();
+        }
     }
 }// Game
