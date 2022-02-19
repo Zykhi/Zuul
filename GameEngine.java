@@ -60,23 +60,23 @@ public class GameEngine {
         aRooms.put("Boss1Room", vBoss3Room);
 
         // exit
-        vOutside.setExits("down", vLobby);
+        vOutside.setExit("down", vLobby);
 
-        vCatacombs.setExits("west", vBoss2Room);
+        vCatacombs.setExit("west", vBoss2Room);
 
-        vLobby.setExits("north", vBoss1Room);
-        vLobby.setExits("east", vBoss2Room);
-        vLobby.setExits("west", vBoss3Room);
+        vLobby.setExit("north", vBoss1Room);
+        vLobby.setExit("east", vBoss2Room);
+        vLobby.setExit("west", vBoss3Room);
 
-        vTreasure.setExits("east", vBoss3Room);
+        vTreasure.setExit("east", vBoss3Room);
 
-        vBoss1Room.setExits("south", vLobby);
+        vBoss1Room.setExit("south", vLobby);
 
-        vBoss2Room.setExits("east", vCatacombs);
-        vBoss2Room.setExits("west", vLobby);
+        vBoss2Room.setExit("east", vCatacombs);
+        vBoss2Room.setExit("west", vLobby);
 
-        vBoss3Room.setExits("west", vTreasure);
-        vBoss3Room.setExits("east", vLobby);
+        vBoss3Room.setExit("west", vTreasure);
+        vBoss3Room.setExit("east", vLobby);
 
         // item
         Item vTest = new Item("TestItem", 10, 5, "This is a test item"); // Name, price, weight, desc

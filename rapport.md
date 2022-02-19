@@ -322,7 +322,7 @@ public class Room
         this.aExits = new HashMap<String,Room>();
     }
 
-    public void setExits(final String pDirec, Room pNeighbor){
+    public void setExit(final String pDirec, Room pNeighbor){
         aExits.put(pDirec, pNeighbor);
     }
 
@@ -350,18 +350,23 @@ public class Game
 
         [...]
 
-        vOutside.setExits("east", vTheatre);
-        vOutside.setExits("south", vLab);
-        vOutside.setExits("west", vPub);
+        vOutside.setExit("north", vLobby);
 
-        vTheatre.setExits("west", vOutside);
+        vCatacombs.setExit("west", vBoss2Room);
 
-        vPub.setExits("east", vOutside);
+        vLobby.setExit("north", vBoss1Room);
+        vLobby.setExit("east", vBoss2Room);
+        vLobby.setExit("west", vBoss3Room);
 
-        vLab.setExits("north", vOutside);
-        vLab.setExits("east", vOffice);
+        vTreasure.setExit("east", vBoss3Room);
 
-        vOffice.setExits("west", vLab);
+        vBoss1Room.setExit("south", vLobby);
+
+        vBoss2Room.setExit("east", vCatacombs);
+        vBoss2Room.setExit("west", vLobby);
+
+        vBoss3Room.setExit("west", vTreasure);
+        vBoss3Room.setExit("east", vLobby);
 
         [...]
     }

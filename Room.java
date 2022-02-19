@@ -82,7 +82,7 @@ public class Room {
      * @param pDirection
      * @param pNeighbor
      */
-    public void setExits(final String pDirection, Room pNeighbor) {
+    public void setExit(final String pDirection, Room pNeighbor) {
         aExits.put(pDirection, pNeighbor);
     }
 
