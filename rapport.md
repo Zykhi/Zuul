@@ -1008,7 +1008,7 @@ La commande fonctionne très bien pour revenir en arrière lorsqu'on se déplace
 else if (vCommandWord.equals("back")) {
     if (vCommand.hasSecondWord()) {
         this.aGui.println("it's impossible");;
-    }if(aPreviousRoom == null){ // add this if block to be sure previous room is not null
+    }else if(aPreviousRoom == null){ // add this if block to be sure previous room is not null
         this.aGui.println("you cant do that"); // send to the player it's impossible to back here because it's the first room
     }else {
         this.back();
