@@ -1014,3 +1014,7 @@ else if (vCommandWord.equals("back")) {
         this.back();
     }
 ```
+
+#### Exercice 7.25 
+
+Quand on se déplace plusieurs fois et qu'on fait la commande `back` autant de fois. Cela nous ramène uniquement dans la salle précédente et pas a la première salle du jeu.
