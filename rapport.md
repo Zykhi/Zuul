@@ -885,7 +885,7 @@ private void lookItem(final Command pCommand){
     if(vItem == null){
         this.aGui.println("I dont know what do you mean");
     }else{
-        this.aGui.println(vItem.getDescription());
+        this.aGui.println(vItem.toString());
     }
 }
 ```
