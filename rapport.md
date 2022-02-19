@@ -1000,3 +1000,17 @@ else if (vCommandWord.equals("back")) {
     }
 }
 ```
+
+#### Exercice 7.24
+
+La commande fonctionne très bien pour revenir en arrière lorsqu'on se déplace une fois, si on ajoute un second mot le programme reagit correctement et nous affiche qu'il est impossible de combiner un autre mot avec `back`. Si on utilise `back` sans avoir bouger le programme crash. Pour corriger cela nous devons apporter quelques modifications dans la méthode `interpretCommand()`
+```java
+else if (vCommandWord.equals("back")) {
+    if (vCommand.hasSecondWord()) {
+        this.aGui.println("it's impossible");;
+    }if(aPreviousRoom == null){ // add this if block to be sure previous room is not null
+        this.aGui.println("you cant do that"); // send to the player it's impossible to back here because it's the first room
+    }else {
+        this.back();
+    }
+```
