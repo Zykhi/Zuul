@@ -104,6 +104,17 @@ public class Room {
     // ITEM
 
     /**
+     * this Item get name
+     * 
+     * @param pName
+     * @return the name of the item
+     *         If there is no item with this name, return null.
+     */
+    public Item getItemName(String pName) {
+        return aItems.get(pName);
+    }
+
+    /**
      * Define an item from this room.
      * 
      * @param pName

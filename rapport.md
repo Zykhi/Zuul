@@ -848,13 +848,57 @@ public String getLongDescription() {
 
 #### Exercice 7.21
 
-Il faut que la classe `Item` produise la chaine de caractère qui décris l'objet, c'est pour cela que l'on doit effectuer quelques modifications. Nous redéfinissons la fonction `toString()` dans la classe `Item` 
+Il faut que la classe `Item` produise la chaine de caractère qui décris l'objet, c'est pour cela que l'on doit effectuer quelques modifications. Nous redéfinissons la fonction `toString()` dans la classe `Item`
+
 ```java
 @Override public String toString(){
-    return this.aName + 
-            ", price : "+ this.aPrice + 
+    return this.aName +
+            ", price : "+ this.aPrice +
             ", weight : " +this.aWeight + "kg, " +
             this.aDescription;
 }
 ```
 
+#### Exercice 7.21.1
+
+Pour faciliter la recupération du nom nous allons créer un acceceur ressemblant à `getExit()`
+
+```java
+public Item getItemName(String pName) {
+    return aItems.get(pName);
+}
+```
+
+Pour regarder un objet nous allons créer une méthode `lookItem()` dans la classe `GameEngine`
+
+```java
+private void lookItem(final Command pCommand){
+    String vItemName = pCommand.getSecondWord();
+
+    Item vItem = aCurrentRoom.getItemName(vItemName);
+
+    if(vItem == null){
+        this.aGui.println("I dont know what do you mean");
+    }else{
+        this.aGui.println(vItem.getDescription());
+    }
+}
+```
+
+Puis nous allons remplacer
+
+```java
+else if (vCommandWord.equals("look")) {
+    if (vCommand.hasSecondWord()) {
+        this.aGui.println("I don't know how to look here");
+    }
+```
+
+Par
+
+```java
+else if (vCommandWord.equals("look")) {
+    if (vCommand.hasSecondWord()) {
+        this.lookItem(vCommand);
+    }
+```
