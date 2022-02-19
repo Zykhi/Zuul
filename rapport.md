@@ -902,3 +902,7 @@ else if (vCommandWord.equals("look")) {
         this.lookItem(vCommand);
     }
 ```
+
+#### Exercice 7.22
+
+La possibilité d'ajouter plusieurs objets avait déja été implémenté pendant les exercices précedents. La méthode qui permettait de placer les objets à juste changer de nom pour être conforme au cahier des charges, passant de `setItems()` à `addItem()`

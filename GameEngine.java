@@ -80,7 +80,7 @@ public class GameEngine {
 
         // item
         Item vTest = new Item("TestItem", 10, 5, "This is a test item"); // Name, price, weight, desc
-        vOutside.setItems("Test", vTest);
+        vOutside.addItem("Test", vTest);
 
         this.aCurrentRoom = vOutside;
     }

@@ -120,7 +120,7 @@ public class Room {
      * @param pName
      * @param pItem
      */
-    public void setItems(final String pName, final Item pItem) {
+    public void addItem(final String pName, final Item pItem) {
         aItems.put(pName, pItem);
     }
 
