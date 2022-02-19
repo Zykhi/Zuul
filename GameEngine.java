@@ -158,7 +158,7 @@ public class GameEngine {
         } else if (vCommandWord.equals("eat")) {
             this.eat();
         } else if (vCommandWord.equals("back")) {
-                this.back(vCommand);
+            this.back(vCommand);
         }
     }
 
@@ -196,6 +196,11 @@ public class GameEngine {
         }
     }
 
+    /**
+     * This method print the description of the item passed as a param
+     * 
+     * @param pCommand
+     */
     private void lookItem(final Command pCommand) {
         String vItemName = pCommand.getSecondWord();
 
@@ -227,16 +232,25 @@ public class GameEngine {
         printLocationInfo();
     }
 
+    /**
+     * This method is just a simple command
+     */
     private void eat() {
         this.aGui.println("You have eaten now and you are not hungry any more.");
     }
 
-    private void back(Command pCommand){
+    /**
+     * This method is to return to the previous room to the starting room
+     * 
+     * @param pCommand
+     */
+    private void back(Command pCommand) {
         if (pCommand.hasSecondWord()) {
-            this.aGui.println("it's impossible");;
-        }else if(aPreviousRooms.empty()){
+            this.aGui.println("it's impossible");
+            ;
+        } else if (aPreviousRooms.empty()) {
             this.aGui.println("you cant back");
-        }else {
+        } else {
             Room vPreviousRoom = aPreviousRooms.pop();
             aCurrentRoom = vPreviousRoom;
             printLocationInfo();

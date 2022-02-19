@@ -139,6 +139,12 @@ public class Room {
         return vReturnString;
     }
 
+    /**
+     * This boolean return if a room got item
+     * 
+     * @return true if there is no item in the room
+     *         false if there is item(s) in the room
+     */
     public boolean isEmpty() {
         return this.aItems.isEmpty();
     }

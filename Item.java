@@ -1,9 +1,23 @@
+/**
+ * This class implement item for the game
+ * 
+ * @author C.Diouy
+ * @version 2022.02.19
+ */
 public class Item {
     private String aName;
     private double aPrice;
     private double aWeight;
     private String aDescription;
 
+    /**
+     * Create an item with a name, a price, a weight and a description
+     * 
+     * @param pName
+     * @param pPrice
+     * @param pWeight
+     * @param pDescription
+     */
     public Item(final String pName, final double pPrice, final double pWeight, final String pDescription) {
         this.aName = pName;
         this.aPrice = pPrice;
@@ -11,10 +25,14 @@ public class Item {
         this.aDescription = pDescription;
     }
 
-    @Override public String toString(){
-        return this.aName + 
-                ", price : "+ this.aPrice + 
-                ", weight : " +this.aWeight + "kg, " +
+    /**
+     * Redefine toString()
+     */
+    @Override
+    public String toString() {
+        return this.aName +
+                ", price : " + this.aPrice +
+                ", weight : " + this.aWeight + "kg, " +
                 this.aDescription;
     }
 

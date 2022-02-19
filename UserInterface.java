@@ -22,7 +22,7 @@ import javax.swing.JButton;
  * area, a text output area and an optional image.
  * 
  * @author Michael Kolling
- * @version 1.0 (Jan 2003) DB edited (2019)
+ * @version 1.0 (Jan 2003) DB edited (2019) CD edited (2022)
  */
 public class UserInterface implements ActionListener {
     private GameEngine aEngine;
