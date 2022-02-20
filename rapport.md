@@ -1149,7 +1149,7 @@ look Warmog's_Armor
 LastLine
 ```
 
-allCommand.txt
+allCommands.txt
 
 ```txt
 help
