@@ -877,8 +877,8 @@ public Item getItemName(String pName) {
 Pour regarder un objet nous allons créer une méthode `lookItem()` dans la classe `GameEngine`
 
 ```java
-private void lookItem(final Command pCommand){
-    String vItemName = pCommand.getSecondWord();
+private void lookItem(final Command pItem){
+    String vItemName = pItem.getSecondWord();
 
     Item vItem = aCurrentRoom.getItemName(vItemName);
 
@@ -1081,3 +1081,133 @@ else if (vCommandWord.equals("back")) {
 ```
 
 Nous remplaçons tout le gros bloc par un appel à la méthode
+
+#### Exercice 7.27
+
+Ce qui serait pertinant de tester est les commandes utilisateur, se deplacer dans toutes les salles, essayer de regarder dans les pieces voir si tout s'affiche bien, regarder les objets, utiliser la commande `back` pour voir si elle réagit bien dans toutes les circonstances.
+
+#### Exercice 7.28
+
+Pour automatiser les textes il serait interressant de créer un fichier comportant toutes les commandes à tester. La classe `GameEngine` devra être modifiée pour inséré la possiblité d'avoir un script de test. Il faudra aussi ajouté dans `CommandWord` un nouveau mot comme `test` par exemple, qui acceptera un second mot qui pourrait être le nom du fichier test
+
+#### Exercice 7.28.1
+
+Nous devons donc implémenter une commande de test, pour se faire nous ajoutons une nouvelle commande dans la classe `CommandWords`
+
+```java
+public CommandWords() {
+    this.aValidCommands = new String[7];
+
+    [...]
+
+    this.aValidCommands[6] = "test";
+}
+```
+
+Ensuite nous créons notre méthode `test()` qui prendra en paramètre un second mot qui sera le nom du fichier.
+
+```java
+private void test(Command pFile) {
+    if (pFile.hasSecondWord()) {
+        try{
+            String vFile = pFile.getSecondWord();
+            Scanner vScanner = new Scanner(new File(vFile+".txt"));
+            String vCommand = vScanner.nextLine();
+            while (vScanner.hasNextLine()) {
+                interpretCommand(vCommand);
+                vCommand = vScanner.nextLine();
+            }
+        }catch(final FileNotFoundException pE){
+            this.aGui.println(pE.getMessage());
+        }
+    } else {
+        this.aGui.println("This command need a second word");
+    }
+}
+```
+
+L'utilisation d'un `try` et `catch()` permet de recupérer l'erreur que cela génére et de la mettre dans un message et ainsi éviter un bug du programme, ce qui serait une aubaine pour une commande de test.
+Pour finir il faut ajouter la commande dans `interpretCommand()`
+
+```java
+else if (vCommandWord.equals("test")) {
+    this.test(vCommand);
+}
+```
+
+#### Exercice 7.28.2
+
+Création de 3 fichers de test
+
+court.txt
+
+```txt
+go down
+look
+go north
+look Warmog's_Armor
+LastLine
+```
+
+allCommand.txt
+
+```txt
+help
+back
+back back
+eat
+azerty
+look
+look Test
+look Test2
+go up
+go down
+go up
+back back
+look item
+go north
+look Warmog's_Armor
+go south
+go east
+look Blade_Of_The_Ruined_King
+go east
+look Wedding_ring
+go west
+go west
+go west
+look Frostfire_Gauntlet
+go west
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+quit
+LastLine
+```
+
+fastEnd.txt
+
+```txt
+go down
+go north
+look Warmog's_Armor
+go south
+go east
+look Blade_Of_The_Ruined_King
+go east
+look Wedding_ring
+go west
+go west
+go west
+look Frostfire_Gauntlet
+go east
+LastLine
+```
+
+l'ajout d'une ligne `LastLine` a été nécessaire pour le bon fonctionnement, car la boucle s'effectue tant qu'il y a une encore une ligne, ce qui passait la dernière commande a éxécuter

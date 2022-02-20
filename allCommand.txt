@@ -1,0 +1,37 @@
+help
+back
+back back
+eat
+azerty
+look
+look Test
+look Test2
+go up
+go down
+go up
+back back
+look item
+go north
+look Warmog's_Armor
+go south
+go east
+look Blade_Of_The_Ruined_King
+go east
+look Wedding_ring
+go west
+go west
+go west
+look Frostfire_Gauntlet
+go west
+back
+back
+back
+back
+back
+back
+back
+back
+back
+back
+quit
+LastLine

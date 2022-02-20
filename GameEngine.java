@@ -1,4 +1,7 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.Scanner;
 import java.util.Stack;
 
 /**
@@ -161,6 +164,8 @@ public class GameEngine {
             this.eat();
         } else if (vCommandWord.equals("back")) {
             this.back(vCommand);
+        } else if (vCommandWord.equals("test")) {
+            this.test(vCommand);
         }
     }
 
@@ -178,17 +183,17 @@ public class GameEngine {
      * Try to go to one direction. If there is an exit, enter the new
      * room, otherwise print an error message.
      * 
-     * @param pCommand use for check if there are second word      
+     * @param pDirection use for check if there are second word
      */
-    private void goRoom(final Command pCommand) {
-        if (!pCommand.hasSecondWord()) {
+    private void goRoom(final Command pDirection) {
+        if (!pDirection.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
             this.aGui.println("Go where?");
             return;
         }
         aPreviousRooms.push(aCurrentRoom);
 
-        String vDirection = pCommand.getSecondWord();
+        String vDirection = pDirection.getSecondWord();
 
         // Try to leave current room.
         Room vNextRoom = this.aCurrentRoom.getExit(vDirection);
@@ -198,23 +203,6 @@ public class GameEngine {
         else {
             this.aCurrentRoom = vNextRoom;
             printLocationInfo();
-        }
-    }
-
-    /**
-     * This method print the description of the item passed as a param
-     * 
-     * @param pCommand to get the item name
-     */
-    private void lookItem(final Command pCommand) {
-        String vItemName = pCommand.getSecondWord();
-
-        Item vItem = aCurrentRoom.getItemName(vItemName);
-
-        if (vItem == null) {
-            this.aGui.println("I dont know what do you mean");
-        } else {
-            this.aGui.println(vItem.toString());
         }
     }
 
@@ -235,6 +223,23 @@ public class GameEngine {
      */
     private void look() {
         printLocationInfo();
+    }
+
+    /**
+     * This method print the description of the item passed as a param
+     * 
+     * @param pItem to get the item name
+     */
+    private void lookItem(final Command pItem) {
+        String vItemName = pItem.getSecondWord();
+
+        Item vItem = aCurrentRoom.getItemName(vItemName);
+
+        if (vItem == null) {
+            this.aGui.println("I dont know what do you mean");
+        } else {
+            this.aGui.println(vItem.toString());
+        }
     }
 
     /**
@@ -259,6 +264,28 @@ public class GameEngine {
             Room vPreviousRoom = aPreviousRooms.pop();
             aCurrentRoom = vPreviousRoom;
             printLocationInfo();
+        }
+    }
+
+    /**
+     * 
+     * @param pFile
+     */
+    private void test(Command pFile) {
+        if (pFile.hasSecondWord()) {
+            try {
+                String vFile = pFile.getSecondWord();
+                Scanner vScanner = new Scanner(new File(vFile + ".txt"));
+                String vCommand = vScanner.nextLine();
+                while (vScanner.hasNextLine()) {
+                    interpretCommand(vCommand);
+                    vCommand = vScanner.nextLine();
+                }
+            } catch (final FileNotFoundException pE) {
+                this.aGui.println(pE.getMessage());
+            }
+        } else {
+            this.aGui.println("This command need a second word");
         }
     }
 }// Game

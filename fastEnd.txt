@@ -1,0 +1,14 @@
+go down
+go north
+look Warmog's_Armor
+go south
+go east
+look Blade_Of_The_Ruined_King
+go east
+look Wedding_ring
+go west
+go west
+go west
+look Frostfire_Gauntlet
+go east
+LastLine
