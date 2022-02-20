@@ -125,6 +125,10 @@ public class Room {
         aItems.put(pName, pItem);
     }
 
+    public void removeItem(final String pName) {
+        this.aItems.remove(pName);
+    }
+
     /**
      * This String get all the item in the String
      * 
@@ -158,5 +162,6 @@ public class Room {
     public String getImageName() {
         return this.aImageName;
     }
+
 
 } // Room

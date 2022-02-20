@@ -39,6 +39,7 @@ public class GameEngine {
      */
     public void setGUI(final UserInterface pUserInterface) {
         this.aGui = pUserInterface;
+        this.aPlayer.setGUI(pUserInterface);
         this.printWelcome();
     }
 
@@ -117,18 +118,7 @@ public class GameEngine {
         this.aGui.println("Welcome to Zuul GOTY Edition !");
         this.aGui.println("Zuul GOTY Edition is a new, incredibly and fantastic adventure game.");
         this.aGui.println("Type 'help' if you need help.");
-        printLocationInfo();
-    }
-
-    /**
-     * This method print the info of the room with the exit when you enter on it
-     */
-    private void printLocationInfo() {
-        this.aGui.println(aPlayer.getCurrentRoom().getLongDescription()); // was before
-                                                                          // aCurrentRoom.getLongDescription()
-        if (this.aPlayer.getCurrentRoom().getImageName() != null) { // was before aCurrentRoom.getImageName()
-            this.aGui.showImage(this.aPlayer.getCurrentRoom().getImageName()); // was before aCurrentRoom.getImageName()
-        }
+        this.aPlayer.printLocationInfo();
     }
 
     /**
@@ -147,9 +137,9 @@ public class GameEngine {
         try {
             String vCommandWord = vCommand.getCommandWord();
             if (vCommandWord.equals("help")) {
-                this.printHelp();
+                this.aPlayer.printHelp();
             } else if (vCommandWord.equals("go")) {
-                this.goRoom(vCommand);
+                this.aPlayer.goRoom(vCommand);
             } else if (vCommandWord.equals("quit")) {
                 if (vCommand.hasSecondWord()) {
                     this.aGui.println("Quit what?");
@@ -157,21 +147,21 @@ public class GameEngine {
                     this.endGame();
                 }
             } else if (vCommandWord.equals("look")) {
-                if (vCommand.hasSecondWord()) {
-                    this.lookItem(vCommand);
-                } else {
-                    this.look();
-                }
+                this.aPlayer.look(vCommand);
             } else if (vCommandWord.equals("eat")) {
-                this.eat();
+                this.aPlayer.eat();
             } else if (vCommandWord.equals("back")) {
-                this.back(vCommand);
+                this.aPlayer.back(vCommand);
             } else if (vCommandWord.equals("test")) {
                 this.test(vCommand);
+            } else if (vCommandWord.equals("take")) {
+                this.aPlayer.take(vCommand);
+            } else if (vCommandWord.equals("drop")) {
+                this.aPlayer.drop(vCommand);
             }
         } catch (Exception pE) {
             // use try catch to avoid error
-            //System.out.println(pE.getMessage());
+            // System.out.println(pE.getMessage());
         }
     }
 
@@ -181,95 +171,6 @@ public class GameEngine {
     private void endGame() {
         this.aGui.println("Thank you for playing.  Good bye.");
         this.aGui.enable(false);
-    }
-
-    // implementations of user commands:
-
-    /**
-     * Try to go to one direction. If there is an exit, enter the new
-     * room, otherwise print an error message.
-     * 
-     * @param pDirection use for check if there are second word
-     */
-    private void goRoom(final Command pDirection) {
-        if (!pDirection.hasSecondWord()) {
-            // if there is no second word, we don't know where to go...
-            this.aGui.println("Go where?");
-            return;
-        }
-        aPlayer.getPreviousRooms().push(aPlayer.getCurrentRoom());
-
-        String vDirection = pDirection.getSecondWord();
-
-        // Try to leave current room.
-        Room vNextRoom = this.aPlayer.getCurrentRoom().getExit(vDirection);
-
-        if (vNextRoom == null)
-            this.aGui.println("There is no door!");
-        else {
-            this.aPlayer.setRoom(vNextRoom);
-            printLocationInfo();
-        }
-    }
-
-    /**
-     * Print out some help information.
-     * Here we print some stupid, cryptic message and a list of the
-     * command words.
-     */
-    private void printHelp() {
-        this.aGui.println("You are lost. You leave the fight.");
-        this.aGui.println("You wander around the dungeon.");
-        this.aGui.println("");
-        this.aGui.println("Your command words are : " + aParser.getCommandString());
-    }
-
-    /**
-     * This method print the info of the room with the exit when you wrote in a chat
-     */
-    private void look() {
-        printLocationInfo();
-    }
-
-    /**
-     * This method print the description of the item passed as a param
-     * 
-     * @param pItem to get the item name
-     */
-    private void lookItem(final Command pItem) {
-        String vItemName = pItem.getSecondWord();
-
-        Item vItem = aPlayer.getCurrentRoom().getItemName(vItemName);
-
-        if (vItem == null) {
-            this.aGui.println("I dont know what do you mean");
-        } else {
-            this.aGui.println(vItem.toString());
-        }
-    }
-
-    /**
-     * This method is just a simple command
-     */
-    private void eat() {
-        this.aGui.println("You have eaten now and you are not hungry any more.");
-    }
-
-    /**
-     * This method is to return to the previous room to the starting room
-     * 
-     * @param pCommand to be sure there is no second word
-     */
-    private void back(Command pCommand) {
-        if (pCommand.hasSecondWord()) {
-            this.aGui.println("it's impossible");
-        } else if (aPlayer.getPreviousRooms().empty()) { // was aPreviousRooms.empty()
-            this.aGui.println("you cant back");
-        } else {
-            Room vPreviousRoom = aPlayer.getPreviousRooms().pop(); // was aPreviousRooms.pop()
-            aPlayer.setRoom(vPreviousRoom); // was aCurrentRoom = vPreviousRoom
-            printLocationInfo();
-        }
     }
 
     /**

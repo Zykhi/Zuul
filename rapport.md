@@ -1248,7 +1248,7 @@ try {
 
 #### Exercice 7.29
 
-Création d'une nouvelle classe `Player` avec 3 attributs, la salle actuelle, la pile des salles précédentes et un nom pour le joueur
+Création d'une nouvelle classe `Player`. Nous prenons toutes les commandes associé au joueur et nous les mettons dans la classe, car c'est le joueur qui doit utiliser les commandes
 
 ```java
 import java.util.Stack;
@@ -1257,11 +1257,14 @@ public class Player {
     private Room aCurrentRoom;
     private Stack<Room> aPreviousRooms;
     private String aName;
+    private UserInterface aGui;
+    private Parser aParser;
 
     public Player(final Room pCurrentRoom, final String pName) {
         this.aCurrentRoom = pCurrentRoom;
         this.aName = pName;
         this.aPreviousRooms = new Stack<Room>();
+        this.aParser = new Parser();
     }
 
     public Room getCurrentRoom() {
@@ -1276,23 +1279,142 @@ public class Player {
         return this.aPreviousRooms;
     }
 
+    /**
+     * GUI Constructor
+     *
+     * @param pGui UserInterface
+     */
+    public void setGUI(UserInterface pGui) {
+        this.aGui = pGui;
+    }
+
+    // User Command
+
+    /**
+     * Print out some help information.
+     * Here we print some stupid, cryptic message and a list of the
+     * command words.
+     */
+    protected void printHelp() {
+        this.aGui.println("You are lost. You leave the fight.");
+        this.aGui.println("You wander around the dungeon.");
+        this.aGui.println("");
+        this.aGui.println("Your command words are : " + aParser.getCommandString());
+    }
+
+    /**
+     * Try to go to one direction. If there is an exit, enter the new
+     * room, otherwise print an error message.
+     *
+     * @param pDirection use for check if there are second word
+     */
+    protected void goRoom(final Command pDirection) {
+        if (!pDirection.hasSecondWord()) {
+            // if there is no second word, we don't know where to go...
+            this.aGui.println("Go where?");
+            return;
+        }
+        this.getPreviousRooms().push(this.getCurrentRoom());
+
+        String vDirection = pDirection.getSecondWord();
+
+        // Try to leave current room.
+        Room vNextRoom = this.getCurrentRoom().getExit(vDirection);
+
+        if (vNextRoom == null)
+            this.aGui.println("There is no door!");
+        else {
+            this.setRoom(vNextRoom);
+            printLocationInfo();
+        }
+    }
+
+    /**
+     * This method print the info of the room with the exit when you wrote in a chat
+     */
+    protected void look(final Command pCommand) {
+        if (pCommand.hasSecondWord()) {
+            this.lookItem(pCommand);
+        } else {
+            printLocationInfo();
+        }
+    }
+
+    /**
+     * This method print the description of the item passed as a param
+     *
+     * @param pItem to get the item name
+     */
+    protected void lookItem(final Command pItemName) {
+        String vItemName = pItemName.getSecondWord();
+
+        Item vItem = this.getCurrentRoom().getItemName(vItemName);
+
+        if (vItem == null) {
+            this.aGui.println("I dont know what do you mean");
+        } else {
+            this.aGui.println(vItem.toString());
+        }
+    }
+
+    /**
+     * This method is just a simple command
+     */
+    protected void eat() {
+        this.aGui.println("You have eaten now and you are not hungry any more.");
+    }
+
+    /**
+     * This method is to return to the previous room to the starting room
+     *
+     * @param pCommand to be sure there is no second word
+     */
+    protected void back(final Command pCommand) {
+        if (pCommand.hasSecondWord()) {
+            this.aGui.println("it's impossible");
+        } else if (this.getPreviousRooms().empty()) { // was aPreviousRooms.empty()
+            this.aGui.println("you cant back");
+        } else {
+            Room vPreviousRoom = this.getPreviousRooms().pop(); // was aPreviousRooms.pop()
+            this.setRoom(vPreviousRoom); // was aCurrentRoom = vPreviousRoom
+            printLocationInfo();
+        }
+    }
+
+    /**
+     * This method print the info of the room with the exit when you enter on it
+     */
+    protected void printLocationInfo() {
+        this.aGui.println(this.getCurrentRoom().getLongDescription());
+        if (this.getCurrentRoom().getImageName() != null) {
+            this.aGui.showImage(this.getCurrentRoom().getImageName());
+        }
+    }
+
 }
 ```
 
-Nous devons ajouter des getters et des setters pour simplifier l'implémentation dans la classe `GameEngine`
-Les modifications dans la classe `GameEngine` sont donc les suivantes
+Nous devons déclarer le joueur dans la classe `GameEngine`
 
 ```java
 private Player aPlayer;
 ```
 
-Nous ajoutons un attribut `aPlayer` et nous supprimons donc les attributs `aCurrentRoom` et `aPreviousRooms`
+Puis l'initialiser dans le constructeur
 
 ```java
-this.createPlayer();
+public GameEngine() {
+
+    [...]
+
+    this.createPlayer();
+
+    [...]
+
+}
 ```
 
-Dans le constructeur de la classe `GameEngine` nous ajoutons une nouvelle méthode `createPlayer()`
+Le constructeur fait appelle à la méthode `createPlayer()` ci-dessous
 
 ```java
 private void createPlayer() {
@@ -1300,31 +1422,132 @@ private void createPlayer() {
 }
 ```
 
-C'est une méthode très simple qui initialise le joueur avec sa salle de départ et son nom
+Nous devons aussi initialiser l'interface graphique du joueur
 
 ```java
-private void printLocationInfo() {
-    this.aGui.println(aPlayer.getCurrentRoom().getLongDescription()); // was before aCurrentRoom.getLongDescription()
-    if (this.aPlayer.getCurrentRoom().getImageName() != null) { // was before aCurrentRoom.getImageName()
-        this.aGui.showImage(this.aPlayer.getCurrentRoom().getImageName()); // was before aCurrentRoom.getImageName()
+public void setGUI(.) {
+
+    [...]
+
+    this.aPlayer.setGUI(pUserInterface;
+
+    [...]
+
+}
+```
+
+Les modifications dans la classe `GameEngine` sont principalement dans la méthode `interpretCommand()`
+
+```java
+public void interpretCommand(.) {
+
+    [...]
+
+    try {
+        String vCommandWord = vCommand.getCommandWord();
+        if (vCommandWord.equals("help")) {
+            this.aPlayer.printHelp();
+        } else if (vCommandWord.equals("go")) {
+            this.aPlayer.goRoom(vCommand);
+        } else if (vCommandWord.equals("quit")) {
+            if (vCommand.hasSecondWord()) {
+                this.aGui.println("Quit what?");
+            } else {
+                this.endGame();
+            }
+        } else if (vCommandWord.equals("look")) {
+            this.aPlayer.look(vCommand);
+        } else if (vCommandWord.equals("eat")) {
+            this.aPlayer.eat();
+        } else if (vCommandWord.equals("back")) {
+            this.aPlayer.back(vCommand);
+        } else if (vCommandWord.equals("test")) {
+            this.test(vCommand);
+        }
+    } catch (Exception pE) {
+            // use try catch to avoid error
     }
 }
 ```
 
-Les modifications dans `printLocationInfo()` sont décrites avec des commentaires
+#### Exercice 7.30
+
+Implémentation de deux nouvelles commandes `take` et `drop` pour prendre et lacher des objets, pour se faire, comme d'habitude nous devons les rajouter dans la classe `CommandWords`
 
 ```java
-private void back(Command pCommand) {
-    if (pCommand.hasSecondWord()) {
-        this.aGui.println("it's impossible");
-    } else if (aPlayer.getPreviousRooms().empty()) { //was aPreviousRooms.empty()
-        this.aGui.println("you cant back");
+public CommandWords() {
+    this.aValidCommands = new String[9];
+
+    [...]
+
+    this.aValidCommands[7] = "take";
+    this.aValidCommands[8] = "drop";
+    }
+```
+
+Nous créons les commandes dorénavent dans la classe `Player`. Nous créons une `HashMap aInventory` pour stocker les objets, nous les utilisons depuis le début du projet donc nous avons maintenant aquis certains automatismes
+
+```java
+private HashMap<String, Item> aInventory;
+
+public Player(.) {
+
+    [...]
+
+    this.aInventory = new HashMap<String, Item>();
+}
+```
+
+Nous nous attaquons maintenant à la création des commandes. Les deux sont assez similaire, `take` est l'inverse de `drop` c'est pour cela que les codes se ressemble, nous commençons par créer une `String` et un `Item` pour que ce soit plus simple dans la manipulation de notre `HashMap`. Nous effectuon ensuite les tests pour savoir si il y à bien un deuxième mot puis si l'objet est bien dans la salle pour `take` et si le joueur a bien l'objet pour `drop`. Lorsque les tests sont effectué on peut soit prendre, soit lacher l'objet, Nous utiliserons ici un `StringBuilder` comme vu lors d'un précédent exercice pour généré la chaine de caractère de l'inventaire du joueur puis l'afficher. Pour finir nous retirons l'objet de la salle pour la commande `take` ou de l'inventaire du joueur lorsque celui-ci pose l'objet
+
+```java
+protected void take(final Command pItemName) {
+    String vItemName = pItemName.getSecondWord();
+    Item vItem = this.aCurrentRoom.getItemName(vItemName);
+    if (!pItemName.hasSecondWord()) {
+        this.aGui.println("What do you want to take");
+    } else if (vItem == null) {
+        this.aGui.println("This is not here");
     } else {
-        Room vPreviousRoom = aPlayer.getPreviousRooms().pop(); // was aPreviousRooms.pop()
-        aPlayer.setRoom(vPreviousRoom); // was aCurrentRoom = vPreviousRoom
-        printLocationInfo();
+
+        this.aInventory.put(vItemName, vItem);
+
+        StringBuilder vInventoryBuilder = new StringBuilder( "your inventory : " );
+        Set<String> vKeys = aInventory.keySet();
+        for ( String vS : vKeys )vInventoryBuilder.append( " " + vS );
+        String vInventory = vInventoryBuilder.toString();
+        this.aGui.println(vInventory);
+        this.aCurrentRoom.removeItem(vItemName);
+    }
+}
+
+protected void drop(final Command pItemName) {
+    String vItemName = pItemName.getSecondWord();
+    Item vItem = this.aInventory.get(vItemName);
+    if (!pItemName.hasSecondWord()) {
+        this.aGui.println("What do you want to drop");
+    } else if (vItem == null) {
+        this.aGui.println("You dont have this");
+    } else {
+
+        this.aInventory.remove(vItemName);
+
+        StringBuilder vInventoryBuilder = new StringBuilder( "your inventory : " );
+        Set<String> vKeys = aInventory.keySet();
+        for ( String vS : vKeys )vInventoryBuilder.append( " " + vS );
+        String vInventory = vInventoryBuilder.toString();
+        this.aGui.println(vInventory);
+        this.aCurrentRoom.addItem(vItemName, vItem);
     }
 }
 ```
 
-D'autres modfications semblable ont été effectuées dans la classe `GameEngine`
+Pour finir dans la classe `GameEngine` nous ajoutons les deux nouvelles commande à la méthode `interpretCommand()`
+
+```java
+else if (vCommandWord.equals("take")) {
+    this.aPlayer.take(vCommand);
+} else if (vCommandWord.equals("drop")) {
+    this.aPlayer.drop(vCommand);
+}
+```
