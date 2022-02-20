@@ -1156,7 +1156,6 @@ help
 back
 back back
 eat
-azerty
 look
 look Test
 look Test2
@@ -1211,3 +1210,86 @@ LastLine
 ```
 
 l'ajout d'une ligne `LastLine` a été nécessaire pour le bon fonctionnement, car la boucle s'effectue tant qu'il y a une encore une ligne, ce qui passait la dernière commande a éxécuter
+
+#### Exercice 7.29
+
+Création d'une nouvelle classe `Player` avec 3 attributs, la salle actuelle, la pile des salles précédentes et un nom pour le joueur
+
+```java
+import java.util.Stack;
+
+public class Player {
+    private Room aCurrentRoom;
+    private Stack<Room> aPreviousRooms;
+    private String aName;
+
+    public Player(final Room pCurrentRoom, final String pName) {
+        this.aCurrentRoom = pCurrentRoom;
+        this.aName = pName;
+        this.aPreviousRooms = new Stack<Room>();
+    }
+
+    public Room getCurrentRoom() {
+        return this.aCurrentRoom;
+    }
+
+    public void setRoom(final Room pNextRoom) {
+        this.aCurrentRoom = pNextRoom;
+    }
+
+    public Stack<Room> getPreviousRooms() {
+        return this.aPreviousRooms;
+    }
+
+}
+```
+
+Nous devons ajouter des getters et des setters pour simplifier l'implémentation dans la classe `GameEngine`
+Les modifications dans la classe `GameEngine` sont donc les suivantes
+
+```java
+private Player aPlayer;
+```
+
+Nous ajoutons un attribut `aPlayer` et nous supprimons donc les attributs `aCurrentRoom` et `aPreviousRooms`
+
+```java
+this.createPlayer();
+```
+
+Dans le constructeur de la classe `GameEngine` nous ajoutons une nouvelle méthode `createPlayer()`
+
+```java
+private void createPlayer() {
+    this.aPlayer = new Player(aRooms.get("Outside"), "Edward");
+}
+```
+
+C'est une méthode très simple qui initialise le joueur avec sa salle de départ et son nom
+
+```java
+private void printLocationInfo() {
+    this.aGui.println(aPlayer.getCurrentRoom().getLongDescription()); // was before aCurrentRoom.getLongDescription()
+    if (this.aPlayer.getCurrentRoom().getImageName() != null) { // was before aCurrentRoom.getImageName()
+        this.aGui.showImage(this.aPlayer.getCurrentRoom().getImageName()); // was before aCurrentRoom.getImageName()
+    }
+}
+```
+
+Les modifications dans `printLocationInfo()` sont décrites avec des commentaires
+
+```java
+private void back(Command pCommand) {
+    if (pCommand.hasSecondWord()) {
+        this.aGui.println("it's impossible");
+    } else if (aPlayer.getPreviousRooms().empty()) { //was aPreviousRooms.empty()
+        this.aGui.println("you cant back");
+    } else {
+        Room vPreviousRoom = aPlayer.getPreviousRooms().pop(); // was aPreviousRooms.pop()
+        aPlayer.setRoom(vPreviousRoom); // was aCurrentRoom = vPreviousRoom
+        printLocationInfo();
+    }
+}
+```
+
+D'autres modfications semblable ont été effectuées

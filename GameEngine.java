@@ -2,7 +2,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.Stack;
 
 /**
  * This class is part of the "Zuul GOTY Edition" application.
@@ -19,8 +18,7 @@ import java.util.Stack;
  * @version 2008.03.30 + 2019.09.25 + 2022.02.11
  */
 public class GameEngine {
-    private Room aCurrentRoom;
-    private Stack<Room> aPreviousRooms;
+    private Player aPlayer;
     private Parser aParser;
     private HashMap<String, Room> aRooms;
     private UserInterface aGui;
@@ -30,8 +28,8 @@ public class GameEngine {
      */
     public GameEngine() {
         this.createRooms();
+        this.createPlayer();
         this.aParser = new Parser();
-        this.aPreviousRooms = new Stack<Room>();
     }
 
     /**
@@ -106,9 +104,10 @@ public class GameEngine {
 
         Item vWeddingRing = new Item("Wedding Ring", 0, 0, "This is a wedding ring, it's will be usefull");
         vCatacombs.addItem("Wedding_ring", vWeddingRing);
+    }
 
-        // starting room
-        this.aCurrentRoom = vOutside;
+    private void createPlayer() {
+        this.aPlayer = new Player(aRooms.get("Outside"), "Edward");
     }
 
     /**
@@ -125,9 +124,10 @@ public class GameEngine {
      * This method print the info of the room with the exit when you enter on it
      */
     private void printLocationInfo() {
-        this.aGui.println(aCurrentRoom.getLongDescription());
-        if (this.aCurrentRoom.getImageName() != null) {
-            this.aGui.showImage(this.aCurrentRoom.getImageName());
+        this.aGui.println(aPlayer.getCurrentRoom().getLongDescription()); // was before
+                                                                          // aCurrentRoom.getLongDescription()
+        if (this.aPlayer.getCurrentRoom().getImageName() != null) { // was before aCurrentRoom.getImageName()
+            this.aGui.showImage(this.aPlayer.getCurrentRoom().getImageName()); // was before aCurrentRoom.getImageName()
         }
     }
 
@@ -191,17 +191,17 @@ public class GameEngine {
             this.aGui.println("Go where?");
             return;
         }
-        aPreviousRooms.push(aCurrentRoom);
+        aPlayer.getPreviousRooms().push(aPlayer.getCurrentRoom());
 
         String vDirection = pDirection.getSecondWord();
 
         // Try to leave current room.
-        Room vNextRoom = this.aCurrentRoom.getExit(vDirection);
+        Room vNextRoom = this.aPlayer.getCurrentRoom().getExit(vDirection);
 
         if (vNextRoom == null)
             this.aGui.println("There is no door!");
         else {
-            this.aCurrentRoom = vNextRoom;
+            this.aPlayer.setRoom(vNextRoom);
             printLocationInfo();
         }
     }
@@ -233,7 +233,7 @@ public class GameEngine {
     private void lookItem(final Command pItem) {
         String vItemName = pItem.getSecondWord();
 
-        Item vItem = aCurrentRoom.getItemName(vItemName);
+        Item vItem = aPlayer.getCurrentRoom().getItemName(vItemName);
 
         if (vItem == null) {
             this.aGui.println("I dont know what do you mean");
@@ -257,19 +257,19 @@ public class GameEngine {
     private void back(Command pCommand) {
         if (pCommand.hasSecondWord()) {
             this.aGui.println("it's impossible");
-            ;
-        } else if (aPreviousRooms.empty()) {
+        } else if (aPlayer.getPreviousRooms().empty()) { // was aPreviousRooms.empty()
             this.aGui.println("you cant back");
         } else {
-            Room vPreviousRoom = aPreviousRooms.pop();
-            aCurrentRoom = vPreviousRoom;
+            Room vPreviousRoom = aPlayer.getPreviousRooms().pop(); // was aPreviousRooms.pop()
+            aPlayer.setRoom(vPreviousRoom); // was aCurrentRoom = vPreviousRoom
             printLocationInfo();
         }
     }
 
     /**
+     * This method is used to test game command
      * 
-     * @param pFile
+     * @param pFile test file
      */
     private void test(Command pFile) {
         if (pFile.hasSecondWord()) {
