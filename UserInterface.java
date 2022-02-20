@@ -46,6 +46,8 @@ public class UserInterface implements ActionListener {
 
     /**
      * Print out some text into the text area.
+     * 
+     * @param pText like sysout but for gui, is the text in " "
      */
     public void print(final String pText) {
         this.aLog.append(pText);
@@ -61,6 +63,8 @@ public class UserInterface implements ActionListener {
 
     /**
      * Show an image file in the interface.
+     * 
+     * @param pText like sysout but for gui, is the text in " "
      */
     public void showImage(final String pImageName) {
         String vImagePath = "" + pImageName; // to change the directory
@@ -76,6 +80,9 @@ public class UserInterface implements ActionListener {
 
     /**
      * Enable or disable input in the input field.
+     * 
+     * @param pOnOff true when enable
+     *               false when disable
      */
     public void enable(final boolean pOnOff) {
         this.aEntryField.setEditable(pOnOff); // enable/disable
@@ -128,6 +135,8 @@ public class UserInterface implements ActionListener {
 
     /**
      * Actionlistener interface for entry textfield.
+     * 
+     * @param pE event of actionListener
      */
     public void actionPerformed(final ActionEvent pE) {
         // check the type of action

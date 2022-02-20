@@ -13,10 +13,10 @@ public class Item {
     /**
      * Create an item with a name, a price, a weight and a description
      * 
-     * @param pName
-     * @param pPrice
-     * @param pWeight
-     * @param pDescription
+     * @param pName        name of the item
+     * @param pPrice       price of the item
+     * @param pWeight      weight of the item
+     * @param pDescription description of the item
      */
     public Item(final String pName, final double pPrice, final double pWeight, final String pDescription) {
         this.aName = pName;
@@ -27,6 +27,8 @@ public class Item {
 
     /**
      * Redefine toString()
+     * 
+     * @return a string with all informations about an item
      */
     @Override
     public String toString() {

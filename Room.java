@@ -25,7 +25,8 @@ public class Room {
      * Initially, it has no exits. "aDescription" is something like
      * "in a kitchen" or "in an open court yard".
      * 
-     * @param pDescription
+     * @param pDescription description of the room
+     * @param pImage       image of the room
      */
     public Room(final String pDescription, final String pImage) {
         this.aDescription = pDescription;
@@ -68,7 +69,7 @@ public class Room {
     /**
      * this Room get exit
      * 
-     * @param pDirection
+     * @param pDirection name of the exit
      * @return the room that is reached if we go from this room in direction
      *         "direction". If there is no room in that direction, return null.
      */
@@ -79,8 +80,8 @@ public class Room {
     /**
      * Define an exit from this room.
      * 
-     * @param pDirection
-     * @param pNeighbor
+     * @param pDirection name of the exit
+     * @param pNeighbor  room neighbor of actual room
      */
     public void setExit(final String pDirection, Room pNeighbor) {
         aExits.put(pDirection, pNeighbor);
@@ -106,7 +107,7 @@ public class Room {
     /**
      * this Item get name
      * 
-     * @param pName
+     * @param pName name of the item
      * @return the name of the item
      *         If there is no item with this name, return null.
      */
@@ -117,8 +118,8 @@ public class Room {
     /**
      * Define an item from this room.
      * 
-     * @param pName
-     * @param pItem
+     * @param pName name of the item
+     * @param pItem variable item
      */
     public void addItem(final String pName, final Item pItem) {
         aItems.put(pName, pItem);
@@ -152,7 +153,7 @@ public class Room {
     // IMAGE
 
     /**
-     * Return a string describing the room's image name
+     * @return a string describing the room's image name
      */
     public String getImageName() {
         return this.aImageName;

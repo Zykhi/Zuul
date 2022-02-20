@@ -25,8 +25,8 @@ public class Command {
      * either one (or both) can be null. The command word should be null to
      * indicate that this was a command that is not recognised by this game.
      * 
-     * @param pCommandWord
-     * @param pSecondWord
+     * @param pCommandWord first word like "go" or "help"
+     * @param pSecondWord second word if it's needed like "north"
      */
     public Command(final String pCommandWord, final String pSecondWord) {
         this.aCommandWord = pCommandWord;

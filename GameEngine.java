@@ -31,6 +31,11 @@ public class GameEngine {
         this.aPreviousRooms = new Stack<Room>();
     }
 
+    /**
+     * setup the user interface
+     * 
+     * @param pUserInterface need user interface for gui
+     */
     public void setGUI(final UserInterface pUserInterface) {
         this.aGui = pUserInterface;
         this.printWelcome();
@@ -126,7 +131,8 @@ public class GameEngine {
     /**
      * Given a command, process (that is: execute) the command.
      * 
-     * @param pCommand
+     * @param pCommandLine command who's enter by the player
+     * 
      * @return If this command ends the game, true is returned, otherwise false is
      *         returned.
      */
@@ -162,6 +168,9 @@ public class GameEngine {
         }
     }
 
+    /**
+     * End the game
+     */
     private void endGame() {
         this.aGui.println("Thank you for playing.  Good bye.");
         this.aGui.enable(false);
@@ -173,7 +182,7 @@ public class GameEngine {
      * Try to go to one direction. If there is an exit, enter the new
      * room, otherwise print an error message.
      * 
-     * @param pDirection
+     * @param pDirection direction of the exit who want to take
      */
     private void goRoom(final Command pCommand) {
         if (!pCommand.hasSecondWord()) {
@@ -199,7 +208,7 @@ public class GameEngine {
     /**
      * This method print the description of the item passed as a param
      * 
-     * @param pCommand
+     * @param pCommand to get the item name
      */
     private void lookItem(final Command pCommand) {
         String vItemName = pCommand.getSecondWord();
@@ -242,7 +251,7 @@ public class GameEngine {
     /**
      * This method is to return to the previous room to the starting room
      * 
-     * @param pCommand
+     * @param pCommand to be sure there is no second word
      */
     private void back(Command pCommand) {
         if (pCommand.hasSecondWord()) {

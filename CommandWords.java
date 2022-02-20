@@ -40,8 +40,8 @@ public class CommandWords {
         return false;
     } // isCommand()
 
-    /*
-     * returns a String of all valid commands.
+    /**
+     * @return a String of all valid commands.
      */
     public String getCommandList() {
         StringBuilder sCommands = new StringBuilder();
