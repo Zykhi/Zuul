@@ -1551,3 +1551,7 @@ else if (vCommandWord.equals("take")) {
     this.aPlayer.drop(vCommand);
 }
 ```
+#### Exercice 7.31
+
+L'exercice précédent réponds aussi à cet exercice.
+Les fichier de test sont mis à jour

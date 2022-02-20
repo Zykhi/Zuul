@@ -1,16 +1,23 @@
 help
 back
 back back
+take
+take something
+take Test
+drop Test
 eat
 azerty
 look
 look Test
 look Test2
+take Test2
 go up
 go down
 go up
 back back
+drop Test2
 look item
+look
 go north
 look Warmog's_Armor
 go south
