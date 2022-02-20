@@ -1156,6 +1156,7 @@ help
 back
 back back
 eat
+azerty
 look
 look Test
 look Test2
@@ -1210,6 +1211,40 @@ LastLine
 ```
 
 l'ajout d'une ligne `LastLine` a été nécessaire pour le bon fonctionnement, car la boucle s'effectue tant qu'il y a une encore une ligne, ce qui passait la dernière commande a éxécuter
+
+Découverte d'un bug lorsque nous rentrions une commande inconnue comme `azerty` par exemple. La zone où nous rentrions le texte ne se vidait pas après une commande inconnue, les modifications on donc été effectuées dans la méthode `interpretCommand()`
+
+```java
+try {
+    String vCommandWord = vCommand.getCommandWord();
+    if (vCommandWord.equals("help")){
+        this.printHelp();
+    }else if (vCommandWord.equals("go")){
+        this.goRoom(vCommand);
+    }else if (vCommandWord.equals("quit")) {
+        if (vCommand.hasSecondWord()){
+            this.aGui.println("Quit what?");
+        }else{
+            this.endGame();
+        }
+    } else if (vCommandWord.equals("look")) {
+        if (vCommand.hasSecondWord()) {
+            this.lookItem(vCommand);
+        } else {
+            this.look();
+        }
+    } else if (vCommandWord.equals("eat")) {
+        this.eat();
+    } else if (vCommandWord.equals("back")) {
+        this.back(vCommand);
+    } else if (vCommandWord.equals("test")) {
+        this.test(vCommand);
+    }
+    } catch (Exception pE) {
+        System.out.println(pE.getMessage()); // use try catch to avoid error
+    }
+}
+```
 
 #### Exercice 7.29
 
@@ -1292,4 +1327,4 @@ private void back(Command pCommand) {
 }
 ```
 
-D'autres modfications semblable ont été effectuées
+D'autres modfications semblable ont été effectuées dans la classe `GameEngine`

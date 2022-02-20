@@ -2,6 +2,7 @@ help
 back
 back back
 eat
+azerty
 look
 look Test
 look Test2

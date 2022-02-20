@@ -144,28 +144,34 @@ public class GameEngine {
             this.aGui.println("I don't know what you mean...");
         }
 
-        String vCommandWord = vCommand.getCommandWord();
-        if (vCommandWord.equals("help"))
-            this.printHelp();
-        else if (vCommandWord.equals("go"))
-            this.goRoom(vCommand);
-        else if (vCommandWord.equals("quit")) {
-            if (vCommand.hasSecondWord())
-                this.aGui.println("Quit what?");
-            else
-                this.endGame();
-        } else if (vCommandWord.equals("look")) {
-            if (vCommand.hasSecondWord()) {
-                this.lookItem(vCommand);
-            } else {
-                this.look();
+        try {
+            String vCommandWord = vCommand.getCommandWord();
+            if (vCommandWord.equals("help")) {
+                this.printHelp();
+            } else if (vCommandWord.equals("go")) {
+                this.goRoom(vCommand);
+            } else if (vCommandWord.equals("quit")) {
+                if (vCommand.hasSecondWord()) {
+                    this.aGui.println("Quit what?");
+                } else {
+                    this.endGame();
+                }
+            } else if (vCommandWord.equals("look")) {
+                if (vCommand.hasSecondWord()) {
+                    this.lookItem(vCommand);
+                } else {
+                    this.look();
+                }
+            } else if (vCommandWord.equals("eat")) {
+                this.eat();
+            } else if (vCommandWord.equals("back")) {
+                this.back(vCommand);
+            } else if (vCommandWord.equals("test")) {
+                this.test(vCommand);
             }
-        } else if (vCommandWord.equals("eat")) {
-            this.eat();
-        } else if (vCommandWord.equals("back")) {
-            this.back(vCommand);
-        } else if (vCommandWord.equals("test")) {
-            this.test(vCommand);
+        } catch (Exception pE) {
+            // use try catch to avoid error
+            //System.out.println(pE.getMessage());
         }
     }
 
