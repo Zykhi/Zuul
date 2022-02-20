@@ -37,7 +37,7 @@ public class UserInterface implements ActionListener {
      * (an object processing and executing the game commands) is
      * needed.
      * 
-     * @param gameEngine The GameEngine object implementing the game logic.
+     * @param pGameEngine The GameEngine object implementing the game logic.
      */
     public UserInterface(final GameEngine pGameEngine) {
         this.aEngine = pGameEngine;
@@ -56,6 +56,8 @@ public class UserInterface implements ActionListener {
 
     /**
      * Print out some text into the text area, followed by a line break.
+     * 
+     * @param pText like sysout but for gui, is the text in " "
      */
     public void println(final String pText) {
         this.print(pText + "\n");
@@ -64,7 +66,7 @@ public class UserInterface implements ActionListener {
     /**
      * Show an image file in the interface.
      * 
-     * @param pText like sysout but for gui, is the text in " "
+     * @param pImageName name of the image for the room
      */
     public void showImage(final String pImageName) {
         String vImagePath = "" + pImageName; // to change the directory

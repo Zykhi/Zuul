@@ -132,9 +132,6 @@ public class GameEngine {
      * Given a command, process (that is: execute) the command.
      * 
      * @param pCommandLine command who's enter by the player
-     * 
-     * @return If this command ends the game, true is returned, otherwise false is
-     *         returned.
      */
     public void interpretCommand(final String pCommandLine) {
         this.aGui.println("> " + pCommandLine);
@@ -142,7 +139,6 @@ public class GameEngine {
 
         if (vCommand.isUnknown()) {
             this.aGui.println("I don't know what you mean...");
-            return;
         }
 
         String vCommandWord = vCommand.getCommandWord();
@@ -182,7 +178,7 @@ public class GameEngine {
      * Try to go to one direction. If there is an exit, enter the new
      * room, otherwise print an error message.
      * 
-     * @param pDirection direction of the exit who want to take
+     * @param pCommand use for check if there are second word      
      */
     private void goRoom(final Command pCommand) {
         if (!pCommand.hasSecondWord()) {

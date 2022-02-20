@@ -28,6 +28,8 @@ public class CommandWords {
     /**
      * Check whether a given String is a valid command word.
      * 
+     * @param pString Command line
+     * 
      * @return true if a given string is a valid command,
      *         false if it isn't.
      */
