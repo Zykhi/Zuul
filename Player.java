@@ -1,5 +1,3 @@
-import java.util.HashMap;
-import java.util.Set;
 import java.util.Stack;
 
 public class Player {
@@ -8,14 +6,14 @@ public class Player {
     private String aName;
     private UserInterface aGui;
     private Parser aParser;
-    private HashMap<String, Item> aInventory;
+    private ItemList aInventory;
 
     public Player(final Room pCurrentRoom, final String pName) {
         this.aCurrentRoom = pCurrentRoom;
         this.aName = pName;
         this.aPreviousRooms = new Stack<Room>();
         this.aParser = new Parser();
-        this.aInventory = new HashMap<String, Item>();
+        this.aInventory = new ItemList();
     }
 
     public Room getCurrentRoom() {
@@ -141,36 +139,26 @@ public class Player {
             this.aGui.println("This is not here");
         } else {
 
-            this.aInventory.put(vItemName, vItem);
-
-            StringBuilder vInventoryBuilder = new StringBuilder("your inventory : ");
-            Set<String> vKeys = aInventory.keySet();
-            for (String vS : vKeys)
-                vInventoryBuilder.append(" " + vS);
-            String vInventory = vInventoryBuilder.toString();
-            this.aGui.println(vInventory);
-            this.aCurrentRoom.removeItem(vItemName);
+            this.aInventory.addItem(vItemName, vItem);
+            this.aCurrentRoom.removeItem(vItemName, vItem);
+            this.aGui.println(this.aInventory.showInventory());
+            printLocationInfo();
         }
     }
 
     protected void drop(final Command pItemName) {
         String vItemName = pItemName.getSecondWord();
-        Item vItem = this.aInventory.get(vItemName);
+        Item vItem = this.aInventory.getItemName(vItemName);
         if (!pItemName.hasSecondWord()) {
             this.aGui.println("What do you want to drop");
         } else if (vItem == null) {
             this.aGui.println("You dont have this");
         } else {
 
-            this.aInventory.remove(vItemName);
-
-            StringBuilder vInventoryBuilder = new StringBuilder("your inventory : ");
-            Set<String> vKeys = aInventory.keySet();
-            for (String vS : vKeys)
-                vInventoryBuilder.append(" " + vS);
-            String vInventory = vInventoryBuilder.toString();
-            this.aGui.println(vInventory);
+            this.aInventory.removeItem(vItemName, vItem);
             this.aCurrentRoom.addItem(vItemName, vItem);
+            this.aGui.println(this.aInventory.showInventory());
+            printLocationInfo();
         }
     }
 

@@ -17,7 +17,7 @@ import java.util.Set;
 public class Room {
     private String aDescription;
     private HashMap<String, Room> aExits;
-    private HashMap<String, Item> aItems;
+    private ItemList aItems;
     private String aImageName;
 
     /**
@@ -31,7 +31,7 @@ public class Room {
     public Room(final String pDescription, final String pImage) {
         this.aDescription = pDescription;
         this.aExits = new HashMap<String, Room>();
-        this.aItems = new HashMap<String, Item>();
+        this.aItems = new ItemList();
         this.aImageName = pImage;
     }
 
@@ -53,7 +53,7 @@ public class Room {
      *         Exits: north west
      */
     public String getLongDescription() {
-        if (this.isEmpty()) {
+        if (this.aItems.isEmpty()) {
             return "You are " + aDescription + ".\n" +
                     getExitString() + "\n" +
                     "No item here.";
@@ -94,16 +94,17 @@ public class Room {
      *         "Exits: north west"
      */
     public String getExitString() {
-        String vReturnString = "Exits : ";
+        String vExitString = "Exits : ";
         Set<String> vKeys = aExits.keySet();
         for (String vExit : vKeys) {
-            vReturnString += " " + vExit;
+            vExitString += " " + vExit;
         }
-        return vReturnString;
+        return vExitString;
     }
 
     // ITEM
 
+    
     /**
      * this Item get name
      * 
@@ -112,7 +113,7 @@ public class Room {
      *         If there is no item with this name, return null.
      */
     public Item getItemName(String pName) {
-        return aItems.get(pName);
+        return this.aItems.getItemName(pName);
     }
 
     /**
@@ -122,36 +123,15 @@ public class Room {
      * @param pItem variable item
      */
     public void addItem(final String pName, final Item pItem) {
-        aItems.put(pName, pItem);
+        this.aItems.addItem(pName, pItem);
     }
 
-    public void removeItem(final String pName) {
-        this.aItems.remove(pName);
+    public void removeItem(final String pName, final Item pItem) {
+        this.aItems.removeItem(pName, pItem);
     }
 
-    /**
-     * This String get all the item in the String
-     * 
-     * @return a string describing the room's items, for example
-     *         "Items : sword shield"
-     */
-    public String getItemString() {
-        String vReturnString = "Items :";
-        Set<String> vKeys = aItems.keySet();
-        for (String vItem : vKeys) {
-            vReturnString += " " + vItem;
-        }
-        return vReturnString;
-    }
-
-    /**
-     * This boolean return if a room got item
-     * 
-     * @return true if there is no item in the room
-     *         false if there is item(s) in the room
-     */
-    public boolean isEmpty() {
-        return this.aItems.isEmpty();
+    public String getItemString(){
+        return this.aItems.getItemString();
     }
 
     // IMAGE
@@ -162,6 +142,5 @@ public class Room {
     public String getImageName() {
         return this.aImageName;
     }
-
 
 } // Room
