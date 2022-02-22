@@ -1551,6 +1551,7 @@ else if (vCommandWord.equals("take")) {
     this.aPlayer.drop(vCommand);
 }
 ```
+
 #### Exercice 7.31
 
 L'exercice précédent réponds aussi à cet exercice.
@@ -1560,7 +1561,8 @@ Les fichier de test sont mis à jour
 
 Nous créons ici une nouvelle classe `ItemList` qui permettra de mutualiser la gestion des items
 Dans un premier temps la classe `ItemList`
-```java 
+
+```java
 import java.util.HashMap;
 import java.util.Set;
 
@@ -1577,7 +1579,7 @@ public class ItemList {
 
     /**
      * This String get all the item in the String
-     * 
+     *
      * @return a string describing the room's items, for example
      *         "Items : sword shield"
      */
@@ -1624,7 +1626,9 @@ public class ItemList {
     }
 }
 ```
-Nous changeons donc quelques méthodes dans `Room` et dans `Player` pour faire des appels aux méthodes de la classe `ItemList` tel que `addItem()`, `removeItem()` et `getItemString()` par exemple 
+
+Nous changeons donc quelques méthodes dans `Room` et dans `Player` pour faire des appels aux méthodes de la classe `ItemList` tel que `addItem()`, `removeItem()` et `getItemString()` par exemple
+
 ```java
 public void addItem(final String pName, final Item pItem) {
     this.aItems.addItem(pName, pItem);
@@ -1638,7 +1642,9 @@ public String getItemString(){
     return this.aItems.getItemString();
 }
 ```
+
 Dans la classe `Player` les commandes `take` et `drop` sont modifier pour utiliser la classe `ItemList`
+
 ```java
 protected void take(final Command pItemName) {
     String vItemName = pItemName.getSecondWord();
@@ -1672,3 +1678,92 @@ protected void drop(final Command pItemName) {
     }
 }
 ```
+
+#### Exercice 7.32
+
+Nous ajoutons une contrainte de poids que le joueur peut porter, cela va donc se répercuter sur les objets, nous allons donc commencer par la classe `ItemList`. Nous ajoutons un nouvel attribut `aWeight` et nous l'initialisons dans le constructeur
+
+```java
+private int aWeight;
+
+public ItemList() {
+
+    [...]
+
+    this.aWeight = 0;
+}
+```
+
+Nous créons ensuite un accesseur
+
+```java
+public double getWeight(){
+    return this.aWeight;
+}
+```
+
+Puis nous créeons les méthodes pour gérer le poids du joueur et l'afficher 
+
+```java
+public void addWeight(final double pWeight){
+    this.aWeight += pWeight;
+}
+
+public void removeWeight(final double pWeight){
+    this.aWeight -= pWeight;
+}
+
+public String showWeight(){
+    String vWeightString = "Weight : " + this.getWeight() + "kg / 20kg";
+    return vWeightString;
+}
+```
+
+Viens maintenant le tour de la classe `Player`. Nous ajoutons 1 attribut `aMaxWeight` et nous l'initialisons dans le constructeur à 20. Nous créeons ensuite un getter
+```java
+public int getMaxWeight(){
+    return this.aMaxWeight;
+}
+```
+Puis nous modifions les méthodes `take` et `drop` déjà existante
+```java
+protected void take(.) {
+    
+    [...]
+
+    else if (this.aInventory.getWeight()+vItem.getWeight() > this.aMaxWeight){
+        this.aGui.println("Your inventory is full. Drop some items");
+    } else {
+
+        [...]
+
+        this.aInventory.addWeight(vItem.getWeight());
+        
+        [...]
+
+        this.aGui.println(this.aInventory.showWeight());
+
+        [...]
+    }
+}
+
+protected void drop(final Command pItemName) {
+        
+        [...]
+        
+        else {
+
+            [...]
+
+            this.aInventory.removeWeight(vItem.getWeight());
+
+            [...]
+
+            this.aGui.println(this.aInventory.showWeight());
+            
+            [...]
+        }
+    }
+```
+
+Nous ajoutons une condition pour la commande `take` pour vérifier si l'inventaire n'est pas rempli 

@@ -7,6 +7,7 @@ public class Player {
     private UserInterface aGui;
     private Parser aParser;
     private ItemList aInventory;
+    private int aMaxWeight;
 
     public Player(final Room pCurrentRoom, final String pName) {
         this.aCurrentRoom = pCurrentRoom;
@@ -14,10 +15,15 @@ public class Player {
         this.aPreviousRooms = new Stack<Room>();
         this.aParser = new Parser();
         this.aInventory = new ItemList();
+        this.aMaxWeight = 20;
     }
 
     public Room getCurrentRoom() {
         return this.aCurrentRoom;
+    }
+
+    public int getMaxWeight(){
+        return this.aMaxWeight;
     }
 
     public void setRoom(final Room pNextRoom) {
@@ -137,12 +143,16 @@ public class Player {
             this.aGui.println("What do you want to take");
         } else if (vItem == null) {
             this.aGui.println("This is not here");
+        }else if (this.aInventory.getWeight()+vItem.getWeight() > this.aMaxWeight){
+            this.aGui.println("Your inventory is full. Drop some items");
         } else {
 
             this.aInventory.addItem(vItemName, vItem);
+            this.aInventory.addWeight(vItem.getWeight());
             this.aCurrentRoom.removeItem(vItemName, vItem);
             this.aGui.println(this.aInventory.showInventory());
-            printLocationInfo();
+            this.aGui.println(this.aInventory.showWeight());
+            this.aGui.println(this.aCurrentRoom.getItemString());
         }
     }
 
@@ -156,9 +166,11 @@ public class Player {
         } else {
 
             this.aInventory.removeItem(vItemName, vItem);
+            this.aInventory.removeWeight(vItem.getWeight());
             this.aCurrentRoom.addItem(vItemName, vItem);
             this.aGui.println(this.aInventory.showInventory());
-            printLocationInfo();
+            this.aGui.println(this.aInventory.showWeight());
+            this.aGui.println(this.aCurrentRoom.getItemString());
         }
     }
 
