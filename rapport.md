@@ -1863,3 +1863,7 @@ public String getLongDescription() {
 }
 ```
 ---
+
+#### Exercice 7.34.1
+
+Mise à jour du fichier `allCommands.txt` avec les nouvelles commandes. Le fichier `fastEnd.txt` n'est pas mis à jour car des fonctionnalités ne sont pas implémenter pour finir le jeu actuellement, a voir si c'est le cas dans les prochains exercices du cahier des charges ou si il faudra le faire soit même

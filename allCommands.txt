@@ -3,15 +3,19 @@ back
 back back
 take
 take something
-take Test
-drop Test
 eat
+eat azerty
+eat Test
+take Test
+eat Test
+drop Test
 azerty
 look
 look Test
 look Test2
 take Test2
 go up
+inventory
 go down
 go up
 back back
@@ -20,9 +24,11 @@ look item
 look
 go north
 look Warmog's_Armor
+take Warmog's_Armor
 go south
 go east
 look Blade_Of_The_Ruined_King
+take Blade_Of_The_Ruined_King
 go east
 look Wedding_ring
 go west
@@ -30,6 +36,8 @@ go west
 go west
 look Frostfire_Gauntlet
 go west
+take Cookie
+eat Cookie
 back
 back
 back
@@ -40,5 +48,6 @@ back
 back
 back
 back
+inventory
 quit
 LastLine
