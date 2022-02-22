@@ -1778,7 +1778,7 @@ public CommandWords() {
     [...]
 
     this.aValidCommands[9] = "inventory";
-    }
+}
 ```
 
 Nous créons une méthode `showInventory()`
@@ -1809,3 +1809,57 @@ public void interpretCommand(.) {
 
     }
 ```
+
+#### Exercice 7.34
+
+Modification de la commande `eat` pour rajouté un cookie magique qui double la taille de l'inventaire lorsqu'on le mange
+
+```java
+protected void eat(final Command pCommand) {
+    String vItemName = pCommand.getSecondWord();
+    Item vItem = this.aInventory.getItemName(vItemName);
+    if (!pCommand.hasSecondWord()) {
+        this.aGui.println("what do you want to eat");
+    } else {
+        if (vItemName.equals("Cookie") && this.aInventory.getItemList().contain(vItem)) {
+            this.aMaxWeight *= 2;
+            this.aInventory.removeItem(vItemName, vItem);
+            this.aInventory.removeWeight(vItem.getWeight());
+            this.aGui.println("You eat a cookie");
+            showInventory();
+        } else{
+            this.aGui.println("You cant eat that");
+        }
+    }
+}
+```
+
+Mise a jour du code permettant d'avoir le poids maximum de l'inventaire. Nous ne pouvions le gérer depuis la classe `ItemList` le poids maximum écrit en "dur" de `getWeightString()` est donc supprimé et des modifications sont effectuées dans la classe `Player` sur la méthode `showInventory()`
+
+```java
+protected void showInventory() {
+    this.aGui.println(this.aInventory.getInventoryString());
+    this.aGui.println(this.aInventory.getWeightString() + this.aMaxWeight + "kg");
+}
+```
+---
+Découverte d'un petit problème d'affichage lorsque nous prenions un objet dans une salle et qu'il n'y en avais donc plus. La correction à effectuer est dans la classe `Room` sur les méthodes `getItemString()` et `getLongDescription()`. Au lieu de laisser gérer la seconde methodes pour savoir si il y a un objet dans la pièce où pas, il est plus logique de déléguer cela à la méthode `getItemString`
+
+```java
+public String getItemString() {
+    if (this.aItems.isEmpty()) {
+        return "No item here.";
+    } else {
+        return this.aItems.getItemString();
+    }
+}
+```
+
+```java
+public String getLongDescription() {
+    return "You are " + aDescription + ".\n" +
+            getExitString() + "\n" +
+            getItemString();
+}
+```
+---

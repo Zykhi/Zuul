@@ -105,6 +105,9 @@ public class GameEngine {
 
         Item vWeddingRing = new Item("Wedding Ring", 0, 0, "This is a wedding ring, it's will be usefull");
         vCatacombs.addItem("Wedding_ring", vWeddingRing);
+
+        Item vMagicCookie = new Item("Cookie", 0, 0, "This is a magic cookie");
+        vTreasure.addItem("Cookie", vMagicCookie);
     }
 
     private void createPlayer() {
@@ -149,7 +152,7 @@ public class GameEngine {
             } else if (vCommandWord.equals("look")) {
                 this.aPlayer.look(vCommand);
             } else if (vCommandWord.equals("eat")) {
-                this.aPlayer.eat();
+                this.aPlayer.eat(vCommand);
             } else if (vCommandWord.equals("back")) {
                 this.aPlayer.back(vCommand);
             } else if (vCommandWord.equals("test")) {

@@ -53,15 +53,9 @@ public class Room {
      *         Exits: north west
      */
     public String getLongDescription() {
-        if (this.aItems.isEmpty()) {
-            return "You are " + aDescription + ".\n" +
-                    getExitString() + "\n" +
-                    "No item here.";
-        } else {
-            return "You are " + aDescription + ".\n" +
-                    getExitString() + "\n" +
-                    getItemString();
-        }
+        return "You are " + aDescription + ".\n" +
+                getExitString() + "\n" +
+                getItemString();
     }
 
     // EXIT
@@ -104,7 +98,6 @@ public class Room {
 
     // ITEM
 
-    
     /**
      * this Item get name
      * 
@@ -130,8 +123,12 @@ public class Room {
         this.aItems.removeItem(pName, pItem);
     }
 
-    public String getItemString(){
-        return this.aItems.getItemString();
+    public String getItemString() {
+        if (this.aItems.isEmpty()) {
+            return "No item here.";
+        } else {
+            return this.aItems.getItemString();
+        }
     }
 
     // IMAGE

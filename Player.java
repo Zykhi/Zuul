@@ -115,8 +115,22 @@ public class Player {
     /**
      * This method is just a simple command
      */
-    protected void eat() {
-        this.aGui.println("You have eaten now and you are not hungry any more.");
+    protected void eat(final Command pCommand) {
+        String vItemName = pCommand.getSecondWord();
+        Item vItem = this.aInventory.getItemName(vItemName);
+        if (!pCommand.hasSecondWord()) {
+            this.aGui.println("what do you want to eat");
+        } else {
+            if (vItemName.equals("Cookie") && this.aInventory.getItemList().contain(vItem)) {
+                this.aMaxWeight *= 2;
+                this.aInventory.removeItem(vItemName, vItem);
+                this.aInventory.removeWeight(vItem.getWeight());
+                this.aGui.println("You eat a cookie");
+                showInventory();
+            } else{
+                this.aGui.println("You cant eat that");
+            }
+        }
     }
 
     /**
@@ -174,7 +188,7 @@ public class Player {
 
     protected void showInventory() {
         this.aGui.println(this.aInventory.getInventoryString());
-        this.aGui.println(this.aInventory.getWeightString());
+        this.aGui.println(this.aInventory.getWeightString() + this.aMaxWeight + "kg");
     }
 
     /**

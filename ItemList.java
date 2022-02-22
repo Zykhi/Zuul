@@ -67,8 +67,12 @@ public class ItemList {
     }
 
     public String getWeightString() {
-        String vWeightString = "Weight : " + this.getWeight() + "kg / 20kg";
+        String vWeightString = "Weight : " + this.getWeight() + "kg / ";
         return vWeightString;
+    }
+
+    public boolean contain(final Item pItem) {
+        return this.aItems.containsValue(pItem);
     }
 
     public boolean isEmpty() {
