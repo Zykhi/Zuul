@@ -1617,10 +1617,6 @@ public class ItemList {
         this.aItems.remove(pName, pItem);
     }
 
-    public String showInventory(){
-        return this.getInventoryString();
-    }
-
     public boolean isEmpty(){
         return this.aItems.isEmpty();
     }
@@ -1702,7 +1698,7 @@ public double getWeight(){
 }
 ```
 
-Puis nous créeons les méthodes pour gérer le poids du joueur et l'afficher 
+Puis nous créeons les méthodes pour gérer le poids du joueur et l'afficher
 
 ```java
 public void addWeight(final double pWeight){
@@ -1720,15 +1716,18 @@ public String showWeight(){
 ```
 
 Viens maintenant le tour de la classe `Player`. Nous ajoutons 1 attribut `aMaxWeight` et nous l'initialisons dans le constructeur à 20. Nous créeons ensuite un getter
+
 ```java
 public int getMaxWeight(){
     return this.aMaxWeight;
 }
 ```
+
 Puis nous modifions les méthodes `take` et `drop` déjà existante
+
 ```java
 protected void take(.) {
-    
+
     [...]
 
     else if (this.aInventory.getWeight()+vItem.getWeight() > this.aMaxWeight){
@@ -1738,7 +1737,7 @@ protected void take(.) {
         [...]
 
         this.aInventory.addWeight(vItem.getWeight());
-        
+
         [...]
 
         this.aGui.println(this.aInventory.showWeight());
@@ -1748,9 +1747,9 @@ protected void take(.) {
 }
 
 protected void drop(final Command pItemName) {
-        
+
         [...]
-        
+
         else {
 
             [...]
@@ -1760,10 +1759,53 @@ protected void drop(final Command pItemName) {
             [...]
 
             this.aGui.println(this.aInventory.showWeight());
-            
+
             [...]
         }
     }
 ```
 
-Nous ajoutons une condition pour la commande `take` pour vérifier si l'inventaire n'est pas rempli 
+Nous ajoutons une condition pour la commande `take` pour vérifier si l'inventaire n'est pas rempli
+
+#### Exercice 7.33
+
+Nous ajoutons une nouvelle commande pour voir l'inventaire du joueur
+
+```java
+public CommandWords() {
+    this.aValidCommands = new String[10];
+
+    [...]
+
+    this.aValidCommands[9] = "inventory";
+    }
+```
+
+Nous créons une méthode `showInventory()`
+
+```java
+protected void showInventory() {
+    this.aGui.println(this.aInventory.getInventoryString());
+    this.aGui.println(this.aInventory.getWeightString());
+}
+```
+
+Puis nous ajoutons la commande dans `interpretCommand()`
+
+```java
+public void interpretCommand(.) {
+
+    [...]
+
+    try {
+
+        [...]
+
+        else if (vCommandWord.equals("inventory")) {
+            this.aPlayer.showInventory();
+        }
+
+    [...]
+
+    }
+```

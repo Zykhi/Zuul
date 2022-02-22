@@ -22,7 +22,7 @@ public class Player {
         return this.aCurrentRoom;
     }
 
-    public int getMaxWeight(){
+    public int getMaxWeight() {
         return this.aMaxWeight;
     }
 
@@ -143,15 +143,14 @@ public class Player {
             this.aGui.println("What do you want to take");
         } else if (vItem == null) {
             this.aGui.println("This is not here");
-        }else if (this.aInventory.getWeight()+vItem.getWeight() > this.aMaxWeight){
+        } else if (this.aInventory.getWeight() + vItem.getWeight() > this.aMaxWeight) {
             this.aGui.println("Your inventory is full. Drop some items");
         } else {
 
             this.aInventory.addItem(vItemName, vItem);
             this.aInventory.addWeight(vItem.getWeight());
             this.aCurrentRoom.removeItem(vItemName, vItem);
-            this.aGui.println(this.aInventory.showInventory());
-            this.aGui.println(this.aInventory.showWeight());
+            showInventory();
             this.aGui.println(this.aCurrentRoom.getItemString());
         }
     }
@@ -168,10 +167,14 @@ public class Player {
             this.aInventory.removeItem(vItemName, vItem);
             this.aInventory.removeWeight(vItem.getWeight());
             this.aCurrentRoom.addItem(vItemName, vItem);
-            this.aGui.println(this.aInventory.showInventory());
-            this.aGui.println(this.aInventory.showWeight());
+            showInventory();
             this.aGui.println(this.aCurrentRoom.getItemString());
         }
+    }
+
+    protected void showInventory() {
+        this.aGui.println(this.aInventory.getInventoryString());
+        this.aGui.println(this.aInventory.getWeightString());
     }
 
     /**

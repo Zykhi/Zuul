@@ -158,6 +158,8 @@ public class GameEngine {
                 this.aPlayer.take(vCommand);
             } else if (vCommandWord.equals("drop")) {
                 this.aPlayer.drop(vCommand);
+            } else if (vCommandWord.equals("inventory")) {
+                this.aPlayer.showInventory();
             }
         } catch (Exception pE) {
             // use try catch to avoid error
