@@ -123,6 +123,11 @@ public class Room {
         this.aItems.removeItem(pName, pItem);
     }
 
+    /**
+     * This function get the string of the item in the room
+     * 
+     * @return the item in the room
+     */
     public String getItemString() {
         if (this.aItems.isEmpty()) {
             return "No item here.";
@@ -134,6 +139,8 @@ public class Room {
     // IMAGE
 
     /**
+     * This function get the image
+     * 
      * @return a string describing the room's image name
      */
     public String getImageName() {

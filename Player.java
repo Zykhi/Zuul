@@ -18,18 +18,48 @@ public class Player {
         this.aMaxWeight = 20;
     }
 
+    /**
+     * Get the current room
+     * 
+     * @return the current room
+     */
     public Room getCurrentRoom() {
         return this.aCurrentRoom;
     }
 
+    /**
+     * This function get the max weight of the player can carry
+     * 
+     * @return max weight of inventory
+     */
     public int getMaxWeight() {
         return this.aMaxWeight;
     }
 
+    /**
+     * This function is useless right now
+     * 
+     * @return name of the player
+     */
+    public String getName() {
+        return this.aName;
+    }
+
+    /**
+     * 
+     * This setter set the next room
+     * 
+     * @param pNextRoom next room
+     */
     public void setRoom(final Room pNextRoom) {
         this.aCurrentRoom = pNextRoom;
     }
 
+    /**
+     * This getter get the previous room
+     * 
+     * @return previous room
+     */
     public Stack<Room> getPreviousRooms() {
         return this.aPreviousRooms;
     }
@@ -86,6 +116,10 @@ public class Player {
 
     /**
      * This method print the info of the room with the exit when you wrote in a chat
+     * when there isnt second word, if there is it's print information about item
+     * 
+     * @param pCommand to check if there is second word to change between look and
+     *                 look item
      */
     protected void look(final Command pCommand) {
         if (pCommand.hasSecondWord()) {
@@ -113,7 +147,9 @@ public class Player {
     }
 
     /**
-     * This method is just a simple command
+     * This method is to eat a cookie (for the moment)
+     * 
+     * @param pCommand to be sure there is a second word
      */
     protected void eat(final Command pCommand) {
         String vItemName = pCommand.getSecondWord();
@@ -127,7 +163,7 @@ public class Player {
                 this.aInventory.removeWeight(vItem.getWeight());
                 this.aGui.println("You eat a cookie");
                 showInventory();
-            } else{
+            } else {
                 this.aGui.println("You cant eat that");
             }
         }
@@ -150,6 +186,11 @@ public class Player {
         }
     }
 
+    /**
+     * This method is to take an item
+     * 
+     * @param pItemName name of the item to take
+     */
     protected void take(final Command pItemName) {
         String vItemName = pItemName.getSecondWord();
         Item vItem = this.aCurrentRoom.getItemName(vItemName);
@@ -169,6 +210,11 @@ public class Player {
         }
     }
 
+    /**
+     * This method is to drop an item
+     * 
+     * @param pItemName name of the item to drop
+     */
     protected void drop(final Command pItemName) {
         String vItemName = pItemName.getSecondWord();
         Item vItem = this.aInventory.getItemName(vItemName);
@@ -186,6 +232,9 @@ public class Player {
         }
     }
 
+    /**
+     * This method print all info about inventory of the player
+     */
     protected void showInventory() {
         this.aGui.println(this.aInventory.getInventoryString());
         this.aGui.println(this.aInventory.getWeightString() + this.aMaxWeight + "kg");
