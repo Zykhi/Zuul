@@ -1842,7 +1842,9 @@ protected void showInventory() {
     this.aGui.println(this.aInventory.getWeightString() + this.aMaxWeight + "kg");
 }
 ```
+
 ---
+
 Découverte d'un petit problème d'affichage lorsque nous prenions un objet dans une salle et qu'il n'y en avais donc plus. La correction à effectuer est dans la classe `Room` sur les méthodes `getItemString()` et `getLongDescription()`. Au lieu de laisser gérer la seconde methodes pour savoir si il y a un objet dans la pièce où pas, il est plus logique de déléguer cela à la méthode `getItemString`
 
 ```java
@@ -1862,8 +1864,46 @@ public String getLongDescription() {
             getItemString();
 }
 ```
+
 ---
 
 #### Exercice 7.34.1
 
 Mise à jour du fichier `allCommands.txt` avec les nouvelles commandes. Le fichier `fastEnd.txt` n'est pas mis à jour car des fonctionnalités ne sont pas implémenter pour finir le jeu actuellement, a voir si c'est le cas dans les prochains exercices du cahier des charges ou si il faudra le faire soit même
+
+#### Exercice 7.34.2
+
+Re-génération des deux javadoc, mise à jour des documentations sur le site
+
+---
+
+Refonte de la partie qui gère les items dans la classe `GameEngine` ajout d'une méthode `createItems()` qui s'occupera de créer les objets et de les placer dans les salles
+
+```java
+private void createItems() {
+    Item vTest = new Item("TestItem", 10, 5, "This is a test item"); // Name, price, weight, desc
+    Item vTest2 = new Item("TestItem2", 20, 10, "This is a test item 2"); // Name, price, weight, desc
+    this.aRooms.get("Outside").addItem("Test", vTest);
+    this.aRooms.get("Outside").addItem("Test2", vTest2);
+
+    Item vWarmogArmor = new Item("Warmog's Armor", 0, 40, "This is the armor of Warmog the Giant");
+    this.aRooms.get("Boss1Room").addItem("Warmog's_Armor", vWarmogArmor);
+
+    Item vBOTRK = new Item("Blade Of The Ruined King", 0, 20,
+            "This is the blade of Viego, it weighs nothing compared to its burden");
+    this.aRooms.get("Boss2Room").addItem("Blade_Of_The_Ruined_King", vBOTRK);
+
+    Item vFrostFireGauntlet = new Item("Frostfire Gauntlet", 0, 10, "This is the last artefact of the dungeon");
+    this.aRooms.get("Boss3Room").addItem("Frostfire_Gauntlet", vFrostFireGauntlet);
+
+    Item vWeddingRing = new Item("Wedding Ring", 0, 0, "This is a wedding ring, it's will be usefull");
+    this.aRooms.get("Catacombs").addItem("Wedding_ring", vWeddingRing);
+
+    Item vMagicCookie = new Item("Cookie", 0, 0, "This is a magic cookie");
+    this.aRooms.get("Treasure").addItem("Cookie", vMagicCookie);
+}
+```
+
+Cette méthode est appelé dans le constructeur de la classe `GameEngine`
+
+---

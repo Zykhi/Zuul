@@ -119,6 +119,12 @@ public class Room {
         this.aItems.addItem(pName, pItem);
     }
 
+    /**
+     * This method remove an item from the room
+     * 
+     * @param pName name of the item
+     * @param pItem the item
+     */
     public void removeItem(final String pName, final Item pItem) {
         this.aItems.removeItem(pName, pItem);
     }

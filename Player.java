@@ -132,7 +132,7 @@ public class Player {
     /**
      * This method print the description of the item passed as a param
      * 
-     * @param pItem to get the item name
+     * @param pItemName to get the item name
      */
     protected void lookItem(final Command pItemName) {
         String vItemName = pItemName.getSecondWord();
