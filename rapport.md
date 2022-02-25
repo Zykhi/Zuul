@@ -2121,3 +2121,70 @@ public String getEntryField() {
 ```
 
 Problème détecté lorsque nous utilisons la commande test, la commande rentrée est la bonne mais pas la commande affichée. Une correction est en cours de recherche
+
+#### Exercice 7.35.1
+
+Changement dans la méthode `interpretCommand()`. Nous enlevons les `if`, `else` au profit d'un `switch`
+```java
+public void interpretCommand(final Command pCommandLine) {
+
+        [...]
+
+        try {
+
+            switch (vCommandWord) {
+                case HELP:
+                    this.aPlayer.printHelp();
+                    break;
+
+                case GO:
+                    this.aPlayer.goRoom(pCommandLine);
+                    break;
+
+                case QUIT:
+                    if (pCommandLine.hasSecondWord()) {
+                        this.aGui.println("Quit what?");
+                    } else {
+                        this.endGame();
+                    }
+                    break;
+
+                case LOOK:
+                    this.aPlayer.look(pCommandLine);
+                    break;
+
+                case EAT:
+                    this.aPlayer.eat(pCommandLine);
+                    break;
+
+                case BACK:
+                    this.aPlayer.back(pCommandLine);
+                    break;
+
+                case TEST:
+                    this.test(pCommandLine);
+                    break;
+
+                case TAKE:
+                    this.aPlayer.take(pCommandLine);
+                    break;
+
+                case DROP:
+                    this.aPlayer.drop(pCommandLine);
+                    break;
+
+                case INVENTORY:
+                    this.aPlayer.showInventory();
+                    break;
+
+                default:
+                    this.aGui.println("I don't know what you mean...");
+                    break;
+            }
+
+        } 
+
+        [...]
+
+    }
+```

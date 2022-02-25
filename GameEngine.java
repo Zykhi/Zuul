@@ -144,37 +144,58 @@ public class GameEngine {
 
         CommandWord vCommandWord = pCommandLine.getCommandWord();
 
-        if (pCommandLine.isUnknown()) {
-            this.aGui.println("I don't know what you mean...");
-        }
-
         try {
 
-            if (vCommandWord == CommandWord.HELP) {
-                this.aPlayer.printHelp();
-            } else if (vCommandWord == CommandWord.GO) {
-                this.aPlayer.goRoom(pCommandLine);
-            } else if (vCommandWord == CommandWord.QUIT) {
-                if (pCommandLine.hasSecondWord()) {
-                    this.aGui.println("Quit what?");
-                } else {
-                    this.endGame();
-                }
-            } else if (vCommandWord == CommandWord.LOOK) {
-                this.aPlayer.look(pCommandLine);
-            } else if (vCommandWord == CommandWord.EAT) {
-                this.aPlayer.eat(pCommandLine);
-            } else if (vCommandWord == CommandWord.BACK) {
-                this.aPlayer.back(pCommandLine);
-            } else if (vCommandWord == CommandWord.TEST) {
-                this.test(pCommandLine);
-            } else if (vCommandWord == CommandWord.TAKE) {
-                this.aPlayer.take(pCommandLine);
-            } else if (vCommandWord == CommandWord.DROP) {
-                this.aPlayer.drop(pCommandLine);
-            } else if (vCommandWord == CommandWord.INVENTORY) {
-                this.aPlayer.showInventory();
+            switch (vCommandWord) {
+                case HELP:
+                    this.aPlayer.printHelp();
+                    break;
+
+                case GO:
+                    this.aPlayer.goRoom(pCommandLine);
+                    break;
+
+                case QUIT:
+                    if (pCommandLine.hasSecondWord()) {
+                        this.aGui.println("Quit what?");
+                    } else {
+                        this.endGame();
+                    }
+                    break;
+
+                case LOOK:
+                    this.aPlayer.look(pCommandLine);
+                    break;
+
+                case EAT:
+                    this.aPlayer.eat(pCommandLine);
+                    break;
+
+                case BACK:
+                    this.aPlayer.back(pCommandLine);
+                    break;
+
+                case TEST:
+                    this.test(pCommandLine);
+                    break;
+
+                case TAKE:
+                    this.aPlayer.take(pCommandLine);
+                    break;
+
+                case DROP:
+                    this.aPlayer.drop(pCommandLine);
+                    break;
+
+                case INVENTORY:
+                    this.aPlayer.showInventory();
+                    break;
+
+                default:
+                    this.aGui.println("I don't know what you mean...");
+                    break;
             }
+
         } catch (Exception pE) {
             // use try catch to avoid error
             // System.out.println(pE.getMessage());
