@@ -84,7 +84,7 @@ public class Player {
         this.aGui.println("You are lost. You leave the fight.");
         this.aGui.println("You wander around the dungeon.");
         this.aGui.println("");
-        this.aGui.println("Your command words are : " + aParser.getCommandString());
+        this.aGui.println(aParser.getCommandString());
     }
 
     /**

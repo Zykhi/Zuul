@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.Set;
+
 /**
  * This class is part of the "Zuul GOTY Edition" application.
  * "Zuul GOTY Edition" is a very simple, text based adventure game.
@@ -10,50 +13,60 @@
  */
 public class CommandWords {
     // a constant array that will hold all valid command words
-    private final String[] aValidCommands;
+    private HashMap<String, CommandWord> aValidCommands;
 
     /**
      * Constructor - initialise the command words.
      */
     public CommandWords() {
-        this.aValidCommands = new String[10];
-        this.aValidCommands[0] = "go";
-        this.aValidCommands[1] = "help";
-        this.aValidCommands[2] = "quit";
-        this.aValidCommands[3] = "look";
-        this.aValidCommands[4] = "eat";
-        this.aValidCommands[5] = "back";
-        this.aValidCommands[6] = "test";
-        this.aValidCommands[7] = "take";
-        this.aValidCommands[8] = "drop";
-        this.aValidCommands[9] = "inventory";
+        this.aValidCommands = new HashMap<String, CommandWord>();
+        this.aValidCommands.put("go", CommandWord.GO);
+        this.aValidCommands.put("help", CommandWord.HELP);
+        this.aValidCommands.put("quit", CommandWord.QUIT);
+        this.aValidCommands.put("look", CommandWord.LOOK);
+        this.aValidCommands.put("eat", CommandWord.EAT);
+        this.aValidCommands.put("back", CommandWord.BACK);
+        this.aValidCommands.put("test", CommandWord.TEST);
+        this.aValidCommands.put("take", CommandWord.TAKE);
+        this.aValidCommands.put("drop", CommandWord.DROP);
+        this.aValidCommands.put("inventory", CommandWord.INVENTORY);
     } // CommandWords()
 
     /**
-     * Check whether a given String is a valid command word.
-     * 
-     * @param pString Command line
-     * 
-     * @return true if a given string is a valid command,
-     *         false if it isn't.
+     * Check whether a given String is a valid command word. 
+     * @return true if it is, false if it isn't.
      */
-    public boolean isCommand(final String pString) {
-        for (int i = 0; i < this.aValidCommands.length; i++) {
-            if (this.aValidCommands[i].equals(pString))
-                return true;
-        } // for
-          // if we get here, the string was not found in the commands
-        return false;
-    } // isCommand()
+    public boolean isCommand(String aString)
+    {
+        return aValidCommands.containsKey(aString);
+    }
+
+    /**
+     * Find the CommandWord associated with a command word.
+     * @param pCommandWord The word to look up.
+     * @return The CommandWord correspondng to commandWord, or UNKNOWN
+     *         if it is not a valid command word.
+     */
+    public CommandWord getCommandWord(String pCommandWord)
+    {
+        CommandWord vCommand = aValidCommands.get(pCommandWord);
+        if(vCommand != null) {
+            return vCommand;
+        }
+        else {
+            return CommandWord.UNKNOWN;
+        }
+    }
 
     /**
      * @return a String of all valid commands.
      */
     public String getCommandList() {
-        StringBuilder sCommands = new StringBuilder();
-        for (int i = 0; i < aValidCommands.length; i++) {
-            sCommands.append(aValidCommands[i] + "  ");
+        String vCommandString = "";
+        Set<String> vKeys = aValidCommands.keySet();
+        for (String vCommand : vKeys) {
+            vCommandString += " " + vCommand;
         }
-        return sCommands.toString();
+        return vCommandString;
     }
 } // CommandWords

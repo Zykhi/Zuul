@@ -67,7 +67,8 @@ public class Parser {
      */
     public String getCommandString() // was showCommands()
     {
-        return this.aCommandWords.getCommandList();
+        String vCommandString = "Your commands are : " + this.aCommandWords.getCommandList();
+        return vCommandString;
     } // getCommandString()
 
 } // Parser
