@@ -31,6 +31,7 @@ public class UserInterface implements ActionListener {
     private JTextArea aLog;
     private JLabel aImage;
     private JButton aButton;
+    private Parser aParser;
 
     /**
      * Construct a UserInterface. As a parameter, a Game Engine
@@ -42,6 +43,7 @@ public class UserInterface implements ActionListener {
     public UserInterface(final GameEngine pGameEngine) {
         this.aEngine = pGameEngine;
         this.createGUI();
+        this.aParser = new Parser();
     } // UserInterface(.)
 
     /**
@@ -143,7 +145,7 @@ public class UserInterface implements ActionListener {
     public void actionPerformed(final ActionEvent pE) {
         // check the type of action
         if (pE.getActionCommand() != null) {
-            this.aEngine.interpretCommand(pE.getActionCommand());
+            this.aEngine.interpretCommand(aParser.getCommand(pE.getActionCommand()));
             this.aEntryField.setText(""); // to reset entry field
         } else {
             this.processCommand(); // never suppress this line
@@ -158,6 +160,10 @@ public class UserInterface implements ActionListener {
         String vInput = this.aEntryField.getText();
         this.aEntryField.setText("");
 
-        this.aEngine.interpretCommand(vInput);
+        this.aEngine.interpretCommand(aParser.getCommand(vInput));
     } // processCommand()
+
+    public String getEntryField() {
+        return this.aEntryField.getText();
+    }
 } // UserInterface

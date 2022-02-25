@@ -138,39 +138,41 @@ public class GameEngine {
      * 
      * @param pCommandLine command who's enter by the player
      */
-    public void interpretCommand(final String pCommandLine) {
-        this.aGui.println("> " + pCommandLine);
-        Command vCommand = this.aParser.getCommand(pCommandLine);
+    public void interpretCommand(final Command pCommandLine) {
 
-        if (vCommand.isUnknown()) {
+        this.aGui.println("> " + aGui.getEntryField());
+
+        CommandWord vCommandWord = pCommandLine.getCommandWord();
+
+        if (pCommandLine.isUnknown()) {
             this.aGui.println("I don't know what you mean...");
         }
 
         try {
-            String vCommandWord = vCommand.getCommandWord();
-            if (vCommandWord.equals("help")) {
+
+            if (vCommandWord == CommandWord.HELP) {
                 this.aPlayer.printHelp();
-            } else if (vCommandWord.equals("go")) {
-                this.aPlayer.goRoom(vCommand);
-            } else if (vCommandWord.equals("quit")) {
-                if (vCommand.hasSecondWord()) {
+            } else if (vCommandWord == CommandWord.GO) {
+                this.aPlayer.goRoom(pCommandLine);
+            } else if (vCommandWord == CommandWord.QUIT) {
+                if (pCommandLine.hasSecondWord()) {
                     this.aGui.println("Quit what?");
                 } else {
                     this.endGame();
                 }
-            } else if (vCommandWord.equals("look")) {
-                this.aPlayer.look(vCommand);
-            } else if (vCommandWord.equals("eat")) {
-                this.aPlayer.eat(vCommand);
-            } else if (vCommandWord.equals("back")) {
-                this.aPlayer.back(vCommand);
-            } else if (vCommandWord.equals("test")) {
-                this.test(vCommand);
-            } else if (vCommandWord.equals("take")) {
-                this.aPlayer.take(vCommand);
-            } else if (vCommandWord.equals("drop")) {
-                this.aPlayer.drop(vCommand);
-            } else if (vCommandWord.equals("inventory")) {
+            } else if (vCommandWord == CommandWord.LOOK) {
+                this.aPlayer.look(pCommandLine);
+            } else if (vCommandWord == CommandWord.EAT) {
+                this.aPlayer.eat(pCommandLine);
+            } else if (vCommandWord == CommandWord.BACK) {
+                this.aPlayer.back(pCommandLine);
+            } else if (vCommandWord == CommandWord.TEST) {
+                this.test(pCommandLine);
+            } else if (vCommandWord == CommandWord.TAKE) {
+                this.aPlayer.take(pCommandLine);
+            } else if (vCommandWord == CommandWord.DROP) {
+                this.aPlayer.drop(pCommandLine);
+            } else if (vCommandWord == CommandWord.INVENTORY) {
                 this.aPlayer.showInventory();
             }
         } catch (Exception pE) {
@@ -197,10 +199,11 @@ public class GameEngine {
             try {
                 String vFile = pFile.getSecondWord();
                 Scanner vScanner = new Scanner(new File(vFile + ".txt"));
-                String vCommand = vScanner.nextLine();
+                String vCommandString = vScanner.nextLine();
                 while (vScanner.hasNextLine()) {
+                    Command vCommand = aParser.getCommand(vCommandString);
                     interpretCommand(vCommand);
-                    vCommand = vScanner.nextLine();
+                    vCommandString = vScanner.nextLine();
                 }
             } catch (final FileNotFoundException pE) {
                 this.aGui.println(pE.getMessage());

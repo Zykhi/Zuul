@@ -1910,7 +1910,8 @@ Cette méthode est appelé dans le constructeur de la classe `GameEngine`
 
 #### Exercice 7.35
 
-Une refonte de la classe `CommandWords` est demandé dans cette exercice. L'ajout d'une enum `CommandWord` est effectué pour répondre au cahier des charges 
+Une refonte de la classe `CommandWords` est demandé dans cette exercice. L'ajout d'une enum `CommandWord` est effectué pour répondre au cahier des charges
+
 ```java
 public enum CommandWord{
     // A value for each command word, plus one for unrecognised
@@ -1918,22 +1919,13 @@ public enum CommandWord{
     HELP, GO, QUIT, LOOK, EAT, BACK, TEST, TAKE, DROP, INVENTORY, UNKNOWN;
 }
 ```
+
 Cette enum sert à lister les commands possible pour l'utilisateur
 
 ```java
 import java.util.HashMap;
 import java.util.Set;
 
-/**
- * This class is part of the "Zuul GOTY Edition" application.
- * "Zuul GOTY Edition" is a very simple, text based adventure game.
- * 
- * This class holds an enumeration table of all command words known to the game.
- * It is used to recognise commands as they are typed in.
- *
- * @author Michael Kolling and David J. Barnes + D.Bureau
- * @version 2008.03.30 + 2019.09.25
- */
 public class CommandWords {
     // a constant array that will hold all valid command words
     private HashMap<String, CommandWord> aValidCommands;
@@ -1956,7 +1948,7 @@ public class CommandWords {
     } // CommandWords()
 
     /**
-     * Check whether a given String is a valid command word. 
+     * Check whether a given String is a valid command word.
      * @return true if it is, false if it isn't.
      */
     public boolean isCommand(String aString)
@@ -1994,4 +1986,138 @@ public class CommandWords {
     }
 } // CommandWords
 ```
-La classe `CommandWords` est entierement refaite pour fonctionner avec cette nouvelle enum
+
+La classe `CommandWords` est entierement refaite pour fonctionner avec cette nouvelle enum. De légère modification sont apportée a la classe `Command` pour que celle ci prennent en compte l'enum que nous venons de créer
+
+```java
+public class Command {
+    private CommandWord aCommandWord;
+
+    [...]
+
+    public Command(final CommandWord pCommandWord, .) {
+        this.aCommandWord = pCommandWord;
+
+        [...]
+
+    }
+
+    public CommandWord getCommandWord() {
+        return this.aCommandWord;
+    }
+
+    [...]
+
+    public boolean isUnknown() {
+        return this.aCommandWord == CommandWord.UNKNOWN;
+    }
+}
+```
+
+Une petite modification est apportée à la classe `Parser` sur la fonction `getCommand()`
+
+```java
+public Command getCommand(final String pInputLine) {
+
+    [...]
+
+    return new Command(aCommandWords.getCommandWord(vWord1), vWord2);
+}
+```
+
+Deux modifications sont aussi apportée dans la classe `UserInterface`. Après avoir initialiser la classe `Parser` dans le constructeur de l'interface utilisateur nous effectuons les modifications suivante :
+
+```java
+public void actionPerformed(final ActionEvent pE) {
+    // check the type of action
+    if (pE.getActionCommand() != null) {
+        this.aEngine.interpretCommand(aParser.getCommand(pE.getActionCommand()));
+
+        [...]
+
+}
+
+private void processCommand() {
+
+    [...]
+
+    this.aEngine.interpretCommand(aParser.getCommand(vInput));
+}
+```
+
+Le plus gros changement est dans la classe `GameEngine`
+
+```java
+public void interpretCommand(final Command pCommandLine) {
+
+    this.aGui.println("> " + aGui.getEntryField());
+
+    CommandWord vCommandWord = pCommandLine.getCommandWord();
+
+    if (pCommandLine.isUnknown()) {
+        this.aGui.println("I don't know what you mean...");
+    }
+
+    try {
+
+        if (vCommandWord == CommandWord.HELP) {
+            this.aPlayer.printHelp();
+        } else if (vCommandWord == CommandWord.GO) {
+            this.aPlayer.goRoom(pCommandLine);
+        } else if (vCommandWord == CommandWord.QUIT) {
+            if (pCommandLine.hasSecondWord()) {
+                this.aGui.println("Quit what?");
+            } else {
+                this.endGame();
+            }
+        } else if (vCommandWord == CommandWord.LOOK) {
+            this.aPlayer.look(pCommandLine);
+        } else if (vCommandWord == CommandWord.EAT) {
+            this.aPlayer.eat(pCommandLine);
+        } else if (vCommandWord == CommandWord.BACK) {
+            this.aPlayer.back(pCommandLine);
+        } else if (vCommandWord == CommandWord.TEST) {
+            this.test(pCommandLine);
+        } else if (vCommandWord == CommandWord.TAKE) {
+            this.aPlayer.take(pCommandLine);
+        } else if (vCommandWord == CommandWord.DROP) {
+            this.aPlayer.drop(pCommandLine);
+        } else if (vCommandWord == CommandWord.INVENTORY) {
+            this.aPlayer.showInventory();
+        }
+
+        [...]
+    }
+}
+```
+
+Pour finir on met a jour la commande de test (interpretCommand) prenait une `String` en paramètre et maintenant une `Command` donc Nous créons une variable qui obtiens la commande de la `String` entrée en paramètre
+
+```java
+private void test(Command pFile) {
+    if (pFile.hasSecondWord()) {
+        try {
+
+            [...]
+
+            while (vScanner.hasNextLine()) {
+                Command vCommand = aParser.getCommand(vCommandString);
+                interpretCommand(vCommand);
+                vCommandString = vScanner.nextLine();
+            }
+
+        [...]
+
+        }
+}
+```
+
+Création d'une fonction `getEntryField()` qui permet au joueur de savoir quelle commande il a rentré car avec les modifications de la méthodes `interpretCommand()` l'affichage était `> Command@6c3c90c9` donc la fonction vient corriger ceci
+
+```java
+public String getEntryField() {
+    return this.aEntryField.getText();
+}
+```
+
+Problème détecté lorsque nous utilisons la commande test, la commande rentrée est la bonne mais pas la commande affichée. Une correction est en cours de recherche

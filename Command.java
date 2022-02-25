@@ -17,7 +17,7 @@
  * @version 2008.03.30 + 2019.09.25 + 2022.02.11
  */
 public class Command {
-    private String aCommandWord;
+    private CommandWord aCommandWord;
     private String aSecondWord;
 
     /**
@@ -26,9 +26,9 @@ public class Command {
      * indicate that this was a command that is not recognised by this game.
      * 
      * @param pCommandWord first word like "go" or "help"
-     * @param pSecondWord second word if it's needed like "north"
+     * @param pSecondWord  second word if it's needed like "north"
      */
-    public Command(final String pCommandWord, final String pSecondWord) {
+    public Command(final CommandWord pCommandWord, final String pSecondWord) {
         this.aCommandWord = pCommandWord;
         this.aSecondWord = pSecondWord;
     }
@@ -39,7 +39,7 @@ public class Command {
      * @return the command word (the first word) of this command. If the
      *         command was not understood, the result is null.
      */
-    public String getCommandWord() {
+    public CommandWord getCommandWord() {
         return this.aCommandWord;
     }
 
@@ -68,6 +68,6 @@ public class Command {
      * @return true if this command was not understood.
      */
     public boolean isUnknown() {
-        return this.aCommandWord == null;
+        return this.aCommandWord == CommandWord.UNKNOWN;
     }
 } // Command
