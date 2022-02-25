@@ -2232,3 +2232,64 @@ Version incorporée à l'exercice précédent
 #### Exercice 7.41.2
 
 Javadoc à jour et mise sur le site
+
+#### Exercice 7.42
+
+Nous créons un nouvel attribut, qui aura pour valeur, le nombre de pas maximum que le joueur peut effectuer. Nous créons l'accesseur de cet attribut
+```java
+public int getMovement(){
+    return this.aMovement;
+}
+```
+Nous effectuons ensuite la modification dans la méthode `goRoom()` et `back()`
+```java
+protected void goRoom(final Command pDirection) {
+        
+    [...]
+
+    } else {
+       
+        [...]
+
+        aMovement -= 1;
+    }
+}
+
+[...]
+
+protected void back(final Command pCommand) {
+        
+    [...]
+        
+    } else {
+
+        [...]
+
+        aMovement -=1;
+    }
+}
+```
+Puis nous ajoutons une condition à la méthode `processCommand()` pour que quand le nombre de pas à été atteint, le joueur ne puisse plus rentrer de commande
+```java
+public void interpretCommand(final Command pCommandLine) {
+
+    [...]
+        
+    if (aPlayer.getMovement() <= 0) {
+        this.gameOver();
+    } else {
+        try {
+                
+            [...]
+                
+        }catch (Exception pE) {
+            [...]
+        }
+    }
+}
+
+private void gameOver(){
+    this.aGui.println("game over.");
+    this.aGui.enable(false);
+}
+```

@@ -8,6 +8,7 @@ public class Player {
     private Parser aParser;
     private ItemList aInventory;
     private int aMaxWeight;
+    private int aMovement;
 
     public Player(final Room pCurrentRoom, final String pName) {
         this.aCurrentRoom = pCurrentRoom;
@@ -16,6 +17,16 @@ public class Player {
         this.aParser = new Parser();
         this.aInventory = new ItemList();
         this.aMaxWeight = 20;
+        this.aMovement = 2;
+    }
+
+    /**
+     * get the number of movement
+     * 
+     * @return the nbr of movement
+     */
+    public int getMovement(){
+        return this.aMovement;
     }
 
     /**
@@ -106,11 +117,13 @@ public class Player {
         // Try to leave current room.
         Room vNextRoom = this.getCurrentRoom().getExit(vDirection);
 
-        if (vNextRoom == null)
+        if (vNextRoom == null) {
             this.aGui.println("There is no door!");
-        else {
+        } else {
             this.setRoom(vNextRoom);
             printLocationInfo();
+            aMovement -= 1;
+
         }
     }
 
@@ -183,6 +196,7 @@ public class Player {
             Room vPreviousRoom = this.getPreviousRooms().pop(); // was aPreviousRooms.pop()
             this.setRoom(vPreviousRoom); // was aCurrentRoom = vPreviousRoom
             printLocationInfo();
+            aMovement -=1;
         }
     }
 

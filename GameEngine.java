@@ -129,7 +129,7 @@ public class GameEngine {
     private void printWelcome() {
         this.aGui.println("Welcome to Zuul GOTY Edition !");
         this.aGui.println("Zuul GOTY Edition is a new, incredibly and fantastic adventure game.");
-        this.aGui.println("Type '"+ CommandWord.HELP.toString() +"' if you need help.");
+        this.aGui.println("Type '" + CommandWord.HELP.toString() + "' if you need help.");
         this.aPlayer.printLocationInfo();
     }
 
@@ -143,62 +143,66 @@ public class GameEngine {
         this.aGui.println("> " + aGui.getEntryField());
 
         CommandWord vCommandWord = pCommandLine.getCommandWord();
+        if (aPlayer.getMovement() <= 0) {
+            this.gameOver();
+        } else {
 
-        try {
+            try {
 
-            switch (vCommandWord) {
-                case HELP:
-                    this.aPlayer.printHelp();
-                    break;
+                switch (vCommandWord) {
+                    case HELP:
+                        this.aPlayer.printHelp();
+                        break;
 
-                case GO:
-                    this.aPlayer.goRoom(pCommandLine);
-                    break;
+                    case GO:
+                        this.aPlayer.goRoom(pCommandLine);
+                        break;
 
-                case QUIT:
-                    if (pCommandLine.hasSecondWord()) {
-                        this.aGui.println("Quit what?");
-                    } else {
-                        this.endGame();
-                    }
-                    break;
+                    case QUIT:
+                        if (pCommandLine.hasSecondWord()) {
+                            this.aGui.println("Quit what?");
+                        } else {
+                            this.endGame();
+                        }
+                        break;
 
-                case LOOK:
-                    this.aPlayer.look(pCommandLine);
-                    break;
+                    case LOOK:
+                        this.aPlayer.look(pCommandLine);
+                        break;
 
-                case EAT:
-                    this.aPlayer.eat(pCommandLine);
-                    break;
+                    case EAT:
+                        this.aPlayer.eat(pCommandLine);
+                        break;
 
-                case BACK:
-                    this.aPlayer.back(pCommandLine);
-                    break;
+                    case BACK:
+                        this.aPlayer.back(pCommandLine);
+                        break;
 
-                case TEST:
-                    this.test(pCommandLine);
-                    break;
+                    case TEST:
+                        this.test(pCommandLine);
+                        break;
 
-                case TAKE:
-                    this.aPlayer.take(pCommandLine);
-                    break;
+                    case TAKE:
+                        this.aPlayer.take(pCommandLine);
+                        break;
 
-                case DROP:
-                    this.aPlayer.drop(pCommandLine);
-                    break;
+                    case DROP:
+                        this.aPlayer.drop(pCommandLine);
+                        break;
 
-                case INVENTORY:
-                    this.aPlayer.showInventory();
-                    break;
+                    case INVENTORY:
+                        this.aPlayer.showInventory();
+                        break;
 
-                default:
-                    this.aGui.println("I don't know what you mean...");
-                    break;
+                    default:
+                        this.aGui.println("I don't know what you mean...");
+                        break;
+                }
+
+            } catch (Exception pE) {
+                // use try catch to avoid error
+                // System.out.println(pE.getMessage());
             }
-
-        } catch (Exception pE) {
-            // use try catch to avoid error
-            // System.out.println(pE.getMessage());
         }
     }
 
@@ -207,6 +211,14 @@ public class GameEngine {
      */
     private void endGame() {
         this.aGui.println("Thank you for playing.  Good bye.");
+        this.aGui.enable(false);
+    }
+
+    /**
+     * Game over
+     */
+    private void gameOver() {
+        this.aGui.println("game over.");
         this.aGui.enable(false);
     }
 
