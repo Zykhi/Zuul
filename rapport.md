@@ -2229,3 +2229,6 @@ private void printWelcome() {
 
 Version incorporée à l'exercice précédent
 
+#### Exercice 7.41.2
+
+Javadoc à jour et mise sur le site

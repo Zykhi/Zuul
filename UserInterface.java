@@ -163,6 +163,10 @@ public class UserInterface implements ActionListener {
         this.aEngine.interpretCommand(aParser.getCommand(vInput));
     } // processCommand()
 
+    /**
+     * get the entry field
+     * @return the text in the entry field
+     */
     public String getEntryField() {
         return this.aEntryField.getText();
     }

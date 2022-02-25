@@ -8,8 +8,8 @@ import java.util.Set;
  * This class holds an enumeration table of all command words known to the game.
  * It is used to recognise commands as they are typed in.
  *
- * @author Michael Kolling and David J. Barnes + D.Bureau
- * @version 2008.03.30 + 2019.09.25
+ * @author Michael Kolling and David J. Barnes + D.Bureau + C.Diouy
+ * @version 2008.03.30 + 2019.09.25 + 2022.02.25
  */
 public class CommandWords {
     // A mapping between a command word and the CommandWord
@@ -31,10 +31,11 @@ public class CommandWords {
     /**
      * Check whether a given String is a valid command word.
      * 
+     * @param pString command entered by the player
      * @return true if it is, false if it isn't.
      */
-    public boolean isCommand(String aString) {
-        return aValidCommands.containsKey(aString);
+    public boolean isCommand(String pString) {
+        return aValidCommands.containsKey(pString);
     }
 
     /**

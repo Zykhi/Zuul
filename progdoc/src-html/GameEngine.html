@@ -138,7 +138,7 @@
 <span class="sourceLineNo">129</span><a id="line.129">    private void printWelcome() {</a>
 <span class="sourceLineNo">130</span><a id="line.130">        this.aGui.println("Welcome to Zuul GOTY Edition !");</a>
 <span class="sourceLineNo">131</span><a id="line.131">        this.aGui.println("Zuul GOTY Edition is a new, incredibly and fantastic adventure game.");</a>
-<span class="sourceLineNo">132</span><a id="line.132">        this.aGui.println("Type 'help' if you need help.");</a>
+<span class="sourceLineNo">132</span><a id="line.132">        this.aGui.println("Type '"+ CommandWord.HELP.toString() +"' if you need help.");</a>
 <span class="sourceLineNo">133</span><a id="line.133">        this.aPlayer.printLocationInfo();</a>
 <span class="sourceLineNo">134</span><a id="line.134">    }</a>
 <span class="sourceLineNo">135</span><a id="line.135"></a>
@@ -147,78 +147,102 @@
 <span class="sourceLineNo">138</span><a id="line.138">     * </a>
 <span class="sourceLineNo">139</span><a id="line.139">     * @param pCommandLine command who's enter by the player</a>
 <span class="sourceLineNo">140</span><a id="line.140">     */</a>
-<span class="sourceLineNo">141</span><a id="line.141">    public void interpretCommand(final String pCommandLine) {</a>
-<span class="sourceLineNo">142</span><a id="line.142">        this.aGui.println("&gt; " + pCommandLine);</a>
-<span class="sourceLineNo">143</span><a id="line.143">        Command vCommand = this.aParser.getCommand(pCommandLine);</a>
+<span class="sourceLineNo">141</span><a id="line.141">    public void interpretCommand(final Command pCommandLine) {</a>
+<span class="sourceLineNo">142</span><a id="line.142"></a>
+<span class="sourceLineNo">143</span><a id="line.143">        this.aGui.println("&gt; " + aGui.getEntryField());</a>
 <span class="sourceLineNo">144</span><a id="line.144"></a>
-<span class="sourceLineNo">145</span><a id="line.145">        if (vCommand.isUnknown()) {</a>
-<span class="sourceLineNo">146</span><a id="line.146">            this.aGui.println("I don't know what you mean...");</a>
-<span class="sourceLineNo">147</span><a id="line.147">        }</a>
+<span class="sourceLineNo">145</span><a id="line.145">        CommandWord vCommandWord = pCommandLine.getCommandWord();</a>
+<span class="sourceLineNo">146</span><a id="line.146"></a>
+<span class="sourceLineNo">147</span><a id="line.147">        try {</a>
 <span class="sourceLineNo">148</span><a id="line.148"></a>
-<span class="sourceLineNo">149</span><a id="line.149">        try {</a>
-<span class="sourceLineNo">150</span><a id="line.150">            String vCommandWord = vCommand.getCommandWord();</a>
-<span class="sourceLineNo">151</span><a id="line.151">            if (vCommandWord.equals("help")) {</a>
-<span class="sourceLineNo">152</span><a id="line.152">                this.aPlayer.printHelp();</a>
-<span class="sourceLineNo">153</span><a id="line.153">            } else if (vCommandWord.equals("go")) {</a>
-<span class="sourceLineNo">154</span><a id="line.154">                this.aPlayer.goRoom(vCommand);</a>
-<span class="sourceLineNo">155</span><a id="line.155">            } else if (vCommandWord.equals("quit")) {</a>
-<span class="sourceLineNo">156</span><a id="line.156">                if (vCommand.hasSecondWord()) {</a>
-<span class="sourceLineNo">157</span><a id="line.157">                    this.aGui.println("Quit what?");</a>
-<span class="sourceLineNo">158</span><a id="line.158">                } else {</a>
-<span class="sourceLineNo">159</span><a id="line.159">                    this.endGame();</a>
-<span class="sourceLineNo">160</span><a id="line.160">                }</a>
-<span class="sourceLineNo">161</span><a id="line.161">            } else if (vCommandWord.equals("look")) {</a>
-<span class="sourceLineNo">162</span><a id="line.162">                this.aPlayer.look(vCommand);</a>
-<span class="sourceLineNo">163</span><a id="line.163">            } else if (vCommandWord.equals("eat")) {</a>
-<span class="sourceLineNo">164</span><a id="line.164">                this.aPlayer.eat(vCommand);</a>
-<span class="sourceLineNo">165</span><a id="line.165">            } else if (vCommandWord.equals("back")) {</a>
-<span class="sourceLineNo">166</span><a id="line.166">                this.aPlayer.back(vCommand);</a>
-<span class="sourceLineNo">167</span><a id="line.167">            } else if (vCommandWord.equals("test")) {</a>
-<span class="sourceLineNo">168</span><a id="line.168">                this.test(vCommand);</a>
-<span class="sourceLineNo">169</span><a id="line.169">            } else if (vCommandWord.equals("take")) {</a>
-<span class="sourceLineNo">170</span><a id="line.170">                this.aPlayer.take(vCommand);</a>
-<span class="sourceLineNo">171</span><a id="line.171">            } else if (vCommandWord.equals("drop")) {</a>
-<span class="sourceLineNo">172</span><a id="line.172">                this.aPlayer.drop(vCommand);</a>
-<span class="sourceLineNo">173</span><a id="line.173">            } else if (vCommandWord.equals("inventory")) {</a>
-<span class="sourceLineNo">174</span><a id="line.174">                this.aPlayer.showInventory();</a>
-<span class="sourceLineNo">175</span><a id="line.175">            }</a>
-<span class="sourceLineNo">176</span><a id="line.176">        } catch (Exception pE) {</a>
-<span class="sourceLineNo">177</span><a id="line.177">            // use try catch to avoid error</a>
-<span class="sourceLineNo">178</span><a id="line.178">            // System.out.println(pE.getMessage());</a>
-<span class="sourceLineNo">179</span><a id="line.179">        }</a>
-<span class="sourceLineNo">180</span><a id="line.180">    }</a>
+<span class="sourceLineNo">149</span><a id="line.149">            switch (vCommandWord) {</a>
+<span class="sourceLineNo">150</span><a id="line.150">                case HELP:</a>
+<span class="sourceLineNo">151</span><a id="line.151">                    this.aPlayer.printHelp();</a>
+<span class="sourceLineNo">152</span><a id="line.152">                    break;</a>
+<span class="sourceLineNo">153</span><a id="line.153"></a>
+<span class="sourceLineNo">154</span><a id="line.154">                case GO:</a>
+<span class="sourceLineNo">155</span><a id="line.155">                    this.aPlayer.goRoom(pCommandLine);</a>
+<span class="sourceLineNo">156</span><a id="line.156">                    break;</a>
+<span class="sourceLineNo">157</span><a id="line.157"></a>
+<span class="sourceLineNo">158</span><a id="line.158">                case QUIT:</a>
+<span class="sourceLineNo">159</span><a id="line.159">                    if (pCommandLine.hasSecondWord()) {</a>
+<span class="sourceLineNo">160</span><a id="line.160">                        this.aGui.println("Quit what?");</a>
+<span class="sourceLineNo">161</span><a id="line.161">                    } else {</a>
+<span class="sourceLineNo">162</span><a id="line.162">                        this.endGame();</a>
+<span class="sourceLineNo">163</span><a id="line.163">                    }</a>
+<span class="sourceLineNo">164</span><a id="line.164">                    break;</a>
+<span class="sourceLineNo">165</span><a id="line.165"></a>
+<span class="sourceLineNo">166</span><a id="line.166">                case LOOK:</a>
+<span class="sourceLineNo">167</span><a id="line.167">                    this.aPlayer.look(pCommandLine);</a>
+<span class="sourceLineNo">168</span><a id="line.168">                    break;</a>
+<span class="sourceLineNo">169</span><a id="line.169"></a>
+<span class="sourceLineNo">170</span><a id="line.170">                case EAT:</a>
+<span class="sourceLineNo">171</span><a id="line.171">                    this.aPlayer.eat(pCommandLine);</a>
+<span class="sourceLineNo">172</span><a id="line.172">                    break;</a>
+<span class="sourceLineNo">173</span><a id="line.173"></a>
+<span class="sourceLineNo">174</span><a id="line.174">                case BACK:</a>
+<span class="sourceLineNo">175</span><a id="line.175">                    this.aPlayer.back(pCommandLine);</a>
+<span class="sourceLineNo">176</span><a id="line.176">                    break;</a>
+<span class="sourceLineNo">177</span><a id="line.177"></a>
+<span class="sourceLineNo">178</span><a id="line.178">                case TEST:</a>
+<span class="sourceLineNo">179</span><a id="line.179">                    this.test(pCommandLine);</a>
+<span class="sourceLineNo">180</span><a id="line.180">                    break;</a>
 <span class="sourceLineNo">181</span><a id="line.181"></a>
-<span class="sourceLineNo">182</span><a id="line.182">    /**</a>
-<span class="sourceLineNo">183</span><a id="line.183">     * End the game</a>
-<span class="sourceLineNo">184</span><a id="line.184">     */</a>
-<span class="sourceLineNo">185</span><a id="line.185">    private void endGame() {</a>
-<span class="sourceLineNo">186</span><a id="line.186">        this.aGui.println("Thank you for playing.  Good bye.");</a>
-<span class="sourceLineNo">187</span><a id="line.187">        this.aGui.enable(false);</a>
-<span class="sourceLineNo">188</span><a id="line.188">    }</a>
+<span class="sourceLineNo">182</span><a id="line.182">                case TAKE:</a>
+<span class="sourceLineNo">183</span><a id="line.183">                    this.aPlayer.take(pCommandLine);</a>
+<span class="sourceLineNo">184</span><a id="line.184">                    break;</a>
+<span class="sourceLineNo">185</span><a id="line.185"></a>
+<span class="sourceLineNo">186</span><a id="line.186">                case DROP:</a>
+<span class="sourceLineNo">187</span><a id="line.187">                    this.aPlayer.drop(pCommandLine);</a>
+<span class="sourceLineNo">188</span><a id="line.188">                    break;</a>
 <span class="sourceLineNo">189</span><a id="line.189"></a>
-<span class="sourceLineNo">190</span><a id="line.190">    /**</a>
-<span class="sourceLineNo">191</span><a id="line.191">     * This method is used to test game command</a>
-<span class="sourceLineNo">192</span><a id="line.192">     * </a>
-<span class="sourceLineNo">193</span><a id="line.193">     * @param pFile test file</a>
-<span class="sourceLineNo">194</span><a id="line.194">     */</a>
-<span class="sourceLineNo">195</span><a id="line.195">    private void test(Command pFile) {</a>
-<span class="sourceLineNo">196</span><a id="line.196">        if (pFile.hasSecondWord()) {</a>
-<span class="sourceLineNo">197</span><a id="line.197">            try {</a>
-<span class="sourceLineNo">198</span><a id="line.198">                String vFile = pFile.getSecondWord();</a>
-<span class="sourceLineNo">199</span><a id="line.199">                Scanner vScanner = new Scanner(new File(vFile + ".txt"));</a>
-<span class="sourceLineNo">200</span><a id="line.200">                String vCommand = vScanner.nextLine();</a>
-<span class="sourceLineNo">201</span><a id="line.201">                while (vScanner.hasNextLine()) {</a>
-<span class="sourceLineNo">202</span><a id="line.202">                    interpretCommand(vCommand);</a>
-<span class="sourceLineNo">203</span><a id="line.203">                    vCommand = vScanner.nextLine();</a>
-<span class="sourceLineNo">204</span><a id="line.204">                }</a>
-<span class="sourceLineNo">205</span><a id="line.205">            } catch (final FileNotFoundException pE) {</a>
-<span class="sourceLineNo">206</span><a id="line.206">                this.aGui.println(pE.getMessage());</a>
-<span class="sourceLineNo">207</span><a id="line.207">            }</a>
-<span class="sourceLineNo">208</span><a id="line.208">        } else {</a>
-<span class="sourceLineNo">209</span><a id="line.209">            this.aGui.println("This command need a second word");</a>
-<span class="sourceLineNo">210</span><a id="line.210">        }</a>
+<span class="sourceLineNo">190</span><a id="line.190">                case INVENTORY:</a>
+<span class="sourceLineNo">191</span><a id="line.191">                    this.aPlayer.showInventory();</a>
+<span class="sourceLineNo">192</span><a id="line.192">                    break;</a>
+<span class="sourceLineNo">193</span><a id="line.193"></a>
+<span class="sourceLineNo">194</span><a id="line.194">                default:</a>
+<span class="sourceLineNo">195</span><a id="line.195">                    this.aGui.println("I don't know what you mean...");</a>
+<span class="sourceLineNo">196</span><a id="line.196">                    break;</a>
+<span class="sourceLineNo">197</span><a id="line.197">            }</a>
+<span class="sourceLineNo">198</span><a id="line.198"></a>
+<span class="sourceLineNo">199</span><a id="line.199">        } catch (Exception pE) {</a>
+<span class="sourceLineNo">200</span><a id="line.200">            // use try catch to avoid error</a>
+<span class="sourceLineNo">201</span><a id="line.201">            // System.out.println(pE.getMessage());</a>
+<span class="sourceLineNo">202</span><a id="line.202">        }</a>
+<span class="sourceLineNo">203</span><a id="line.203">    }</a>
+<span class="sourceLineNo">204</span><a id="line.204"></a>
+<span class="sourceLineNo">205</span><a id="line.205">    /**</a>
+<span class="sourceLineNo">206</span><a id="line.206">     * End the game</a>
+<span class="sourceLineNo">207</span><a id="line.207">     */</a>
+<span class="sourceLineNo">208</span><a id="line.208">    private void endGame() {</a>
+<span class="sourceLineNo">209</span><a id="line.209">        this.aGui.println("Thank you for playing.  Good bye.");</a>
+<span class="sourceLineNo">210</span><a id="line.210">        this.aGui.enable(false);</a>
 <span class="sourceLineNo">211</span><a id="line.211">    }</a>
-<span class="sourceLineNo">212</span><a id="line.212">}// Game</a>
+<span class="sourceLineNo">212</span><a id="line.212"></a>
+<span class="sourceLineNo">213</span><a id="line.213">    /**</a>
+<span class="sourceLineNo">214</span><a id="line.214">     * This method is used to test game command</a>
+<span class="sourceLineNo">215</span><a id="line.215">     * </a>
+<span class="sourceLineNo">216</span><a id="line.216">     * @param pFile test file</a>
+<span class="sourceLineNo">217</span><a id="line.217">     */</a>
+<span class="sourceLineNo">218</span><a id="line.218">    private void test(Command pFile) {</a>
+<span class="sourceLineNo">219</span><a id="line.219">        if (pFile.hasSecondWord()) {</a>
+<span class="sourceLineNo">220</span><a id="line.220">            try {</a>
+<span class="sourceLineNo">221</span><a id="line.221">                String vFile = pFile.getSecondWord();</a>
+<span class="sourceLineNo">222</span><a id="line.222">                Scanner vScanner = new Scanner(new File(vFile + ".txt"));</a>
+<span class="sourceLineNo">223</span><a id="line.223">                String vCommandString = vScanner.nextLine();</a>
+<span class="sourceLineNo">224</span><a id="line.224">                while (vScanner.hasNextLine()) {</a>
+<span class="sourceLineNo">225</span><a id="line.225">                    Command vCommand = aParser.getCommand(vCommandString);</a>
+<span class="sourceLineNo">226</span><a id="line.226">                    interpretCommand(vCommand);</a>
+<span class="sourceLineNo">227</span><a id="line.227">                    vCommandString = vScanner.nextLine();</a>
+<span class="sourceLineNo">228</span><a id="line.228">                }</a>
+<span class="sourceLineNo">229</span><a id="line.229">            } catch (final FileNotFoundException pE) {</a>
+<span class="sourceLineNo">230</span><a id="line.230">                this.aGui.println(pE.getMessage());</a>
+<span class="sourceLineNo">231</span><a id="line.231">            }</a>
+<span class="sourceLineNo">232</span><a id="line.232">        } else {</a>
+<span class="sourceLineNo">233</span><a id="line.233">            this.aGui.println("This command need a second word");</a>
+<span class="sourceLineNo">234</span><a id="line.234">        }</a>
+<span class="sourceLineNo">235</span><a id="line.235">    }</a>
+<span class="sourceLineNo">236</span><a id="line.236">}// Game</a>
 
 
 

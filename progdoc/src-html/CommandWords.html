@@ -7,65 +7,74 @@
 <body>
 <main role="main">
 <div class="sourceContainer">
-<pre><span class="sourceLineNo">001</span><a id="line.1">/**</a>
-<span class="sourceLineNo">002</span><a id="line.2"> * This class is part of the "Zuul GOTY Edition" application.</a>
-<span class="sourceLineNo">003</span><a id="line.3"> * "Zuul GOTY Edition" is a very simple, text based adventure game.</a>
-<span class="sourceLineNo">004</span><a id="line.4"> * </a>
-<span class="sourceLineNo">005</span><a id="line.5"> * This class holds an enumeration table of all command words known to the game.</a>
-<span class="sourceLineNo">006</span><a id="line.6"> * It is used to recognise commands as they are typed in.</a>
-<span class="sourceLineNo">007</span><a id="line.7"> *</a>
-<span class="sourceLineNo">008</span><a id="line.8"> * @author Michael Kolling and David J. Barnes + D.Bureau</a>
-<span class="sourceLineNo">009</span><a id="line.9"> * @version 2008.03.30 + 2019.09.25</a>
-<span class="sourceLineNo">010</span><a id="line.10"> */</a>
-<span class="sourceLineNo">011</span><a id="line.11">public class CommandWords {</a>
-<span class="sourceLineNo">012</span><a id="line.12">    // a constant array that will hold all valid command words</a>
-<span class="sourceLineNo">013</span><a id="line.13">    private final String[] aValidCommands;</a>
-<span class="sourceLineNo">014</span><a id="line.14"></a>
-<span class="sourceLineNo">015</span><a id="line.15">    /**</a>
-<span class="sourceLineNo">016</span><a id="line.16">     * Constructor - initialise the command words.</a>
-<span class="sourceLineNo">017</span><a id="line.17">     */</a>
-<span class="sourceLineNo">018</span><a id="line.18">    public CommandWords() {</a>
-<span class="sourceLineNo">019</span><a id="line.19">        this.aValidCommands = new String[10];</a>
-<span class="sourceLineNo">020</span><a id="line.20">        this.aValidCommands[0] = "go";</a>
-<span class="sourceLineNo">021</span><a id="line.21">        this.aValidCommands[1] = "help";</a>
-<span class="sourceLineNo">022</span><a id="line.22">        this.aValidCommands[2] = "quit";</a>
-<span class="sourceLineNo">023</span><a id="line.23">        this.aValidCommands[3] = "look";</a>
-<span class="sourceLineNo">024</span><a id="line.24">        this.aValidCommands[4] = "eat";</a>
-<span class="sourceLineNo">025</span><a id="line.25">        this.aValidCommands[5] = "back";</a>
-<span class="sourceLineNo">026</span><a id="line.26">        this.aValidCommands[6] = "test";</a>
-<span class="sourceLineNo">027</span><a id="line.27">        this.aValidCommands[7] = "take";</a>
-<span class="sourceLineNo">028</span><a id="line.28">        this.aValidCommands[8] = "drop";</a>
-<span class="sourceLineNo">029</span><a id="line.29">        this.aValidCommands[9] = "inventory";</a>
-<span class="sourceLineNo">030</span><a id="line.30">    } // CommandWords()</a>
-<span class="sourceLineNo">031</span><a id="line.31"></a>
-<span class="sourceLineNo">032</span><a id="line.32">    /**</a>
-<span class="sourceLineNo">033</span><a id="line.33">     * Check whether a given String is a valid command word.</a>
-<span class="sourceLineNo">034</span><a id="line.34">     * </a>
-<span class="sourceLineNo">035</span><a id="line.35">     * @param pString Command line</a>
-<span class="sourceLineNo">036</span><a id="line.36">     * </a>
-<span class="sourceLineNo">037</span><a id="line.37">     * @return true if a given string is a valid command,</a>
-<span class="sourceLineNo">038</span><a id="line.38">     *         false if it isn't.</a>
-<span class="sourceLineNo">039</span><a id="line.39">     */</a>
-<span class="sourceLineNo">040</span><a id="line.40">    public boolean isCommand(final String pString) {</a>
-<span class="sourceLineNo">041</span><a id="line.41">        for (int i = 0; i &lt; this.aValidCommands.length; i++) {</a>
-<span class="sourceLineNo">042</span><a id="line.42">            if (this.aValidCommands[i].equals(pString))</a>
-<span class="sourceLineNo">043</span><a id="line.43">                return true;</a>
-<span class="sourceLineNo">044</span><a id="line.44">        } // for</a>
-<span class="sourceLineNo">045</span><a id="line.45">          // if we get here, the string was not found in the commands</a>
-<span class="sourceLineNo">046</span><a id="line.46">        return false;</a>
-<span class="sourceLineNo">047</span><a id="line.47">    } // isCommand()</a>
-<span class="sourceLineNo">048</span><a id="line.48"></a>
-<span class="sourceLineNo">049</span><a id="line.49">    /**</a>
-<span class="sourceLineNo">050</span><a id="line.50">     * @return a String of all valid commands.</a>
-<span class="sourceLineNo">051</span><a id="line.51">     */</a>
-<span class="sourceLineNo">052</span><a id="line.52">    public String getCommandList() {</a>
-<span class="sourceLineNo">053</span><a id="line.53">        StringBuilder sCommands = new StringBuilder();</a>
-<span class="sourceLineNo">054</span><a id="line.54">        for (int i = 0; i &lt; aValidCommands.length; i++) {</a>
-<span class="sourceLineNo">055</span><a id="line.55">            sCommands.append(aValidCommands[i] + "  ");</a>
-<span class="sourceLineNo">056</span><a id="line.56">        }</a>
-<span class="sourceLineNo">057</span><a id="line.57">        return sCommands.toString();</a>
-<span class="sourceLineNo">058</span><a id="line.58">    }</a>
-<span class="sourceLineNo">059</span><a id="line.59">} // CommandWords</a>
+<pre><span class="sourceLineNo">001</span><a id="line.1">import java.util.HashMap;</a>
+<span class="sourceLineNo">002</span><a id="line.2">import java.util.Set;</a>
+<span class="sourceLineNo">003</span><a id="line.3"></a>
+<span class="sourceLineNo">004</span><a id="line.4">/**</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * This class is part of the "Zuul GOTY Edition" application.</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * "Zuul GOTY Edition" is a very simple, text based adventure game.</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * </a>
+<span class="sourceLineNo">008</span><a id="line.8"> * This class holds an enumeration table of all command words known to the game.</a>
+<span class="sourceLineNo">009</span><a id="line.9"> * It is used to recognise commands as they are typed in.</a>
+<span class="sourceLineNo">010</span><a id="line.10"> *</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * @author Michael Kolling and David J. Barnes + D.Bureau + C.Diouy</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * @version 2008.03.30 + 2019.09.25 + 2022.02.25</a>
+<span class="sourceLineNo">013</span><a id="line.13"> */</a>
+<span class="sourceLineNo">014</span><a id="line.14">public class CommandWords {</a>
+<span class="sourceLineNo">015</span><a id="line.15">    // A mapping between a command word and the CommandWord</a>
+<span class="sourceLineNo">016</span><a id="line.16">    // associated with it.</a>
+<span class="sourceLineNo">017</span><a id="line.17">    private HashMap&lt;String, CommandWord&gt; aValidCommands;</a>
+<span class="sourceLineNo">018</span><a id="line.18"></a>
+<span class="sourceLineNo">019</span><a id="line.19">    /**</a>
+<span class="sourceLineNo">020</span><a id="line.20">     * Constructor - initialise the command words.</a>
+<span class="sourceLineNo">021</span><a id="line.21">     */</a>
+<span class="sourceLineNo">022</span><a id="line.22">    public CommandWords() {</a>
+<span class="sourceLineNo">023</span><a id="line.23">        aValidCommands = new HashMap&lt;String, CommandWord&gt;();</a>
+<span class="sourceLineNo">024</span><a id="line.24">        for (CommandWord vCommand : CommandWord.values()) {</a>
+<span class="sourceLineNo">025</span><a id="line.25">            if (vCommand != CommandWord.UNKNOWN) {</a>
+<span class="sourceLineNo">026</span><a id="line.26">                aValidCommands.put(vCommand.toString(), vCommand);</a>
+<span class="sourceLineNo">027</span><a id="line.27">            }</a>
+<span class="sourceLineNo">028</span><a id="line.28">        }</a>
+<span class="sourceLineNo">029</span><a id="line.29">    } // CommandWords()</a>
+<span class="sourceLineNo">030</span><a id="line.30"></a>
+<span class="sourceLineNo">031</span><a id="line.31">    /**</a>
+<span class="sourceLineNo">032</span><a id="line.32">     * Check whether a given String is a valid command word.</a>
+<span class="sourceLineNo">033</span><a id="line.33">     * </a>
+<span class="sourceLineNo">034</span><a id="line.34">     * @param pString command entered by the player</a>
+<span class="sourceLineNo">035</span><a id="line.35">     * @return true if it is, false if it isn't.</a>
+<span class="sourceLineNo">036</span><a id="line.36">     */</a>
+<span class="sourceLineNo">037</span><a id="line.37">    public boolean isCommand(String pString) {</a>
+<span class="sourceLineNo">038</span><a id="line.38">        return aValidCommands.containsKey(pString);</a>
+<span class="sourceLineNo">039</span><a id="line.39">    }</a>
+<span class="sourceLineNo">040</span><a id="line.40"></a>
+<span class="sourceLineNo">041</span><a id="line.41">    /**</a>
+<span class="sourceLineNo">042</span><a id="line.42">     * Find the CommandWord associated with a command word.</a>
+<span class="sourceLineNo">043</span><a id="line.43">     * </a>
+<span class="sourceLineNo">044</span><a id="line.44">     * @param pCommandWord The word to look up.</a>
+<span class="sourceLineNo">045</span><a id="line.45">     * @return The CommandWord correspondng to commandWord, or UNKNOWN</a>
+<span class="sourceLineNo">046</span><a id="line.46">     *         if it is not a valid command word.</a>
+<span class="sourceLineNo">047</span><a id="line.47">     */</a>
+<span class="sourceLineNo">048</span><a id="line.48">    public CommandWord getCommandWord(String pCommandWord) {</a>
+<span class="sourceLineNo">049</span><a id="line.49">        CommandWord vCommand = aValidCommands.get(pCommandWord);</a>
+<span class="sourceLineNo">050</span><a id="line.50">        if (vCommand != null) {</a>
+<span class="sourceLineNo">051</span><a id="line.51">            return vCommand;</a>
+<span class="sourceLineNo">052</span><a id="line.52">        } else {</a>
+<span class="sourceLineNo">053</span><a id="line.53">            return CommandWord.UNKNOWN;</a>
+<span class="sourceLineNo">054</span><a id="line.54">        }</a>
+<span class="sourceLineNo">055</span><a id="line.55">    }</a>
+<span class="sourceLineNo">056</span><a id="line.56"></a>
+<span class="sourceLineNo">057</span><a id="line.57">    /**</a>
+<span class="sourceLineNo">058</span><a id="line.58">     * @return a String of all valid commands.</a>
+<span class="sourceLineNo">059</span><a id="line.59">     */</a>
+<span class="sourceLineNo">060</span><a id="line.60">    public String getCommandList() {</a>
+<span class="sourceLineNo">061</span><a id="line.61">        String vCommandString = "";</a>
+<span class="sourceLineNo">062</span><a id="line.62">        Set&lt;String&gt; vKeys = aValidCommands.keySet();</a>
+<span class="sourceLineNo">063</span><a id="line.63">        for (String vCommand : vKeys) {</a>
+<span class="sourceLineNo">064</span><a id="line.64">            vCommandString += " " + vCommand;</a>
+<span class="sourceLineNo">065</span><a id="line.65">        }</a>
+<span class="sourceLineNo">066</span><a id="line.66">        return vCommandString;</a>
+<span class="sourceLineNo">067</span><a id="line.67">    }</a>
+<span class="sourceLineNo">068</span><a id="line.68">} // CommandWords</a>
 
 
 
