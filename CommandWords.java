@@ -12,48 +12,43 @@ import java.util.Set;
  * @version 2008.03.30 + 2019.09.25
  */
 public class CommandWords {
-    // a constant array that will hold all valid command words
+    // A mapping between a command word and the CommandWord
+    // associated with it.
     private HashMap<String, CommandWord> aValidCommands;
 
     /**
      * Constructor - initialise the command words.
      */
     public CommandWords() {
-        this.aValidCommands = new HashMap<String, CommandWord>();
-        this.aValidCommands.put("go", CommandWord.GO);
-        this.aValidCommands.put("help", CommandWord.HELP);
-        this.aValidCommands.put("quit", CommandWord.QUIT);
-        this.aValidCommands.put("look", CommandWord.LOOK);
-        this.aValidCommands.put("eat", CommandWord.EAT);
-        this.aValidCommands.put("back", CommandWord.BACK);
-        this.aValidCommands.put("test", CommandWord.TEST);
-        this.aValidCommands.put("take", CommandWord.TAKE);
-        this.aValidCommands.put("drop", CommandWord.DROP);
-        this.aValidCommands.put("inventory", CommandWord.INVENTORY);
+        aValidCommands = new HashMap<String, CommandWord>();
+        for (CommandWord vCommand : CommandWord.values()) {
+            if (vCommand != CommandWord.UNKNOWN) {
+                aValidCommands.put(vCommand.toString(), vCommand);
+            }
+        }
     } // CommandWords()
 
     /**
-     * Check whether a given String is a valid command word. 
+     * Check whether a given String is a valid command word.
+     * 
      * @return true if it is, false if it isn't.
      */
-    public boolean isCommand(String aString)
-    {
+    public boolean isCommand(String aString) {
         return aValidCommands.containsKey(aString);
     }
 
     /**
      * Find the CommandWord associated with a command word.
+     * 
      * @param pCommandWord The word to look up.
      * @return The CommandWord correspondng to commandWord, or UNKNOWN
      *         if it is not a valid command word.
      */
-    public CommandWord getCommandWord(String pCommandWord)
-    {
+    public CommandWord getCommandWord(String pCommandWord) {
         CommandWord vCommand = aValidCommands.get(pCommandWord);
-        if(vCommand != null) {
+        if (vCommand != null) {
             return vCommand;
-        }
-        else {
+        } else {
             return CommandWord.UNKNOWN;
         }
     }

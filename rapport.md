@@ -2209,3 +2209,23 @@ N'étant pas utile pour mon jeu, car tout en anglais, la fonctionnalité optionn
 #### Exercice 7.38
 
 Une fois la modification précédente effectuée, le message de bienvenue disait toujours `... Type 'help' if you need help.`
+
+#### Exercice 7.40 - 7.41
+
+L'ajout de la nouvelle version de l'enum `CommandWord` nous permet de modifier notre méthode `printWelcome()` pour qu'elle affiche le mot de commande `help` traduit
+
+```java
+private void printWelcome() {
+
+    [...]
+
+    this.aGui.println("Type '"+ CommandWord.HELP.toString() +"' if you need help.");
+
+    [...]
+}
+```
+
+#### Exercice 7.41.1
+
+Version incorporée à l'exercice précédent
+

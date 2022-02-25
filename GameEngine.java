@@ -129,7 +129,7 @@ public class GameEngine {
     private void printWelcome() {
         this.aGui.println("Welcome to Zuul GOTY Edition !");
         this.aGui.println("Zuul GOTY Edition is a new, incredibly and fantastic adventure game.");
-        this.aGui.println("Type 'help' if you need help.");
+        this.aGui.println("Type '"+ CommandWord.HELP.toString() +"' if you need help.");
         this.aPlayer.printLocationInfo();
     }
 
