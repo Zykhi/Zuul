@@ -2125,6 +2125,7 @@ Problème détecté lorsque nous utilisons la commande test, la commande rentré
 #### Exercice 7.35.1
 
 Changement dans la méthode `interpretCommand()`. Nous enlevons les `if`, `else` au profit d'un `switch`
+
 ```java
 public void interpretCommand(final Command pCommandLine) {
 
@@ -2182,9 +2183,29 @@ public void interpretCommand(final Command pCommandLine) {
                     break;
             }
 
-        } 
+        }
 
         [...]
 
     }
 ```
+
+#### Exercice 7.37
+
+Pour traduire les commandes, grâce à l'enum `CommandWord` précédement crée il suffit de modifier
+
+```java
+this.aValidCommands.put("help", CommandWord.HELP);
+```
+
+par
+
+```java
+this.aValidCommands.put("aide", CommandWord.HELP);
+```
+
+N'étant pas utile pour mon jeu, car tout en anglais, la fonctionnalité optionnelle n'est pas implémenté
+
+#### Exercice 7.38
+
+Une fois la modification précédente effectuée, le message de bienvenue disait toujours `... Type 'help' if you need help.`
