@@ -2375,3 +2375,88 @@ public void clearStack() {
 }
 ```
 Cette modification permet de bloquer le retour dans la piece précédente si le joueur effectue la commande `go up` avant `back`. Une réflexion est en cours pour corriger cela.
+
+#### Exercice 7.44 
+
+Nous devons ici créer un téléporteur, c'est à dire une sorte d'`Item`. Lorsqu'il est chargé dans une salle, quand le joueur l'active, le téléporteur doit le ramener à la salle où il a été chargé. Pour ce faire, nous créons une nouvelle classe `Beamer` qui est donc une sorte d'`Item`
+```java
+public class Beamer extends Item {
+    private boolean aIsCharged;
+    private Room aRoomCharged;
+
+    public Beamer() {
+        super("teleporter", 10, 5, "teleport where it's charged");
+        this.aIsCharged = false;
+        this.aRoomCharged = null;
+    }
+
+    public void charge(final Room pRoom) {
+        this.aIsCharged = true;
+        this.aRoomCharged = pRoom;
+    }
+
+    public Room fire() {
+        this.aIsCharged = false;
+        Room vRoom = this.aRoomCharged;
+        this.aRoomCharged = null;
+        return vRoom;
+    }
+
+    public boolean isCharged() {
+        return this.aIsCharged;
+    }
+}
+```
+Nous ajoutons donc ce nouvel objet dans le jeu, dans la classe `GameEngine`
+```java
+private void createItems() {
+
+    [...]
+
+    Beamer vBeamer = new Beamer();
+    this.aRooms.get("Outside").addItem("teleporter", vBeamer);
+}
+```
+Le téléporteur est, pour le moment, dans la première salle pour faciliter les tests et parce que je n'ai aucune idée où le mettre.
+Nous devons maintenant ajouter les deux fonctionnalités, `charge` et `fire` dans la classe `Player`
+```java
+public void charge() {
+    Beamer vBeamer = (Beamer) this.aInventory.getItemName("teleporter");
+    if (this.aInventory.contain(vBeamer)) {
+        vBeamer.charge(this.aCurrentRoom);
+        this.aGui.println("Teleporter is charged");
+    } else {
+        this.aGui.println("You dont have teleporter");
+    }
+}
+
+public void fire() {
+    Beamer vBeamer = (Beamer) this.aInventory.getItemName("teleporter");
+    if (this.aInventory.contain(vBeamer)) {
+        if (vBeamer.isCharged()) {
+            this.setRoom(vBeamer.fire());
+            this.aInventory.removeItem("teleporter", vBeamer);
+            this.aGui.println("You have been teleported. Teleporter is destroyed");
+            printLocationInfo();
+            showInventory();
+        } else {
+            this.aGui.println("teleporter isnt loaded.");
+        }
+    } else {
+        this.aGui.println("You dont have teleporter.");
+    }
+}
+```
+Puis pour finir nous ajoutons l'utilisation des commandes dans la méthode `interpretCommand()` de la classe `GameEngine` et nous créons les mots de commande dans l'enum `CommandWord`
+```java
+case CHARGE:
+    this.aPlayer.charge();
+    break;
+
+case FIRE:
+    this.aPlayer.fire();
+    break;
+```
+```java
+CHARGE("charge"), FIRE("fire");
+```

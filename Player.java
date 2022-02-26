@@ -261,6 +261,33 @@ public class Player {
         this.aGui.println(this.aInventory.getWeightString() + this.aMaxWeight + "kg");
     }
 
+    public void charge() {
+        Beamer vBeamer = (Beamer) this.aInventory.getItemName("teleporter");
+        if (this.aInventory.contain(vBeamer)) {
+            vBeamer.charge(this.aCurrentRoom);
+            this.aGui.println("Teleporter is charged");
+        } else {
+            this.aGui.println("You dont have teleporter");
+        }
+    }
+
+    public void fire() {
+        Beamer vBeamer = (Beamer) this.aInventory.getItemName("teleporter");
+        if (this.aInventory.contain(vBeamer)) {
+            if (vBeamer.isCharged()) {
+                this.setRoom(vBeamer.fire());
+                this.aInventory.removeItem("teleporter", vBeamer);
+                this.aGui.println("You have been teleported. Teleporter is destroyed");
+                printLocationInfo();
+                showInventory();
+            } else {
+                this.aGui.println("teleporter isnt loaded.");
+            }
+        } else {
+            this.aGui.println("You dont have teleporter.");
+        }
+    }
+
     /**
      * This method print the info of the room with the exit when you enter on it
      */

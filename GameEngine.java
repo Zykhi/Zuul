@@ -123,6 +123,9 @@ public class GameEngine {
 
         Item vMagicCookie = new Item("Cookie", 0, 0, "This is a magic cookie");
         this.aRooms.get("Treasure").addItem("Cookie", vMagicCookie);
+
+        Beamer vBeamer = new Beamer();
+        this.aRooms.get("Outside").addItem("teleporter", vBeamer);
     }
 
     private void createDoor() {
@@ -199,6 +202,14 @@ public class GameEngine {
 
                     case INVENTORY:
                         this.aPlayer.showInventory();
+                        break;
+
+                    case CHARGE:
+                        this.aPlayer.charge();
+                        break;
+
+                    case FIRE:
+                        this.aPlayer.fire();
                         break;
 
                     default:
