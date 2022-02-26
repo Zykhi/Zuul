@@ -17,6 +17,7 @@ import java.util.Set;
 public class Room {
     private String aDescription;
     private HashMap<String, Room> aExits;
+    private HashMap<String, Door> aDoors;
     private ItemList aItems;
     private String aImageName;
 
@@ -31,6 +32,7 @@ public class Room {
     public Room(final String pDescription, final String pImage) {
         this.aDescription = pDescription;
         this.aExits = new HashMap<String, Room>();
+        this.aDoors = new HashMap<String, Door>();
         this.aItems = new ItemList();
         this.aImageName = pImage;
     }
@@ -140,6 +142,16 @@ public class Room {
         } else {
             return this.aItems.getItemString();
         }
+    }
+
+    // DOOR
+
+    public Door getDoor(final String pDirection) {
+        return this.aDoors.get(pDirection);
+    }
+
+    public void addDoor(final String pDirection, final Door pDoor) {
+        this.aDoors.put(pDirection, pDoor);
     }
 
     // IMAGE

@@ -30,6 +30,7 @@ public class GameEngine {
         this.createRooms();
         this.createPlayer();
         this.createItems();
+        this.createDoor();
         this.aParser = new Parser();
     }
 
@@ -74,6 +75,7 @@ public class GameEngine {
 
         vCatacombs.setExit("west", vBoss2Room);
 
+        vLobby.setExit("up", vOutside);
         vLobby.setExit("north", vBoss1Room);
         vLobby.setExit("east", vBoss2Room);
         vLobby.setExit("west", vBoss3Room);
@@ -121,6 +123,11 @@ public class GameEngine {
 
         Item vMagicCookie = new Item("Cookie", 0, 0, "This is a magic cookie");
         this.aRooms.get("Treasure").addItem("Cookie", vMagicCookie);
+    }
+
+    private void createDoor() {
+        Door vTrapLobby = new Door(true);
+        this.aRooms.get("Lobby").addDoor("up", vTrapLobby);
     }
 
     /**

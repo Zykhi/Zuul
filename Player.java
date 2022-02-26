@@ -17,7 +17,7 @@ public class Player {
         this.aParser = new Parser();
         this.aInventory = new ItemList();
         this.aMaxWeight = 20;
-        this.aMovement = 2;
+        this.aMovement = 20;
     }
 
     /**
@@ -25,7 +25,7 @@ public class Player {
      * 
      * @return the nbr of movement
      */
-    public int getMovement(){
+    public int getMovement() {
         return this.aMovement;
     }
 
@@ -113,12 +113,19 @@ public class Player {
         this.getPreviousRooms().push(this.getCurrentRoom());
 
         String vDirection = pDirection.getSecondWord();
+        Door vDoor = this.getCurrentRoom().getDoor(vDirection);
 
         // Try to leave current room.
         Room vNextRoom = this.getCurrentRoom().getExit(vDirection);
 
         if (vNextRoom == null) {
             this.aGui.println("There is no door!");
+        } else if (vDoor != null) {
+            if (vDoor.isTrap()) {
+                this.aGui.println("its a trap");
+                clearStack();
+                return;
+            }
         } else {
             this.setRoom(vNextRoom);
             printLocationInfo();
@@ -196,7 +203,7 @@ public class Player {
             Room vPreviousRoom = this.getPreviousRooms().pop(); // was aPreviousRooms.pop()
             this.setRoom(vPreviousRoom); // was aCurrentRoom = vPreviousRoom
             printLocationInfo();
-            aMovement -=1;
+            aMovement -= 1;
         }
     }
 
@@ -262,6 +269,13 @@ public class Player {
         if (this.getCurrentRoom().getImageName() != null) {
             this.aGui.showImage(this.getCurrentRoom().getImageName());
         }
+    }
+
+    /**
+     * This method clear the stack
+     */
+    public void clearStack() {
+        this.aPreviousRooms.clear();
     }
 
 }

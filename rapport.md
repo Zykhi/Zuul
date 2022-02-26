@@ -2236,19 +2236,22 @@ Javadoc à jour et mise sur le site
 #### Exercice 7.42
 
 Nous créons un nouvel attribut, qui aura pour valeur, le nombre de pas maximum que le joueur peut effectuer. Nous créons l'accesseur de cet attribut
+
 ```java
 public int getMovement(){
     return this.aMovement;
 }
 ```
+
 Nous effectuons ensuite la modification dans la méthode `goRoom()` et `back()`
+
 ```java
 protected void goRoom(final Command pDirection) {
-        
+
     [...]
 
     } else {
-       
+
         [...]
 
         aMovement -= 1;
@@ -2258,9 +2261,9 @@ protected void goRoom(final Command pDirection) {
 [...]
 
 protected void back(final Command pCommand) {
-        
+
     [...]
-        
+
     } else {
 
         [...]
@@ -2269,19 +2272,21 @@ protected void back(final Command pCommand) {
     }
 }
 ```
+
 Puis nous ajoutons une condition à la méthode `processCommand()` pour que quand le nombre de pas à été atteint, le joueur ne puisse plus rentrer de commande
+
 ```java
 public void interpretCommand(final Command pCommandLine) {
 
     [...]
-        
+
     if (aPlayer.getMovement() <= 0) {
         this.gameOver();
     } else {
         try {
-                
+
             [...]
-                
+
         }catch (Exception pE) {
             [...]
         }
@@ -2293,3 +2298,80 @@ private void gameOver(){
     this.aGui.enable(false);
 }
 ```
+
+#### Exercice 7.42.1
+
+A FAIRE
+
+#### Exercice 7.42.2
+
+Je suis très largement en avance, je me lancerais donc dans une IHM plus poussée. Celle ci sera faite plus tard lorsque les exercices obligatoires seront terminés
+
+#### Exercice 7.43
+
+La pièce `Outside` a une seule sortie, une fois celle ci prise on ne peux revenir en arrière. Il faut juste pour cela vider la pile de la commande `back`. Je décide pour cet exercice de créer une classe `Door` qui me permettra de savoir si la porte est piégée ou pas
+
+```java
+public class Door {
+    private boolean aIsTrap;
+
+    public Door(final boolean pTrap) {
+        this.aIsTrap = pTrap;
+    }
+
+    public boolean isTrap() {
+        return this.aIsTrap;
+    }
+}
+```
+
+Ensuite dans la classe `GameEngine`, je crée une methode `createDoor()`
+
+```java
+private void createDoor(){
+    Door vTrapLobby = new Door(true);
+    this.aRooms.get("Lobby").addDoor("up", vTrapLobby);
+}
+```
+
+Nous ajoutons la méthode `addDoor()` précédement utilisée et une fonction `getDoor()`
+
+```java
+public void addDoor(final String pDirection, final Door pDoor) {
+    this.aDoors.put(pDirection, pDoor);
+}
+
+public Door getDoor(final String pDirection) {
+    return this.aDoors.get(pDirection);
+}
+```
+
+Puis les dernières modifications sont dans la classe `Player`
+
+```java
+protected void goRoom(final Command pDirection) {
+
+    [...]
+
+    Door vDoor = this.getCurrentRoom().getDoor(vDirection);
+
+    else if (vDoor != null) {
+        if (vDoor.isTrap()) {
+            this.aGui.println("its a trap");
+            clearStack();
+            return;
+        }
+
+    [...]
+
+    }
+```
+
+La méthode `clearStack()` sert à vider la pile
+
+```java
+public void clearStack() {
+    this.aPreviousRooms.clear();
+}
+```
+Cette modification permet de bloquer le retour dans la piece précédente si le joueur effectue la commande `go up` avant `back`. Une réflexion est en cours pour corriger cela.
