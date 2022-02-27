@@ -123,7 +123,7 @@ Réalisation du site internet pour Zuul a l'adresse suivante : [Zuul GOTY Editio
 
 #### Exercice 7.5
 
-La création de la méthode `printLocationInfo()` dans la classe `Game` permet d'éviter la duplication de code. En effet, il y a, à 2 reprises, le même segment de code (`goRoom()` et `printWelcome()`) pour informer le joueur de sa postion et les sorties disponibles. La création de `printLocationInfo()` permet de remplacer chaque occurence par un appel à la procedure, cela facilite aussi grandement les modifications futures car il y aura juste ce passage de code a modifier si on veut changer le texte pour les informations des salles.
+La création de la méthode `printLocationInfo()` dans la classe `Game` permet d'éviter la duplication de code. En effet, il y a, à 2 reprises, le même segment de code (`goRoom()` et `printWelcome()`) pour informer le joueur de sa postion et les sorties disponibles. La création de `printLocationInfo()` permet de remplacer chaque occurence par un appel à la procédure, cela facilite aussi grandement les modifications futures car il y aura juste ce passage de code à modifier si on veut changer le texte pour les informations des salles.
 
 ```java
 private void printLocationInfo()
@@ -178,7 +178,7 @@ public class Game
 
 #### Exercice 7.6
 
-La création de l'accesseur `getExit()` dans la classe `Room` permet de reduire le couplage, et de respecter un principe fondamental d'une bonne conception de classe qui est _l'encapsulation_. Cela nous permet de passer les attributs de la classe en privé. Le code passe de
+La création de l'accesseur `getExit()` dans la classe `Room` permet de réduire le couplage, et de respecter un principe fondamental d'une bonne conception de classe qui est _l'encapsulation_. Cela nous permet de passer les attributs de la classe en privé. Le code passe de
 
 ```java
 public class Room
@@ -224,7 +224,7 @@ public class Room
 }
 ```
 
-Il y a aussi des modifications à faire dans la classe `Game` qui sont
+Il y a aussi des modifications à faire dans la classe `Game`, pour remplacer un appel aux attributs par l'accesseur `getExit()` qui sont :
 
 ```java
 public class Game
@@ -266,7 +266,7 @@ public class Game
 
 #### Exercice 7.7
 
-La création de la méthode `getExitString()` doit être crée dans la classe `Room` car celle-ci gère tout ce qui réfère aux salles.
+La création de la méthode `getExitString()` qui nous retournera la chaine de caractère contenant toutes les sorties, doit être créée dans la classe `Room` car celle-ci gère tout ce qui réfère aux salles.
 
 ```java
 public String getExitString()
@@ -308,7 +308,7 @@ private void printLocationInfo()
 
 #### Exercice 7.8
 
-Modification des attributs de la classe `Room` pour les mettre dans une `HashMap`, pour ce faire il faut écrire en haut de la classe `import java.util.HashMap;`et pour la créer `private HashMap<String, Room> aExits;`. Le code de la classe `Room` est donc comme suit
+Modification des attributs de la classe `Room` pour les mettre dans une `HashMap`, pour ce faire il faut écrire en haut de la classe `import java.util.HashMap;` et pour la créer `private HashMap<String, Room> aExits;`. Le code de la classe `Room` est donc comme suit
 
 ```java
 import java.util.HashMap;
@@ -338,7 +338,7 @@ public class Room
 }
 ```
 
-et des changements dans `Game`
+Des changements sont aussi effectués dans la classe `Game` pour les mettres aux formats de nos accesseurs modifiés dû à la `HashMap`
 
 ```java
 public class Game
@@ -392,7 +392,7 @@ La méthode `keySet()` permet d'associer des valeurs arbitraires à des clés.
 import java.util.Set;
 ```
 
-Ainsi, il peut associer le mot de commande à la clé qui ouvrira l'accès à la `HashMap` contenant toutes les pièces. **Exemple :** pour le lobby, les sorties sont `north`, `east` et `west`. La clé nord sur la commande `go north` permettra d'accéder à la salle au nord du lobby.
+Ainsi, elle peut associer le mot de commande à la clé qui ouvrira l'accès à la `HashMap` contenant toutes les pièces. **Exemple :** pour le lobby, les sorties sont `north`, `east` et `west`. La clé nord sur la commande `go north` permettra d'accéder à la salle au nord du lobby.
 
 #### Exercice 7.10
 
@@ -416,7 +416,7 @@ for(String vExit : vKeys){
 }
 ```
 
-Ce bout de code est une boucle `for each` qui parcours la liste des clés stockées. `vExit` est une variable qui prend la valeur de la prochaine clé de la `HashMap`à chaque fois que la bocule se répète, ce qui fait que `vReturnString` obtient toutes les sorties disponibles dans la `String`.
+Ce bout de code est une boucle `for each` qui parcours la liste des clés stockées. `vExit` est une variable qui prend la valeur de la prochaine clé de la `HashMap`à chaque fois que la boucle se répète, ce qui fait que `vReturnString` obtient toutes les sorties disponibles dans la `String`.
 
 ```java
 return vReturnString;
@@ -444,7 +444,7 @@ private void printLocationInfo() {
 
 #### Exercice 7.12
 
-Les objets crées au lancement du programme sont imagés dans ce diagramme
+Les objets créés au lancement du programme sont imagés dans ce diagramme
 
 <p align="center">
   <img src="images/DiagrammeObjet.png" />
@@ -452,7 +452,7 @@ Les objets crées au lancement du programme sont imagés dans ce diagramme
 
 #### Exercice 7.13
 
-Lorsque la commande `go` est exécuté, l'objet courrant change, c'est a dire, passer d'une salle à l'autre
+Lorsque la commande `go` est exécutée, l'objet courrant change, c'est à dire, passer d'une salle à l'autre
 
 #### Exercice 7.14
 
@@ -523,7 +523,7 @@ public void showCommands(){
 }
 ```
 
-Puis on remplace le texte écrit "en dur" par la methode `showCommands()` afin de le rendre dynamique. Lorsque nous voudrons ajouter d'autres commandes, il s'adaptera automatiquement
+Puis nous remplaçons le texte écrit "en dur" par la methode `showCommands()` afin de le rendre dynamique. Lorsque nous voudrons ajouter d'autres commandes, il s'adaptera automatiquement
 
 ```java
 private void printHelp() {
@@ -650,7 +650,7 @@ public class Room {
 
 Ensuite la classe `Parser` n'a plus besoin de `Scanner`
 
-La classe `Game` devient la classe `GameEngine`. Le changement majeur est qu'avec la nouvelle interface on "imprime" plus dans le terminal mais sur la fenêtre du jeu avec cette ligne
+La classe `Game` devient la classe `GameEngine`. Le changement majeur est qu'avec la nouvelle interface on n'"imprime" plus dans le terminal mais sur la fenêtre du jeu avec cette ligne
 
 ```java
 this.aGui.println("exemple");
@@ -721,13 +721,13 @@ Une fois cela fait il faut l'ajouter sur le `JPanel`. Pour se faire on doit écr
 vPanel.add(this.aButton, BorderLayout.WEST); // EAST and WEST are available
 ```
 
-Le bouton à juste une interface graphique pour le moment, il faut donc lui ajouter un `ActionListener()`
+Le bouton a juste une interface graphique pour le moment, il faut donc lui ajouter un `ActionListener()`
 
 ```java
 this.aButton.addActionListener(this);
 ```
 
-Pour finir il faut modifier la méthode `actionPerformed` pour que que le bouton exectute la commande qui lui est renseignée
+Pour finir, il faut modifier la méthode `actionPerformed` pour que que le bouton exectute la commande qui lui est renseignée
 
 ```java
 public void actionPerformed(final ActionEvent pE) {
@@ -779,8 +779,8 @@ public class Item {
 }
 ```
 
-les accesseurs sont aussi créé ils pourraient être utile par la suite.
-Ensuite dans la classe `Room`, car les objets y seront stockés, nous devons l'initialiser. Nous choisirons ici l'utilisation d'une `HashMap` pour facilité l'ajout de plusieurs objets dans le futur. Cette exercice demande l'ajout d'un seul objet, c'est donc ce que nous feront.
+les accesseurs sont aussi créés, ils pourraient être utile par la suite.
+Ensuite dans la classe `Room`, car les objets y seront stockés, nous devons l'initialiser. Nous choisirons ici l'utilisation d'une `HashMap` pour faciliter l'ajout de plusieurs objets dans le futur. Cette exercice demande l'ajout d'un seul objet, c'est donc ce que nous ferons.
 
 ```java
 private HashMap<String, Item> aItems;
@@ -794,7 +794,7 @@ public Room(..) {
     }
 ```
 
-Pour ajouter des objets il nous faut une methode pour le faire. Nous en créons une nommée `setItems()`
+Pour ajouter des objets il nous faut une méthode pour le faire. Nous en créons une nommée `setItems()`
 
 ```java
 public void setItems(final String pName, final Item pItem){
@@ -802,7 +802,7 @@ public void setItems(final String pName, final Item pItem){
 }
 ```
 
-Nous ajoutons une fonction presque identique a `getExitString()` pour obtenir une chaine de caractère contenant tout les objets présents
+Nous ajoutons une fonction presque identique à `getExitString()` pour obtenir une chaine de caractère contenant tout les objets présents
 
 ```java
 public String getItemString() {
@@ -815,7 +815,7 @@ public String getItemString() {
 }
 ```
 
-Une fois cela fait nous pouvons nous attaquer a la mise en place d'un objet dans une pièce, nous allons donc modifier la classe `GameEngine`.
+Une fois cela fait nous pouvons nous attaquer à la mise en place d'un objet dans une pièce, nous allons donc modifier la classe `GameEngine`.
 Dans la méthode `createRoom()` nous allons pouvoir ajouter des objets grâce aux lignes ci-dessous
 
 ```java
@@ -825,7 +825,7 @@ public void createRoom(){
 }
 ```
 
-Ces deux lignes servent à créer un Item puis de le mettre dans la pièce en question, ici nous créons un objet `Test` que nous mettons dans la pièce `vOutside`
+Ces deux lignes servent à créer un `Item` puis de le mettre dans la pièce en question, ici nous créons un objet `Test` que nous mettons dans la pièce `vOutside`
 Il faut maintenant modifier la fonction `getLongDescription()` de la classe `Room` pour afficher les objets disponibles dans la salle. Comment savoir si la piece contient un objet ? Nous utiliserons un `boolean isEmpty()`
 
 ```java
@@ -853,7 +853,7 @@ public String getLongDescription() {
 
 #### Exercice 7.21
 
-Il faut que la classe `Item` produise la chaine de caractère qui décris l'objet, c'est pour cela que l'on doit effectuer quelques modifications. Nous redéfinissons la fonction `toString()` dans la classe `Item`
+Il faut que la classe `Item` produise la chaine de caractère qui décrit l'objet, c'est pour cela que l'on doit effectuer quelques modifications. Nous redéfinissons la fonction `toString()` dans la classe `Item`
 
 ```java
 @Override public String toString(){
@@ -914,11 +914,11 @@ La possibilité d'ajouter plusieurs objets avait déja été implémenté pendan
 
 #### Exercice 7.22.1
 
-Une `HashMap` a été utilisé car c'est, à mon avis, le plus approprié pour réaliser cet exercice puisqu'elle nous permet d'ajouter un nombre infini d'objet, c'est dynamique (comparé a un tableau où nous aurions dû modifier la taille a chaque objet rajouté ou supprimé de la salle) et c'est aussi une collection que nous avons vu dans les exercices précédents. Tout cela ajouté au fait que nous pouvons retrouver directement grâce a la méthode `get()` étant donnée que les objets sont stocké sous une chaine de caractères qui est leur noms et d'une clé qui est l'objet.
+Une `HashMap` a été utilisée car c'est, à mon avis, le plus approprié pour réaliser cet exercice puisqu'elle nous permet d'ajouter un nombre infini d'objet, c'est dynamique (comparé à un tableau où nous aurions dû modifier la taille à chaque objet rajouté ou supprimé de la salle) et c'est aussi une collection que nous avons vu dans les exercices précédents. Tout cela ajouté au fait que nous pouvons retrouver directement grâce à la méthode `get()` étant donnée que les objets sont stocké sous une chaine de caractères qui est leur noms et d'une clé qui est l'objet.
 
 #### Exercice 7.22.2
 
-Tout les objets actuels du jeu ont été implémenté, 2 objets factices ont été rajouté pour répondre au cahier des charges
+Tout les objets actuels du jeu sont implémentés, deux objets factices sont rajoutés pour répondre au cahier des charges
 
 ```java
 Item vTest = new Item("TestItem", 10, 5, "This is a test item"); // Name, price, weight, desc
@@ -954,7 +954,7 @@ public CommandWords() {
 }
 ```
 
-Puis la crée dans la classe `Game`. Pour ce faire nous avons besoin de nous "souvenir" de la salle précédente, nous créons donc un attribut `aPreviousRoom`
+Puis la créer dans la classe `Game`. Pour ce faire nous avons besoin de nous "souvenir" de la salle précédente, nous créons donc un attribut `aPreviousRoom`
 
 ```java
 private Room aPreviousRoom;
@@ -985,7 +985,7 @@ private void goRoom(.) {
 }
 ```
 
-L'avant dernière étape est de crée la méthode pour la commande `back`. La pièce actuelle prend la valeur de la pièce précédente qui nous permet donc de revenir en arrière. Pour finir la méthode nous affichons les informations de la salle.
+L'avant dernière étape est de créer la méthode pour la commande `back`. La pièce actuelle prend la valeur de la pièce précédente qui nous permet donc de revenir en arrière. Pour finir la méthode nous affichons les informations de la salle.
 
 ```java
 private void back(){
@@ -1023,7 +1023,7 @@ else if (vCommandWord.equals("back")) {
 
 #### Exercice 7.25
 
-Quand on se déplace plusieurs fois et qu'on fait la commande `back` autant de fois. Cela nous ramène uniquement dans la salle précédente et pas a la première salle du jeu.
+Quand on se déplace plusieurs fois et qu'on fait la commande `back` autant de fois. Cela nous ramène uniquement dans la salle précédente et pas à la première salle du jeu.
 
 #### Exercice 7.26
 
@@ -1050,7 +1050,7 @@ public GameEngine() {
     }
 ```
 
-Puis on commence les modifications. Dans `goRoom()`
+Puis on commence les modifications dans `goRoom()`
 
 ```java
 aPreviousRooms.push(aCurrentRoom);
@@ -1072,7 +1072,7 @@ private void back(Command pCommand){
 }
 ```
 
-J'ai aussi effectué une modification dans `interpretCommand()` je trouvais cela plus logique de tout géré depuis la commande `back`. C'est à dire, le cas où il y a 2 mots et celui où il n'y a pas d'autre salle dans la pile, qu'on esssaye d'effectuer `back` au démarrage du jeu. Les modifications dans `interpretCommand()` sont donc les suivantes
+J'ai aussi effectué une modification dans `interpretCommand()` je trouvais cela plus logique de tout gérer depuis la commande `back`. C'est à dire, le cas où il y a 2 mots et celui où il n'y a pas d'autre salle dans la pile, qu'on esssaye d'effectuer `back` au démarrage du jeu. Les modifications dans `interpretCommand()` sont donc les suivantes :
 
 ```java
 else if (vCommandWord.equals("back")) {
@@ -1084,11 +1084,11 @@ Nous remplaçons tout le gros bloc par un appel à la méthode
 
 #### Exercice 7.27
 
-Ce qui serait pertinant de tester est les commandes utilisateur, se deplacer dans toutes les salles, essayer de regarder dans les pieces voir si tout s'affiche bien, regarder les objets, utiliser la commande `back` pour voir si elle réagit bien dans toutes les circonstances.
+Il serait pertinent de tester les commandes utilisateur, de se deplacer dans toutes les salles, d'essayer de regarder dans les pieces voir si tout s'affiche bien, de regarder les objets et d'utiliser la commande `back` pour voir si elle réagit bien dans toutes les circonstances.
 
 #### Exercice 7.28
 
-Pour automatiser les textes il serait interressant de créer un fichier comportant toutes les commandes à tester. La classe `GameEngine` devra être modifiée pour inséré la possiblité d'avoir un script de test. Il faudra aussi ajouté dans `CommandWord` un nouveau mot comme `test` par exemple, qui acceptera un second mot qui pourrait être le nom du fichier test
+Pour automatiser les textes il serait intéressant de créer un fichier comportant toutes les commandes à tester. La classe `GameEngine` devra être modifiée pour insérer la possiblité d'avoir un script de test. Il faudra aussi ajouter dans `CommandWord` un nouveau mot comme `test` par exemple, qui acceptera un second mot qui pourrait être le nom du fichier test
 
 #### Exercice 7.28.1
 
@@ -1126,7 +1126,7 @@ private void test(Command pFile) {
 }
 ```
 
-L'utilisation d'un `try` et `catch()` permet de recupérer l'erreur que cela génére et de la mettre dans un message et ainsi éviter un bug du programme, ce qui serait une aubaine pour une commande de test.
+L'utilisation d'un `try` et `catch()` permet de recupérer l'erreur que cela génére, de la mettre dans un message et ainsi éviter un bug du programme, ce qui serait une aubaine pour une commande de test.
 Pour finir il faut ajouter la commande dans `interpretCommand()`
 
 ```java
@@ -1212,7 +1212,7 @@ LastLine
 
 l'ajout d'une ligne `LastLine` a été nécessaire pour le bon fonctionnement, car la boucle s'effectue tant qu'il y a une encore une ligne, ce qui passait la dernière commande a éxécuter
 
-Découverte d'un bug lorsque nous rentrions une commande inconnue comme `azerty` par exemple. La zone où nous rentrions le texte ne se vidait pas après une commande inconnue, les modifications on donc été effectuées dans la méthode `interpretCommand()`
+Découverte d'un bug lorsque nous rentrions une commande inconnue comme `azerty` par exemple. La zone où nous rentrions le texte ne se vidait pas après une commande inconnue, les modifications ont donc été effectuées dans la méthode `interpretCommand()`
 
 ```java
 try {
@@ -1248,7 +1248,7 @@ try {
 
 #### Exercice 7.29
 
-Création d'une nouvelle classe `Player`. Nous prenons toutes les commandes associé au joueur et nous les mettons dans la classe, car c'est le joueur qui doit utiliser les commandes
+Création d'une nouvelle classe `Player`. Nous prenons toutes les commandes associées au joueur et nous les mettons dans la classe, car c'est le joueur qui doit utiliser les commandes
 
 ```java
 import java.util.Stack;
@@ -1485,7 +1485,7 @@ public CommandWords() {
     }
 ```
 
-Nous créons les commandes dorénavent dans la classe `Player`. Nous créons une `HashMap aInventory` pour stocker les objets, nous les utilisons depuis le début du projet donc nous avons maintenant aquis certains automatismes
+Nous créons dorénavent les commandes dans la classe `Player`. Nous créons une `HashMap aInventory` pour stocker les objets, nous les utilisons depuis le début du projet donc nous avons maintenant aquis certains automatismes
 
 ```java
 private HashMap<String, Item> aInventory;
@@ -1498,7 +1498,7 @@ public Player(.) {
 }
 ```
 
-Nous nous attaquons maintenant à la création des commandes. Les deux sont assez similaire, `take` est l'inverse de `drop` c'est pour cela que les codes se ressemble, nous commençons par créer une `String` et un `Item` pour que ce soit plus simple dans la manipulation de notre `HashMap`. Nous effectuon ensuite les tests pour savoir si il y à bien un deuxième mot puis si l'objet est bien dans la salle pour `take` et si le joueur a bien l'objet pour `drop`. Lorsque les tests sont effectué on peut soit prendre, soit lacher l'objet, Nous utiliserons ici un `StringBuilder` comme vu lors d'un précédent exercice pour généré la chaine de caractère de l'inventaire du joueur puis l'afficher. Pour finir nous retirons l'objet de la salle pour la commande `take` ou de l'inventaire du joueur lorsque celui-ci pose l'objet
+Nous nous attaquons maintenant à la création des commandes. Les deux sont assez similaires, `take` est l'inverse de `drop` c'est pour cela que les codes se ressemble, nous commençons par créer une `String` et un `Item` pour que ce soit plus simple dans la manipulation de notre `HashMap`. Nous effectuons ensuite les tests pour savoir si il y à bien un deuxième mot puis si l'objet est bien dans la salle pour `take` et si le joueur a bien l'objet pour `drop`. Lorsque les tests sont effectués, on peut soit prendre, soit lacher l'objet. Nous utiliserons ici un `StringBuilder` comme vu lors d'un précédent exercice pour générer la chaine de caractère de l'inventaire du joueur puis l'afficher. Pour finir nous retirons l'objet de la salle pour la commande `take` ou de l'inventaire du joueur lorsque celui-ci pose l'objet
 
 ```java
 protected void take(final Command pItemName) {
@@ -1542,7 +1542,7 @@ protected void drop(final Command pItemName) {
 }
 ```
 
-Pour finir dans la classe `GameEngine` nous ajoutons les deux nouvelles commande à la méthode `interpretCommand()`
+Pour finir dans la classe `GameEngine` nous ajoutons les deux nouvelles commandes à la méthode `interpretCommand()`
 
 ```java
 else if (vCommandWord.equals("take")) {
@@ -1639,7 +1639,7 @@ public String getItemString(){
 }
 ```
 
-Dans la classe `Player` les commandes `take` et `drop` sont modifier pour utiliser la classe `ItemList`
+Dans la classe `Player` les commandes `take` et `drop` sont modifiées pour utiliser la classe `ItemList`
 
 ```java
 protected void take(final Command pItemName) {
@@ -1677,7 +1677,7 @@ protected void drop(final Command pItemName) {
 
 #### Exercice 7.32
 
-Nous ajoutons une contrainte de poids que le joueur peut porter, cela va donc se répercuter sur les objets, nous allons donc commencer par la classe `ItemList`. Nous ajoutons un nouvel attribut `aWeight` et nous l'initialisons dans le constructeur
+Nous ajoutons une contrainte de poids que le joueur peut porter, cela va se répercuter sur les objets et nous allons commencer par la classe `ItemList`. Nous ajoutons un nouvel attribut `aWeight` et nous l'initialisons dans le constructeur
 
 ```java
 private int aWeight;
@@ -1698,7 +1698,7 @@ public double getWeight(){
 }
 ```
 
-Puis nous créeons les méthodes pour gérer le poids du joueur et l'afficher
+Puis nous créons les méthodes pour gérer le poids du joueur et l'afficher
 
 ```java
 public void addWeight(final double pWeight){
@@ -1715,7 +1715,7 @@ public String showWeight(){
 }
 ```
 
-Viens maintenant le tour de la classe `Player`. Nous ajoutons 1 attribut `aMaxWeight` et nous l'initialisons dans le constructeur à 20. Nous créeons ensuite un getter
+Viens maintenant le tour de la classe `Player`. Nous ajoutons un attribut `aMaxWeight` et nous l'initialisons dans le constructeur à 20. Nous créons ensuite un getter
 
 ```java
 public int getMaxWeight(){
@@ -1812,7 +1812,7 @@ public void interpretCommand(.) {
 
 #### Exercice 7.34
 
-Modification de la commande `eat` pour rajouté un cookie magique qui double la taille de l'inventaire lorsqu'on le mange
+Modification de la commande `eat` pour rajouter un cookie magique qui double la taille de l'inventaire lorsqu'on le mange
 
 ```java
 protected void eat(final Command pCommand) {
@@ -1845,7 +1845,7 @@ protected void showInventory() {
 
 ---
 
-Découverte d'un petit problème d'affichage lorsque nous prenions un objet dans une salle et qu'il n'y en avais donc plus. La correction à effectuer est dans la classe `Room` sur les méthodes `getItemString()` et `getLongDescription()`. Au lieu de laisser gérer la seconde methodes pour savoir si il y a un objet dans la pièce où pas, il est plus logique de déléguer cela à la méthode `getItemString`
+Découverte d'un petit problème d'affichage lorsque nous prenions un objet dans une salle et qu'il n'y en avais donc plus. La correction à effectuer est dans la classe `Room` sur les méthodes `getItemString()` et `getLongDescription()`. Au lieu de laisser gérer la seconde méthode pour savoir si il y a un objet dans la pièce où pas, il est plus logique de déléguer cela à la méthode `getItemString`
 
 ```java
 public String getItemString() {
@@ -1869,7 +1869,7 @@ public String getLongDescription() {
 
 #### Exercice 7.34.1
 
-Mise à jour du fichier `allCommands.txt` avec les nouvelles commandes. Le fichier `fastEnd.txt` n'est pas mis à jour car des fonctionnalités ne sont pas implémenter pour finir le jeu actuellement, a voir si c'est le cas dans les prochains exercices du cahier des charges ou si il faudra le faire soit même
+Mise à jour du fichier `allCommands.txt` avec les nouvelles commandes. Le fichier `fastEnd.txt` n'est pas mis à jour car des fonctionnalités ne sont pas implémenter pour finir le jeu actuellement, à voir si c'est le cas dans les prochains exercices du cahier des charges ou si il faudra le faire soit même
 
 #### Exercice 7.34.2
 
@@ -1910,7 +1910,7 @@ Cette méthode est appelé dans le constructeur de la classe `GameEngine`
 
 #### Exercice 7.35
 
-Une refonte de la classe `CommandWords` est demandé dans cette exercice. L'ajout d'une enum `CommandWord` est effectué pour répondre au cahier des charges
+Une refonte de la classe `CommandWords` est demandée dans cette exercice. L'ajout d'une enum `CommandWord` est effectuée pour répondre au cahier des charges
 
 ```java
 public enum CommandWord{
@@ -1920,7 +1920,7 @@ public enum CommandWord{
 }
 ```
 
-Cette enum sert à lister les commands possible pour l'utilisateur
+Cette enum sert à lister les commandes possible pour l'utilisateur
 
 ```java
 import java.util.HashMap;
@@ -1987,7 +1987,7 @@ public class CommandWords {
 } // CommandWords
 ```
 
-La classe `CommandWords` est entierement refaite pour fonctionner avec cette nouvelle enum. De légère modification sont apportée a la classe `Command` pour que celle ci prennent en compte l'enum que nous venons de créer
+La classe `CommandWords` est entierement refaite pour fonctionner avec cette nouvelle enum. De légères modifications sont apportées à la classe `Command` pour que celle ci prenne en compte l'enum que nous venons de créer
 
 ```java
 public class Command {
@@ -2025,7 +2025,7 @@ public Command getCommand(final String pInputLine) {
 }
 ```
 
-Deux modifications sont aussi apportée dans la classe `UserInterface`. Après avoir initialiser la classe `Parser` dans le constructeur de l'interface utilisateur nous effectuons les modifications suivante :
+Deux modifications sont aussi apportées dans la classe `UserInterface`. Après avoir initialisé la classe `Parser` dans le constructeur de l'interface utilisateur nous effectuons les modifications suivante :
 
 ```java
 public void actionPerformed(final ActionEvent pE) {
@@ -2091,7 +2091,7 @@ public void interpretCommand(final Command pCommandLine) {
 }
 ```
 
-Pour finir on met a jour la commande de test (interpretCommand) prenait une `String` en paramètre et maintenant une `Command` donc Nous créons une variable qui obtiens la commande de la `String` entrée en paramètre
+Pour finir, on met à jour la commande de test (interpretCommand) prenait une `String` en paramètre et maintenant une `Command` donc nous créons une variable qui obtient la commande de la `String` entrée en paramètre
 
 ```java
 private void test(Command pFile) {
@@ -2112,7 +2112,7 @@ private void test(Command pFile) {
 }
 ```
 
-Création d'une fonction `getEntryField()` qui permet au joueur de savoir quelle commande il a rentré car avec les modifications de la méthodes `interpretCommand()` l'affichage était `> Command@6c3c90c9` donc la fonction vient corriger ceci
+Création d'une fonction `getEntryField()` qui permet au joueur de savoir quelle commande il a rentré car avec les modifications de la méthode `interpretCommand()` l'affichage était `> Command@6c3c90c9` donc la fonction vient corriger ceci
 
 ```java
 public String getEntryField() {
@@ -2204,7 +2204,7 @@ par
 this.aValidCommands.put("aide", CommandWord.HELP);
 ```
 
-N'étant pas utile pour mon jeu, car tout en anglais, la fonctionnalité optionnelle n'est pas implémenté
+N'étant pas utile pour mon jeu, tout en anglais, la fonctionnalité optionnelle n'est pas implémenté
 
 #### Exercice 7.38
 
@@ -2273,7 +2273,7 @@ protected void back(final Command pCommand) {
 }
 ```
 
-Puis nous ajoutons une condition à la méthode `processCommand()` pour que quand le nombre de pas à été atteint, le joueur ne puisse plus rentrer de commande
+Puis nous ajoutons une condition à la méthode `processCommand()` pour que quand le nombre de pas est atteint, le joueur ne puisse plus rentrer de commande
 
 ```java
 public void interpretCommand(final Command pCommandLine) {
@@ -2417,7 +2417,7 @@ private void createItems() {
     this.aRooms.get("Outside").addItem("teleporter", vBeamer);
 }
 ```
-Le téléporteur est, pour le moment, dans la première salle pour faciliter les tests et parce que je n'ai aucune idée où le mettre.
+Le téléporteur est, pour le moment, dans la première salle pour faciliter les tests.
 Nous devons maintenant ajouter les deux fonctionnalités, `charge` et `fire` dans la classe `Player`
 ```java
 public void charge() {
