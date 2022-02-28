@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -21,6 +22,7 @@ public class GameEngine {
     private Player aPlayer;
     private Parser aParser;
     private HashMap<String, Room> aRooms;
+    private ArrayList<TransporterRoom> aTransporterRoom;
     private UserInterface aGui;
 
     /**
@@ -51,8 +53,9 @@ public class GameEngine {
     private void createRooms() {
 
         this.aRooms = new HashMap<String, Room>();
+        this.aTransporterRoom = new ArrayList<TransporterRoom>();
 
-        Room vOutside, vCatacombs, vLobby, vTreasure, vBoss1Room, vBoss2Room, vBoss3Room;
+        Room vOutside, vCatacombs, vLobby, vTreasure, vBoss1Room, vBoss2Room, vBoss3Room, vTestRoom;
 
         vOutside = new Room("outside the dungeon", "gameImages/outside.gif");
         vCatacombs = new Room("in the catacombs", "gameImages/catacombs.gif");
@@ -62,6 +65,8 @@ public class GameEngine {
         vBoss2Room = new Room("boss room 2", "gameImages/boss2.gif");
         vBoss3Room = new Room("boss room 3", "gameImages/boss3.gif");
 
+        vTestRoom = new TransporterRoom("This is a test room", "gameImages/test.gif");
+
         aRooms.put("Outside", vOutside);
         aRooms.put("Catacombs", vCatacombs);
         aRooms.put("Lobby", vLobby);
@@ -69,6 +74,9 @@ public class GameEngine {
         aRooms.put("Boss1Room", vBoss1Room);
         aRooms.put("Boss2Room", vBoss2Room);
         aRooms.put("Boss3Room", vBoss3Room);
+        aRooms.put("TestRoom", vTestRoom);
+
+        ((TransporterRoom) vTestRoom).setAllRooms(this.aRooms);
 
         // exit
         vOutside.setExit("down", vLobby);
@@ -83,6 +91,7 @@ public class GameEngine {
         vTreasure.setExit("east", vBoss3Room);
 
         vBoss1Room.setExit("south", vLobby);
+        vBoss1Room.setExit("north", vTestRoom);
 
         vBoss2Room.setExit("east", vCatacombs);
         vBoss2Room.setExit("west", vLobby);

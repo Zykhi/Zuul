@@ -2460,3 +2460,76 @@ case FIRE:
 ```java
 CHARGE("charge"), FIRE("fire");
 ```
+
+#### Exercice 7.46
+
+Ajout de deux nouvelles classe pour réaliser cette exercice
+```java
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
+
+public class RoomRandomizer {
+    private HashMap<String, Room> aAllRooms;
+    private ArrayList<Room> aRoomsArrayList;
+
+    public RoomRandomizer(HashMap<String, Room> pAllRooms) {
+        this.aAllRooms = pAllRooms;
+        this.aRoomsArrayList = new ArrayList<Room>();
+        fillArrayList();
+    }
+
+    private void fillArrayList() {
+        HashMap<String, Room> vAllRooms = this.aAllRooms;
+        for (String vRoomName : vAllRooms.keySet()) {
+            this.aRoomsArrayList.add(vAllRooms.get(vRoomName));
+        }
+    }
+
+    public Room findRandomRoom() {
+        Random vRandom = new Random();
+        int vRandomIntInArray = vRandom.nextInt(this.aRoomsArrayList.size());
+
+        return this.aRoomsArrayList.get(vRandomIntInArray);
+    }
+
+}
+````
+
+```java
+import java.util.HashMap;
+
+public class TransporterRoom extends Room {
+
+    private RoomRandomizer aRoomRandomizer;
+
+    public TransporterRoom(String pDescription, String pImage) {
+        super(pDescription, pImage);
+
+    }
+
+    public void setAllRooms(final HashMap<String, Room> pAllRooms) {
+        this.aRoomRandomizer = new RoomRandomizer(pAllRooms);
+    }
+
+    @Override
+    public Room getExit(final String pDirection) {
+        return this.aRoomRandomizer.findRandomRoom();
+    }
+
+}
+```
+
+Puis dans la classe `GameEngine``
+
+```java
+private ArrayList<TransporterRoom> aTransporterRoom;
+```
+
+```java
+this.aTransporterRoom = new ArrayList<TransporterRoom>();
+```
+
+```java
+((TransporterRoom) vTestRoom).setAllRooms(this.aRooms);
+```
