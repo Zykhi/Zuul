@@ -2374,11 +2374,13 @@ public void clearStack() {
     this.aPreviousRooms.clear();
 }
 ```
+
 Cette modification permet de bloquer le retour dans la piece précédente si le joueur effectue la commande `go up` avant `back`. Une réflexion est en cours pour corriger cela.
 
-#### Exercice 7.44 
+#### Exercice 7.44
 
 Nous devons ici créer un téléporteur, c'est à dire une sorte d'`Item`. Lorsqu'il est chargé dans une salle, quand le joueur l'active, le téléporteur doit le ramener à la salle où il a été chargé. Pour ce faire, nous créons une nouvelle classe `Beamer` qui est donc une sorte d'`Item`
+
 ```java
 public class Beamer extends Item {
     private boolean aIsCharged;
@@ -2407,7 +2409,9 @@ public class Beamer extends Item {
     }
 }
 ```
+
 Nous ajoutons donc ce nouvel objet dans le jeu, dans la classe `GameEngine`
+
 ```java
 private void createItems() {
 
@@ -2417,8 +2421,10 @@ private void createItems() {
     this.aRooms.get("Outside").addItem("teleporter", vBeamer);
 }
 ```
+
 Le téléporteur est, pour le moment, dans la première salle pour faciliter les tests.
 Nous devons maintenant ajouter les deux fonctionnalités, `charge` et `fire` dans la classe `Player`
+
 ```java
 public void charge() {
     Beamer vBeamer = (Beamer) this.aInventory.getItemName("teleporter");
@@ -2447,7 +2453,9 @@ public void fire() {
     }
 }
 ```
+
 Puis pour finir nous ajoutons l'utilisation des commandes dans la méthode `interpretCommand()` de la classe `GameEngine` et nous créons les mots de commande dans l'enum `CommandWord`
+
 ```java
 case CHARGE:
     this.aPlayer.charge();
@@ -2457,13 +2465,15 @@ case FIRE:
     this.aPlayer.fire();
     break;
 ```
+
 ```java
 CHARGE("charge"), FIRE("fire");
 ```
 
 #### Exercice 7.46
 
-Ajout de deux nouvelles classe pour réaliser cette exercice
+Ajout de deux nouvelles classe pour réaliser cet exercice. Une classe `RoomRandomizer` qui cherchera une salle aléatoire dans toutes les salles possibles
+
 ```java
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -2494,7 +2504,9 @@ public class RoomRandomizer {
     }
 
 }
-````
+```
+
+Et une classe `TransporterRoom` qui elle, recupérera la salle aléatoire et lui attribura comme sortie
 
 ```java
 import java.util.HashMap;
@@ -2520,15 +2532,20 @@ public class TransporterRoom extends Room {
 }
 ```
 
-Puis dans la classe `GameEngine``
+Puis dans la classe `GameEngine` il y a des ajouts pour que cette pièce soit dans le jeux.
+On ajoute un nouvel attribut
 
 ```java
 private ArrayList<TransporterRoom> aTransporterRoom;
 ```
 
+Puis on l'initialise
+
 ```java
 this.aTransporterRoom = new ArrayList<TransporterRoom>();
 ```
+
+Et ensuite on ajoute a une room la sortie aléatoire
 
 ```java
 ((TransporterRoom) vTestRoom).setAllRooms(this.aRooms);
