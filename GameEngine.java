@@ -137,6 +137,9 @@ public class GameEngine {
         this.aRooms.get("Outside").addItem("teleporter", vBeamer);
     }
 
+    /**
+     * This method init door in the room
+     */
     private void createDoor() {
         Door vTrapLobby = new Door(true);
         this.aRooms.get("Lobby").addDoor("up", vTrapLobby);

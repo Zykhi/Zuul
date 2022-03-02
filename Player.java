@@ -261,6 +261,9 @@ public class Player {
         this.aGui.println(this.aInventory.getWeightString() + this.aMaxWeight + "kg");
     }
 
+    /**
+     * This method charge the beamer
+     */
     public void charge() {
         Beamer vBeamer = (Beamer) this.aInventory.getItemName("teleporter");
         if (this.aInventory.contain(vBeamer)) {
@@ -271,6 +274,9 @@ public class Player {
         }
     }
 
+    /**
+     * This method fire the beamer
+     */
     public void fire() {
         Beamer vBeamer = (Beamer) this.aInventory.getItemName("teleporter");
         if (this.aInventory.contain(vBeamer)) {

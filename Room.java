@@ -146,10 +146,22 @@ public class Room {
 
     // DOOR
 
+    /**
+     * This function get the door
+     * 
+     * @param pDirection direction of the exit
+     * @return the door
+     */
     public Door getDoor(final String pDirection) {
         return this.aDoors.get(pDirection);
     }
 
+    /**
+     * This method add a door
+     * 
+     * @param pDirection direction of the exit
+     * @param pDoor the door 
+     */
     public void addDoor(final String pDirection, final Door pDoor) {
         this.aDoors.put(pDirection, pDoor);
     }
