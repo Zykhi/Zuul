@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 /**
- * Item list class - 
+ * Item list class -
  * 
  * @author C.Diouy
  * @version 2022.02.22
@@ -23,7 +23,7 @@ public class ItemList {
      * This function get the name of the item
      * 
      * @param pName name of the item
-     * @return a item 
+     * @return a item
      */
     public Item getItemName(final String pName) {
         return this.aItems.get(pName);
@@ -56,7 +56,7 @@ public class ItemList {
     /**
      * This function get all the item in inventory in a string
      * 
-     * @return a string describing the inventory's items 
+     * @return a string describing the inventory's items
      */
     public String getInventoryString() {
         if (this.aItems.isEmpty()) {

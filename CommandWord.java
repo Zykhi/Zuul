@@ -9,7 +9,7 @@ public enum CommandWord {
     // A value for each command word, plus one for unrecognised
     // commands.
     HELP("help"), GO("go"), QUIT("quit"), LOOK("look"), EAT("eat"), BACK("back"),
-    TEST("test"), TAKE("take"), DROP("drop"), INVENTORY("inventory"), UNKNOWN("?"), 
+    TEST("test"), TAKE("take"), DROP("drop"), INVENTORY("inventory"), UNKNOWN("?"),
     CHARGE("charge"), FIRE("fire");
 
     // The command string.

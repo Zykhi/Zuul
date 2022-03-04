@@ -165,6 +165,7 @@ public class UserInterface implements ActionListener {
 
     /**
      * get the entry field
+     * 
      * @return the text in the entry field
      */
     public String getEntryField() {

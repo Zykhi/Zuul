@@ -160,7 +160,7 @@ public class Room {
      * This method add a door
      * 
      * @param pDirection direction of the exit
-     * @param pDoor the door 
+     * @param pDoor      the door
      */
     public void addDoor(final String pDirection, final Door pDoor) {
         this.aDoors.put(pDirection, pDoor);
