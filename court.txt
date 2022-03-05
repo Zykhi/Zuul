@@ -2,4 +2,5 @@ go down
 look
 go north
 look Warmog's_Armor
+take Warmog's_Armor
 LastLine
