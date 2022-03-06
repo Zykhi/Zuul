@@ -6,7 +6,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -118,6 +120,12 @@ public class UserInterface implements ActionListener {
         vPanel.add(vListScroller, BorderLayout.CENTER);
         vPanel.add(this.aEntryField, BorderLayout.SOUTH);
         vPanel.add(this.aButton, BorderLayout.WEST);
+
+        Font vFont = new Font("Monospaced", Font.PLAIN, 14);
+
+        this.aLog.setFont(vFont);
+        this.aLog.setForeground(Color.white);
+        this.aLog.setBackground(Color.darkGray);
 
         this.aMyFrame.getContentPane().add(vPanel, BorderLayout.CENTER);
 
