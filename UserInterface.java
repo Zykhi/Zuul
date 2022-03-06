@@ -102,9 +102,13 @@ public class UserInterface implements ActionListener {
      * Set up graphical user interface.
      */
     private void createGUI() {
-        this.aMyFrame = new JFrame("Zuul GOTY Edition"); // change the title
+        this.aMyFrame = new JFrame("Zuul GOTY Edition");
+        ImageIcon aQuitIcon = new ImageIcon("gameImages/quit.png");
+        ImageIcon aGameIcon = new ImageIcon("gameImages/game.png");
         this.aEntryField = new JTextField(34);
-        this.aButton = new JButton("quit");
+        this.aButton = new JButton("quit", aQuitIcon);
+
+        this.aMyFrame.setIconImage(aGameIcon.getImage());
 
         this.aLog = new JTextArea();
         this.aLog.setEditable(false);
