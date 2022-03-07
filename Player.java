@@ -101,7 +101,7 @@ public class Player {
         this.aGui.slowPrintln("Good luck knight. If you need help, let me know.");
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -152,6 +152,7 @@ public class Player {
             }
         } else {
             this.setRoom(vNextRoom);
+            showImage();
             printLocationInfo();
             aMovement -= 1;
 
@@ -169,6 +170,7 @@ public class Player {
         if (pCommand.hasSecondWord()) {
             this.lookItem(pCommand);
         } else {
+            showImage();
             printLocationInfo();
         }
     }
@@ -226,6 +228,7 @@ public class Player {
         } else {
             Room vPreviousRoom = this.getPreviousRooms().pop(); // was aPreviousRooms.pop()
             this.setRoom(vPreviousRoom); // was aCurrentRoom = vPreviousRoom
+            showImage();
             printLocationInfo();
             aMovement -= 1;
         }
@@ -323,9 +326,6 @@ public class Player {
      */
     protected void printLocationInfo() {
         this.aGui.println(this.getCurrentRoom().getLongDescription());
-        if (this.getCurrentRoom().getImageName() != null) {
-            this.aGui.showImage(this.getCurrentRoom().getImageName());
-        }
     }
 
     protected void showImage() {
