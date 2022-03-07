@@ -90,6 +90,7 @@ public class Player {
      * Print out the opening message for the player.
      */
     protected void printWelcome() {
+        this.showImage();
         this.aGui.playWelcomeSound();
         this.aGui.slowPrintln("Welcome to the world of Zuul.");
         this.aGui.slowPrintln("You are Edward, the hero of this story.");
@@ -98,7 +99,13 @@ public class Player {
                 "You come across a waterfall that hides a cave, mist emanating from it.");
         this.aGui.slowPrintln("It is at this moment that your adventure takes all its meaning.");
         this.aGui.slowPrintln("Good luck knight. If you need help, let me know.");
-        
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         this.aGui.println("Type '" + CommandWord.HELP.toString() + "' if you need help.");
         this.printLocationInfo();
     }
@@ -316,6 +323,12 @@ public class Player {
      */
     protected void printLocationInfo() {
         this.aGui.println(this.getCurrentRoom().getLongDescription());
+        if (this.getCurrentRoom().getImageName() != null) {
+            this.aGui.showImage(this.getCurrentRoom().getImageName());
+        }
+    }
+
+    protected void showImage() {
         if (this.getCurrentRoom().getImageName() != null) {
             this.aGui.showImage(this.getCurrentRoom().getImageName());
         }
