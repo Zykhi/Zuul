@@ -85,7 +85,7 @@ public class UserInterface implements ActionListener {
             this.aLog.setCaretPosition(this.aLog.getDocument().getLength());
 
             try {
-                Thread.sleep(65);
+                Thread.sleep(60);
             } catch(InterruptedException e) {
                 e.printStackTrace();
             }
@@ -149,7 +149,7 @@ public class UserInterface implements ActionListener {
      */
     private void createGUI() {
         this.aMyFrame = new JFrame("Zuul GOTY Edition");
-        this.aMyFrame.setPreferredSize(new Dimension(650, 850));
+        this.aMyFrame.setPreferredSize(new Dimension(650, 950));
         ImageIcon aQuitIcon = new ImageIcon("gameImages/quit.png");
         ImageIcon aGameIcon = new ImageIcon("gameImages/game.png");
         this.aEntryField = new JTextField(34);
