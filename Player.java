@@ -87,6 +87,17 @@ public class Player {
     // User Command
 
     /**
+     * Print out the opening message for the player.
+     */
+    protected void printWelcome() {
+        this.aGui.playWelcomeSound();
+        this.aGui.slowPrintln("Welcome to Zuul GOTY Edition !");
+        this.aGui.slowPrintln("Zuul GOTY Edition is a new, incredibly and fantastic adventure game.");
+        this.aGui.slowPrintln("Type '" + CommandWord.HELP.toString() + "' if you need help.");
+        this.printLocationInfo();
+    }
+
+    /**
      * Print out some help information.
      * Here we print some stupid, cryptic message and a list of the
      * command words.

@@ -1,15 +1,17 @@
 import java.net.URL;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
+import java.io.File;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -67,6 +69,50 @@ public class UserInterface implements ActionListener {
         this.print(pText + "\n");
     } // println(.)
 
+
+    /**
+     * 
+     * 
+     * @author https://github.com/Vourem/SlowPrint-Method/blob/master/SlowPrint
+     * @param pText
+     */
+    public void slowPrint(final String pText) {
+        
+        for (char c : pText.toCharArray()) {
+            String vMessage = Character.toString(c);
+
+            this.aLog.append(vMessage);
+            this.aLog.setCaretPosition(this.aLog.getDocument().getLength());
+
+            try {
+                Thread.sleep(65);
+            } catch(InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void slowPrintln(final String pText) {
+        this.slowPrint(pText + "\n");
+    }
+
+
+    /**
+     * 
+     * @author https://stackoverflow.com/questions/6045384/playing-mp3-and-wav-in-java
+     */
+    public void playWelcomeSound() {
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("gameSounds/welcome.wav").getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch(Exception ex) {
+            System.out.println("Error with playing sound.");
+            ex.printStackTrace();
+        }
+    }
+
     /**
      * Show an image file in the interface.
      * 
@@ -103,6 +149,7 @@ public class UserInterface implements ActionListener {
      */
     private void createGUI() {
         this.aMyFrame = new JFrame("Zuul GOTY Edition");
+        this.aMyFrame.setPreferredSize(new Dimension(650, 850));
         ImageIcon aQuitIcon = new ImageIcon("gameImages/quit.png");
         ImageIcon aGameIcon = new ImageIcon("gameImages/game.png");
         this.aEntryField = new JTextField(34);

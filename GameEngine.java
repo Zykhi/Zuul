@@ -44,7 +44,7 @@ public class GameEngine {
     public void setGUI(final UserInterface pUserInterface) {
         this.aGui = pUserInterface;
         this.aPlayer.setGUI(pUserInterface);
-        this.printWelcome();
+        this.aPlayer.printWelcome();
     }
 
     /**
@@ -145,15 +145,6 @@ public class GameEngine {
         this.aRooms.get("Lobby").addDoor("up", vTrapLobby);
     }
 
-    /**
-     * Print out the opening message for the player.
-     */
-    private void printWelcome() {
-        this.aGui.println("Welcome to Zuul GOTY Edition !");
-        this.aGui.println("Zuul GOTY Edition is a new, incredibly and fantastic adventure game.");
-        this.aGui.println("Type '" + CommandWord.HELP.toString() + "' if you need help.");
-        this.aPlayer.printLocationInfo();
-    }
 
     /**
      * Given a command, process (that is: execute) the command.
