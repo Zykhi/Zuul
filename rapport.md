@@ -2305,7 +2305,165 @@ A FAIRE
 
 #### Exercice 7.42.2
 
-Je suis très largement en avance, je me lancerais donc dans une IHM plus poussée. Celle ci sera faite plus tard lorsque les exercices obligatoires seront terminés
+Une IHM plus poussée est développée.
+
+```java
+private void createGUI() {
+    this.aMyFrame = new JFrame();
+    this.aMyFrame.setTitle("Zuul GOTY Edition");
+    // this.aMyFrame.setSize(650, 950);
+    this.aMyFrame.setResizable(false);
+    this.aMyFrame.setBackground(Color.DARK_GRAY);
+
+    this.aEntryField = new JTextField(34);
+
+    ImageIcon aQuitIcon = new ImageIcon("gameImages/quit.png");
+    ImageIcon aGameIcon = new ImageIcon("gameImages/game.png");
+
+    this.aQuitButton = new JButton("quit", aQuitIcon);
+    this.aNorthButton = new JButton("north ▲");
+    this.aEastButton = new JButton("east ▶");
+    this.aSouthButton = new JButton("south ▼");
+    this.aWestButton = new JButton("◀ west");
+    this.aUpButton = new JButton("up △");
+    this.aDownButton = new JButton("down ▽");
+    this.aBackButton = new JButton("back ↺");
+    this.aHelpButton = new JButton("help ?");
+    this.aDropButton = new JButton("drop");
+    this.aTakeButton = new JButton("take");
+    this.aFireButton = new JButton("fire");
+    this.aChargeButton = new JButton("charge");
+
+    this.aMyFrame.setIconImage(aGameIcon.getImage());
+
+    this.aLog = new JTextArea();
+    this.aLog.setEditable(false);
+    this.aLog.setLineWrap(true);
+    this.aLog.setWrapStyleWord(true);
+    this.aLog.setMargin(new Insets(10, 10, 10, 10));
+    JScrollPane vListScroller = new JScrollPane(this.aLog);
+    vListScroller.setPreferredSize(new Dimension(200, 200));
+    vListScroller.setMinimumSize(new Dimension(100, 100));
+
+    JPanel vImagePanel = new JPanel();
+    this.aImage = new JLabel();
+
+    vImagePanel.setLayout(new BorderLayout()); // ==> only five places
+    vImagePanel.add(this.aImage, BorderLayout.CENTER);
+
+    JPanel vTextPanel = new JPanel();
+
+    vTextPanel.setLayout(new BorderLayout());
+    vTextPanel.add(vListScroller, BorderLayout.CENTER);
+    vTextPanel.add(this.aEntryField, BorderLayout.SOUTH);
+
+    JPanel vButtonPanel1 = new JPanel();
+    JPanel vCenterButtonPanel = new JPanel();
+
+    vCenterButtonPanel.setLayout(new GridLayout(1, 2));
+    vCenterButtonPanel.setBackground(Color.DARK_GRAY);
+    vCenterButtonPanel.add(this.aUpButton);
+    vCenterButtonPanel.add(this.aDownButton);
+
+    vButtonPanel1.setLayout(new BorderLayout());
+    vButtonPanel1.setBackground(Color.DARK_GRAY);
+    vButtonPanel1.add(this.aNorthButton, BorderLayout.NORTH);
+    vButtonPanel1.add(this.aWestButton, BorderLayout.WEST);
+    vButtonPanel1.add(this.aSouthButton, BorderLayout.SOUTH);
+    vButtonPanel1.add(this.aEastButton, BorderLayout.EAST);
+    vButtonPanel1.add(vCenterButtonPanel, BorderLayout.CENTER);
+
+    JPanel vButtonPanel2 = new JPanel();
+    vButtonPanel2.setLayout(new GridLayout(3, 3));
+    vButtonPanel2.setBackground(Color.DARK_GRAY);
+    vButtonPanel2.add(this.aBackButton);
+    vButtonPanel2.add(this.aHelpButton);
+    vButtonPanel2.add(this.aQuitButton);
+    vButtonPanel2.add(this.aDropButton);
+    vButtonPanel2.add(this.aTakeButton);
+    vButtonPanel2.add(this.aFireButton);
+    vButtonPanel2.add(this.aChargeButton);
+
+    JPanel vPanel = new JPanel();
+    vPanel.setLayout(new GridBagLayout());
+    GridBagConstraints vGridBagLayout = new GridBagConstraints();
+    vGridBagLayout.weightx = 1;
+    vGridBagLayout.weighty = 1;
+
+    vGridBagLayout.gridx = 0;
+    vGridBagLayout.gridwidth = 2;
+    vGridBagLayout.gridheight = 2;
+    vGridBagLayout.gridy = 0;
+    vGridBagLayout.fill = GridBagConstraints.BOTH;
+    vPanel.add(vImagePanel, vGridBagLayout);
+
+    vGridBagLayout.gridx = 0;
+    vGridBagLayout.gridwidth = 1;
+    vGridBagLayout.gridheight = 1;
+    vGridBagLayout.gridy = 2;
+    vPanel.add(vButtonPanel1, vGridBagLayout);
+
+    vGridBagLayout.gridx = 1;
+    vGridBagLayout.gridwidth = 1;
+    vGridBagLayout.gridheight = 1;
+    vGridBagLayout.gridy = 2;
+    vPanel.add(vButtonPanel2, vGridBagLayout);
+
+    vGridBagLayout.gridx = 2;
+    vGridBagLayout.gridwidth = 1;
+    vGridBagLayout.gridheight = 3;
+    vGridBagLayout.gridy = 0;
+    vPanel.add(vTextPanel, vGridBagLayout);
+
+    Font vFont = new Font("Monospaced", Font.PLAIN, 14);
+
+    this.aLog.setFont(vFont);
+    this.aLog.setForeground(Color.white);
+    this.aLog.setBackground(Color.darkGray);
+
+    this.aMyFrame.getContentPane().add(vPanel, BorderLayout.CENTER);
+
+    [...]
+} // createGUI()
+```
+
+Les boutons permettant d'effectuer toutes les commandes sont ajoutées, et une réorganisation des différents éléments est mise en place.
+L'ajout d'une nouvelle méthode permettant d'ecrire le texte comme si quelqu'un l'écrivait est ajoutée
+
+```java
+public void slowPrint(final String pText) {
+
+    for (char c : pText.toCharArray()) {
+        String vMessage = Character.toString(c);
+
+        this.aLog.append(vMessage);
+        this.aLog.setCaretPosition(this.aLog.getDocument().getLength());
+
+        try {
+            Thread.sleep(60);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+Puis ajout d'un narrateur pour le message de bienvenue
+
+```java
+public void playWelcomeSound() {
+    try {
+        AudioInputStream vAudioInputStream = AudioSystem
+                .getAudioInputStream(new File("gameSounds/welcome.wav").getAbsoluteFile());
+        Clip vClip = AudioSystem.getClip();
+        vClip.open(vAudioInputStream);
+        vClip.start();
+    } catch (Exception ex) {
+        System.out.println("Error with playing sound.");
+        ex.printStackTrace();
+    }
+}
+```
 
 #### Exercice 7.43
 

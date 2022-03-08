@@ -3,9 +3,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.io.File;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 
@@ -34,8 +39,20 @@ public class UserInterface implements ActionListener {
     private JTextField aEntryField;
     private JTextArea aLog;
     private JLabel aImage;
-    private JButton aButton;
+    private JButton aQuitButton;
+    private JButton aNorthButton;
+    private JButton aSouthButton;
+    private JButton aEastButton;
+    private JButton aWestButton;
+    private JButton aUpButton;
+    private JButton aDownButton;
     private Parser aParser;
+    private JButton aBackButton;
+    private JButton aHelpButton;
+    private JButton aDropButton;
+    private JButton aTakeButton;
+    private Component aChargeButton;
+    private Component aFireButton;
 
     /**
      * Construct a UserInterface. As a parameter, a Game Engine
@@ -69,7 +86,6 @@ public class UserInterface implements ActionListener {
         this.print(pText + "\n");
     } // println(.)
 
-
     /**
      * 
      * 
@@ -77,7 +93,7 @@ public class UserInterface implements ActionListener {
      * @param pText
      */
     public void slowPrint(final String pText) {
-        
+
         for (char c : pText.toCharArray()) {
             String vMessage = Character.toString(c);
 
@@ -86,7 +102,7 @@ public class UserInterface implements ActionListener {
 
             try {
                 Thread.sleep(60);
-            } catch(InterruptedException e) {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -96,18 +112,18 @@ public class UserInterface implements ActionListener {
         this.slowPrint(pText + "\n");
     }
 
-
     /**
      * 
      * @author https://stackoverflow.com/questions/6045384/playing-mp3-and-wav-in-java
      */
     public void playWelcomeSound() {
         try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("gameSounds/welcome.wav").getAbsoluteFile());
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-            clip.start();
-        } catch(Exception ex) {
+            AudioInputStream vAudioInputStream = AudioSystem
+                    .getAudioInputStream(new File("gameSounds/welcome.wav").getAbsoluteFile());
+            Clip vClip = AudioSystem.getClip();
+            vClip.open(vAudioInputStream);
+            vClip.start();
+        } catch (Exception ex) {
             System.out.println("Error with playing sound.");
             ex.printStackTrace();
         }
@@ -148,29 +164,111 @@ public class UserInterface implements ActionListener {
      * Set up graphical user interface.
      */
     private void createGUI() {
-        this.aMyFrame = new JFrame("Zuul GOTY Edition");
-        this.aMyFrame.setPreferredSize(new Dimension(650, 950));
+        this.aMyFrame = new JFrame();
+        this.aMyFrame.setTitle("Zuul GOTY Edition");
+        // this.aMyFrame.setSize(650, 950);
+        this.aMyFrame.setResizable(false);
+        this.aMyFrame.setBackground(Color.DARK_GRAY);
+
+        this.aEntryField = new JTextField(34);
+
         ImageIcon aQuitIcon = new ImageIcon("gameImages/quit.png");
         ImageIcon aGameIcon = new ImageIcon("gameImages/game.png");
-        this.aEntryField = new JTextField(34);
-        this.aButton = new JButton("quit", aQuitIcon);
+
+        this.aQuitButton = new JButton("quit", aQuitIcon);
+        this.aNorthButton = new JButton("north ▲");
+        this.aEastButton = new JButton("east ▶");
+        this.aSouthButton = new JButton("south ▼");
+        this.aWestButton = new JButton("◀ west");
+        this.aUpButton = new JButton("up △");
+        this.aDownButton = new JButton("down ▽");
+        this.aBackButton = new JButton("back ↺");
+        this.aHelpButton = new JButton("help ?");
+        this.aDropButton = new JButton("drop");
+        this.aTakeButton = new JButton("take");
+        this.aFireButton = new JButton("fire");
+        this.aChargeButton = new JButton("charge");
 
         this.aMyFrame.setIconImage(aGameIcon.getImage());
 
         this.aLog = new JTextArea();
         this.aLog.setEditable(false);
+        this.aLog.setLineWrap(true);
+        this.aLog.setWrapStyleWord(true);
+        this.aLog.setMargin(new Insets(10, 10, 10, 10));
         JScrollPane vListScroller = new JScrollPane(this.aLog);
         vListScroller.setPreferredSize(new Dimension(200, 200));
         vListScroller.setMinimumSize(new Dimension(100, 100));
 
-        JPanel vPanel = new JPanel();
+        JPanel vImagePanel = new JPanel();
         this.aImage = new JLabel();
 
-        vPanel.setLayout(new BorderLayout()); // ==> only five places
-        vPanel.add(this.aImage, BorderLayout.NORTH);
-        vPanel.add(vListScroller, BorderLayout.CENTER);
-        vPanel.add(this.aEntryField, BorderLayout.SOUTH);
-        vPanel.add(this.aButton, BorderLayout.WEST);
+        vImagePanel.setLayout(new BorderLayout()); // ==> only five places
+        vImagePanel.add(this.aImage, BorderLayout.CENTER);
+
+        JPanel vTextPanel = new JPanel();
+
+        vTextPanel.setLayout(new BorderLayout());
+        vTextPanel.add(vListScroller, BorderLayout.CENTER);
+        vTextPanel.add(this.aEntryField, BorderLayout.SOUTH);
+
+        JPanel vButtonPanel1 = new JPanel();
+        JPanel vCenterButtonPanel = new JPanel();
+
+        vCenterButtonPanel.setLayout(new GridLayout(1, 2));
+        vCenterButtonPanel.setBackground(Color.DARK_GRAY);
+        vCenterButtonPanel.add(this.aUpButton);
+        vCenterButtonPanel.add(this.aDownButton);
+
+        vButtonPanel1.setLayout(new BorderLayout());
+        vButtonPanel1.setBackground(Color.DARK_GRAY);
+        vButtonPanel1.add(this.aNorthButton, BorderLayout.NORTH);
+        vButtonPanel1.add(this.aWestButton, BorderLayout.WEST);
+        vButtonPanel1.add(this.aSouthButton, BorderLayout.SOUTH);
+        vButtonPanel1.add(this.aEastButton, BorderLayout.EAST);
+        vButtonPanel1.add(vCenterButtonPanel, BorderLayout.CENTER);
+
+        JPanel vButtonPanel2 = new JPanel();
+        vButtonPanel2.setLayout(new GridLayout(3, 3));
+        vButtonPanel2.setBackground(Color.DARK_GRAY);
+        vButtonPanel2.add(this.aBackButton);
+        vButtonPanel2.add(this.aHelpButton);
+        vButtonPanel2.add(this.aQuitButton);
+        vButtonPanel2.add(this.aDropButton);
+        vButtonPanel2.add(this.aTakeButton);
+        vButtonPanel2.add(this.aFireButton);
+        vButtonPanel2.add(this.aChargeButton);
+
+        JPanel vPanel = new JPanel();
+        vPanel.setLayout(new GridBagLayout());
+        GridBagConstraints vGridBagLayout = new GridBagConstraints();
+        vGridBagLayout.weightx = 1;
+        vGridBagLayout.weighty = 1;
+
+        vGridBagLayout.gridx = 0;
+        vGridBagLayout.gridwidth = 2;
+        vGridBagLayout.gridheight = 2;
+        vGridBagLayout.gridy = 0;
+        vGridBagLayout.fill = GridBagConstraints.BOTH;
+        vPanel.add(vImagePanel, vGridBagLayout);
+
+        vGridBagLayout.gridx = 0;
+        vGridBagLayout.gridwidth = 1;
+        vGridBagLayout.gridheight = 1;
+        vGridBagLayout.gridy = 2;
+        vPanel.add(vButtonPanel1, vGridBagLayout);
+
+        vGridBagLayout.gridx = 1;
+        vGridBagLayout.gridwidth = 1;
+        vGridBagLayout.gridheight = 1;
+        vGridBagLayout.gridy = 2;
+        vPanel.add(vButtonPanel2, vGridBagLayout);
+
+        vGridBagLayout.gridx = 2;
+        vGridBagLayout.gridwidth = 1;
+        vGridBagLayout.gridheight = 3;
+        vGridBagLayout.gridy = 0;
+        vPanel.add(vTextPanel, vGridBagLayout);
 
         Font vFont = new Font("Monospaced", Font.PLAIN, 14);
 
@@ -182,7 +280,7 @@ public class UserInterface implements ActionListener {
 
         // add some event listeners to some components
         this.aEntryField.addActionListener(this);
-        this.aButton.addActionListener(this);
+        this.aQuitButton.addActionListener(this);
 
         // to end program when window is closed
         this.aMyFrame.addWindowListener(new WindowAdapter() {
