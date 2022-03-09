@@ -10,7 +10,6 @@ import java.awt.Insets;
 import java.io.File;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 
@@ -39,21 +38,9 @@ public class UserInterface implements ActionListener {
     private JTextField aEntryField;
     private JTextArea aLog;
     private JLabel aImage;
-    private JButton aQuitButton;
-    private JButton aNorthButton;
-    private JButton aSouthButton;
-    private JButton aEastButton;
-    private JButton aWestButton;
-    private JButton aUpButton;
-    private JButton aDownButton;
+    private JButton aQuitButton, aNorthButton, aSouthButton, aEastButton, aWestButton, aUpButton, aDownButton,
+            aBackButton, aHelpButton, aDropButton, aTakeButton, aChargeButton, aFireButton, aInventoryButton;
     private Parser aParser;
-    private JButton aBackButton;
-    private JButton aHelpButton;
-    private JButton aDropButton;
-    private JButton aTakeButton;
-    private Component aChargeButton;
-    private Component aFireButton;
-    private JButton aInventoryButton;
 
     /**
      * Construct a UserInterface. As a parameter, a Game Engine
@@ -167,9 +154,7 @@ public class UserInterface implements ActionListener {
     private void createGUI() {
         this.aMyFrame = new JFrame();
         this.aMyFrame.setTitle("Zuul GOTY Edition");
-        // this.aMyFrame.setSize(650, 950);
         this.aMyFrame.setResizable(false);
-        this.aMyFrame.setBackground(Color.DARK_GRAY);
 
         this.aEntryField = new JTextField(34);
 
@@ -283,6 +268,35 @@ public class UserInterface implements ActionListener {
         // add some event listeners to some components
         this.aEntryField.addActionListener(this);
         this.aQuitButton.addActionListener(this);
+        this.aNorthButton.addActionListener(this);
+        this.aSouthButton.addActionListener(this);
+        this.aEastButton.addActionListener(this);
+        this.aWestButton.addActionListener(this);
+        this.aUpButton.addActionListener(this);
+        this.aDownButton.addActionListener(this);
+        this.aBackButton.addActionListener(this);
+        this.aHelpButton.addActionListener(this);
+        this.aDropButton.addActionListener(this);
+        this.aTakeButton.addActionListener(this);
+        this.aFireButton.addActionListener(this);
+        this.aChargeButton.addActionListener(this);
+        this.aInventoryButton.addActionListener(this);
+
+        // set action to write differents names
+        this.aQuitButton.setActionCommand("quit");
+        this.aNorthButton.setActionCommand("go north");
+        this.aSouthButton.setActionCommand("go south");
+        this.aEastButton.setActionCommand("go east");
+        this.aWestButton.setActionCommand("go west");
+        this.aUpButton.setActionCommand("go up");
+        this.aDownButton.setActionCommand("go down");
+        this.aBackButton.setActionCommand("back");
+        this.aHelpButton.setActionCommand("help");
+        this.aDropButton.setActionCommand("drop");
+        this.aTakeButton.setActionCommand("take");
+        this.aFireButton.setActionCommand("fire");
+        this.aChargeButton.setActionCommand("charge");
+        this.aInventoryButton.setActionCommand("inventory");
 
         // to end program when window is closed
         this.aMyFrame.addWindowListener(new WindowAdapter() {
