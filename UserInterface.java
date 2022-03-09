@@ -39,7 +39,7 @@ public class UserInterface implements ActionListener {
     private JTextArea aLog;
     private JLabel aImage;
     private JButton aQuitButton, aNorthButton, aSouthButton, aEastButton, aWestButton, aUpButton, aDownButton,
-            aBackButton, aHelpButton, aDropButton, aTakeButton, aChargeButton, aFireButton, aInventoryButton;
+            aBackButton, aHelpButton, aDropButton, aTakeButton, aChargeButton, aFireButton, aInventoryButton, aSkipButton;
     private Parser aParser;
 
     /**
@@ -104,10 +104,10 @@ public class UserInterface implements ActionListener {
      * 
      * @author https://stackoverflow.com/questions/6045384/playing-mp3-and-wav-in-java
      */
-    public void playWelcomeSound() {
+    public void playSound(final String pFile) {
         try {
             AudioInputStream vAudioInputStream = AudioSystem
-                    .getAudioInputStream(new File("gameSounds/welcome.wav").getAbsoluteFile());
+                    .getAudioInputStream(new File("gameSounds/"+pFile+".wav").getAbsoluteFile());
             Clip vClip = AudioSystem.getClip();
             vClip.open(vAudioInputStream);
             vClip.start();
@@ -174,6 +174,7 @@ public class UserInterface implements ActionListener {
         this.aFireButton = new JButton("fire ◎");
         this.aChargeButton = new JButton("charge ⌁");
         this.aInventoryButton = new JButton("bag ₿");
+        this.aSkipButton = new JButton("skip ▹▹");
 
         this.aMyFrame.setIconImage(aGameIcon.getImage());
 
@@ -183,11 +184,11 @@ public class UserInterface implements ActionListener {
         this.aLog.setWrapStyleWord(true);
         this.aLog.setMargin(new Insets(10, 10, 10, 10));
         JScrollPane vListScroller = new JScrollPane(this.aLog);
-        vListScroller.setPreferredSize(new Dimension(200, 200));
-        vListScroller.setMinimumSize(new Dimension(100, 100));
+        vListScroller.setPreferredSize(new Dimension(400, 700));
 
         JPanel vImagePanel = new JPanel();
         this.aImage = new JLabel();
+        vImagePanel.setPreferredSize(new Dimension(650, 650));
 
         vImagePanel.setLayout(new BorderLayout()); // ==> only five places
         vImagePanel.add(this.aImage, BorderLayout.CENTER);
@@ -198,7 +199,7 @@ public class UserInterface implements ActionListener {
         vTextPanel.add(vListScroller, BorderLayout.CENTER);
         vTextPanel.add(this.aEntryField, BorderLayout.SOUTH);
 
-        JPanel vButtonPanel1 = new JPanel();
+        JPanel vMovementButtonPanel = new JPanel();
         JPanel vCenterButtonPanel = new JPanel();
 
         vCenterButtonPanel.setLayout(new GridLayout(1, 2));
@@ -206,25 +207,26 @@ public class UserInterface implements ActionListener {
         vCenterButtonPanel.add(this.aUpButton);
         vCenterButtonPanel.add(this.aDownButton);
 
-        vButtonPanel1.setLayout(new BorderLayout());
-        vButtonPanel1.setBackground(Color.DARK_GRAY);
-        vButtonPanel1.add(this.aNorthButton, BorderLayout.NORTH);
-        vButtonPanel1.add(this.aWestButton, BorderLayout.WEST);
-        vButtonPanel1.add(this.aSouthButton, BorderLayout.SOUTH);
-        vButtonPanel1.add(this.aEastButton, BorderLayout.EAST);
-        vButtonPanel1.add(vCenterButtonPanel, BorderLayout.CENTER);
+        vMovementButtonPanel.setLayout(new BorderLayout());
+        vMovementButtonPanel.setBackground(Color.DARK_GRAY);
+        vMovementButtonPanel.add(this.aNorthButton, BorderLayout.NORTH);
+        vMovementButtonPanel.add(this.aWestButton, BorderLayout.WEST);
+        vMovementButtonPanel.add(this.aSouthButton, BorderLayout.SOUTH);
+        vMovementButtonPanel.add(this.aEastButton, BorderLayout.EAST);
+        vMovementButtonPanel.add(vCenterButtonPanel, BorderLayout.CENTER);
 
-        JPanel vButtonPanel2 = new JPanel();
-        vButtonPanel2.setLayout(new GridLayout(3, 3));
-        vButtonPanel2.setBackground(Color.DARK_GRAY);
-        vButtonPanel2.add(this.aBackButton);
-        vButtonPanel2.add(this.aHelpButton);
-        vButtonPanel2.add(this.aQuitButton);
-        vButtonPanel2.add(this.aDropButton);
-        vButtonPanel2.add(this.aTakeButton);
-        vButtonPanel2.add(this.aFireButton);
-        vButtonPanel2.add(this.aChargeButton);
-        vButtonPanel2.add(this.aInventoryButton);
+        JPanel vActionButtonPanel = new JPanel();
+        vActionButtonPanel.setLayout(new GridLayout(3, 3));
+        vActionButtonPanel.setBackground(Color.DARK_GRAY);
+        vActionButtonPanel.add(this.aBackButton);
+        vActionButtonPanel.add(this.aHelpButton);
+        vActionButtonPanel.add(this.aQuitButton);
+        vActionButtonPanel.add(this.aDropButton);
+        vActionButtonPanel.add(this.aTakeButton);
+        vActionButtonPanel.add(this.aFireButton);
+        vActionButtonPanel.add(this.aChargeButton);
+        vActionButtonPanel.add(this.aInventoryButton);
+        vActionButtonPanel.add(this.aSkipButton);
 
         JPanel vPanel = new JPanel();
         vPanel.setLayout(new GridBagLayout());
@@ -243,13 +245,13 @@ public class UserInterface implements ActionListener {
         vGridBagLayout.gridwidth = 1;
         vGridBagLayout.gridheight = 1;
         vGridBagLayout.gridy = 2;
-        vPanel.add(vButtonPanel1, vGridBagLayout);
+        vPanel.add(vMovementButtonPanel, vGridBagLayout);
 
         vGridBagLayout.gridx = 1;
         vGridBagLayout.gridwidth = 1;
         vGridBagLayout.gridheight = 1;
         vGridBagLayout.gridy = 2;
-        vPanel.add(vButtonPanel2, vGridBagLayout);
+        vPanel.add(vActionButtonPanel, vGridBagLayout);
 
         vGridBagLayout.gridx = 2;
         vGridBagLayout.gridwidth = 1;
@@ -281,6 +283,7 @@ public class UserInterface implements ActionListener {
         this.aFireButton.addActionListener(this);
         this.aChargeButton.addActionListener(this);
         this.aInventoryButton.addActionListener(this);
+        this.aSkipButton.addActionListener(this);
 
         // set action to write differents names
         this.aQuitButton.setActionCommand("quit");
@@ -297,6 +300,7 @@ public class UserInterface implements ActionListener {
         this.aFireButton.setActionCommand("fire");
         this.aChargeButton.setActionCommand("charge");
         this.aInventoryButton.setActionCommand("inventory");
+        this.aSkipButton.setActionCommand("skip");
 
         // to end program when window is closed
         this.aMyFrame.addWindowListener(new WindowAdapter() {
