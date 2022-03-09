@@ -53,6 +53,7 @@ public class UserInterface implements ActionListener {
     private JButton aTakeButton;
     private Component aChargeButton;
     private Component aFireButton;
+    private JButton aInventoryButton;
 
     /**
      * Construct a UserInterface. As a parameter, a Game Engine
@@ -172,10 +173,9 @@ public class UserInterface implements ActionListener {
 
         this.aEntryField = new JTextField(34);
 
-        ImageIcon aQuitIcon = new ImageIcon("gameImages/quit.png");
         ImageIcon aGameIcon = new ImageIcon("gameImages/game.png");
 
-        this.aQuitButton = new JButton("quit", aQuitIcon);
+        this.aQuitButton = new JButton("quit");
         this.aNorthButton = new JButton("north ▲");
         this.aEastButton = new JButton("east ▶");
         this.aSouthButton = new JButton("south ▼");
@@ -184,10 +184,11 @@ public class UserInterface implements ActionListener {
         this.aDownButton = new JButton("down ▽");
         this.aBackButton = new JButton("back ↺");
         this.aHelpButton = new JButton("help ?");
-        this.aDropButton = new JButton("drop");
-        this.aTakeButton = new JButton("take");
-        this.aFireButton = new JButton("fire");
-        this.aChargeButton = new JButton("charge");
+        this.aDropButton = new JButton("drop ☛");
+        this.aTakeButton = new JButton("take ☚");
+        this.aFireButton = new JButton("fire ◎");
+        this.aChargeButton = new JButton("charge ⌁");
+        this.aInventoryButton = new JButton("bag ₿");
 
         this.aMyFrame.setIconImage(aGameIcon.getImage());
 
@@ -238,6 +239,7 @@ public class UserInterface implements ActionListener {
         vButtonPanel2.add(this.aTakeButton);
         vButtonPanel2.add(this.aFireButton);
         vButtonPanel2.add(this.aChargeButton);
+        vButtonPanel2.add(this.aInventoryButton);
 
         JPanel vPanel = new JPanel();
         vPanel.setLayout(new GridBagLayout());
