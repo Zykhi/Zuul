@@ -30,7 +30,7 @@ public class Command {
      */
     public Command(final CommandWord pCommandWord, final String pSecondWord) {
         this.aCommandWord = pCommandWord;
-        this.aSecondWord = pSecondWord;
+        this.aSecondWord = pSecondWord != null ? pSecondWord.toLowerCase() : null;
     }
 
     /**

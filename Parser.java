@@ -1,4 +1,9 @@
 import java.util.StringTokenizer;
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.imageio.spi.RegisterableService;
 
 /**
  * This class is part of the "Zuul GOTY Edition" application.
@@ -18,6 +23,7 @@ import java.util.StringTokenizer;
  */
 public class Parser {
 
+    private static final Pattern PATTERN = Pattern.compile("^(?<commandword>\\S+)\\s?(?<secondword>.*)$");
     private CommandWords aCommandWords; // holds all valid command words
 
     /**
@@ -36,26 +42,20 @@ public class Parser {
      * @return The next command from the user.
      */
     public Command getCommand(final String pInputLine) {
-        String vWord1;
-        String vWord2;
+        String vWord1 = null;
+        String vWord2 = null;
 
-        StringTokenizer tokenizer = new StringTokenizer(pInputLine);
+        Matcher vMatcher = PATTERN.matcher(pInputLine);
+        MatchResult vResult = vMatcher.toMatchResult();
 
-        if (tokenizer.hasMoreTokens())
-            vWord1 = tokenizer.nextToken(); // get first word
-        else
-            vWord1 = null;
+        if (vMatcher.find()) {
+            String vCommandWord = vMatcher.group("commandword");
+            String vSecondWord = vMatcher.group("secondword").replace(' ', '_');
+            vWord1 = vCommandWord;
+            vWord2 = vSecondWord.equals("") ? null : vSecondWord;
+        }
 
-        if (tokenizer.hasMoreTokens())
-            vWord2 = tokenizer.nextToken(); // get second word
-        else
-            vWord2 = null;
-
-        // note: we just ignore the rest of the input line.
-
-        // Now check whether this word is known. If so, create a command
-        // with it. If not, create a "null" command (for unknown command).
-
+        System.out.println(vWord1 + " " + vWord2);
         return new Command(aCommandWords.getCommandWord(vWord1), vWord2);
     } // getCommand(.)
 
@@ -64,8 +64,7 @@ public class Parser {
      */
     public String getCommandString() // was showCommands()
     {
-        String vCommandString = "Your commands are : " + this.aCommandWords.getCommandList();
-        return vCommandString;
+        return "Your commands are : " + this.aCommandWords.getCommandList();
     } // getCommandString()
 
 } // Parser
