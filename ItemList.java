@@ -76,8 +76,8 @@ public class ItemList {
      * 
      * @return inventory
      */
-    public ItemList getItemList() {
-        return this;
+    public HashMap<String, Item> getItemList() {
+        return this.aItems;
     }
 
     /**
@@ -124,8 +124,7 @@ public class ItemList {
      * @return the string of the weight of the inventory
      */
     public String getWeightString() {
-        String vWeightString = "Weight : " + this.getWeight() + "kg / ";
-        return vWeightString;
+        return "Weight : " + this.getWeight() + "kg / ";
     }
 
     /**

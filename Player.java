@@ -91,7 +91,7 @@ public class Player {
      */
     protected void printWelcome() {
         this.showImage();
-        this.aGui.playWelcomeSound();
+        this.aGui.playSound("welcome");
         this.aGui.slowPrintln("Welcome to the world of Zuul.");
         this.aGui.slowPrintln("You are Edward, the hero of this story.");
         this.aGui.slowPrintln(
@@ -203,7 +203,7 @@ public class Player {
         if (!pCommand.hasSecondWord()) {
             this.aGui.println("what do you want to eat");
         } else {
-            if (vItemName.equals("Cookie") && this.aInventory.getItemList().contain(vItem)) {
+            if (vItemName.equals("Cookie") && this.aInventory.getItemList().containsValue(vItem)) {
                 this.aMaxWeight *= 2;
                 this.aInventory.removeItem(vItemName, vItem);
                 this.aInventory.removeWeight(vItem.getWeight());
@@ -339,6 +339,14 @@ public class Player {
      */
     public void clearStack() {
         this.aPreviousRooms.clear();
+    }
+
+    public String getCurrentRoomItemsString() {
+        return this.aCurrentRoom.getItemString();
+    }
+
+    public String getCurrentInventoryItemsString() {
+        return this.aInventory.getInventoryString();
     }
 
 }

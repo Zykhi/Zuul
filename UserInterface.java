@@ -1,8 +1,6 @@
 import java.net.URL;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -39,7 +37,8 @@ public class UserInterface implements ActionListener {
     private JTextArea aLog;
     private JLabel aImage;
     private JButton aQuitButton, aNorthButton, aSouthButton, aEastButton, aWestButton, aUpButton, aDownButton,
-            aBackButton, aHelpButton, aDropButton, aTakeButton, aChargeButton, aFireButton, aInventoryButton, aSkipButton;
+            aBackButton, aHelpButton, aDropButton, aTakeButton, aChargeButton, aFireButton, aInventoryButton,
+            aSkipButton;
     private Parser aParser;
 
     /**
@@ -107,7 +106,7 @@ public class UserInterface implements ActionListener {
     public void playSound(final String pFile) {
         try {
             AudioInputStream vAudioInputStream = AudioSystem
-                    .getAudioInputStream(new File("gameSounds/"+pFile+".wav").getAbsoluteFile());
+                    .getAudioInputStream(new File("gameSounds/" + pFile + ".wav").getAbsoluteFile());
             Clip vClip = AudioSystem.getClip();
             vClip.open(vAudioInputStream);
             vClip.start();
@@ -155,6 +154,7 @@ public class UserInterface implements ActionListener {
         this.aMyFrame = new JFrame();
         this.aMyFrame.setTitle("Zuul GOTY Edition");
         this.aMyFrame.setResizable(false);
+        this.aMyFrame.setPreferredSize(new Dimension(1077, 765));
 
         this.aEntryField = new JTextField(34);
 
@@ -184,7 +184,7 @@ public class UserInterface implements ActionListener {
         this.aLog.setWrapStyleWord(true);
         this.aLog.setMargin(new Insets(10, 10, 10, 10));
         JScrollPane vListScroller = new JScrollPane(this.aLog);
-        vListScroller.setPreferredSize(new Dimension(400, 700));
+        vListScroller.setPreferredSize(new Dimension(414, 707));
 
         JPanel vImagePanel = new JPanel();
         this.aImage = new JLabel();
@@ -200,6 +200,7 @@ public class UserInterface implements ActionListener {
         vTextPanel.add(this.aEntryField, BorderLayout.SOUTH);
 
         JPanel vMovementButtonPanel = new JPanel();
+        vMovementButtonPanel.setPreferredSize(new Dimension(365, 87));
         JPanel vCenterButtonPanel = new JPanel();
 
         vCenterButtonPanel.setLayout(new GridLayout(1, 2));
@@ -216,6 +217,8 @@ public class UserInterface implements ActionListener {
         vMovementButtonPanel.add(vCenterButtonPanel, BorderLayout.CENTER);
 
         JPanel vActionButtonPanel = new JPanel();
+        vActionButtonPanel.setPreferredSize(new Dimension(294, 87));
+
         vActionButtonPanel.setLayout(new GridLayout(3, 3));
         vActionButtonPanel.setBackground(Color.DARK_GRAY);
         vActionButtonPanel.add(this.aBackButton);
@@ -278,8 +281,8 @@ public class UserInterface implements ActionListener {
         this.aDownButton.addActionListener(this);
         this.aBackButton.addActionListener(this);
         this.aHelpButton.addActionListener(this);
-        this.aDropButton.addActionListener(this);
-        this.aTakeButton.addActionListener(this);
+        this.aDropButton.addActionListener(e -> dropButtonMethod());
+        this.aTakeButton.addActionListener(e -> takeButtonMethod());
         this.aFireButton.addActionListener(this);
         this.aChargeButton.addActionListener(this);
         this.aInventoryButton.addActionListener(this);
@@ -303,15 +306,13 @@ public class UserInterface implements ActionListener {
         this.aSkipButton.setActionCommand("skip");
 
         // to end program when window is closed
-        this.aMyFrame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
+        // update the method to have something shorter
+        this.aMyFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.aMyFrame.pack();
         this.aMyFrame.setVisible(true);
         this.aEntryField.requestFocus();
+
     } // createGUI()
 
     /**
@@ -328,6 +329,68 @@ public class UserInterface implements ActionListener {
             this.processCommand(); // never suppress this line
         }
     } // actionPerformed(.)
+
+    public void dropButtonMethod() {
+        JButton[] vButtons = { aBackButton, aHelpButton, aQuitButton, aDropButton, aTakeButton, aFireButton,
+                aChargeButton, aInventoryButton };
+
+        if (aEngine.getCurrentInventoryItemsString() != null) {
+            String[] vOutput = aEngine.getCurrentInventoryItemsString().split(" ");
+            for (int i = 0; i < vOutput.length; i++) {
+                vButtons[i].setText(vOutput[i]);
+                vButtons[i].setActionCommand("drop " + vOutput[i]);
+            }
+            for (int i = vOutput.length; i < 8; i++) {
+                vButtons[i].setText("");
+                vButtons[i].setActionCommand("");
+                vButtons[i].removeActionListener(this);
+            }
+            aSkipButton.setText("exit");
+            aSkipButton.addActionListener(e -> exitButtonMethod());
+        }
+    }
+
+    public void takeButtonMethod() {
+        JButton[] vButtons = { aBackButton, aHelpButton, aQuitButton, aDropButton, aTakeButton, aFireButton,
+                aChargeButton, aInventoryButton };
+
+        if (aEngine.getCurrentRoomItemsString() != null) {
+            String[] vOutput = aEngine.getCurrentRoomItemsString().split(" ");
+            for (int i = 0; i < vOutput.length; i++) {
+                vButtons[i].setText(vOutput[i]);
+                vButtons[i].setActionCommand("take " + vOutput[i]);
+            }
+            for (int i = vOutput.length; i < 8; i++) {
+                vButtons[i].setText("");
+                vButtons[i].setActionCommand("");
+                vButtons[i].removeActionListener(this);
+            }
+            aSkipButton.setText("exit");
+            aSkipButton.addActionListener(e -> exitButtonMethod());
+        }
+    }
+
+    public void exitButtonMethod() {
+        aQuitButton.setText("quit");
+        aBackButton.setText("back ↺");
+        aHelpButton.setText("help ?");
+        aDropButton.setText("drop ☛");
+        aTakeButton.setText("take ☚");
+        aFireButton.setText("fire ◎");
+        aChargeButton.setText("charge ⌁");
+        aInventoryButton.setText("bag ₿");
+        aSkipButton.setText("skip ▹▹");
+
+        aQuitButton.setActionCommand("quit");
+        aBackButton.setActionCommand("back");
+        aHelpButton.setActionCommand("help");
+        aDropButton.setActionCommand("drop");
+        aTakeButton.setActionCommand("take");
+        aFireButton.setActionCommand("fire");
+        aChargeButton.setActionCommand("charge");
+        aInventoryButton.setActionCommand("inventory");
+        aSkipButton.setActionCommand("skip");
+    }
 
     /**
      * A command has been entered. Read the command and do whatever is

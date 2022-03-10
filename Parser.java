@@ -1,9 +1,6 @@
-import java.util.StringTokenizer;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.imageio.spi.RegisterableService;
 
 /**
  * This class is part of the "Zuul GOTY Edition" application.

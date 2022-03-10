@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -67,14 +68,14 @@ public class GameEngine {
 
         vTestRoom = new TransporterRoom("This is a test room", "gameImages/test.gif");
 
-        aRooms.put("Outside", vOutside);
-        aRooms.put("Catacombs", vCatacombs);
-        aRooms.put("Lobby", vLobby);
-        aRooms.put("Treasure", vTreasure);
-        aRooms.put("Boss1Room", vBoss1Room);
-        aRooms.put("Boss2Room", vBoss2Room);
-        aRooms.put("Boss3Room", vBoss3Room);
-        aRooms.put("TestRoom", vTestRoom);
+        aRooms.put("outside", vOutside);
+        aRooms.put("catacombs", vCatacombs);
+        aRooms.put("lobby", vLobby);
+        aRooms.put("treasure", vTreasure);
+        aRooms.put("boss1room", vBoss1Room);
+        aRooms.put("boss2room", vBoss2Room);
+        aRooms.put("boss3room", vBoss3Room);
+        aRooms.put("testroom", vTestRoom);
 
         ((TransporterRoom) vTestRoom).setAllRooms(this.aRooms);
 
@@ -105,7 +106,7 @@ public class GameEngine {
      * This method init the player
      */
     private void createPlayer() {
-        this.aPlayer = new Player(this.aRooms.get("Outside"), "Edward");
+        this.aPlayer = new Player(this.aRooms.get("outside"), "Edward");
     }
 
     /**
@@ -114,27 +115,27 @@ public class GameEngine {
     private void createItems() {
         Item vTest = new Item("TestItem", 10, 5, "This is a test item"); // Name, price, weight, desc
         Item vTest2 = new Item("TestItem2", 20, 10, "This is a test item 2"); // Name, price, weight, desc
-        this.aRooms.get("Outside").addItem("Test", vTest);
-        this.aRooms.get("Outside").addItem("Test2", vTest2);
+        this.aRooms.get("outside").addItem("test", vTest);
+        this.aRooms.get("outside").addItem("test2", vTest2);
 
-        Item vWarmogArmor = new Item("Warmog's Armor", 0, 40, "This is the armor of Warmog the Giant");
-        this.aRooms.get("Boss1Room").addItem("Warmog's_Armor", vWarmogArmor);
+        Item vWarmogArmor = new Item("warmog's_armor", 0, 40, "This is the armor of Warmog the Giant");
+        this.aRooms.get("boss1room").addItem("warmog's_armor", vWarmogArmor);
 
-        Item vBOTRK = new Item("Blade Of The Ruined King", 0, 20,
+        Item vBOTRK = new Item("Blade_Of_The_Ruined King", 0, 20,
                 "This is the blade of Viego, it weighs nothing compared to its burden");
-        this.aRooms.get("Boss2Room").addItem("Blade_Of_The_Ruined_King", vBOTRK);
+        this.aRooms.get("boss2room").addItem("blade_of_the_ruined_king", vBOTRK);
 
-        Item vFrostFireGauntlet = new Item("Frostfire Gauntlet", 0, 10, "This is the last artefact of the dungeon");
-        this.aRooms.get("Boss3Room").addItem("Frostfire_Gauntlet", vFrostFireGauntlet);
+        Item vFrostFireGauntlet = new Item("Frostfire_Gauntlet", 0, 10, "This is the last artefact of the dungeon");
+        this.aRooms.get("boss3room").addItem("frostfire_gauntlet", vFrostFireGauntlet);
 
-        Item vWeddingRing = new Item("Wedding Ring", 0, 0, "This is a wedding ring, it's will be usefull");
-        this.aRooms.get("Catacombs").addItem("Wedding_ring", vWeddingRing);
+        Item vWeddingRing = new Item("wedding_ring", 0, 0, "This is a wedding ring, it's will be usefull");
+        this.aRooms.get("catacombs").addItem("wedding_ring", vWeddingRing);
 
-        Item vMagicCookie = new Item("Cookie", 0, 0, "This is a magic cookie");
-        this.aRooms.get("Treasure").addItem("Cookie", vMagicCookie);
+        Item vMagicCookie = new Item("cookie", 0, 0, "This is a magic cookie");
+        this.aRooms.get("treasure").addItem("cookie", vMagicCookie);
 
         Beamer vBeamer = new Beamer();
-        this.aRooms.get("Outside").addItem("teleporter", vBeamer);
+        this.aRooms.get("outside").addItem("teleporter", vBeamer);
     }
 
     /**
@@ -142,9 +143,8 @@ public class GameEngine {
      */
     private void createDoor() {
         Door vTrapLobby = new Door(true);
-        this.aRooms.get("Lobby").addDoor("up", vTrapLobby);
+        this.aRooms.get("lobby").addDoor("up", vTrapLobby);
     }
-
 
     /**
      * Given a command, process (that is: execute) the command.
@@ -165,6 +165,7 @@ public class GameEngine {
                 switch (vCommandWord) {
                     case HELP:
                         this.aPlayer.printHelp();
+                        getCurrentRoomItemsString();
                         break;
 
                     case GO:
@@ -241,6 +242,24 @@ public class GameEngine {
     private void gameOver() {
         this.aGui.println("game over.");
         this.aGui.enable(false);
+    }
+
+    protected String getCurrentRoomItemsString() {
+        String[] vCRIS = aPlayer.getCurrentRoomItemsString().split(" : ");
+        if (vCRIS.length > 1) {
+            return vCRIS[1];
+        } else {
+            return null;
+        }
+    }
+
+    protected String getCurrentInventoryItemsString() {
+        String[] vCIIS = aPlayer.getCurrentInventoryItemsString().split(" : ");
+        if (vCIIS.length > 1) {
+            return vCIIS[1];
+        } else {
+            return null;
+        }
     }
 
     /**
