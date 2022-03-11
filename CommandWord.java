@@ -10,7 +10,7 @@ public enum CommandWord {
     // commands.
     HELP("help"), GO("go"), QUIT("quit"), LOOK("look"), EAT("eat"), BACK("back"),
     TEST("test"), TAKE("take"), DROP("drop"), INVENTORY("inventory"), UNKNOWN("?"),
-    CHARGE("charge"), FIRE("fire"), EXIT("exit"), SKIP("skip");
+    CHARGE("charge"), FIRE("fire"), EXIT("exit"), SKIP("skip"), ALEA("alea");
 
     // The command string.
     private String aCommandString;

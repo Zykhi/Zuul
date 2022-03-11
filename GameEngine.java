@@ -25,6 +25,7 @@ public class GameEngine {
     private HashMap<String, Room> aRooms;
     private ArrayList<TransporterRoom> aTransporterRoom;
     private UserInterface aGui;
+    private boolean aTest;
 
     /**
      * Create the game and initialise its internal map.
@@ -35,6 +36,7 @@ public class GameEngine {
         this.createItems();
         this.createDoor();
         this.aParser = new Parser();
+        this.aTest = false;
     }
 
     /**
@@ -153,7 +155,7 @@ public class GameEngine {
      */
     public void interpretCommand(final Command pCommandLine) {
 
-        //this.aGui.println("> " + aGui.getEntryField());
+        // this.aGui.println("> " + aGui.getEntryField());
 
         CommandWord vCommandWord = pCommandLine.getCommandWord();
         if (aPlayer.getMovement() <= 0) {
@@ -224,6 +226,12 @@ public class GameEngine {
                         this.aGui.skipMethod();
                         break;
 
+                    case ALEA:
+                    if(this.aTest){
+                        this.alea(pCommandLine);
+                    }
+                        break;
+                        
                     default:
                         this.aGui.println("I don't know what you mean...");
                         break;
@@ -281,11 +289,13 @@ public class GameEngine {
                 String vFile = pFile.getSecondWord();
                 Scanner vScanner = new Scanner(new File(vFile + ".txt"));
                 String vCommandString = vScanner.nextLine();
+                this.aTest = true;
                 while (vScanner.hasNextLine()) {
                     Command vCommand = aParser.getCommand(vCommandString);
                     interpretCommand(vCommand);
                     vCommandString = vScanner.nextLine();
                 }
+                this.aTest = false;
             } catch (final FileNotFoundException pE) {
                 this.aGui.println(pE.getMessage());
             }
@@ -293,4 +303,11 @@ public class GameEngine {
             this.aGui.println("This command need a second word");
         }
     }
+
+    private void alea(final Command pRoom) {
+        String vRoomName = pRoom.getSecondWord();
+        //TODO
+        //((TransporterRoom) this.aRooms.get("testroom")).setNextRoom(vRoomName);
+    }
+
 }// Game

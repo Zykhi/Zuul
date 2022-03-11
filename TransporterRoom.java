@@ -9,6 +9,7 @@ import java.util.HashMap;
 public class TransporterRoom extends Room {
 
     private RoomRandomizer aRoomRandomizer;
+    private String aAlea;
 
     /**
      * Constructor of Transporter Room
@@ -18,7 +19,7 @@ public class TransporterRoom extends Room {
      */
     public TransporterRoom(String pDescription, String pImage) {
         super(pDescription, pImage);
-
+        this.aAlea = null;
     }
 
     /**
@@ -37,7 +38,15 @@ public class TransporterRoom extends Room {
      */
     @Override
     public Room getExit(final String pDirection) {
-        return this.aRoomRandomizer.findRandomRoom();
+        if (this.aAlea == null) {
+            return this.aRoomRandomizer.findRandomRoom();
+        } else {
+            return this.aRoomRandomizer.getRoom(pDirection);
+        }
+    }
+
+    public void setNextRoom(final String pNextRoom) {
+        this.aAlea = pNextRoom;
     }
 
 }

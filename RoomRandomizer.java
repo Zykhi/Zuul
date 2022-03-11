@@ -45,4 +45,8 @@ public class RoomRandomizer {
         return this.aRoomsArrayList.get(vRandomIntInArray);
     }
 
+    public Room getRoom(String pRoomName) {
+        return this.aAllRooms.get(pRoomName);
+    }
+
 }
