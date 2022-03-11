@@ -9,7 +9,6 @@ import java.util.HashMap;
 public class TransporterRoom extends Room {
 
     private RoomRandomizer aRoomRandomizer;
-    private String aAlea;
 
     /**
      * Constructor of Transporter Room
@@ -17,18 +16,9 @@ public class TransporterRoom extends Room {
      * @param pDescription description of the room
      * @param pImage       image of the room
      */
-    public TransporterRoom(String pDescription, String pImage) {
+    public TransporterRoom(String pDescription, String pImage, final RoomRandomizer pRoomRandomizer) {
         super(pDescription, pImage);
-        this.aAlea = null;
-    }
-
-    /**
-     * This method set all the room in the room randomizer
-     * 
-     * @param pAllRooms hashmap contain all the room
-     */
-    public void setAllRooms(final HashMap<String, Room> pAllRooms) {
-        this.aRoomRandomizer = new RoomRandomizer(pAllRooms);
+        this.aRoomRandomizer = pRoomRandomizer;
     }
 
     /**
@@ -38,15 +28,6 @@ public class TransporterRoom extends Room {
      */
     @Override
     public Room getExit(final String pDirection) {
-        if (this.aAlea == null) {
-            return this.aRoomRandomizer.findRandomRoom();
-        } else {
-            return this.aRoomRandomizer.getRoom(pDirection);
-        }
+        return this.aRoomRandomizer.findRandomRoom();
     }
-
-    public void setNextRoom(final String pNextRoom) {
-        this.aAlea = pNextRoom;
-    }
-
 }

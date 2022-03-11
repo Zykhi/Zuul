@@ -24,6 +24,7 @@ public class GameEngine {
     private Parser aParser;
     private HashMap<String, Room> aRooms;
     private ArrayList<TransporterRoom> aTransporterRoom;
+    private RoomRandomizer aRandomRoom;
     private UserInterface aGui;
     private boolean aTest;
 
@@ -56,7 +57,9 @@ public class GameEngine {
     private void createRooms() {
 
         this.aRooms = new HashMap<String, Room>();
-        this.aTransporterRoom = new ArrayList<TransporterRoom>();
+        // this.aTransporterRoom = new ArrayList<TransporterRoom>();
+        aRandomRoom = new RoomRandomizer();
+        this.aRandomRoom.setRandom(aRooms);
 
         Room vOutside, vCatacombs, vLobby, vTreasure, vBoss1Room, vBoss2Room, vBoss3Room, vTestRoom;
 
@@ -68,7 +71,7 @@ public class GameEngine {
         vBoss2Room = new Room("boss room 2", "gameImages/boss2.gif");
         vBoss3Room = new Room("boss room 3", "gameImages/boss3.gif");
 
-        vTestRoom = new TransporterRoom("This is a test room", "gameImages/test.gif");
+        vTestRoom = new TransporterRoom("This is a test room", "gameImages/test.gif", this.aRandomRoom);
 
         aRooms.put("outside", vOutside);
         aRooms.put("catacombs", vCatacombs);
@@ -78,8 +81,6 @@ public class GameEngine {
         aRooms.put("boss2room", vBoss2Room);
         aRooms.put("boss3room", vBoss3Room);
         aRooms.put("testroom", vTestRoom);
-
-        ((TransporterRoom) vTestRoom).setAllRooms(this.aRooms);
 
         // exit
         vOutside.setExit("down", vLobby);
@@ -101,6 +102,8 @@ public class GameEngine {
 
         vBoss3Room.setExit("west", vTreasure);
         vBoss3Room.setExit("east", vLobby);
+
+        vTestRoom.setExit("south", vBoss1Room);
 
     }
 
@@ -227,11 +230,9 @@ public class GameEngine {
                         break;
 
                     case ALEA:
-                    if(this.aTest){
                         this.alea(pCommandLine);
-                    }
                         break;
-                        
+
                     default:
                         this.aGui.println("I don't know what you mean...");
                         break;
@@ -305,9 +306,18 @@ public class GameEngine {
     }
 
     private void alea(final Command pRoom) {
-        String vRoomName = pRoom.getSecondWord();
-        //TODO
-        //((TransporterRoom) this.aRooms.get("testroom")).setNextRoom(vRoomName);
+        if (!aTest) {
+            this.aGui.println("You need to be in test mode");
+        }
+        if (pRoom.hasSecondWord() && !aRandomRoom.isAlea()) {
+            Room vRoom = aRooms.get(pRoom.getSecondWord());
+            if (vRoom == null) {
+                System.out.println("Room dont found");
+            }
+            aRandomRoom.setAlea(vRoom);
+        } else {
+            aRandomRoom.setRandom(aRooms);
+        }
     }
 
 }// Game

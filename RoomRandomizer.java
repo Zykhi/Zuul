@@ -10,27 +10,16 @@ import java.util.Random;
  */
 public class RoomRandomizer {
     private HashMap<String, Room> aAllRooms;
-    private ArrayList<Room> aRoomsArrayList;
+    private Object[] aRoomsArrayList;
+    private boolean aAlea;
 
     /**
      * this constructor create a room randomizer
      * 
      * @param pAllRooms hashmap contain all rooms
      */
-    public RoomRandomizer(HashMap<String, Room> pAllRooms) {
-        this.aAllRooms = pAllRooms;
-        this.aRoomsArrayList = new ArrayList<Room>();
-        fillArrayList();
-    }
-
-    /**
-     * this method fill the array list
-     */
-    private void fillArrayList() {
-        HashMap<String, Room> vAllRooms = this.aAllRooms;
-        for (String vRoomName : vAllRooms.keySet()) {
-            this.aRoomsArrayList.add(vAllRooms.get(vRoomName));
-        }
+    public RoomRandomizer() {
+        this.aAlea = false;
     }
 
     /**
@@ -40,13 +29,21 @@ public class RoomRandomizer {
      */
     public Room findRandomRoom() {
         Random vRandom = new Random();
-        int vRandomIntInArray = vRandom.nextInt(this.aRoomsArrayList.size());
-
-        return this.aRoomsArrayList.get(vRandomIntInArray);
+        int vRandomIntInArray = vRandom.nextInt(this.aRoomsArrayList.length);
+        return (Room) this.aRoomsArrayList[vRandomIntInArray];
     }
 
-    public Room getRoom(String pRoomName) {
-        return this.aAllRooms.get(pRoomName);
+    public void setAlea(Room pRoom) {
+        this.aRoomsArrayList = new Object[] {pRoom};
+    }
+
+    public void setRandom(final HashMap<String, Room> pAllRooms){
+        this.aAllRooms = pAllRooms;
+        this.aRoomsArrayList = this.aAllRooms.values().toArray();
+    }
+
+    public boolean isAlea(){
+        return this.aAlea;
     }
 
 }
