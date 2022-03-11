@@ -96,8 +96,7 @@ public class Player {
         this.aGui.slowPrintln("You are Edward, the hero of this story.");
         this.aGui.slowPrintln(
                 "You are a knight, the war has been raging for decades and you cannot sleep. You decide to go out to clear your mind by walking away from the castle. You come across a waterfall that hides a cave, mist emanating from it.");
-        this.aGui.slowPrintln("It is at this moment that your adventure takes " + "\n" +
-                "all its meaning.");
+        this.aGui.slowPrintln("It is at this moment that your adventure takes all its meaning.");
         this.aGui.slowPrintln("Good luck knight. If you need help, let me know.");
 
         try {
@@ -319,6 +318,10 @@ public class Player {
         } else {
             this.aGui.println("You dont have teleporter.");
         }
+    }
+
+    public void exit() {
+        this.aGui.println("you have left menu");
     }
 
     /**

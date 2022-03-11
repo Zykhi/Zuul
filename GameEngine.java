@@ -153,7 +153,7 @@ public class GameEngine {
      */
     public void interpretCommand(final Command pCommandLine) {
 
-        this.aGui.println("> " + aGui.getEntryField());
+        //this.aGui.println("> " + aGui.getEntryField());
 
         CommandWord vCommandWord = pCommandLine.getCommandWord();
         if (aPlayer.getMovement() <= 0) {
@@ -214,6 +214,14 @@ public class GameEngine {
 
                     case FIRE:
                         this.aPlayer.fire();
+                        break;
+
+                    case EXIT:
+                        this.aPlayer.exit();
+                        break;
+
+                    case SKIP:
+                        this.aGui.skipMethod();
                         break;
 
                     default:

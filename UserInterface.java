@@ -40,6 +40,8 @@ public class UserInterface implements ActionListener {
             aBackButton, aHelpButton, aDropButton, aTakeButton, aChargeButton, aFireButton, aInventoryButton,
             aSkipButton;
     private Parser aParser;
+    private int aTimer = 60; 
+    private Clip aClip;
 
     /**
      * Construct a UserInterface. As a parameter, a Game Engine
@@ -88,7 +90,7 @@ public class UserInterface implements ActionListener {
             this.aLog.setCaretPosition(this.aLog.getDocument().getLength());
 
             try {
-                Thread.sleep(60);
+                Thread.sleep(aTimer);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -107,13 +109,17 @@ public class UserInterface implements ActionListener {
         try {
             AudioInputStream vAudioInputStream = AudioSystem
                     .getAudioInputStream(new File("gameSounds/" + pFile + ".wav").getAbsoluteFile());
-            Clip vClip = AudioSystem.getClip();
-            vClip.open(vAudioInputStream);
-            vClip.start();
+            aClip = AudioSystem.getClip();
+            aClip.open(vAudioInputStream);
+            aClip.start();
         } catch (Exception ex) {
             System.out.println("Error with playing sound.");
             ex.printStackTrace();
         }
+    }
+
+    public void stopSound() {
+            aClip.stop();
     }
 
     /**
@@ -346,7 +352,11 @@ public class UserInterface implements ActionListener {
                 vButtons[i].removeActionListener(this);
             }
             aSkipButton.setText("exit");
+            aSkipButton.setActionCommand("exit");
             aSkipButton.addActionListener(e -> exitButtonMethod());
+            for (int i = vOutput.length; i < 8; i++) {
+                vButtons[i].addActionListener(this);
+            }
         }
     }
 
@@ -366,7 +376,11 @@ public class UserInterface implements ActionListener {
                 vButtons[i].removeActionListener(this);
             }
             aSkipButton.setText("exit");
+            aSkipButton.setActionCommand("exit");
             aSkipButton.addActionListener(e -> exitButtonMethod());
+            for (int i = vOutput.length; i < 8; i++) {
+                vButtons[i].addActionListener(this);
+            }
         }
     }
 
@@ -392,6 +406,11 @@ public class UserInterface implements ActionListener {
         aSkipButton.setActionCommand("skip");
     }
 
+    public void skipMethod() {
+        this.aTimer = 1;
+        stopSound();
+    }
+
     /**
      * A command has been entered. Read the command and do whatever is
      * necessary to process it.
@@ -411,4 +430,5 @@ public class UserInterface implements ActionListener {
     public String getEntryField() {
         return this.aEntryField.getText();
     }
+
 } // UserInterface
