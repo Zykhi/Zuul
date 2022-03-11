@@ -39,15 +39,13 @@
 
 [![zuul][zuul-screenshot]](https://perso.esiee.fr/~diouyc/ZuulGOTYEdition/)
 
-It is a text adventure game
-
-section filled with progress
+It's an adventure game developed in java from the IGI-1202 unit of Denis BUREAU, IT professor at ESIEE PARIS. The whole game is in English, the report is in French for the moment, a translation will be available soon to be able to play the game again without understanding French.
 
 ### Built With
 
 This game is built in Java, this section will be filled as the project progresses
 
-- [Java](https://www.java.com/fr/)
+- [Java](https://www.java.com/en/)
 
 <!-- GETTING STARTED -->
 
@@ -81,10 +79,10 @@ will be update soon
 
 ## Contact
 
-Your Name : charly.diouy@edu.esiee.fr
+email : charly.diouy@edu.esiee.fr
 
 Project Link : [https://github.com/Zykhi/Zuul](https://github.com/Zykhi/Zuul)
 
-<br><br><br><br> image add soon
+Official Exercise List : [here](https://perso.esiee.fr/~bureaud/Unites/Zuul/listeExercices.htm)
 
 [zuul-screenshot]: images/screenshot.png
