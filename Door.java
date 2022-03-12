@@ -1,4 +1,5 @@
 /**
+ * This class implements door
  * 
  * @author C.Diouy
  * @version 2022.03.02

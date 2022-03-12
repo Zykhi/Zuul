@@ -1,5 +1,5 @@
 /**
- * 
+ * This class implements beamer
  *
  * @author C.Diouy
  * @version 2022.02.26

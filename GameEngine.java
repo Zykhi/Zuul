@@ -1,7 +1,5 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -23,7 +21,6 @@ public class GameEngine {
     private Player aPlayer;
     private Parser aParser;
     private HashMap<String, Room> aRooms;
-    private ArrayList<TransporterRoom> aTransporterRoom;
     private RoomRandomizer aRandomRoom;
     private UserInterface aGui;
     private boolean aTest;
@@ -57,7 +54,6 @@ public class GameEngine {
     private void createRooms() {
 
         this.aRooms = new HashMap<String, Room>();
-        // this.aTransporterRoom = new ArrayList<TransporterRoom>();
         aRandomRoom = new RoomRandomizer();
         this.aRandomRoom.setRandom(aRooms);
 
@@ -158,8 +154,6 @@ public class GameEngine {
      */
     public void interpretCommand(final Command pCommandLine) {
 
-        // this.aGui.println("> " + aGui.getEntryField());
-
         CommandWord vCommandWord = pCommandLine.getCommandWord();
         if (aPlayer.getMovement() <= 0) {
             this.gameOver();
@@ -240,7 +234,6 @@ public class GameEngine {
 
             } catch (Exception pE) {
                 // use try catch to avoid error
-                // System.out.println(pE.getMessage());
             }
         }
     }
@@ -261,6 +254,12 @@ public class GameEngine {
         this.aGui.enable(false);
     }
 
+    /**
+     * This function get the items in the room. This function is used for the
+     * UserInterface
+     * 
+     * @return String with all items in the room
+     */
     protected String getCurrentRoomItemsString() {
         String[] vCRIS = aPlayer.getCurrentRoomItemsString().split(" : ");
         if (vCRIS.length > 1) {
@@ -270,6 +269,12 @@ public class GameEngine {
         }
     }
 
+    /**
+     * This function get the item in the inventory. This function is used for the
+     * UserInterface
+     * 
+     * @return String with all items in inventory
+     */
     protected String getCurrentInventoryItemsString() {
         String[] vCIIS = aPlayer.getCurrentInventoryItemsString().split(" : ");
         if (vCIIS.length > 1) {
@@ -305,6 +310,11 @@ public class GameEngine {
         }
     }
 
+    /**
+     * this method is used to set a room for the random room
+     * 
+     * @param pRoom Room to set for the exit of the random room
+     */
     private void alea(final Command pRoom) {
         if (!aTest) {
             this.aGui.println("You need to be in test mode");

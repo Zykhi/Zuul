@@ -40,7 +40,7 @@ public class UserInterface implements ActionListener {
             aBackButton, aHelpButton, aDropButton, aTakeButton, aChargeButton, aFireButton, aInventoryButton,
             aSkipButton;
     private Parser aParser;
-    private int aTimer = 60; 
+    private int aTimer = 60;
     private Clip aClip;
 
     /**
@@ -76,10 +76,12 @@ public class UserInterface implements ActionListener {
     } // println(.)
 
     /**
+     * This method prints slowly the text in param
      * 
+     * This code was found on internet and update for my use
      * 
      * @author https://github.com/Vourem/SlowPrint-Method/blob/master/SlowPrint
-     * @param pText
+     * @param pText Text you want to write slowly
      */
     public void slowPrint(final String pText) {
 
@@ -97,13 +99,22 @@ public class UserInterface implements ActionListener {
         }
     }
 
+    /**
+     * This method is like SlowPrint but for println
+     * 
+     * @param pText Text you want to write slowly
+     */
     public void slowPrintln(final String pText) {
         this.slowPrint(pText + "\n");
     }
 
     /**
+     * This method play sound.
+     * 
+     * This code was found on internet and update for my use
      * 
      * @author https://stackoverflow.com/questions/6045384/playing-mp3-and-wav-in-java
+     * @param pFile File you want to play
      */
     public void playSound(final String pFile) {
         try {
@@ -118,8 +129,11 @@ public class UserInterface implements ActionListener {
         }
     }
 
+    /**
+     * This method stop sound.
+     */
     public void stopSound() {
-            aClip.stop();
+        aClip.stop();
     }
 
     /**
@@ -336,6 +350,10 @@ public class UserInterface implements ActionListener {
         }
     } // actionPerformed(.)
 
+    /**
+     * This method is called when you click on the drop button
+     * It's to change UI to show items in inventory
+     */
     public void dropButtonMethod() {
         JButton[] vButtons = { aBackButton, aHelpButton, aQuitButton, aDropButton, aTakeButton, aFireButton,
                 aChargeButton, aInventoryButton };
@@ -360,6 +378,10 @@ public class UserInterface implements ActionListener {
         }
     }
 
+    /**
+     * This method is called when you click on the take button
+     * It's to change UI to show items in the room
+     */
     public void takeButtonMethod() {
         JButton[] vButtons = { aBackButton, aHelpButton, aQuitButton, aDropButton, aTakeButton, aFireButton,
                 aChargeButton, aInventoryButton };
@@ -384,6 +406,10 @@ public class UserInterface implements ActionListener {
         }
     }
 
+    /**
+     * This method is called when the exit button is clicked
+     * It's back to "main" menu of the UI
+     */
     public void exitButtonMethod() {
         aQuitButton.setText("quit");
         aBackButton.setText("back ↺");
@@ -398,14 +424,18 @@ public class UserInterface implements ActionListener {
         aQuitButton.setActionCommand("quit");
         aBackButton.setActionCommand("back");
         aHelpButton.setActionCommand("help");
-        aDropButton.setActionCommand("drop");
-        aTakeButton.setActionCommand("take");
+        aDropButton.setActionCommand("drop"); // FIXME if nothing in inventory dont write "what do you want to drop"
+        aTakeButton.setActionCommand("take"); // FIXME if nothing in the room dont write " what do you want to take"
         aFireButton.setActionCommand("fire");
         aChargeButton.setActionCommand("charge");
         aInventoryButton.setActionCommand("inventory");
         aSkipButton.setActionCommand("skip");
     }
 
+    /**
+     * This method is called when skip button is clicked
+     * It's write quikly the text of the slowPrint method
+     */
     public void skipMethod() {
         this.aTimer = 1;
         stopSound();

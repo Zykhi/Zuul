@@ -52,7 +52,7 @@ public class Parser {
             vWord2 = vSecondWord.equals("") ? null : vSecondWord;
         }
 
-        System.out.println(vWord1 + " " + vWord2);
+        // System.out.println(vWord1 + " " + vWord2);
         return new Command(aCommandWords.getCommandWord(vWord1), vWord2);
     } // getCommand(.)
 

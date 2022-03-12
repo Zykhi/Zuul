@@ -1,5 +1,3 @@
-import java.util.HashMap;
-
 /**
  * This class create a transporter room
  * 
@@ -15,6 +13,7 @@ public class TransporterRoom extends Room {
      * 
      * @param pDescription description of the room
      * @param pImage       image of the room
+     * @param pRoomRandomizer Room random
      */
     public TransporterRoom(String pDescription, String pImage, final RoomRandomizer pRoomRandomizer) {
         super(pDescription, pImage);

@@ -39,7 +39,7 @@
 <span class="sourceLineNo">030</span><a id="line.30">     */</a>
 <span class="sourceLineNo">031</span><a id="line.31">    public Command(final CommandWord pCommandWord, final String pSecondWord) {</a>
 <span class="sourceLineNo">032</span><a id="line.32">        this.aCommandWord = pCommandWord;</a>
-<span class="sourceLineNo">033</span><a id="line.33">        this.aSecondWord = pSecondWord;</a>
+<span class="sourceLineNo">033</span><a id="line.33">        this.aSecondWord = pSecondWord != null ? pSecondWord.toLowerCase() : null;</a>
 <span class="sourceLineNo">034</span><a id="line.34">    }</a>
 <span class="sourceLineNo">035</span><a id="line.35"></a>
 <span class="sourceLineNo">036</span><a id="line.36">    /**</a>

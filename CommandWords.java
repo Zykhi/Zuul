@@ -55,6 +55,8 @@ public class CommandWords {
     }
 
     /**
+     * This function get all commands in a String
+     * 
      * @return a String of all valid commands.
      */
     public String getCommandList() {

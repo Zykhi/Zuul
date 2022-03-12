@@ -1,5 +1,10 @@
 import java.util.Stack;
 
+/**
+ * This class implements player
+ * 
+ * @author C.Diouy
+ */
 public class Player {
     private Room aCurrentRoom;
     private Stack<Room> aPreviousRooms;
@@ -10,6 +15,12 @@ public class Player {
     private int aMaxWeight;
     private int aMovement;
 
+    /**
+     * this constructor init the player
+     * 
+     * @param pCurrentRoom Start room
+     * @param pName        Name of the player
+     */
     public Player(final Room pCurrentRoom, final String pName) {
         this.aCurrentRoom = pCurrentRoom;
         this.aName = pName;
@@ -320,6 +331,9 @@ public class Player {
         }
     }
 
+    /**
+     * This method write in UI when you left the menu
+     */
     public void exit() {
         this.aGui.println("you have left menu");
     }
@@ -331,6 +345,9 @@ public class Player {
         this.aGui.println(this.getCurrentRoom().getLongDescription());
     }
 
+    /**
+     * This method show the image of the room
+     */
     protected void showImage() {
         if (this.getCurrentRoom().getImageName() != null) {
             this.aGui.showImage(this.getCurrentRoom().getImageName());
@@ -344,10 +361,20 @@ public class Player {
         this.aPreviousRooms.clear();
     }
 
+    /**
+     * This function get the current room Item
+     * 
+     * @return String with all items in the room
+     */
     public String getCurrentRoomItemsString() {
         return this.aCurrentRoom.getItemString();
     }
 
+    /**
+     * This function get items in inventory
+     * 
+     * @return a String with items in inventory
+     */
     public String getCurrentInventoryItemsString() {
         return this.aInventory.getInventoryString();
     }

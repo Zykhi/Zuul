@@ -2305,6 +2305,8 @@ A FAIRE
 
 #### Exercice 7.42.2
 
+//TODO
+
 Une IHM plus poussée est développée.
 
 ```java
@@ -2628,65 +2630,58 @@ case FIRE:
 CHARGE("charge"), FIRE("fire");
 ```
 
+#### Exercice 7.45.1
+
+Mise a jour des fichiers test
+
+#### Exercice 7.45.2
+
+Les javadoc sont mise à jour sur le site
+
 #### Exercice 7.46
 
 Ajout de deux nouvelles classe pour réaliser cet exercice. Une classe `RoomRandomizer` qui cherchera une salle aléatoire dans toutes les salles possibles
 
 ```java
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
 public class RoomRandomizer {
     private HashMap<String, Room> aAllRooms;
-    private ArrayList<Room> aRoomsArrayList;
+    private Object[] aRoomsArrayList;
 
-    public RoomRandomizer(HashMap<String, Room> pAllRooms) {
-        this.aAllRooms = pAllRooms;
-        this.aRoomsArrayList = new ArrayList<Room>();
-        fillArrayList();
-    }
-
-    private void fillArrayList() {
-        HashMap<String, Room> vAllRooms = this.aAllRooms;
-        for (String vRoomName : vAllRooms.keySet()) {
-            this.aRoomsArrayList.add(vAllRooms.get(vRoomName));
-        }
+    public RoomRandomizer() {
     }
 
     public Room findRandomRoom() {
         Random vRandom = new Random();
-        int vRandomIntInArray = vRandom.nextInt(this.aRoomsArrayList.size());
-
-        return this.aRoomsArrayList.get(vRandomIntInArray);
+        int vRandomIntInArray = vRandom.nextInt(this.aRoomsArrayList.length);
+        return (Room) this.aRoomsArrayList[vRandomIntInArray];
     }
 
+    public void setRandom(final HashMap<String, Room> pAllRooms) {
+        this.aAllRooms = pAllRooms;
+        this.aRoomsArrayList = this.aAllRooms.values().toArray();
+    }
 }
 ```
 
 Et une classe `TransporterRoom` qui elle, recupérera la salle aléatoire et lui attribura comme sortie
 
 ```java
-import java.util.HashMap;
-
 public class TransporterRoom extends Room {
 
     private RoomRandomizer aRoomRandomizer;
 
-    public TransporterRoom(String pDescription, String pImage) {
+    public TransporterRoom(String pDescription, String pImage, final RoomRandomizer pRoomRandomizer) {
         super(pDescription, pImage);
-
-    }
-
-    public void setAllRooms(final HashMap<String, Room> pAllRooms) {
-        this.aRoomRandomizer = new RoomRandomizer(pAllRooms);
+        this.aRoomRandomizer = pRoomRandomizer;
     }
 
     @Override
     public Room getExit(final String pDirection) {
         return this.aRoomRandomizer.findRandomRoom();
     }
-
 }
 ```
 
@@ -2694,17 +2689,74 @@ Puis dans la classe `GameEngine` il y a des ajouts pour que cette pièce soit da
 On ajoute un nouvel attribut
 
 ```java
-private ArrayList<TransporterRoom> aTransporterRoom;
+private RoomRandomizer aRandomRoom;
 ```
 
-Puis on l'initialise
+Puis on l'initialise dans la pièces dans `createRooms()`
 
 ```java
-this.aTransporterRoom = new ArrayList<TransporterRoom>();
+vTestRoom = new TransporterRoom("This is a test room", "gameImages/test.gif", this.aRandomRoom);
 ```
 
-Et ensuite on ajoute a une room la sortie aléatoire
+#### Exercice 7.46.1
+
+Nous mettons à jour la classe `RoomRandomizer` pour ajouter la commande alea
 
 ```java
-((TransporterRoom) vTestRoom).setAllRooms(this.aRooms);
+import java.util.HashMap;
+import java.util.Random;
+
+public class RoomRandomizer {
+
+    [...]
+
+    private boolean aAlea;
+
+    public RoomRandomizer() {
+        this.aAlea = false;
+    }
+
+    [...]
+
+    public void setAlea(Room pRoom) {
+        this.aRoomsArrayList = new Object[] { pRoom };
+    }
+
+    [...]
+
+    public boolean isAlea() {
+        return this.aAlea;
+    }
+}
 ```
+
+Puis après avoir ajouté la commande dans la classe `CommandWord` nous nous attaquons à la classe `GameEngine`. Cela permet de mettre une piece pour enlever l'aléatoire de la sortie de la `TransporterRoom`
+
+```java
+private void alea(final Command pRoom) {
+    if (!aTest) {
+        this.aGui.println("You need to be in test mode");
+    }
+    if (pRoom.hasSecondWord() && !aRandomRoom.isAlea()) {
+        Room vRoom = aRooms.get(pRoom.getSecondWord());
+        if (vRoom == null) {
+            System.out.println("Room dont found");
+        }
+        aRandomRoom.setAlea(vRoom);
+    } else {
+        aRandomRoom.setRandom(aRooms);
+    }
+}
+```
+
+#### Exercice 7.46.2
+
+L'héritage est utilisé pour la classe `Beamer` c'est une sorte d'`Item`
+
+#### Exercice 7.46.3
+
+Mise à jour de la javadoc
+
+#### Exercice 7.46.4
+
+Mise à jour de la javadoc sur le site
