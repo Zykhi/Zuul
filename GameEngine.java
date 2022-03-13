@@ -294,7 +294,7 @@ public class GameEngine {
         if (pFile.hasSecondWord()) {
             try {
                 String vFile = pFile.getSecondWord();
-                Scanner vScanner = new Scanner(new File(vFile + ".txt"));
+                Scanner vScanner = new Scanner(new File("testFiles/" + vFile + ".txt"));
                 String vCommandString = vScanner.nextLine();
                 this.aTest = true;
                 while (vScanner.hasNextLine()) {
