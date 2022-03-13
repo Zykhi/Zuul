@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -21,7 +22,7 @@ public class GameEngine {
     private Player aPlayer;
     private Parser aParser;
     private HashMap<String, Room> aRooms;
-    private RoomRandomizer aRandomRoom;
+    private ArrayList<TransporterRoom> aTransporterRoom;
     private UserInterface aGui;
     private boolean aTest;
 
@@ -54,10 +55,9 @@ public class GameEngine {
     private void createRooms() {
 
         this.aRooms = new HashMap<String, Room>();
-        aRandomRoom = new RoomRandomizer();
-        this.aRandomRoom.setRandom(aRooms);
+        this.aTransporterRoom = new ArrayList<TransporterRoom>();
 
-        Room vOutside, vCatacombs, vLobby, vTreasure, vBoss1Room, vBoss2Room, vBoss3Room, vTestRoom;
+        Room vOutside, vCatacombs, vLobby, vTreasure, vBoss1Room, vBoss2Room, vBoss3Room;
 
         vOutside = new Room("outside the dungeon", "gameImages/outside.gif");
         vCatacombs = new Room("in the catacombs", "gameImages/catacombs.gif");
@@ -66,8 +66,9 @@ public class GameEngine {
         vBoss1Room = new Room("boss room 1", "gameImages/boss1.gif"); // need change desc of boss room
         vBoss2Room = new Room("boss room 2", "gameImages/boss2.gif");
         vBoss3Room = new Room("boss room 3", "gameImages/boss3.gif");
+        TransporterRoom vTestRoom = new TransporterRoom("this is a test room", "gameImages/test.gif", this.aRooms);
 
-        vTestRoom = new TransporterRoom("This is a test room", "gameImages/test.gif", this.aRandomRoom);
+        this.aTransporterRoom.add(vTestRoom);
 
         aRooms.put("outside", vOutside);
         aRooms.put("catacombs", vCatacombs);
@@ -319,14 +320,14 @@ public class GameEngine {
         if (!aTest) {
             this.aGui.println("You need to be in test mode");
         }
-        if (pRoom.hasSecondWord() && !aRandomRoom.isAlea()) {
-            Room vRoom = aRooms.get(pRoom.getSecondWord());
-            if (vRoom == null) {
+        if (pRoom.hasSecondWord() && aTest) {
+            String vRoomName = pRoom.getSecondWord();
+            if (vRoomName == null) {
                 System.out.println("Room dont found");
             }
-            aRandomRoom.setAlea(vRoom);
-        } else {
-            aRandomRoom.setRandom(aRooms);
+            for (TransporterRoom vTransporterRoom : this.aTransporterRoom) {
+                vTransporterRoom.setNextRoom(vRoomName);
+            }
         }
     }
 

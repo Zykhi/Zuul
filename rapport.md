@@ -2644,24 +2644,23 @@ Ajout de deux nouvelles classe pour réaliser cet exercice. Une classe `RoomRand
 
 ```java
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Random;
 
-public class RoomRandomizer {
-    private HashMap<String, Room> aAllRooms;
-    private Object[] aRoomsArrayList;
+public class RoomRandomizer
+{
+    private HashMap<String, Room> aRooms;
 
-    public RoomRandomizer() {
+    public RoomRandomizer(final HashMap<String, Room> pRooms)
+    {
+       this.aRooms = pRooms;
     }
 
-    public Room findRandomRoom() {
-        Random vRandom = new Random();
-        int vRandomIntInArray = vRandom.nextInt(this.aRoomsArrayList.length);
-        return (Room) this.aRoomsArrayList[vRandomIntInArray];
-    }
-
-    public void setRandom(final HashMap<String, Room> pAllRooms) {
-        this.aAllRooms = pAllRooms;
-        this.aRoomsArrayList = this.aAllRooms.values().toArray();
+    public Room findRandomRoom(){
+        Random vRandomNb = new Random();
+        ArrayList<Room> vRoomsList = new ArrayList<Room>(this.aRooms.values());
+        int vNb = vRandomNb.nextInt(vRoomList.size());
+        return vRoomList.get(vNb);
     }
 }
 ```
@@ -2669,19 +2668,23 @@ public class RoomRandomizer {
 Et une classe `TransporterRoom` qui elle, recupérera la salle aléatoire et lui attribura comme sortie
 
 ```java
-public class TransporterRoom extends Room {
+import java.util.HashMap;
 
-    private RoomRandomizer aRoomRandomizer;
+public class TransporterRoom extends Room
+{
+    private RoomRandomizer aRandomRoom;
+    private HashMap<String, Room> aRooms;
 
-    public TransporterRoom(String pDescription, String pImage, final RoomRandomizer pRoomRandomizer) {
+    public TransporterRoom(final String pDescription, final String pImage, final HashMap<String, Room> pRooms){
         super(pDescription, pImage);
-        this.aRoomRandomizer = pRoomRandomizer;
+        this.aRandomRoom = new RoomRandomizer(pRooms);
+        this.aRooms = pRooms;
     }
 
-    @Override
-    public Room getExit(final String pDirection) {
-        return this.aRoomRandomizer.findRandomRoom();
+    @Override public Room getExit(final String pDirection){
+        return this.aRandomRoom.findRandomRoom();
     }
+
 }
 ```
 
@@ -2689,62 +2692,66 @@ Puis dans la classe `GameEngine` il y a des ajouts pour que cette pièce soit da
 On ajoute un nouvel attribut
 
 ```java
-private RoomRandomizer aRandomRoom;
+private ArrayList<TransporterRoom> aTransporterRoom;
 ```
 
 Puis on l'initialise dans la pièces dans `createRooms()`
 
 ```java
-vTestRoom = new TransporterRoom("This is a test room", "gameImages/test.gif", this.aRandomRoom);
+this.aTransporterRoom = new ArrayList<TransporterRoom>();
+
+TransporterRoom vTestRoom = new TransporterRoom("this is a test room", "gameImages/test.gif", this.aRooms);
+
+this.aTransporterRoom.add(vTestRoom);
 ```
 
 #### Exercice 7.46.1
 
-Nous mettons à jour la classe `RoomRandomizer` pour ajouter la commande alea
+Nous mettons à jour la classe `TransporterRoom` pour ajouter la commande alea
 
 ```java
-import java.util.HashMap;
-import java.util.Random;
-
-public class RoomRandomizer {
+public class TransporterRoom extends Room {
 
     [...]
 
-    private boolean aAlea;
+    private String aAlea;
 
-    public RoomRandomizer() {
-        this.aAlea = false;
+    public TransporterRoom(final String pDescription, final String pImage, final HashMap<String, Room> pRooms){
+
+        [...]
+
+        this.aAlea = null;
     }
 
-    [...]
-
-    public void setAlea(Room pRoom) {
-        this.aRoomsArrayList = new Object[] { pRoom };
+    @Override public Room getExit(final String pDirection){
+        if(this.aAlea==null){
+            return this.aRandomRoom.findRandomRoom();
+        }else{
+            return this.aRooms.get(this.aAlea);
+        }
     }
 
-    [...]
-
-    public boolean isAlea() {
-        return this.aAlea;
+    public void setNextRoom(final String pNextRoom){
+        this.aAlea = pNextRoom;
     }
 }
 ```
 
-Puis après avoir ajouté la commande dans la classe `CommandWord` nous nous attaquons à la classe `GameEngine`. Cela permet de mettre une piece pour enlever l'aléatoire de la sortie de la `TransporterRoom`
+Puis après avoir ajouté la commande dans la classe `CommandWord` nous nous attaquons à la classe `GameEngine`. Cela permet de mettre une pièce pour enlever l'aléatoire de la sortie de la `TransporterRoom`
 
 ```java
 private void alea(final Command pRoom) {
     if (!aTest) {
         this.aGui.println("You need to be in test mode");
     }
-    if (pRoom.hasSecondWord() && !aRandomRoom.isAlea()) {
-        Room vRoom = aRooms.get(pRoom.getSecondWord());
-        if (vRoom == null) {
+    if (pRoom.hasSecondWord() && aTest) {
+        String vRoomName = pRoom.getSecondWord();
+        if (vRoomName == null) {
             System.out.println("Room dont found");
         }
-        aRandomRoom.setAlea(vRoom);
-    } else {
-        aRandomRoom.setRandom(aRooms);
+        for (TransporterRoom vTransporterRoom : this.aTransporterRoom) {
+            vTransporterRoom.setNextRoom(vRoomName);
+        }
     }
 }
 ```

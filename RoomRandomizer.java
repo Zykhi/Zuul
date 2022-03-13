@@ -1,22 +1,22 @@
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * This class represents part of TransporterRoom
- * 
+ * Thid class create a random room
+ *
  * @author C.Diouy
- * @version 2022.03.02
  */
 public class RoomRandomizer {
-    private HashMap<String, Room> aAllRooms;
-    private Object[] aRoomsArrayList;
-    private boolean aAlea;
+    private HashMap<String, Room> aRooms;
 
     /**
      * this constructor create a room randomizer
+     * 
+     * @param pRooms Hashmap contain all the room
      */
-    public RoomRandomizer() {
-        this.aAlea = false;
+    public RoomRandomizer(final HashMap<String, Room> pRooms) {
+        this.aRooms = pRooms;
     }
 
     /**
@@ -25,38 +25,9 @@ public class RoomRandomizer {
      * @return room in array list
      */
     public Room findRandomRoom() {
-        Random vRandom = new Random();
-        int vRandomIntInArray = vRandom.nextInt(this.aRoomsArrayList.length);
-        return (Room) this.aRoomsArrayList[vRandomIntInArray];
+        Random vRandomNb = new Random();
+        ArrayList<Room> vRoomsList = new ArrayList<Room>(this.aRooms.values());
+        int vNb = vRandomNb.nextInt(vRoomsList.size());
+        return vRoomsList.get(vNb);
     }
-
-    /**
-     * This method set the room for alea command
-     * 
-     * @param pRoom Room to set
-     */
-    public void setAlea(Room pRoom) {
-        this.aRoomsArrayList = new Object[] { pRoom };
-    }
-
-    /**
-     * This method set all the room random for the transporterRoom
-     * 
-     * @param pAllRooms all the room of the game
-     */
-    public void setRandom(final HashMap<String, Room> pAllRooms) {
-        this.aAllRooms = pAllRooms;
-        this.aRoomsArrayList = this.aAllRooms.values().toArray();
-    }
-
-    /**
-     * This boolean return if alea is on or off
-     * 
-     * @return true if aAlea is active
-     *         false if isnt
-     */
-    public boolean isAlea() {
-        return this.aAlea;
-    }
-
 }
