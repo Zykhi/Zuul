@@ -17,6 +17,7 @@ import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -33,6 +34,7 @@ import javax.swing.JButton;
 public class UserInterface implements ActionListener {
     private GameEngine aEngine;
     private JFrame aMyFrame;
+    private JLayeredPane aLayeredPane;
     private JTextField aEntryField;
     private JTextArea aLog;
     private JLabel aImage;
@@ -176,10 +178,44 @@ public class UserInterface implements ActionListener {
         this.aMyFrame.setResizable(false);
         this.aMyFrame.setPreferredSize(new Dimension(1077, 765));
 
-        this.aEntryField = new JTextField(34);
-
         ImageIcon aGameIcon = new ImageIcon("gameImages/game.png");
 
+        this.aMyFrame.setIconImage(aGameIcon.getImage());
+
+        this.createButton();
+        this.createPanel();
+
+        this.aMyFrame.add(aLayeredPane);
+
+        // to end program when window is closed
+        // update the method to have something shorter
+        this.aMyFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        this.aMyFrame.pack();
+        this.aMyFrame.setVisible(true);
+        this.aEntryField.requestFocus();
+
+    } // createGUI()
+
+    /**
+     * Actionlistener interface for entry textfield.
+     * 
+     * @param pE event of actionListener
+     */
+    public void actionPerformed(final ActionEvent pE) {
+        // check the type of action
+        if (pE.getActionCommand() != null) {
+            this.aEngine.interpretCommand(aParser.getCommand(pE.getActionCommand()));
+            this.aEntryField.setText(""); // to reset entry field
+        } else {
+            this.processCommand(); // never suppress this line
+        }
+    } // actionPerformed(.)
+
+    /**
+     * This method creates all the button
+     */
+    public void createButton() {
         this.aQuitButton = new JButton("quit");
         this.aNorthButton = new JButton("north ▲");
         this.aEastButton = new JButton("east ▶");
@@ -196,102 +232,7 @@ public class UserInterface implements ActionListener {
         this.aInventoryButton = new JButton("bag ₿");
         this.aSkipButton = new JButton("skip ▹▹");
 
-        this.aMyFrame.setIconImage(aGameIcon.getImage());
-
-        this.aLog = new JTextArea();
-        this.aLog.setEditable(false);
-        this.aLog.setLineWrap(true);
-        this.aLog.setWrapStyleWord(true);
-        this.aLog.setMargin(new Insets(10, 10, 10, 10));
-        JScrollPane vListScroller = new JScrollPane(this.aLog);
-        vListScroller.setPreferredSize(new Dimension(414, 707));
-
-        JPanel vImagePanel = new JPanel();
-        this.aImage = new JLabel();
-        vImagePanel.setPreferredSize(new Dimension(650, 650));
-
-        vImagePanel.setLayout(new BorderLayout()); // ==> only five places
-        vImagePanel.add(this.aImage, BorderLayout.CENTER);
-
-        JPanel vTextPanel = new JPanel();
-
-        vTextPanel.setLayout(new BorderLayout());
-        vTextPanel.add(vListScroller, BorderLayout.CENTER);
-        vTextPanel.add(this.aEntryField, BorderLayout.SOUTH);
-
-        JPanel vMovementButtonPanel = new JPanel();
-        vMovementButtonPanel.setPreferredSize(new Dimension(365, 87));
-        JPanel vCenterButtonPanel = new JPanel();
-
-        vCenterButtonPanel.setLayout(new GridLayout(1, 2));
-        vCenterButtonPanel.setBackground(Color.DARK_GRAY);
-        vCenterButtonPanel.add(this.aUpButton);
-        vCenterButtonPanel.add(this.aDownButton);
-
-        vMovementButtonPanel.setLayout(new BorderLayout());
-        vMovementButtonPanel.setBackground(Color.DARK_GRAY);
-        vMovementButtonPanel.add(this.aNorthButton, BorderLayout.NORTH);
-        vMovementButtonPanel.add(this.aWestButton, BorderLayout.WEST);
-        vMovementButtonPanel.add(this.aSouthButton, BorderLayout.SOUTH);
-        vMovementButtonPanel.add(this.aEastButton, BorderLayout.EAST);
-        vMovementButtonPanel.add(vCenterButtonPanel, BorderLayout.CENTER);
-
-        JPanel vActionButtonPanel = new JPanel();
-        vActionButtonPanel.setPreferredSize(new Dimension(294, 87));
-
-        vActionButtonPanel.setLayout(new GridLayout(3, 3));
-        vActionButtonPanel.setBackground(Color.DARK_GRAY);
-        vActionButtonPanel.add(this.aBackButton);
-        vActionButtonPanel.add(this.aHelpButton);
-        vActionButtonPanel.add(this.aQuitButton);
-        vActionButtonPanel.add(this.aDropButton);
-        vActionButtonPanel.add(this.aTakeButton);
-        vActionButtonPanel.add(this.aFireButton);
-        vActionButtonPanel.add(this.aChargeButton);
-        vActionButtonPanel.add(this.aInventoryButton);
-        vActionButtonPanel.add(this.aSkipButton);
-
-        JPanel vPanel = new JPanel();
-        vPanel.setLayout(new GridBagLayout());
-        GridBagConstraints vGridBagLayout = new GridBagConstraints();
-        vGridBagLayout.weightx = 1;
-        vGridBagLayout.weighty = 1;
-
-        vGridBagLayout.gridx = 0;
-        vGridBagLayout.gridwidth = 2;
-        vGridBagLayout.gridheight = 2;
-        vGridBagLayout.gridy = 0;
-        vGridBagLayout.fill = GridBagConstraints.BOTH;
-        vPanel.add(vImagePanel, vGridBagLayout);
-
-        vGridBagLayout.gridx = 0;
-        vGridBagLayout.gridwidth = 1;
-        vGridBagLayout.gridheight = 1;
-        vGridBagLayout.gridy = 2;
-        vPanel.add(vMovementButtonPanel, vGridBagLayout);
-
-        vGridBagLayout.gridx = 1;
-        vGridBagLayout.gridwidth = 1;
-        vGridBagLayout.gridheight = 1;
-        vGridBagLayout.gridy = 2;
-        vPanel.add(vActionButtonPanel, vGridBagLayout);
-
-        vGridBagLayout.gridx = 2;
-        vGridBagLayout.gridwidth = 1;
-        vGridBagLayout.gridheight = 3;
-        vGridBagLayout.gridy = 0;
-        vPanel.add(vTextPanel, vGridBagLayout);
-
-        Font vFont = new Font("Monospaced", Font.PLAIN, 14);
-
-        this.aLog.setFont(vFont);
-        this.aLog.setForeground(Color.white);
-        this.aLog.setBackground(Color.darkGray);
-
-        this.aMyFrame.getContentPane().add(vPanel, BorderLayout.CENTER);
-
         // add some event listeners to some components
-        this.aEntryField.addActionListener(this);
         this.aQuitButton.addActionListener(this);
         this.aNorthButton.addActionListener(this);
         this.aSouthButton.addActionListener(this);
@@ -324,31 +265,89 @@ public class UserInterface implements ActionListener {
         this.aChargeButton.setActionCommand("charge");
         this.aInventoryButton.setActionCommand("inventory");
         this.aSkipButton.setActionCommand("skip");
+    }
 
-        // to end program when window is closed
-        // update the method to have something shorter
-        this.aMyFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    private void createPanel() {
+        Font vFont = new Font("Monospaced", Font.PLAIN, 14);
 
-        this.aMyFrame.pack();
-        this.aMyFrame.setVisible(true);
-        this.aEntryField.requestFocus();
+        this.aEntryField = new JTextField(34);
+        this.aEntryField.addActionListener(this);
 
-    } // createGUI()
+        this.aLog = new JTextArea();
+        this.aLog.setEditable(false);
+        this.aLog.setLineWrap(true);
+        this.aLog.setWrapStyleWord(true);
+        this.aLog.setMargin(new Insets(10, 10, 10, 10));
+        this.aLog.setFont(vFont);
+        this.aLog.setForeground(Color.white);
+        this.aLog.setBackground(Color.darkGray);
+        JScrollPane vListScroller = new JScrollPane(this.aLog);
+        vListScroller.setPreferredSize(new Dimension(414, 707));
 
-    /**
-     * Actionlistener interface for entry textfield.
-     * 
-     * @param pE event of actionListener
-     */
-    public void actionPerformed(final ActionEvent pE) {
-        // check the type of action
-        if (pE.getActionCommand() != null) {
-            this.aEngine.interpretCommand(aParser.getCommand(pE.getActionCommand()));
-            this.aEntryField.setText(""); // to reset entry field
-        } else {
-            this.processCommand(); // never suppress this line
-        }
-    } // actionPerformed(.)
+        JPanel vImagePanel = new JPanel();
+        this.aImage = new JLabel();
+        vImagePanel.setPreferredSize(new Dimension(650, 650));
+        vImagePanel.setSize(vImagePanel.getPreferredSize());
+        vImagePanel.setLocation(0, 0);
+        vImagePanel.setLayout(new BorderLayout());
+        vImagePanel.add(this.aImage, BorderLayout.CENTER);
+
+        // this is a test label
+        //TODO time limit
+        JLabel label1 = new JLabel("time left : " );
+        label1.setFont(vFont);
+        label1.setSize(150, 50);
+        label1.setLocation(15, 0);
+
+        JPanel vTextPanel = new JPanel();
+        vTextPanel.setLayout(new BorderLayout());
+        vTextPanel.add(vListScroller, BorderLayout.CENTER);
+        vTextPanel.add(this.aEntryField, BorderLayout.SOUTH);
+        vTextPanel.setSize(vTextPanel.getPreferredSize());
+        vTextPanel.setLocation(660, 0);
+        
+        JPanel vMovementButtonPanel = new JPanel();
+        JPanel vCenterButtonPanel = new JPanel();
+
+        vCenterButtonPanel.setLayout(new GridLayout(1, 2));
+        vCenterButtonPanel.setBackground(Color.DARK_GRAY);
+        vCenterButtonPanel.add(this.aUpButton);
+        vCenterButtonPanel.add(this.aDownButton);
+
+        vMovementButtonPanel.setPreferredSize(new Dimension(365, 87));
+        vMovementButtonPanel.setLayout(new BorderLayout());
+        vMovementButtonPanel.setBackground(Color.DARK_GRAY);
+        vMovementButtonPanel.add(this.aNorthButton, BorderLayout.NORTH);
+        vMovementButtonPanel.add(this.aWestButton, BorderLayout.WEST);
+        vMovementButtonPanel.add(this.aSouthButton, BorderLayout.SOUTH);
+        vMovementButtonPanel.add(this.aEastButton, BorderLayout.EAST);
+        vMovementButtonPanel.add(vCenterButtonPanel, BorderLayout.CENTER);
+        vMovementButtonPanel.setSize(vMovementButtonPanel.getPreferredSize());
+        vMovementButtonPanel.setLocation(0, 650);
+
+        JPanel vActionButtonPanel = new JPanel();
+        vActionButtonPanel.setPreferredSize(new Dimension(294, 87));
+        vActionButtonPanel.setLayout(new GridLayout(3, 3));
+        vActionButtonPanel.setBackground(Color.DARK_GRAY);
+        vActionButtonPanel.add(this.aBackButton);
+        vActionButtonPanel.add(this.aHelpButton);
+        vActionButtonPanel.add(this.aQuitButton);
+        vActionButtonPanel.add(this.aDropButton);
+        vActionButtonPanel.add(this.aTakeButton);
+        vActionButtonPanel.add(this.aFireButton);
+        vActionButtonPanel.add(this.aChargeButton);
+        vActionButtonPanel.add(this.aInventoryButton);
+        vActionButtonPanel.add(this.aSkipButton);
+        vActionButtonPanel.setSize(vActionButtonPanel.getPreferredSize());
+        vActionButtonPanel.setLocation(365, 650);
+
+        this.aLayeredPane = new JLayeredPane();
+        this.aLayeredPane.add(vImagePanel, JLayeredPane.DEFAULT_LAYER);
+        this.aLayeredPane.add(vTextPanel, JLayeredPane.DEFAULT_LAYER);
+        this.aLayeredPane.add(vMovementButtonPanel, JLayeredPane.DEFAULT_LAYER);
+        this.aLayeredPane.add(vActionButtonPanel, JLayeredPane.DEFAULT_LAYER);
+        this.aLayeredPane.add(label1, JLayeredPane.PALETTE_LAYER);
+    }
 
     /**
      * This method is called when you click on the drop button
