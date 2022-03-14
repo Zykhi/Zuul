@@ -158,6 +158,10 @@ public class GameEngine {
         CommandWord vCommandWord = pCommandLine.getCommandWord();
         if (aPlayer.getMovement() <= 0) {
             this.gameOver();
+        }
+        if (this.aGui.isTimerEnd()) {
+            this.gameOver();
+            this.aGui.stopTimer();
         } else {
 
             try {
@@ -330,5 +334,4 @@ public class GameEngine {
             }
         }
     }
-
 }// Game

@@ -1,8 +1,6 @@
 import java.net.URL;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.io.File;
@@ -22,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 import javax.swing.JButton;
 
 /**
@@ -38,12 +37,19 @@ public class UserInterface implements ActionListener {
     private JTextField aEntryField;
     private JTextArea aLog;
     private JLabel aImage;
+    private JLabel aGameTimer;
     private JButton aQuitButton, aNorthButton, aSouthButton, aEastButton, aWestButton, aUpButton, aDownButton,
             aBackButton, aHelpButton, aDropButton, aTakeButton, aChargeButton, aFireButton, aInventoryButton,
             aSkipButton;
     private Parser aParser;
-    private int aTimer = 60;
+    private int aTime = 60;
     private Clip aClip;
+    private Timer aTimer;
+    private int aMinute;
+    private int aSecond;
+    private int aDelay = 1000;
+    private int aEndTime = 1;
+    private ActionListener aTaskTimer;
 
     /**
      * Construct a UserInterface. As a parameter, a Game Engine
@@ -56,6 +62,7 @@ public class UserInterface implements ActionListener {
         this.aEngine = pGameEngine;
         this.createGUI();
         this.aParser = new Parser();
+        this.startTimer();
     } // UserInterface(.)
 
     /**
@@ -94,7 +101,7 @@ public class UserInterface implements ActionListener {
             this.aLog.setCaretPosition(this.aLog.getDocument().getLength());
 
             try {
-                Thread.sleep(aTimer);
+                Thread.sleep(aTime);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -292,12 +299,12 @@ public class UserInterface implements ActionListener {
         vImagePanel.setLayout(new BorderLayout());
         vImagePanel.add(this.aImage, BorderLayout.CENTER);
 
-        // this is a test label
-        //TODO time limit
-        JLabel label1 = new JLabel("time left : " );
-        label1.setFont(vFont);
-        label1.setSize(150, 50);
-        label1.setLocation(15, 0);
+        // this is timer label
+        aGameTimer = new JLabel();
+        aGameTimer.setForeground(Color.white);
+        aGameTimer.setFont(vFont);
+        aGameTimer.setSize(300, 50);
+        aGameTimer.setLocation(15, 0);
 
         JPanel vTextPanel = new JPanel();
         vTextPanel.setLayout(new BorderLayout());
@@ -305,7 +312,7 @@ public class UserInterface implements ActionListener {
         vTextPanel.add(this.aEntryField, BorderLayout.SOUTH);
         vTextPanel.setSize(vTextPanel.getPreferredSize());
         vTextPanel.setLocation(660, 0);
-        
+
         JPanel vMovementButtonPanel = new JPanel();
         JPanel vCenterButtonPanel = new JPanel();
 
@@ -346,7 +353,7 @@ public class UserInterface implements ActionListener {
         this.aLayeredPane.add(vTextPanel, JLayeredPane.DEFAULT_LAYER);
         this.aLayeredPane.add(vMovementButtonPanel, JLayeredPane.DEFAULT_LAYER);
         this.aLayeredPane.add(vActionButtonPanel, JLayeredPane.DEFAULT_LAYER);
-        this.aLayeredPane.add(label1, JLayeredPane.PALETTE_LAYER);
+        this.aLayeredPane.add(aGameTimer, JLayeredPane.PALETTE_LAYER);
     }
 
     /**
@@ -436,7 +443,7 @@ public class UserInterface implements ActionListener {
      * It's write quikly the text of the slowPrint method
      */
     public void skipMethod() {
-        this.aTimer = 1;
+        this.aTime = 1;
         stopSound();
     }
 
@@ -458,6 +465,69 @@ public class UserInterface implements ActionListener {
      */
     public String getEntryField() {
         return this.aEntryField.getText();
+    }
+
+    /**
+     * This method start the timer
+     * 
+     * @author https://www.developpez.net/forums/anocode.php?id=f5b514a1cac1a7a4fd52f16767094ab1
+     */
+    public void startTimer() {
+        aSecond = 0;
+        aMinute = 0;
+        aTaskTimer = new ActionListener() {
+            public void actionPerformed(ActionEvent pE) {
+
+                aSecond++;
+                if (aSecond == 60) {
+                    aSecond = 0;
+                    aMinute++;
+                }
+                aGameTimer.setText("elapsed time : " + aMinute + " : " + aSecond);
+            }
+        };
+
+        aTimer = new Timer(aDelay, aTaskTimer);
+        aTimer.start();
+    }
+
+    /**
+     * this method stop the timer
+     */
+    public void stopTimer() {
+        aTimer.stop();
+    }
+
+    /**
+     * this function get the minute of the timer
+     * 
+     * @return a minute of the timer
+     */
+    public int getMinute() {
+        return aMinute;
+    }
+
+    /**
+     * this function get the second of the timer
+     * 
+     * @return a second of the timer
+     */
+    public int getSecond() {
+        return aSecond;
+    }
+
+    /**
+     * this boolean check if timer is end
+     * 
+     * @return true if timer is end
+     *         false if isnt
+     */
+    public boolean isTimerEnd() {
+        if (getMinute() < aEndTime) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 } // UserInterface
