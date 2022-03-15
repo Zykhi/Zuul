@@ -28,7 +28,7 @@ public class Player {
         this.aParser = new Parser();
         this.aInventory = new ItemList();
         this.aMaxWeight = 20;
-        this.aMovement = 20;
+        this.aMovement = 40;
     }
 
     /**
@@ -117,6 +117,7 @@ public class Player {
         }
 
         this.aGui.println("Type '" + CommandWord.HELP.toString() + "' if you need help.");
+        this.aGui.println("You have 20 minutes to escape from the dungeon before being trapped forever");
         this.printLocationInfo();
     }
 

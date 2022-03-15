@@ -48,7 +48,7 @@ public class UserInterface implements ActionListener {
     private int aMinute;
     private int aSecond;
     private int aDelay = 1000;
-    private int aEndTime = 1;
+    private int aEndTime = 20;
     private ActionListener aTaskTimer;
 
     /**
@@ -223,7 +223,7 @@ public class UserInterface implements ActionListener {
      * This method creates all the button
      */
     public void createButton() {
-        this.aQuitButton = new JButton("quit");
+        this.aQuitButton = new JButton("quit ⍈");
         this.aNorthButton = new JButton("north ▲");
         this.aEastButton = new JButton("east ▶");
         this.aSouthButton = new JButton("south ▼");
