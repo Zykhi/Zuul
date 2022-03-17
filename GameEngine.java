@@ -31,9 +31,9 @@ public class GameEngine {
      */
     public GameEngine() {
         this.createRooms();
-        this.createPlayer();
         this.createItems();
         this.createDoor();
+        this.createPlayer();
         this.aParser = new Parser();
         this.aTest = false;
     }
@@ -54,18 +54,17 @@ public class GameEngine {
      */
     private void createRooms() {
 
-        this.aRooms = new HashMap<String, Room>();
+        aRooms = new HashMap<String, Room>();
+
         this.aTransporterRoom = new ArrayList<TransporterRoom>();
 
-        Room vOutside, vCatacombs, vLobby, vTreasure, vBoss1Room, vBoss2Room, vBoss3Room;
-
-        vOutside = new Room("outside the dungeon", "gameImages/outside.gif");
-        vCatacombs = new Room("in the catacombs", "gameImages/catacombs.gif");
-        vLobby = new Room("the main room of the dungeon", "gameImages/lobby.gif");
-        vTreasure = new Room("an empty room", "gameImages/treasure.gif"); // or not ;)
-        vBoss1Room = new Room("boss room 1", "gameImages/boss1.gif"); // need change desc of boss room
-        vBoss2Room = new Room("boss room 2", "gameImages/boss2.gif");
-        vBoss3Room = new Room("boss room 3", "gameImages/boss3.gif");
+        Room vOutside = new Room("outside the dungeon", "gameImages/outside.gif");
+        Room vCatacombs = new Room("in the catacombs", "gameImages/catacombs.gif");
+        Room vLobby = new Room("the main room of the dungeon", "gameImages/lobby.gif");
+        Room vTreasure = new Room("an empty room", "gameImages/treasure.gif"); // or not ;)
+        Room vBoss1Room = new Room("boss room 1", "gameImages/boss1.gif"); // need change desc of boss room
+        Room vBoss2Room = new Room("boss room 2", "gameImages/boss2.gif");
+        Room vBoss3Room = new Room("boss room 3", "gameImages/boss3.gif");
         TransporterRoom vTestRoom = new TransporterRoom("this is a test room", "gameImages/test.gif", this.aRooms);
 
         this.aTransporterRoom.add(vTestRoom);
@@ -287,6 +286,26 @@ public class GameEngine {
         } else {
             return null;
         }
+    }
+
+    public String getKey(HashMap<String, Room> pHashMap, Room pRoom)
+    {
+        for (String vKey: pHashMap.keySet())
+        {
+            if (pRoom.equals(pHashMap.get(vKey))) {
+                return vKey;
+            }
+        }
+        return null;
+    }
+
+    public void playRoomSound(){
+        HashMap<String, Room> vRooms = aRooms;
+        Room vRoom = aPlayer.getCurrentRoom();
+        String vCurrentRoomString = getKey(vRooms, vRoom);
+        this.aGui.stopSound();
+        this.aGui.playSound(vCurrentRoomString);
+        System.out.println(vCurrentRoomString);
     }
 
     /**

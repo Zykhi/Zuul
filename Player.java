@@ -152,7 +152,6 @@ public class Player {
 
         // Try to leave current room.
         Room vNextRoom = this.getCurrentRoom().getExit(vDirection);
-
         if (vNextRoom == null) {
             this.aGui.println("There is no door!");
         } else if (vDoor != null) {
@@ -162,12 +161,16 @@ public class Player {
                 return;
             }
         } else {
-            this.setRoom(vNextRoom);
-            showImage();
-            printLocationInfo();
-            aMovement -= 1;
-
+            changeRoom(vNextRoom);
         }
+    }
+
+    private void changeRoom(Room vNextRoom) {
+        this.setRoom(vNextRoom);
+        showImage();
+        printLocationInfo();
+        this.aGui.playRoomSound();
+        aMovement -= 1;
     }
 
     /**
@@ -238,10 +241,7 @@ public class Player {
             this.aGui.println("you cant back");
         } else {
             Room vPreviousRoom = this.getPreviousRooms().pop(); // was aPreviousRooms.pop()
-            this.setRoom(vPreviousRoom); // was aCurrentRoom = vPreviousRoom
-            showImage();
-            printLocationInfo();
-            aMovement -= 1;
+            changeRoom(vPreviousRoom);
         }
     }
 
@@ -254,7 +254,7 @@ public class Player {
         String vItemName = pItemName.getSecondWord();
         Item vItem = this.aCurrentRoom.getItemName(vItemName);
         if (!pItemName.hasSecondWord()) {
-            this.aGui.println("What do you want to take");
+
         } else if (vItem == null) {
             this.aGui.println("This is not here");
         } else if (this.aInventory.getWeight() + vItem.getWeight() > this.aMaxWeight) {
@@ -278,7 +278,7 @@ public class Player {
         String vItemName = pItemName.getSecondWord();
         Item vItem = this.aInventory.getItemName(vItemName);
         if (!pItemName.hasSecondWord()) {
-            this.aGui.println("What do you want to drop");
+
         } else if (vItem == null) {
             this.aGui.println("You dont have this");
         } else {
@@ -379,5 +379,4 @@ public class Player {
     public String getCurrentInventoryItemsString() {
         return this.aInventory.getInventoryString();
     }
-
 }

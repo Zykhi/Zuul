@@ -51,8 +51,6 @@ public class Parser {
             vWord1 = vCommandWord;
             vWord2 = vSecondWord.equals("") ? null : vSecondWord;
         }
-
-        // System.out.println(vWord1 + " " + vWord2);
         return new Command(aCommandWords.getCommandWord(vWord1), vWord2);
     } // getCommand(.)
 

@@ -132,6 +132,7 @@ public class UserInterface implements ActionListener {
             aClip = AudioSystem.getClip();
             aClip.open(vAudioInputStream);
             aClip.start();
+            aClip.loop(-1);
         } catch (Exception ex) {
             System.out.println("Error with playing sound.");
             ex.printStackTrace();
@@ -143,6 +144,10 @@ public class UserInterface implements ActionListener {
      */
     public void stopSound() {
         aClip.stop();
+    }
+
+    public void playRoomSound() {
+        this.aEngine.playRoomSound();
     }
 
     /**
@@ -363,7 +368,6 @@ public class UserInterface implements ActionListener {
     public void dropButtonMethod() {
         JButton[] vButtons = { aBackButton, aHelpButton, aQuitButton, aDropButton, aTakeButton, aFireButton,
                 aChargeButton, aInventoryButton };
-
         if (aEngine.getCurrentInventoryItemsString() != null) {
             String[] vOutput = aEngine.getCurrentInventoryItemsString().split(" ");
             for (int i = 0; i < vOutput.length; i++) {
@@ -381,6 +385,9 @@ public class UserInterface implements ActionListener {
             for (int i = vOutput.length; i < 8; i++) {
                 vButtons[i].addActionListener(this);
             }
+            this.println("What do you want to drop ?");
+        } else {
+            this.println("Your inventory is empty");
         }
     }
 
@@ -409,6 +416,9 @@ public class UserInterface implements ActionListener {
             for (int i = vOutput.length; i < 8; i++) {
                 vButtons[i].addActionListener(this);
             }
+            this.println("What do you want to take ?");
+        } else {
+            this.println("There is nothing to take here");
         }
     }
 
@@ -430,8 +440,8 @@ public class UserInterface implements ActionListener {
         aQuitButton.setActionCommand("quit");
         aBackButton.setActionCommand("back");
         aHelpButton.setActionCommand("help");
-        aDropButton.setActionCommand("drop"); // FIXME if nothing in inventory dont write "what do you want to drop"
-        aTakeButton.setActionCommand("take"); // FIXME if nothing in the room dont write " what do you want to take"
+        aDropButton.setActionCommand("drop");
+        aTakeButton.setActionCommand("take");
         aFireButton.setActionCommand("fire");
         aChargeButton.setActionCommand("charge");
         aInventoryButton.setActionCommand("inventory");
