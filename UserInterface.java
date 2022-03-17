@@ -125,14 +125,14 @@ public class UserInterface implements ActionListener {
      * @author https://stackoverflow.com/questions/6045384/playing-mp3-and-wav-in-java
      * @param pFile File you want to play
      */
-    public void playSound(final String pFile) {
+    public void playSound(final String pFile, final int pLoop) {
         try {
             AudioInputStream vAudioInputStream = AudioSystem
                     .getAudioInputStream(new File("gameSounds/" + pFile + ".wav").getAbsoluteFile());
             aClip = AudioSystem.getClip();
             aClip.open(vAudioInputStream);
             aClip.start();
-            aClip.loop(-1);
+            aClip.loop(pLoop);
         } catch (Exception ex) {
             System.out.println("Error with playing sound.");
             ex.printStackTrace();

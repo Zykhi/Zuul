@@ -304,7 +304,7 @@ public class GameEngine {
         Room vRoom = aPlayer.getCurrentRoom();
         String vCurrentRoomString = getKey(vRooms, vRoom);
         this.aGui.stopSound();
-        this.aGui.playSound(vCurrentRoomString);
+        this.aGui.playSound(vCurrentRoomString, -1);
         System.out.println(vCurrentRoomString);
     }
 
