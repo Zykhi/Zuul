@@ -157,8 +157,7 @@ public class GameEngine {
         CommandWord vCommandWord = pCommandLine.getCommandWord();
         if (aPlayer.getMovement() <= 0) {
             this.gameOver();
-        }
-        if (this.aGui.isTimerEnd()) {
+        } else if (this.aGui.isTimerEnd()) {
             this.gameOver();
             this.aGui.stopTimer();
         } else {
@@ -288,10 +287,8 @@ public class GameEngine {
         }
     }
 
-    public String getKey(HashMap<String, Room> pHashMap, Room pRoom)
-    {
-        for (String vKey: pHashMap.keySet())
-        {
+    public String getKey(HashMap<String, Room> pHashMap, Room pRoom) {
+        for (String vKey : pHashMap.keySet()) {
             if (pRoom.equals(pHashMap.get(vKey))) {
                 return vKey;
             }
@@ -299,7 +296,7 @@ public class GameEngine {
         return null;
     }
 
-    public void playRoomSound(){
+    public void playRoomSound() {
         HashMap<String, Room> vRooms = aRooms;
         Room vRoom = aPlayer.getCurrentRoom();
         String vCurrentRoomString = getKey(vRooms, vRoom);

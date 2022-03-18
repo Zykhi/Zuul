@@ -178,6 +178,21 @@ public class UserInterface implements ActionListener {
         if (!pOnOff) { // disable
             this.aEntryField.getCaret().setBlinkRate(0); // cursor won't blink
             this.aEntryField.removeActionListener(this); // won't react to entry
+            this.aQuitButton.removeActionListener(this);
+            this.aNorthButton.removeActionListener(this);
+            this.aSouthButton.removeActionListener(this);
+            this.aEastButton.removeActionListener(this);
+            this.aWestButton.removeActionListener(this);
+            this.aUpButton.removeActionListener(this);
+            this.aDownButton.removeActionListener(this);
+            this.aBackButton.removeActionListener(this);
+            this.aHelpButton.removeActionListener(this);
+            this.aDropButton.removeActionListener(this);
+            this.aTakeButton.removeActionListener(this);
+            this.aFireButton.removeActionListener(this);
+            this.aChargeButton.removeActionListener(this);
+            this.aInventoryButton.removeActionListener(this);
+            this.aSkipButton.removeActionListener(this);
         }
     } // enable(.)
 
