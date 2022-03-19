@@ -44,6 +44,7 @@ public class UserInterface implements ActionListener {
     private Parser aParser;
     private int aTime = 60;
     private Clip aClip;
+    private Clip aWelcomeClip;
     private Timer aTimer;
     private int aMinute;
     private int aSecond;
@@ -139,11 +140,28 @@ public class UserInterface implements ActionListener {
         }
     }
 
+    public void playWelcomeSound() {
+        try {
+            AudioInputStream vAudioInputStream = AudioSystem
+                    .getAudioInputStream(new File("gameSounds/welcome.wav").getAbsoluteFile());
+            aWelcomeClip = AudioSystem.getClip();
+            aWelcomeClip.open(vAudioInputStream);
+            aWelcomeClip.start();
+        } catch (Exception ex) {
+            System.out.println("Error with playing sound.");
+            ex.printStackTrace();
+        }
+    }
+
     /**
      * This method stop sound.
      */
     public void stopSound() {
         aClip.stop();
+    }
+
+    public void stopWelcomeSound() {
+        aWelcomeClip.stop();
     }
 
     public void playRoomSound() {
@@ -469,7 +487,7 @@ public class UserInterface implements ActionListener {
      */
     public void skipMethod() {
         this.aTime = 1;
-        stopSound();
+        stopWelcomeSound();
     }
 
     /**

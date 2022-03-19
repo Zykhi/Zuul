@@ -102,7 +102,8 @@ public class Player {
      */
     protected void printWelcome() {
         this.showImage();
-        this.aGui.playSound("welcome", 0);
+        this.aGui.playWelcomeSound();
+        this.aGui.playSound("outside", -1);
         this.aGui.slowPrintln("Welcome to the world of Zuul.");
         this.aGui.slowPrintln("You are Edward, the hero of this story.");
         this.aGui.slowPrintln(
