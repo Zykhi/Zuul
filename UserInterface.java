@@ -125,6 +125,7 @@ public class UserInterface implements ActionListener {
      * 
      * @author https://stackoverflow.com/questions/6045384/playing-mp3-and-wav-in-java
      * @param pFile File you want to play
+     * @param pLoop Number of repetitions of the sound (-1 is infinite)
      */
     public void playSound(final String pFile, final int pLoop) {
         try {
@@ -140,6 +141,9 @@ public class UserInterface implements ActionListener {
         }
     }
 
+    /**
+     * This method play sound of the narrator
+     */
     public void playWelcomeSound() {
         try {
             AudioInputStream vAudioInputStream = AudioSystem
@@ -160,10 +164,16 @@ public class UserInterface implements ActionListener {
         aClip.stop();
     }
 
+    /**
+     * This method stop the sound of the narrator
+     */
     public void stopWelcomeSound() {
         aWelcomeClip.stop();
     }
 
+    /**
+     * This method play sound of the room
+     */
     public void playRoomSound() {
         this.aEngine.playRoomSound();
     }

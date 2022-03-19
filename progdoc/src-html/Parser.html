@@ -60,20 +60,18 @@
 <span class="sourceLineNo">051</span><a id="line.51">            vWord1 = vCommandWord;</a>
 <span class="sourceLineNo">052</span><a id="line.52">            vWord2 = vSecondWord.equals("") ? null : vSecondWord;</a>
 <span class="sourceLineNo">053</span><a id="line.53">        }</a>
-<span class="sourceLineNo">054</span><a id="line.54"></a>
-<span class="sourceLineNo">055</span><a id="line.55">        // System.out.println(vWord1 + " " + vWord2);</a>
-<span class="sourceLineNo">056</span><a id="line.56">        return new Command(aCommandWords.getCommandWord(vWord1), vWord2);</a>
-<span class="sourceLineNo">057</span><a id="line.57">    } // getCommand(.)</a>
-<span class="sourceLineNo">058</span><a id="line.58"></a>
-<span class="sourceLineNo">059</span><a id="line.59">    /**</a>
-<span class="sourceLineNo">060</span><a id="line.60">     * @return a String with valid command words.</a>
-<span class="sourceLineNo">061</span><a id="line.61">     */</a>
-<span class="sourceLineNo">062</span><a id="line.62">    public String getCommandString() // was showCommands()</a>
-<span class="sourceLineNo">063</span><a id="line.63">    {</a>
-<span class="sourceLineNo">064</span><a id="line.64">        return "Your commands are : " + this.aCommandWords.getCommandList();</a>
-<span class="sourceLineNo">065</span><a id="line.65">    } // getCommandString()</a>
-<span class="sourceLineNo">066</span><a id="line.66"></a>
-<span class="sourceLineNo">067</span><a id="line.67">} // Parser</a>
+<span class="sourceLineNo">054</span><a id="line.54">        return new Command(aCommandWords.getCommandWord(vWord1), vWord2);</a>
+<span class="sourceLineNo">055</span><a id="line.55">    } // getCommand(.)</a>
+<span class="sourceLineNo">056</span><a id="line.56"></a>
+<span class="sourceLineNo">057</span><a id="line.57">    /**</a>
+<span class="sourceLineNo">058</span><a id="line.58">     * @return a String with valid command words.</a>
+<span class="sourceLineNo">059</span><a id="line.59">     */</a>
+<span class="sourceLineNo">060</span><a id="line.60">    public String getCommandString() // was showCommands()</a>
+<span class="sourceLineNo">061</span><a id="line.61">    {</a>
+<span class="sourceLineNo">062</span><a id="line.62">        return "Your commands are : " + this.aCommandWords.getCommandList();</a>
+<span class="sourceLineNo">063</span><a id="line.63">    } // getCommandString()</a>
+<span class="sourceLineNo">064</span><a id="line.64"></a>
+<span class="sourceLineNo">065</span><a id="line.65">} // Parser</a>
 
 
 

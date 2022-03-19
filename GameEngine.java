@@ -287,7 +287,15 @@ public class GameEngine {
         }
     }
 
-    public String getKey(HashMap<String, Room> pHashMap, Room pRoom) {
+    /**
+     * This function get the key of the room with the value of the HashMap
+     * 
+     * @param pHashMap the HashMap
+     * @param pRoom    the room in value in the HashMap
+     * @return String of the key of the room
+     * @author https://www.techiedelight.com/get-map-key-from-value-java/
+     */
+    private String getKey(HashMap<String, Room> pHashMap, Room pRoom) {
         for (String vKey : pHashMap.keySet()) {
             if (pRoom.equals(pHashMap.get(vKey))) {
                 return vKey;
@@ -296,13 +304,15 @@ public class GameEngine {
         return null;
     }
 
+    /**
+     * This method play the sound of the current room
+     */
     public void playRoomSound() {
         HashMap<String, Room> vRooms = aRooms;
         Room vRoom = aPlayer.getCurrentRoom();
         String vCurrentRoomString = getKey(vRooms, vRoom);
         this.aGui.stopSound();
         this.aGui.playSound(vCurrentRoomString, -1);
-        System.out.println(vCurrentRoomString);
     }
 
     /**
