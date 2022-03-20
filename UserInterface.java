@@ -4,10 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.io.File;
+import java.io.IOException;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -51,6 +54,7 @@ public class UserInterface implements ActionListener {
     private int aDelay = 1000;
     private int aEndTime = 20;
     private ActionListener aTaskTimer;
+    private Font aFont;
 
     /**
      * Construct a UserInterface. As a parameter, a Game Engine
@@ -323,7 +327,16 @@ public class UserInterface implements ActionListener {
     }
 
     private void createPanel() {
-        Font vFont = new Font("Monospaced", Font.PLAIN, 14);
+        
+        // to import custom font
+        // https://www.ryisnow.online/2021/04/java-for-beginner-how-to-use-custom-font.html
+        try {
+            aFont = Font.createFont(Font.TRUETYPE_FONT, new File("font/8bit.ttf")).deriveFont(18f);
+            GraphicsEnvironment vGraphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            vGraphicsEnvironment.registerFont(aFont);
+        } catch (IOException | FontFormatException e) {
+
+        }
 
         this.aEntryField = new JTextField(34);
         this.aEntryField.addActionListener(this);
@@ -333,7 +346,7 @@ public class UserInterface implements ActionListener {
         this.aLog.setLineWrap(true);
         this.aLog.setWrapStyleWord(true);
         this.aLog.setMargin(new Insets(10, 10, 10, 10));
-        this.aLog.setFont(vFont);
+        this.aLog.setFont(aFont);
         this.aLog.setForeground(Color.white);
         this.aLog.setBackground(Color.darkGray);
         JScrollPane vListScroller = new JScrollPane(this.aLog);
@@ -350,7 +363,7 @@ public class UserInterface implements ActionListener {
         // this is timer label
         aGameTimer = new JLabel();
         aGameTimer.setForeground(Color.white);
-        aGameTimer.setFont(vFont);
+        aGameTimer.setFont(aFont);
         aGameTimer.setSize(300, 50);
         aGameTimer.setLocation(15, 0);
 
