@@ -55,6 +55,8 @@ public class UserInterface implements ActionListener {
     private int aEndTime = 20;
     private ActionListener aTaskTimer;
     private Font aFont;
+    private Font aButtonsFont;
+    private Font aTextFont;
 
     /**
      * Construct a UserInterface. As a parameter, a Game Engine
@@ -65,6 +67,7 @@ public class UserInterface implements ActionListener {
      */
     public UserInterface(final GameEngine pGameEngine) {
         this.aEngine = pGameEngine;
+        this.createFont();
         this.createGUI();
         this.aParser = new Parser();
         this.startTimer();
@@ -228,6 +231,21 @@ public class UserInterface implements ActionListener {
         }
     } // enable(.)
 
+    private void createFont(){
+        // to import custom font
+        // https://www.ryisnow.online/2021/04/java-for-beginner-how-to-use-custom-font.html
+        try {
+            aFont = Font.createFont(Font.TRUETYPE_FONT, new File("font/8bit.ttf"));
+            GraphicsEnvironment vGraphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            vGraphicsEnvironment.registerFont(aFont);
+
+            aTextFont = aFont.deriveFont(18f);
+            aButtonsFont = aFont.deriveFont(14f);
+        } catch (IOException | FontFormatException e) {
+
+        }
+    }
+    
     /**
      * Set up graphical user interface.
      */
@@ -275,21 +293,38 @@ public class UserInterface implements ActionListener {
      * This method creates all the button
      */
     public void createButton() {
-        this.aQuitButton = new JButton("quit ⍈");
+        this.aQuitButton = new JButton("quit");
         this.aNorthButton = new JButton("north ▲");
         this.aEastButton = new JButton("east ▶");
         this.aSouthButton = new JButton("south ▼");
         this.aWestButton = new JButton("◀ west");
         this.aUpButton = new JButton("up △");
         this.aDownButton = new JButton("down ▽");
-        this.aBackButton = new JButton("back ↺");
+        this.aBackButton = new JButton("back ");
         this.aHelpButton = new JButton("help ?");
-        this.aDropButton = new JButton("drop ☛");
-        this.aTakeButton = new JButton("take ☚");
-        this.aFireButton = new JButton("fire ◎");
-        this.aChargeButton = new JButton("charge ⌁");
-        this.aInventoryButton = new JButton("bag ₿");
-        this.aSkipButton = new JButton("skip ▹▹");
+        this.aDropButton = new JButton("drop");
+        this.aTakeButton = new JButton("take");
+        this.aFireButton = new JButton("fire");
+        this.aChargeButton = new JButton("charge");
+        this.aInventoryButton = new JButton("bag");
+        this.aSkipButton = new JButton("skip");
+
+        // add custom font on buttons
+        this.aQuitButton.setFont(aButtonsFont);
+        this.aNorthButton.setFont(aButtonsFont);
+        this.aEastButton.setFont(aButtonsFont);
+        this.aSouthButton.setFont(aButtonsFont);
+        this.aWestButton.setFont(aButtonsFont);
+        this.aUpButton.setFont(aButtonsFont);
+        this.aDownButton.setFont(aButtonsFont);
+        this.aBackButton.setFont(aButtonsFont);
+        this.aHelpButton.setFont(aButtonsFont);
+        this.aDropButton.setFont(aButtonsFont);
+        this.aTakeButton.setFont(aButtonsFont);
+        this.aFireButton.setFont(aButtonsFont);
+        this.aChargeButton.setFont(aButtonsFont);
+        this.aInventoryButton.setFont(aButtonsFont);
+        this.aSkipButton.setFont(aButtonsFont);
 
         // add some event listeners to some components
         this.aQuitButton.addActionListener(this);
@@ -327,16 +362,6 @@ public class UserInterface implements ActionListener {
     }
 
     private void createPanel() {
-        
-        // to import custom font
-        // https://www.ryisnow.online/2021/04/java-for-beginner-how-to-use-custom-font.html
-        try {
-            aFont = Font.createFont(Font.TRUETYPE_FONT, new File("font/8bit.ttf")).deriveFont(18f);
-            GraphicsEnvironment vGraphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            vGraphicsEnvironment.registerFont(aFont);
-        } catch (IOException | FontFormatException e) {
-
-        }
 
         this.aEntryField = new JTextField(34);
         this.aEntryField.addActionListener(this);
@@ -346,7 +371,7 @@ public class UserInterface implements ActionListener {
         this.aLog.setLineWrap(true);
         this.aLog.setWrapStyleWord(true);
         this.aLog.setMargin(new Insets(10, 10, 10, 10));
-        this.aLog.setFont(aFont);
+        this.aLog.setFont(aTextFont);
         this.aLog.setForeground(Color.white);
         this.aLog.setBackground(Color.darkGray);
         JScrollPane vListScroller = new JScrollPane(this.aLog);
@@ -363,7 +388,7 @@ public class UserInterface implements ActionListener {
         // this is timer label
         aGameTimer = new JLabel();
         aGameTimer.setForeground(Color.white);
-        aGameTimer.setFont(aFont);
+        aGameTimer.setFont(aTextFont);
         aGameTimer.setSize(300, 50);
         aGameTimer.setLocation(15, 0);
 
