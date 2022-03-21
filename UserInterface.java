@@ -41,22 +41,34 @@ public class UserInterface implements ActionListener {
     private JTextArea aLog;
     private JLabel aImage;
     private JLabel aGameTimer;
-    private JButton aQuitButton, aNorthButton, aSouthButton, aEastButton, aWestButton, aUpButton, aDownButton,
-            aBackButton, aHelpButton, aDropButton, aTakeButton, aChargeButton, aFireButton, aInventoryButton,
-            aSkipButton;
+    private JButton aQuitButton;
+    private JButton aNorthButton;
+    private JButton aSouthButton;
+    private JButton aEastButton;
+    private JButton aWestButton;
+    private JButton aUpButton;
+    private JButton aDownButton;
+    private JButton aBackButton;
+    private JButton aHelpButton;
+    private JButton aDropButton;
+    private JButton aTakeButton;
+    private JButton aChargeButton;
+    private JButton aFireButton;
+    private JButton aInventoryButton;
+    private JButton aSkipButton;
     private Parser aParser;
-    private int aTime = 60;
     private Clip aClip;
     private Clip aWelcomeClip;
     private Timer aTimer;
-    private int aMinute;
-    private int aSecond;
-    private int aDelay = 1000;
-    private int aEndTime = 20;
     private ActionListener aTaskTimer;
     private Font aFont;
     private Font aButtonsFont;
     private Font aTextFont;
+    private int aTime = 60;
+    private int aMinute;
+    private int aSecond;
+    private int aDelay = 1000;
+    private int aEndTime = 20;
 
     /**
      * Construct a UserInterface. As a parameter, a Game Engine
@@ -72,6 +84,8 @@ public class UserInterface implements ActionListener {
         this.aParser = new Parser();
         this.startTimer();
     } // UserInterface(.)
+
+    // print methods
 
     /**
      * Print out some text into the text area.
@@ -124,6 +138,17 @@ public class UserInterface implements ActionListener {
     public void slowPrintln(final String pText) {
         this.slowPrint(pText + "\n");
     }
+
+    /**
+     * This method is called when skip button is clicked
+     * It's write quikly the text of the slowPrint method
+     */
+    public void skipMethod() {
+        this.aTime = 1;
+        stopWelcomeSound();
+    }
+
+    // sound methods
 
     /**
      * This method play sound.
@@ -185,6 +210,8 @@ public class UserInterface implements ActionListener {
         this.aEngine.playRoomSound();
     }
 
+    // image method
+
     /**
      * Show an image file in the interface.
      * 
@@ -201,6 +228,8 @@ public class UserInterface implements ActionListener {
             this.aMyFrame.pack();
         }
     } // showImage(.)
+
+    // enable method
 
     /**
      * Enable or disable input in the input field.
@@ -231,7 +260,9 @@ public class UserInterface implements ActionListener {
         }
     } // enable(.)
 
-    private void createFont(){
+    // font method
+
+    private void createFont() {
         // to import custom font
         // https://www.ryisnow.online/2021/04/java-for-beginner-how-to-use-custom-font.html
         try {
@@ -245,7 +276,9 @@ public class UserInterface implements ActionListener {
 
         }
     }
-    
+
+    // gui method
+
     /**
      * Set up graphical user interface.
      */
@@ -273,21 +306,6 @@ public class UserInterface implements ActionListener {
         this.aEntryField.requestFocus();
 
     } // createGUI()
-
-    /**
-     * Actionlistener interface for entry textfield.
-     * 
-     * @param pE event of actionListener
-     */
-    public void actionPerformed(final ActionEvent pE) {
-        // check the type of action
-        if (pE.getActionCommand() != null) {
-            this.aEngine.interpretCommand(aParser.getCommand(pE.getActionCommand()));
-            this.aEntryField.setText(""); // to reset entry field
-        } else {
-            this.processCommand(); // never suppress this line
-        }
-    } // actionPerformed(.)
 
     /**
      * This method creates all the button
@@ -442,6 +460,8 @@ public class UserInterface implements ActionListener {
         this.aLayeredPane.add(aGameTimer, JLayeredPane.PALETTE_LAYER);
     }
 
+    // action listeners methods
+
     /**
      * This method is called when you click on the drop button
      * It's to change UI to show items in inventory
@@ -530,13 +550,19 @@ public class UserInterface implements ActionListener {
     }
 
     /**
-     * This method is called when skip button is clicked
-     * It's write quikly the text of the slowPrint method
+     * Actionlistener interface for entry textfield.
+     * 
+     * @param pE event of actionListener
      */
-    public void skipMethod() {
-        this.aTime = 1;
-        stopWelcomeSound();
-    }
+    public void actionPerformed(final ActionEvent pE) {
+        // check the type of action
+        if (pE.getActionCommand() != null) {
+            this.aEngine.interpretCommand(aParser.getCommand(pE.getActionCommand()));
+            this.aEntryField.setText(""); // to reset entry field
+        } else {
+            this.processCommand(); // never suppress this line
+        }
+    } // actionPerformed(.)
 
     /**
      * A command has been entered. Read the command and do whatever is
@@ -549,14 +575,7 @@ public class UserInterface implements ActionListener {
         this.aEngine.interpretCommand(aParser.getCommand(vInput));
     } // processCommand()
 
-    /**
-     * get the entry field
-     * 
-     * @return the text in the entry field
-     */
-    public String getEntryField() {
-        return this.aEntryField.getText();
-    }
+    // timer methods
 
     /**
      * This method start the timer
