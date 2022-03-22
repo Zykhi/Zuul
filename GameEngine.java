@@ -245,7 +245,7 @@ public class GameEngine {
      * End the game
      */
     private void endGame() {
-        this.aGui.println("Thank you for playing.  Good bye.");
+        this.aGui.println("Thank you for playing. Good bye.");
         this.aGui.enable(false);
     }
 
@@ -253,7 +253,7 @@ public class GameEngine {
      * Game over
      */
     private void gameOver() {
-        this.aGui.println("game over.");
+        this.aGui.println("Game over.");
         this.aGui.enable(false);
     }
 
