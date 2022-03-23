@@ -2356,7 +2356,7 @@ public void interpretCommand(final Command pCommandLine) {
 
 #### Exercice 7.42.2
 
-Une IHM plus poussée est développée. On crée une méthode pour crée tout les boutons et les events
+Une IHM plus poussée est développée. On crée une méthode pour crée tout les boutons et les events liés à ceux-ci
 
 ```java
 public void createButton() {
@@ -2482,7 +2482,7 @@ public void exitButtonMethod() {
 }
 ```
 
-Puis une methode pour créer la mise en page des differents éléments
+Puis une méthode pour créer la mise en page des différents éléments
 
 ```java
 private void createPanel() {
@@ -2626,6 +2626,24 @@ public void playWelcomeSound() {
     } catch (Exception ex) {
         System.out.println("Error with playing sound.");
         ex.printStackTrace();
+    }
+}
+```
+
+Ajout d'une police personnalisée pour le jeu
+
+```java
+
+private void createFont() {
+    try {
+        aFont = Font.createFont(Font.TRUETYPE_FONT, new File("font/8bit.ttf"));
+        GraphicsEnvironment vGraphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        vGraphicsEnvironment.registerFont(aFont);
+
+        aTextFont = aFont.deriveFont(18f);
+        aButtonsFont = aFont.deriveFont(14f);
+    } catch (IOException | FontFormatException e) {
+        e.printStackTrace();
     }
 }
 ```
