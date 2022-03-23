@@ -58,13 +58,16 @@ public class GameEngine {
 
         this.aTransporterRoom = new ArrayList<TransporterRoom>();
 
-        Room vOutside = new Room("outside the dungeon", "gameImages/outside.gif");
+        Room vOutside = new Room("outside, the entrance to a cave catches your eye. ", "gameImages/outside.gif");
         Room vCatacombs = new Room("in the catacombs", "gameImages/catacombs.gif");
         Room vLobby = new Room("the main room of the dungeon", "gameImages/lobby.gif");
         Room vTreasure = new Room("an empty room", "gameImages/treasure.gif"); // or not ;)
-        Room vBoss1Room = new Room("boss room 1", "gameImages/boss1.gif"); // need change desc of boss room
-        Room vBoss2Room = new Room("boss room 2", "gameImages/boss2.gif");
-        Room vBoss3Room = new Room("boss room 3", "gameImages/boss3.gif");
+        Room vBoss1Room = new Room("entering in the forest of Warmog the giant", "gameImages/boss1.gif");
+        Room vBoss2Room = new Room("entering in Viego's castle, he turns his back to you and looks away",
+                "gameImages/boss2.gif");
+        Room vBoss3Room = new Room(
+                "entering in the magic room of Hazelgash, be careful with the lava and the lightning that could hit you",
+                "gameImages/boss3.gif");
         TransporterRoom vTestRoom = new TransporterRoom("this is a test room", "gameImages/test.gif", this.aRooms);
 
         this.aTransporterRoom.add(vTestRoom);
