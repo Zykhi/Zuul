@@ -166,6 +166,10 @@ public class Player {
         }
     }
 
+    /**
+     * This method is called when the player change the current room
+     * @param vNextRoom the next room 
+     */
     private void changeRoom(Room vNextRoom) {
         this.setRoom(vNextRoom);
         showImage();

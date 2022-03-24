@@ -262,6 +262,9 @@ public class UserInterface implements ActionListener {
 
     // font method
 
+    /**
+     * This method create custom font
+     */
     private void createFont() {
         // to import custom font
         // https://www.ryisnow.online/2021/04/java-for-beginner-how-to-use-custom-font.html
@@ -273,7 +276,7 @@ public class UserInterface implements ActionListener {
             aTextFont = aFont.deriveFont(18f);
             aButtonsFont = aFont.deriveFont(14f);
         } catch (IOException | FontFormatException e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -379,6 +382,9 @@ public class UserInterface implements ActionListener {
         this.aSkipButton.setActionCommand("skip");
     }
 
+    /**
+     * This method create all the panels
+     */
     private void createPanel() {
 
         this.aEntryField = new JTextField(34);

@@ -17,7 +17,7 @@ public class TransporterRoom extends Room {
      * 
      * @param pDescription description of the room
      * @param pImage       image of the room
-     * @param pRooms        hashmap contains all the rooms
+     * @param pRooms       hashmap contains all the rooms
      */
     public TransporterRoom(final String pDescription, final String pImage, final HashMap<String, Room> pRooms) {
         super(pDescription, pImage);

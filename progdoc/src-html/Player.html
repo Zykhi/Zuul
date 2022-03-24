@@ -175,221 +175,225 @@
 <span class="sourceLineNo">166</span><a id="line.166">        }</a>
 <span class="sourceLineNo">167</span><a id="line.167">    }</a>
 <span class="sourceLineNo">168</span><a id="line.168"></a>
-<span class="sourceLineNo">169</span><a id="line.169">    private void changeRoom(Room vNextRoom) {</a>
-<span class="sourceLineNo">170</span><a id="line.170">        this.setRoom(vNextRoom);</a>
-<span class="sourceLineNo">171</span><a id="line.171">        showImage();</a>
-<span class="sourceLineNo">172</span><a id="line.172">        printLocationInfo();</a>
-<span class="sourceLineNo">173</span><a id="line.173">        this.aGui.playRoomSound();</a>
-<span class="sourceLineNo">174</span><a id="line.174">        aMovement -= 1;</a>
-<span class="sourceLineNo">175</span><a id="line.175">    }</a>
-<span class="sourceLineNo">176</span><a id="line.176"></a>
-<span class="sourceLineNo">177</span><a id="line.177">    /**</a>
-<span class="sourceLineNo">178</span><a id="line.178">     * This method print the info of the room with the exit when you wrote in a chat</a>
-<span class="sourceLineNo">179</span><a id="line.179">     * when there isnt second word, if there is it's print information about item</a>
-<span class="sourceLineNo">180</span><a id="line.180">     * </a>
-<span class="sourceLineNo">181</span><a id="line.181">     * @param pCommand to check if there is second word to change between look and</a>
-<span class="sourceLineNo">182</span><a id="line.182">     *                 look item</a>
-<span class="sourceLineNo">183</span><a id="line.183">     */</a>
-<span class="sourceLineNo">184</span><a id="line.184">    protected void look(final Command pCommand) {</a>
-<span class="sourceLineNo">185</span><a id="line.185">        if (pCommand.hasSecondWord()) {</a>
-<span class="sourceLineNo">186</span><a id="line.186">            this.lookItem(pCommand);</a>
-<span class="sourceLineNo">187</span><a id="line.187">        } else {</a>
-<span class="sourceLineNo">188</span><a id="line.188">            showImage();</a>
-<span class="sourceLineNo">189</span><a id="line.189">            printLocationInfo();</a>
-<span class="sourceLineNo">190</span><a id="line.190">        }</a>
-<span class="sourceLineNo">191</span><a id="line.191">    }</a>
-<span class="sourceLineNo">192</span><a id="line.192"></a>
-<span class="sourceLineNo">193</span><a id="line.193">    /**</a>
-<span class="sourceLineNo">194</span><a id="line.194">     * This method print the description of the item passed as a param</a>
-<span class="sourceLineNo">195</span><a id="line.195">     * </a>
-<span class="sourceLineNo">196</span><a id="line.196">     * @param pItemName to get the item name</a>
-<span class="sourceLineNo">197</span><a id="line.197">     */</a>
-<span class="sourceLineNo">198</span><a id="line.198">    protected void lookItem(final Command pItemName) {</a>
-<span class="sourceLineNo">199</span><a id="line.199">        String vItemName = pItemName.getSecondWord();</a>
-<span class="sourceLineNo">200</span><a id="line.200"></a>
-<span class="sourceLineNo">201</span><a id="line.201">        Item vItem = this.getCurrentRoom().getItemName(vItemName);</a>
-<span class="sourceLineNo">202</span><a id="line.202"></a>
-<span class="sourceLineNo">203</span><a id="line.203">        if (vItem == null) {</a>
-<span class="sourceLineNo">204</span><a id="line.204">            this.aGui.println("I dont know what do you mean");</a>
-<span class="sourceLineNo">205</span><a id="line.205">        } else {</a>
-<span class="sourceLineNo">206</span><a id="line.206">            this.aGui.println(vItem.toString());</a>
-<span class="sourceLineNo">207</span><a id="line.207">        }</a>
-<span class="sourceLineNo">208</span><a id="line.208">    }</a>
-<span class="sourceLineNo">209</span><a id="line.209"></a>
-<span class="sourceLineNo">210</span><a id="line.210">    /**</a>
-<span class="sourceLineNo">211</span><a id="line.211">     * This method is to eat a cookie (for the moment)</a>
-<span class="sourceLineNo">212</span><a id="line.212">     * </a>
-<span class="sourceLineNo">213</span><a id="line.213">     * @param pCommand to be sure there is a second word</a>
-<span class="sourceLineNo">214</span><a id="line.214">     */</a>
-<span class="sourceLineNo">215</span><a id="line.215">    protected void eat(final Command pCommand) {</a>
-<span class="sourceLineNo">216</span><a id="line.216">        String vItemName = pCommand.getSecondWord();</a>
-<span class="sourceLineNo">217</span><a id="line.217">        Item vItem = this.aInventory.getItemName(vItemName);</a>
-<span class="sourceLineNo">218</span><a id="line.218">        if (!pCommand.hasSecondWord()) {</a>
-<span class="sourceLineNo">219</span><a id="line.219">            this.aGui.println("what do you want to eat");</a>
-<span class="sourceLineNo">220</span><a id="line.220">        } else {</a>
-<span class="sourceLineNo">221</span><a id="line.221">            if (vItemName.equals("Cookie") &amp;&amp; this.aInventory.getItemList().containsValue(vItem)) {</a>
-<span class="sourceLineNo">222</span><a id="line.222">                this.aMaxWeight *= 2;</a>
-<span class="sourceLineNo">223</span><a id="line.223">                this.aInventory.removeItem(vItemName, vItem);</a>
-<span class="sourceLineNo">224</span><a id="line.224">                this.aInventory.removeWeight(vItem.getWeight());</a>
-<span class="sourceLineNo">225</span><a id="line.225">                this.aGui.println("You eat a cookie");</a>
-<span class="sourceLineNo">226</span><a id="line.226">                showInventory();</a>
-<span class="sourceLineNo">227</span><a id="line.227">            } else {</a>
-<span class="sourceLineNo">228</span><a id="line.228">                this.aGui.println("You cant eat that");</a>
-<span class="sourceLineNo">229</span><a id="line.229">            }</a>
-<span class="sourceLineNo">230</span><a id="line.230">        }</a>
-<span class="sourceLineNo">231</span><a id="line.231">    }</a>
-<span class="sourceLineNo">232</span><a id="line.232"></a>
-<span class="sourceLineNo">233</span><a id="line.233">    /**</a>
-<span class="sourceLineNo">234</span><a id="line.234">     * This method is to return to the previous room to the starting room</a>
-<span class="sourceLineNo">235</span><a id="line.235">     * </a>
-<span class="sourceLineNo">236</span><a id="line.236">     * @param pCommand to be sure there is no second word</a>
-<span class="sourceLineNo">237</span><a id="line.237">     */</a>
-<span class="sourceLineNo">238</span><a id="line.238">    protected void back(final Command pCommand) {</a>
-<span class="sourceLineNo">239</span><a id="line.239">        if (pCommand.hasSecondWord()) {</a>
-<span class="sourceLineNo">240</span><a id="line.240">            this.aGui.println("it's impossible");</a>
-<span class="sourceLineNo">241</span><a id="line.241">        } else if (this.getPreviousRooms().empty()) { // was aPreviousRooms.empty()</a>
-<span class="sourceLineNo">242</span><a id="line.242">            this.aGui.println("you cant back");</a>
-<span class="sourceLineNo">243</span><a id="line.243">        } else {</a>
-<span class="sourceLineNo">244</span><a id="line.244">            Room vPreviousRoom = this.getPreviousRooms().pop(); // was aPreviousRooms.pop()</a>
-<span class="sourceLineNo">245</span><a id="line.245">            changeRoom(vPreviousRoom);</a>
-<span class="sourceLineNo">246</span><a id="line.246">        }</a>
-<span class="sourceLineNo">247</span><a id="line.247">    }</a>
-<span class="sourceLineNo">248</span><a id="line.248"></a>
-<span class="sourceLineNo">249</span><a id="line.249">    /**</a>
-<span class="sourceLineNo">250</span><a id="line.250">     * This method is to take an item</a>
-<span class="sourceLineNo">251</span><a id="line.251">     * </a>
-<span class="sourceLineNo">252</span><a id="line.252">     * @param pItemName name of the item to take</a>
-<span class="sourceLineNo">253</span><a id="line.253">     */</a>
-<span class="sourceLineNo">254</span><a id="line.254">    protected void take(final Command pItemName) {</a>
-<span class="sourceLineNo">255</span><a id="line.255">        String vItemName = pItemName.getSecondWord();</a>
-<span class="sourceLineNo">256</span><a id="line.256">        Item vItem = this.aCurrentRoom.getItemName(vItemName);</a>
-<span class="sourceLineNo">257</span><a id="line.257">        if (!pItemName.hasSecondWord()) {</a>
-<span class="sourceLineNo">258</span><a id="line.258"></a>
-<span class="sourceLineNo">259</span><a id="line.259">        } else if (vItem == null) {</a>
-<span class="sourceLineNo">260</span><a id="line.260">            this.aGui.println("This is not here");</a>
-<span class="sourceLineNo">261</span><a id="line.261">        } else if (this.aInventory.getWeight() + vItem.getWeight() &gt; this.aMaxWeight) {</a>
-<span class="sourceLineNo">262</span><a id="line.262">            this.aGui.println("Your inventory is full. Drop some items");</a>
-<span class="sourceLineNo">263</span><a id="line.263">        } else {</a>
-<span class="sourceLineNo">264</span><a id="line.264"></a>
-<span class="sourceLineNo">265</span><a id="line.265">            this.aInventory.addItem(vItemName, vItem);</a>
-<span class="sourceLineNo">266</span><a id="line.266">            this.aInventory.addWeight(vItem.getWeight());</a>
-<span class="sourceLineNo">267</span><a id="line.267">            this.aCurrentRoom.removeItem(vItemName, vItem);</a>
-<span class="sourceLineNo">268</span><a id="line.268">            showInventory();</a>
-<span class="sourceLineNo">269</span><a id="line.269">            this.aGui.println(this.aCurrentRoom.getItemString());</a>
-<span class="sourceLineNo">270</span><a id="line.270">        }</a>
-<span class="sourceLineNo">271</span><a id="line.271">    }</a>
-<span class="sourceLineNo">272</span><a id="line.272"></a>
-<span class="sourceLineNo">273</span><a id="line.273">    /**</a>
-<span class="sourceLineNo">274</span><a id="line.274">     * This method is to drop an item</a>
-<span class="sourceLineNo">275</span><a id="line.275">     * </a>
-<span class="sourceLineNo">276</span><a id="line.276">     * @param pItemName name of the item to drop</a>
-<span class="sourceLineNo">277</span><a id="line.277">     */</a>
-<span class="sourceLineNo">278</span><a id="line.278">    protected void drop(final Command pItemName) {</a>
-<span class="sourceLineNo">279</span><a id="line.279">        String vItemName = pItemName.getSecondWord();</a>
-<span class="sourceLineNo">280</span><a id="line.280">        Item vItem = this.aInventory.getItemName(vItemName);</a>
-<span class="sourceLineNo">281</span><a id="line.281">        if (!pItemName.hasSecondWord()) {</a>
-<span class="sourceLineNo">282</span><a id="line.282"></a>
-<span class="sourceLineNo">283</span><a id="line.283">        } else if (vItem == null) {</a>
-<span class="sourceLineNo">284</span><a id="line.284">            this.aGui.println("You dont have this");</a>
-<span class="sourceLineNo">285</span><a id="line.285">        } else {</a>
+<span class="sourceLineNo">169</span><a id="line.169">    /**</a>
+<span class="sourceLineNo">170</span><a id="line.170">     * This method is called when the player change the current room</a>
+<span class="sourceLineNo">171</span><a id="line.171">     * @param vNextRoom the next room </a>
+<span class="sourceLineNo">172</span><a id="line.172">     */</a>
+<span class="sourceLineNo">173</span><a id="line.173">    private void changeRoom(Room vNextRoom) {</a>
+<span class="sourceLineNo">174</span><a id="line.174">        this.setRoom(vNextRoom);</a>
+<span class="sourceLineNo">175</span><a id="line.175">        showImage();</a>
+<span class="sourceLineNo">176</span><a id="line.176">        printLocationInfo();</a>
+<span class="sourceLineNo">177</span><a id="line.177">        this.aGui.playRoomSound();</a>
+<span class="sourceLineNo">178</span><a id="line.178">        aMovement -= 1;</a>
+<span class="sourceLineNo">179</span><a id="line.179">    }</a>
+<span class="sourceLineNo">180</span><a id="line.180"></a>
+<span class="sourceLineNo">181</span><a id="line.181">    /**</a>
+<span class="sourceLineNo">182</span><a id="line.182">     * This method print the info of the room with the exit when you wrote in a chat</a>
+<span class="sourceLineNo">183</span><a id="line.183">     * when there isnt second word, if there is it's print information about item</a>
+<span class="sourceLineNo">184</span><a id="line.184">     * </a>
+<span class="sourceLineNo">185</span><a id="line.185">     * @param pCommand to check if there is second word to change between look and</a>
+<span class="sourceLineNo">186</span><a id="line.186">     *                 look item</a>
+<span class="sourceLineNo">187</span><a id="line.187">     */</a>
+<span class="sourceLineNo">188</span><a id="line.188">    protected void look(final Command pCommand) {</a>
+<span class="sourceLineNo">189</span><a id="line.189">        if (pCommand.hasSecondWord()) {</a>
+<span class="sourceLineNo">190</span><a id="line.190">            this.lookItem(pCommand);</a>
+<span class="sourceLineNo">191</span><a id="line.191">        } else {</a>
+<span class="sourceLineNo">192</span><a id="line.192">            showImage();</a>
+<span class="sourceLineNo">193</span><a id="line.193">            printLocationInfo();</a>
+<span class="sourceLineNo">194</span><a id="line.194">        }</a>
+<span class="sourceLineNo">195</span><a id="line.195">    }</a>
+<span class="sourceLineNo">196</span><a id="line.196"></a>
+<span class="sourceLineNo">197</span><a id="line.197">    /**</a>
+<span class="sourceLineNo">198</span><a id="line.198">     * This method print the description of the item passed as a param</a>
+<span class="sourceLineNo">199</span><a id="line.199">     * </a>
+<span class="sourceLineNo">200</span><a id="line.200">     * @param pItemName to get the item name</a>
+<span class="sourceLineNo">201</span><a id="line.201">     */</a>
+<span class="sourceLineNo">202</span><a id="line.202">    protected void lookItem(final Command pItemName) {</a>
+<span class="sourceLineNo">203</span><a id="line.203">        String vItemName = pItemName.getSecondWord();</a>
+<span class="sourceLineNo">204</span><a id="line.204"></a>
+<span class="sourceLineNo">205</span><a id="line.205">        Item vItem = this.getCurrentRoom().getItemName(vItemName);</a>
+<span class="sourceLineNo">206</span><a id="line.206"></a>
+<span class="sourceLineNo">207</span><a id="line.207">        if (vItem == null) {</a>
+<span class="sourceLineNo">208</span><a id="line.208">            this.aGui.println("I dont know what do you mean");</a>
+<span class="sourceLineNo">209</span><a id="line.209">        } else {</a>
+<span class="sourceLineNo">210</span><a id="line.210">            this.aGui.println(vItem.toString());</a>
+<span class="sourceLineNo">211</span><a id="line.211">        }</a>
+<span class="sourceLineNo">212</span><a id="line.212">    }</a>
+<span class="sourceLineNo">213</span><a id="line.213"></a>
+<span class="sourceLineNo">214</span><a id="line.214">    /**</a>
+<span class="sourceLineNo">215</span><a id="line.215">     * This method is to eat a cookie (for the moment)</a>
+<span class="sourceLineNo">216</span><a id="line.216">     * </a>
+<span class="sourceLineNo">217</span><a id="line.217">     * @param pCommand to be sure there is a second word</a>
+<span class="sourceLineNo">218</span><a id="line.218">     */</a>
+<span class="sourceLineNo">219</span><a id="line.219">    protected void eat(final Command pCommand) {</a>
+<span class="sourceLineNo">220</span><a id="line.220">        String vItemName = pCommand.getSecondWord();</a>
+<span class="sourceLineNo">221</span><a id="line.221">        Item vItem = this.aInventory.getItemName(vItemName);</a>
+<span class="sourceLineNo">222</span><a id="line.222">        if (!pCommand.hasSecondWord()) {</a>
+<span class="sourceLineNo">223</span><a id="line.223">            this.aGui.println("what do you want to eat");</a>
+<span class="sourceLineNo">224</span><a id="line.224">        } else {</a>
+<span class="sourceLineNo">225</span><a id="line.225">            if (vItemName.equals("Cookie") &amp;&amp; this.aInventory.getItemList().containsValue(vItem)) {</a>
+<span class="sourceLineNo">226</span><a id="line.226">                this.aMaxWeight *= 2;</a>
+<span class="sourceLineNo">227</span><a id="line.227">                this.aInventory.removeItem(vItemName, vItem);</a>
+<span class="sourceLineNo">228</span><a id="line.228">                this.aInventory.removeWeight(vItem.getWeight());</a>
+<span class="sourceLineNo">229</span><a id="line.229">                this.aGui.println("You eat a cookie");</a>
+<span class="sourceLineNo">230</span><a id="line.230">                showInventory();</a>
+<span class="sourceLineNo">231</span><a id="line.231">            } else {</a>
+<span class="sourceLineNo">232</span><a id="line.232">                this.aGui.println("You cant eat that");</a>
+<span class="sourceLineNo">233</span><a id="line.233">            }</a>
+<span class="sourceLineNo">234</span><a id="line.234">        }</a>
+<span class="sourceLineNo">235</span><a id="line.235">    }</a>
+<span class="sourceLineNo">236</span><a id="line.236"></a>
+<span class="sourceLineNo">237</span><a id="line.237">    /**</a>
+<span class="sourceLineNo">238</span><a id="line.238">     * This method is to return to the previous room to the starting room</a>
+<span class="sourceLineNo">239</span><a id="line.239">     * </a>
+<span class="sourceLineNo">240</span><a id="line.240">     * @param pCommand to be sure there is no second word</a>
+<span class="sourceLineNo">241</span><a id="line.241">     */</a>
+<span class="sourceLineNo">242</span><a id="line.242">    protected void back(final Command pCommand) {</a>
+<span class="sourceLineNo">243</span><a id="line.243">        if (pCommand.hasSecondWord()) {</a>
+<span class="sourceLineNo">244</span><a id="line.244">            this.aGui.println("it's impossible");</a>
+<span class="sourceLineNo">245</span><a id="line.245">        } else if (this.getPreviousRooms().empty()) { // was aPreviousRooms.empty()</a>
+<span class="sourceLineNo">246</span><a id="line.246">            this.aGui.println("you cant back");</a>
+<span class="sourceLineNo">247</span><a id="line.247">        } else {</a>
+<span class="sourceLineNo">248</span><a id="line.248">            Room vPreviousRoom = this.getPreviousRooms().pop(); // was aPreviousRooms.pop()</a>
+<span class="sourceLineNo">249</span><a id="line.249">            changeRoom(vPreviousRoom);</a>
+<span class="sourceLineNo">250</span><a id="line.250">        }</a>
+<span class="sourceLineNo">251</span><a id="line.251">    }</a>
+<span class="sourceLineNo">252</span><a id="line.252"></a>
+<span class="sourceLineNo">253</span><a id="line.253">    /**</a>
+<span class="sourceLineNo">254</span><a id="line.254">     * This method is to take an item</a>
+<span class="sourceLineNo">255</span><a id="line.255">     * </a>
+<span class="sourceLineNo">256</span><a id="line.256">     * @param pItemName name of the item to take</a>
+<span class="sourceLineNo">257</span><a id="line.257">     */</a>
+<span class="sourceLineNo">258</span><a id="line.258">    protected void take(final Command pItemName) {</a>
+<span class="sourceLineNo">259</span><a id="line.259">        String vItemName = pItemName.getSecondWord();</a>
+<span class="sourceLineNo">260</span><a id="line.260">        Item vItem = this.aCurrentRoom.getItemName(vItemName);</a>
+<span class="sourceLineNo">261</span><a id="line.261">        if (!pItemName.hasSecondWord()) {</a>
+<span class="sourceLineNo">262</span><a id="line.262"></a>
+<span class="sourceLineNo">263</span><a id="line.263">        } else if (vItem == null) {</a>
+<span class="sourceLineNo">264</span><a id="line.264">            this.aGui.println("This is not here");</a>
+<span class="sourceLineNo">265</span><a id="line.265">        } else if (this.aInventory.getWeight() + vItem.getWeight() &gt; this.aMaxWeight) {</a>
+<span class="sourceLineNo">266</span><a id="line.266">            this.aGui.println("Your inventory is full. Drop some items");</a>
+<span class="sourceLineNo">267</span><a id="line.267">        } else {</a>
+<span class="sourceLineNo">268</span><a id="line.268"></a>
+<span class="sourceLineNo">269</span><a id="line.269">            this.aInventory.addItem(vItemName, vItem);</a>
+<span class="sourceLineNo">270</span><a id="line.270">            this.aInventory.addWeight(vItem.getWeight());</a>
+<span class="sourceLineNo">271</span><a id="line.271">            this.aCurrentRoom.removeItem(vItemName, vItem);</a>
+<span class="sourceLineNo">272</span><a id="line.272">            showInventory();</a>
+<span class="sourceLineNo">273</span><a id="line.273">            this.aGui.println(this.aCurrentRoom.getItemString());</a>
+<span class="sourceLineNo">274</span><a id="line.274">        }</a>
+<span class="sourceLineNo">275</span><a id="line.275">    }</a>
+<span class="sourceLineNo">276</span><a id="line.276"></a>
+<span class="sourceLineNo">277</span><a id="line.277">    /**</a>
+<span class="sourceLineNo">278</span><a id="line.278">     * This method is to drop an item</a>
+<span class="sourceLineNo">279</span><a id="line.279">     * </a>
+<span class="sourceLineNo">280</span><a id="line.280">     * @param pItemName name of the item to drop</a>
+<span class="sourceLineNo">281</span><a id="line.281">     */</a>
+<span class="sourceLineNo">282</span><a id="line.282">    protected void drop(final Command pItemName) {</a>
+<span class="sourceLineNo">283</span><a id="line.283">        String vItemName = pItemName.getSecondWord();</a>
+<span class="sourceLineNo">284</span><a id="line.284">        Item vItem = this.aInventory.getItemName(vItemName);</a>
+<span class="sourceLineNo">285</span><a id="line.285">        if (!pItemName.hasSecondWord()) {</a>
 <span class="sourceLineNo">286</span><a id="line.286"></a>
-<span class="sourceLineNo">287</span><a id="line.287">            this.aInventory.removeItem(vItemName, vItem);</a>
-<span class="sourceLineNo">288</span><a id="line.288">            this.aInventory.removeWeight(vItem.getWeight());</a>
-<span class="sourceLineNo">289</span><a id="line.289">            this.aCurrentRoom.addItem(vItemName, vItem);</a>
-<span class="sourceLineNo">290</span><a id="line.290">            showInventory();</a>
-<span class="sourceLineNo">291</span><a id="line.291">            this.aGui.println(this.aCurrentRoom.getItemString());</a>
-<span class="sourceLineNo">292</span><a id="line.292">        }</a>
-<span class="sourceLineNo">293</span><a id="line.293">    }</a>
-<span class="sourceLineNo">294</span><a id="line.294"></a>
-<span class="sourceLineNo">295</span><a id="line.295">    /**</a>
-<span class="sourceLineNo">296</span><a id="line.296">     * This method print all info about inventory of the player</a>
-<span class="sourceLineNo">297</span><a id="line.297">     */</a>
-<span class="sourceLineNo">298</span><a id="line.298">    protected void showInventory() {</a>
-<span class="sourceLineNo">299</span><a id="line.299">        this.aGui.println(this.aInventory.getInventoryString());</a>
-<span class="sourceLineNo">300</span><a id="line.300">        this.aGui.println(this.aInventory.getWeightString() + this.aMaxWeight + "kg");</a>
-<span class="sourceLineNo">301</span><a id="line.301">    }</a>
-<span class="sourceLineNo">302</span><a id="line.302"></a>
-<span class="sourceLineNo">303</span><a id="line.303">    /**</a>
-<span class="sourceLineNo">304</span><a id="line.304">     * This method charge the beamer</a>
-<span class="sourceLineNo">305</span><a id="line.305">     */</a>
-<span class="sourceLineNo">306</span><a id="line.306">    public void charge() {</a>
-<span class="sourceLineNo">307</span><a id="line.307">        Beamer vBeamer = (Beamer) this.aInventory.getItemName("teleporter");</a>
-<span class="sourceLineNo">308</span><a id="line.308">        if (this.aInventory.contain(vBeamer)) {</a>
-<span class="sourceLineNo">309</span><a id="line.309">            vBeamer.charge(this.aCurrentRoom);</a>
-<span class="sourceLineNo">310</span><a id="line.310">            this.aGui.println("Teleporter is charged");</a>
-<span class="sourceLineNo">311</span><a id="line.311">        } else {</a>
-<span class="sourceLineNo">312</span><a id="line.312">            this.aGui.println("You dont have teleporter");</a>
-<span class="sourceLineNo">313</span><a id="line.313">        }</a>
-<span class="sourceLineNo">314</span><a id="line.314">    }</a>
-<span class="sourceLineNo">315</span><a id="line.315"></a>
-<span class="sourceLineNo">316</span><a id="line.316">    /**</a>
-<span class="sourceLineNo">317</span><a id="line.317">     * This method fire the beamer</a>
-<span class="sourceLineNo">318</span><a id="line.318">     */</a>
-<span class="sourceLineNo">319</span><a id="line.319">    public void fire() {</a>
-<span class="sourceLineNo">320</span><a id="line.320">        Beamer vBeamer = (Beamer) this.aInventory.getItemName("teleporter");</a>
-<span class="sourceLineNo">321</span><a id="line.321">        if (this.aInventory.contain(vBeamer)) {</a>
-<span class="sourceLineNo">322</span><a id="line.322">            if (vBeamer.isCharged()) {</a>
-<span class="sourceLineNo">323</span><a id="line.323">                this.setRoom(vBeamer.fire());</a>
-<span class="sourceLineNo">324</span><a id="line.324">                this.aInventory.removeItem("teleporter", vBeamer);</a>
-<span class="sourceLineNo">325</span><a id="line.325">                this.aGui.println("You have been teleported. Teleporter is destroyed");</a>
-<span class="sourceLineNo">326</span><a id="line.326">                printLocationInfo();</a>
-<span class="sourceLineNo">327</span><a id="line.327">                showInventory();</a>
-<span class="sourceLineNo">328</span><a id="line.328">            } else {</a>
-<span class="sourceLineNo">329</span><a id="line.329">                this.aGui.println("teleporter isnt loaded.");</a>
-<span class="sourceLineNo">330</span><a id="line.330">            }</a>
-<span class="sourceLineNo">331</span><a id="line.331">        } else {</a>
-<span class="sourceLineNo">332</span><a id="line.332">            this.aGui.println("You dont have teleporter.");</a>
-<span class="sourceLineNo">333</span><a id="line.333">        }</a>
-<span class="sourceLineNo">334</span><a id="line.334">    }</a>
-<span class="sourceLineNo">335</span><a id="line.335"></a>
-<span class="sourceLineNo">336</span><a id="line.336">    /**</a>
-<span class="sourceLineNo">337</span><a id="line.337">     * This method write in UI when you left the menu</a>
-<span class="sourceLineNo">338</span><a id="line.338">     */</a>
-<span class="sourceLineNo">339</span><a id="line.339">    public void exit() {</a>
-<span class="sourceLineNo">340</span><a id="line.340">        this.aGui.println("you have left menu");</a>
-<span class="sourceLineNo">341</span><a id="line.341">    }</a>
-<span class="sourceLineNo">342</span><a id="line.342"></a>
-<span class="sourceLineNo">343</span><a id="line.343">    /**</a>
-<span class="sourceLineNo">344</span><a id="line.344">     * This method print the info of the room with the exit when you enter on it</a>
-<span class="sourceLineNo">345</span><a id="line.345">     */</a>
-<span class="sourceLineNo">346</span><a id="line.346">    protected void printLocationInfo() {</a>
-<span class="sourceLineNo">347</span><a id="line.347">        this.aGui.println(this.getCurrentRoom().getLongDescription());</a>
-<span class="sourceLineNo">348</span><a id="line.348">    }</a>
-<span class="sourceLineNo">349</span><a id="line.349"></a>
-<span class="sourceLineNo">350</span><a id="line.350">    /**</a>
-<span class="sourceLineNo">351</span><a id="line.351">     * This method show the image of the room</a>
-<span class="sourceLineNo">352</span><a id="line.352">     */</a>
-<span class="sourceLineNo">353</span><a id="line.353">    protected void showImage() {</a>
-<span class="sourceLineNo">354</span><a id="line.354">        if (this.getCurrentRoom().getImageName() != null) {</a>
-<span class="sourceLineNo">355</span><a id="line.355">            this.aGui.showImage(this.getCurrentRoom().getImageName());</a>
-<span class="sourceLineNo">356</span><a id="line.356">        }</a>
-<span class="sourceLineNo">357</span><a id="line.357">    }</a>
-<span class="sourceLineNo">358</span><a id="line.358"></a>
-<span class="sourceLineNo">359</span><a id="line.359">    /**</a>
-<span class="sourceLineNo">360</span><a id="line.360">     * This method clear the stack</a>
-<span class="sourceLineNo">361</span><a id="line.361">     */</a>
-<span class="sourceLineNo">362</span><a id="line.362">    public void clearStack() {</a>
-<span class="sourceLineNo">363</span><a id="line.363">        this.aPreviousRooms.clear();</a>
-<span class="sourceLineNo">364</span><a id="line.364">    }</a>
-<span class="sourceLineNo">365</span><a id="line.365"></a>
-<span class="sourceLineNo">366</span><a id="line.366">    /**</a>
-<span class="sourceLineNo">367</span><a id="line.367">     * This function get the current room Item</a>
-<span class="sourceLineNo">368</span><a id="line.368">     * </a>
-<span class="sourceLineNo">369</span><a id="line.369">     * @return String with all items in the room</a>
-<span class="sourceLineNo">370</span><a id="line.370">     */</a>
-<span class="sourceLineNo">371</span><a id="line.371">    public String getCurrentRoomItemsString() {</a>
-<span class="sourceLineNo">372</span><a id="line.372">        return this.aCurrentRoom.getItemString();</a>
-<span class="sourceLineNo">373</span><a id="line.373">    }</a>
-<span class="sourceLineNo">374</span><a id="line.374"></a>
-<span class="sourceLineNo">375</span><a id="line.375">    /**</a>
-<span class="sourceLineNo">376</span><a id="line.376">     * This function get items in inventory</a>
-<span class="sourceLineNo">377</span><a id="line.377">     * </a>
-<span class="sourceLineNo">378</span><a id="line.378">     * @return a String with items in inventory</a>
-<span class="sourceLineNo">379</span><a id="line.379">     */</a>
-<span class="sourceLineNo">380</span><a id="line.380">    public String getCurrentInventoryItemsString() {</a>
-<span class="sourceLineNo">381</span><a id="line.381">        return this.aInventory.getInventoryString();</a>
-<span class="sourceLineNo">382</span><a id="line.382">    }</a>
-<span class="sourceLineNo">383</span><a id="line.383">}</a>
+<span class="sourceLineNo">287</span><a id="line.287">        } else if (vItem == null) {</a>
+<span class="sourceLineNo">288</span><a id="line.288">            this.aGui.println("You dont have this");</a>
+<span class="sourceLineNo">289</span><a id="line.289">        } else {</a>
+<span class="sourceLineNo">290</span><a id="line.290"></a>
+<span class="sourceLineNo">291</span><a id="line.291">            this.aInventory.removeItem(vItemName, vItem);</a>
+<span class="sourceLineNo">292</span><a id="line.292">            this.aInventory.removeWeight(vItem.getWeight());</a>
+<span class="sourceLineNo">293</span><a id="line.293">            this.aCurrentRoom.addItem(vItemName, vItem);</a>
+<span class="sourceLineNo">294</span><a id="line.294">            showInventory();</a>
+<span class="sourceLineNo">295</span><a id="line.295">            this.aGui.println(this.aCurrentRoom.getItemString());</a>
+<span class="sourceLineNo">296</span><a id="line.296">        }</a>
+<span class="sourceLineNo">297</span><a id="line.297">    }</a>
+<span class="sourceLineNo">298</span><a id="line.298"></a>
+<span class="sourceLineNo">299</span><a id="line.299">    /**</a>
+<span class="sourceLineNo">300</span><a id="line.300">     * This method print all info about inventory of the player</a>
+<span class="sourceLineNo">301</span><a id="line.301">     */</a>
+<span class="sourceLineNo">302</span><a id="line.302">    protected void showInventory() {</a>
+<span class="sourceLineNo">303</span><a id="line.303">        this.aGui.println(this.aInventory.getInventoryString());</a>
+<span class="sourceLineNo">304</span><a id="line.304">        this.aGui.println(this.aInventory.getWeightString() + this.aMaxWeight + "kg");</a>
+<span class="sourceLineNo">305</span><a id="line.305">    }</a>
+<span class="sourceLineNo">306</span><a id="line.306"></a>
+<span class="sourceLineNo">307</span><a id="line.307">    /**</a>
+<span class="sourceLineNo">308</span><a id="line.308">     * This method charge the beamer</a>
+<span class="sourceLineNo">309</span><a id="line.309">     */</a>
+<span class="sourceLineNo">310</span><a id="line.310">    public void charge() {</a>
+<span class="sourceLineNo">311</span><a id="line.311">        Beamer vBeamer = (Beamer) this.aInventory.getItemName("teleporter");</a>
+<span class="sourceLineNo">312</span><a id="line.312">        if (this.aInventory.contain(vBeamer)) {</a>
+<span class="sourceLineNo">313</span><a id="line.313">            vBeamer.charge(this.aCurrentRoom);</a>
+<span class="sourceLineNo">314</span><a id="line.314">            this.aGui.println("Teleporter is charged");</a>
+<span class="sourceLineNo">315</span><a id="line.315">        } else {</a>
+<span class="sourceLineNo">316</span><a id="line.316">            this.aGui.println("You dont have teleporter");</a>
+<span class="sourceLineNo">317</span><a id="line.317">        }</a>
+<span class="sourceLineNo">318</span><a id="line.318">    }</a>
+<span class="sourceLineNo">319</span><a id="line.319"></a>
+<span class="sourceLineNo">320</span><a id="line.320">    /**</a>
+<span class="sourceLineNo">321</span><a id="line.321">     * This method fire the beamer</a>
+<span class="sourceLineNo">322</span><a id="line.322">     */</a>
+<span class="sourceLineNo">323</span><a id="line.323">    public void fire() {</a>
+<span class="sourceLineNo">324</span><a id="line.324">        Beamer vBeamer = (Beamer) this.aInventory.getItemName("teleporter");</a>
+<span class="sourceLineNo">325</span><a id="line.325">        if (this.aInventory.contain(vBeamer)) {</a>
+<span class="sourceLineNo">326</span><a id="line.326">            if (vBeamer.isCharged()) {</a>
+<span class="sourceLineNo">327</span><a id="line.327">                this.setRoom(vBeamer.fire());</a>
+<span class="sourceLineNo">328</span><a id="line.328">                this.aInventory.removeItem("teleporter", vBeamer);</a>
+<span class="sourceLineNo">329</span><a id="line.329">                this.aGui.println("You have been teleported. Teleporter is destroyed");</a>
+<span class="sourceLineNo">330</span><a id="line.330">                printLocationInfo();</a>
+<span class="sourceLineNo">331</span><a id="line.331">                showInventory();</a>
+<span class="sourceLineNo">332</span><a id="line.332">            } else {</a>
+<span class="sourceLineNo">333</span><a id="line.333">                this.aGui.println("teleporter isnt loaded.");</a>
+<span class="sourceLineNo">334</span><a id="line.334">            }</a>
+<span class="sourceLineNo">335</span><a id="line.335">        } else {</a>
+<span class="sourceLineNo">336</span><a id="line.336">            this.aGui.println("You dont have teleporter.");</a>
+<span class="sourceLineNo">337</span><a id="line.337">        }</a>
+<span class="sourceLineNo">338</span><a id="line.338">    }</a>
+<span class="sourceLineNo">339</span><a id="line.339"></a>
+<span class="sourceLineNo">340</span><a id="line.340">    /**</a>
+<span class="sourceLineNo">341</span><a id="line.341">     * This method write in UI when you left the menu</a>
+<span class="sourceLineNo">342</span><a id="line.342">     */</a>
+<span class="sourceLineNo">343</span><a id="line.343">    public void exit() {</a>
+<span class="sourceLineNo">344</span><a id="line.344">        this.aGui.println("you have left menu");</a>
+<span class="sourceLineNo">345</span><a id="line.345">    }</a>
+<span class="sourceLineNo">346</span><a id="line.346"></a>
+<span class="sourceLineNo">347</span><a id="line.347">    /**</a>
+<span class="sourceLineNo">348</span><a id="line.348">     * This method print the info of the room with the exit when you enter on it</a>
+<span class="sourceLineNo">349</span><a id="line.349">     */</a>
+<span class="sourceLineNo">350</span><a id="line.350">    protected void printLocationInfo() {</a>
+<span class="sourceLineNo">351</span><a id="line.351">        this.aGui.println(this.getCurrentRoom().getLongDescription());</a>
+<span class="sourceLineNo">352</span><a id="line.352">    }</a>
+<span class="sourceLineNo">353</span><a id="line.353"></a>
+<span class="sourceLineNo">354</span><a id="line.354">    /**</a>
+<span class="sourceLineNo">355</span><a id="line.355">     * This method show the image of the room</a>
+<span class="sourceLineNo">356</span><a id="line.356">     */</a>
+<span class="sourceLineNo">357</span><a id="line.357">    protected void showImage() {</a>
+<span class="sourceLineNo">358</span><a id="line.358">        if (this.getCurrentRoom().getImageName() != null) {</a>
+<span class="sourceLineNo">359</span><a id="line.359">            this.aGui.showImage(this.getCurrentRoom().getImageName());</a>
+<span class="sourceLineNo">360</span><a id="line.360">        }</a>
+<span class="sourceLineNo">361</span><a id="line.361">    }</a>
+<span class="sourceLineNo">362</span><a id="line.362"></a>
+<span class="sourceLineNo">363</span><a id="line.363">    /**</a>
+<span class="sourceLineNo">364</span><a id="line.364">     * This method clear the stack</a>
+<span class="sourceLineNo">365</span><a id="line.365">     */</a>
+<span class="sourceLineNo">366</span><a id="line.366">    public void clearStack() {</a>
+<span class="sourceLineNo">367</span><a id="line.367">        this.aPreviousRooms.clear();</a>
+<span class="sourceLineNo">368</span><a id="line.368">    }</a>
+<span class="sourceLineNo">369</span><a id="line.369"></a>
+<span class="sourceLineNo">370</span><a id="line.370">    /**</a>
+<span class="sourceLineNo">371</span><a id="line.371">     * This function get the current room Item</a>
+<span class="sourceLineNo">372</span><a id="line.372">     * </a>
+<span class="sourceLineNo">373</span><a id="line.373">     * @return String with all items in the room</a>
+<span class="sourceLineNo">374</span><a id="line.374">     */</a>
+<span class="sourceLineNo">375</span><a id="line.375">    public String getCurrentRoomItemsString() {</a>
+<span class="sourceLineNo">376</span><a id="line.376">        return this.aCurrentRoom.getItemString();</a>
+<span class="sourceLineNo">377</span><a id="line.377">    }</a>
+<span class="sourceLineNo">378</span><a id="line.378"></a>
+<span class="sourceLineNo">379</span><a id="line.379">    /**</a>
+<span class="sourceLineNo">380</span><a id="line.380">     * This function get items in inventory</a>
+<span class="sourceLineNo">381</span><a id="line.381">     * </a>
+<span class="sourceLineNo">382</span><a id="line.382">     * @return a String with items in inventory</a>
+<span class="sourceLineNo">383</span><a id="line.383">     */</a>
+<span class="sourceLineNo">384</span><a id="line.384">    public String getCurrentInventoryItemsString() {</a>
+<span class="sourceLineNo">385</span><a id="line.385">        return this.aInventory.getInventoryString();</a>
+<span class="sourceLineNo">386</span><a id="line.386">    }</a>
+<span class="sourceLineNo">387</span><a id="line.387">}</a>
 
 
 
