@@ -20,6 +20,7 @@ public class Room {
     private HashMap<String, Door> aDoors;
     private ItemList aItems;
     private String aImageName;
+    private Entity aCharacter;
 
     /**
      * Create a room described by "aDescription" with a given image.
@@ -175,6 +176,10 @@ public class Room {
      */
     public String getImageName() {
         return this.aImageName;
+    }
+
+    public Entity getCharacter() {
+        return this.aCharacter;
     }
 
 } // Room
