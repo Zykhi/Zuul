@@ -34,6 +34,7 @@ public class GameEngine {
         this.createItems();
         this.createDoor();
         this.createPlayer();
+        this.createCharacter();
         this.aParser = new Parser();
         this.aTest = false;
     }
@@ -150,6 +151,10 @@ public class GameEngine {
         this.aRooms.get("lobby").addDoor("up", vTrapLobby);
     }
 
+    private void createCharacter() {
+        Entity vGarret = new Entity("Garret", "Bienvenue", "gameImages/garret.png");
+        this.aRooms.get("lobby").setCharacter(vGarret);
+    }
     /**
      * Given a command, process (that is: execute) the command.
      * 

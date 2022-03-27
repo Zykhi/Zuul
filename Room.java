@@ -58,7 +58,8 @@ public class Room {
     public String getLongDescription() {
         return "You are " + aDescription + ".\n" +
                 getExitString() + "\n" +
-                getItemString();
+                getItemString()+ "\n" +
+                getCharacterString();
     }
 
     // EXIT
@@ -178,8 +179,18 @@ public class Room {
         return this.aImageName;
     }
 
+    // CHARACTER
+
     public Entity getCharacter() {
         return this.aCharacter;
+    }
+
+    public void setCharacter(final Entity pCharacter) {
+        this.aCharacter = pCharacter;
+    }
+
+    private String getCharacterString() {
+        return this.getCharacter().toString();
     }
 
 } // Room
