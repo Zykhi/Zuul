@@ -152,7 +152,7 @@ public class GameEngine {
     }
 
     private void createCharacter() {
-        Entity vGarret = new Entity("Garret", "Bienvenue", "gameImages/garret.png");
+        Entity vGarret = new Entity("Garret", "Bienvenue", "faceImages/garret.png");
         this.aRooms.get("lobby").setCharacter(vGarret);
     }
     /**

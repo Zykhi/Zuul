@@ -189,6 +189,7 @@ public class Room {
         this.aCharacter = pCharacter;
     }
 
+    //FIXME
     private String getCharacterString() {
         return this.getCharacter().toString();
     }
