@@ -58,7 +58,7 @@ public class Room {
     public String getLongDescription() {
         return "You are " + aDescription + ".\n" +
                 getExitString() + "\n" +
-                getItemString()+ "\n" +
+                getItemString() + "\n" +
                 getCharacterString();
     }
 
@@ -189,9 +189,9 @@ public class Room {
         this.aCharacter = pCharacter;
     }
 
-    //FIXME
+    // FIXME
     private String getCharacterString() {
-        return this.getCharacter().toString();
+        return this.getCharacter().getName() + " : " + getCharacter().getDialog();
     }
 
 } // Room
