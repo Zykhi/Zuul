@@ -39,8 +39,11 @@ public class UserInterface implements ActionListener {
     private JLayeredPane aLayeredPane;
     private JTextField aEntryField;
     private JTextArea aLog;
+    private JTextArea aEntityLog;
     private JLabel aImage;
+    private JLabel aEntityImage;
     private JLabel aGameTimer;
+    private JPanel aEntityPanel;
     private JButton aQuitButton;
     private JButton aNorthButton;
     private JButton aSouthButton;
@@ -140,6 +143,54 @@ public class UserInterface implements ActionListener {
     }
 
     /**
+     * Print out some text into the entity text area.
+     * 
+     * @param pText like sysout but for gui, is the text in " "
+     */
+    public void printEntity(final String pText) {
+        this.aEntityLog.append(pText);
+        this.aEntityLog.setCaretPosition(this.aEntityLog.getDocument().getLength());
+    } // print(.)
+
+    /**
+     * Print out some text into the entity text area, followed by a line break.
+     * 
+     * @param pText like sysout but for gui, is the text in " "
+     */
+    public void printlnEntity(final String pText) {
+        this.printEntity(pText + "\n");
+    } // println(.)
+
+    public void slowPrintEntity(final String pText) {
+
+        for (char c : pText.toCharArray()) {
+            String vMessage = Character.toString(c);
+
+            this.aEntityLog.append(vMessage);
+            this.aEntityLog.setCaretPosition(this.aEntityLog.getDocument().getLength());
+
+            try {
+                Thread.sleep(aTime);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * This method is like SlowPrint but for println
+     * 
+     * @param pText Text you want to write slowly
+     */
+    public void slowPrintlnEntity(final String pText) {
+        this.slowPrintEntity(pText + "\n");
+    }
+
+    public void clearDialogArea() {
+        this.aEntityLog.setText("");
+    }
+
+    /**
      * This method is called when skip button is clicked
      * It's write quikly the text of the slowPrint method
      */
@@ -228,6 +279,23 @@ public class UserInterface implements ActionListener {
             this.aMyFrame.pack();
         }
     } // showImage(.)
+
+    /**
+     * Show an image file in the interface.
+     * 
+     * @param pImageName name of the image for the room
+     */
+    public void showEntityImage(final String pImageName) {
+        String vImagePath = "" + pImageName; // to change the directory
+        URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
+        if (vImageURL == null)
+            System.out.println("Image not found : " + vImagePath);
+        else {
+            ImageIcon vIcon = new ImageIcon(vImageURL);
+            this.aEntityImage.setIcon(vIcon);
+            this.aMyFrame.pack();
+        }
+    }
 
     // enable method
 
@@ -401,6 +469,29 @@ public class UserInterface implements ActionListener {
         JScrollPane vListScroller = new JScrollPane(this.aLog);
         vListScroller.setPreferredSize(new Dimension(414, 707));
 
+        this.aEntityLog = new JTextArea();
+        this.aEntityLog.setEditable(false);
+        this.aEntityLog.setLineWrap(true);
+        this.aEntityLog.setWrapStyleWord(true);
+        this.aEntityLog.setMargin(new Insets(10, 10, 10, 10));
+        this.aEntityLog.setFont(aTextFont);
+        this.aEntityLog.setForeground(Color.white);
+        this.aEntityLog.setBackground(Color.darkGray);
+        JScrollPane vEntityScroller = new JScrollPane(this.aEntityLog);
+        vEntityScroller.setPreferredSize(new Dimension(430, 100));
+
+        // this.aEntityLog.append("this is a test");
+
+        this.aEntityPanel = new JPanel();
+        this.aEntityImage = new JLabel();
+        this.aEntityPanel.setPreferredSize(new Dimension(630, 100));
+        this.aEntityPanel.setLayout(new BorderLayout());
+        this.aEntityPanel.add(vEntityScroller, BorderLayout.CENTER);
+        this.aEntityPanel.add(this.aEntityImage, BorderLayout.EAST);
+        this.aEntityPanel.setSize(this.aEntityPanel.getPreferredSize());
+        this.aEntityPanel.setLocation(10, 540);
+        this.aEntityPanel.setVisible(false);
+
         JPanel vImagePanel = new JPanel();
         this.aImage = new JLabel();
         vImagePanel.setPreferredSize(new Dimension(650, 650));
@@ -464,6 +555,7 @@ public class UserInterface implements ActionListener {
         this.aLayeredPane.add(vMovementButtonPanel, JLayeredPane.DEFAULT_LAYER);
         this.aLayeredPane.add(vActionButtonPanel, JLayeredPane.DEFAULT_LAYER);
         this.aLayeredPane.add(aGameTimer, JLayeredPane.PALETTE_LAYER);
+        this.aLayeredPane.add(this.aEntityPanel, JLayeredPane.PALETTE_LAYER);
     }
 
     // action listeners methods
@@ -644,6 +736,14 @@ public class UserInterface implements ActionListener {
         } else {
             return true;
         }
+    }
+
+    public void showCharacterPanel() {
+        this.aEntityPanel.setVisible(true);
+    }
+
+    public void hideCharacterPanel() {
+        this.aEntityPanel.setVisible(false);
     }
 
 } // UserInterface

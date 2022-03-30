@@ -168,12 +168,21 @@ public class Player {
 
     /**
      * This method is called when the player change the current room
-     * @param vNextRoom the next room 
+     * 
+     * @param vNextRoom the next room
      */
     private void changeRoom(Room vNextRoom) {
         this.setRoom(vNextRoom);
         showImage();
         printLocationInfo();
+        if (aCurrentRoom.getCharacter() != null) {
+            this.aGui.clearDialogArea();
+            this.aGui.showCharacterPanel();
+            showCharacter();
+            printCharacterDialog();
+        } else {
+            this.aGui.hideCharacterPanel();
+        }
         this.aGui.playRoomSound();
         aMovement -= 1;
     }
@@ -351,12 +360,22 @@ public class Player {
         this.aGui.println(this.getCurrentRoom().getLongDescription());
     }
 
+    private void printCharacterDialog() {
+        this.aGui.printlnEntity(this.getCurrentRoom().getDialog());
+    }
+
     /**
      * This method show the image of the room
      */
     protected void showImage() {
         if (this.getCurrentRoom().getImageName() != null) {
             this.aGui.showImage(this.getCurrentRoom().getImageName());
+        }
+    }
+
+    protected void showCharacter() {
+        if (this.getCurrentRoom().getCharacter().getImageName() != null) {
+            this.aGui.showEntityImage(this.getCurrentRoom().getCharacter().getImageName());
         }
     }
 

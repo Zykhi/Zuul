@@ -20,4 +20,5 @@ public class Entity {
     public String getImageName() {
         return this.aImageName;
     }
+
 }

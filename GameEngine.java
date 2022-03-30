@@ -152,10 +152,10 @@ public class GameEngine {
     }
 
     private void createCharacter() {
-        Entity vGarret = new Entity("Garret", "Welcome to the dungeon!", "faceImages/garret.png");
+        Entity vGarret = new Entity("Garret", "Welcome to the dungeon! How are you?", "faceImages/garret.png");
         this.aRooms.get("lobby").setCharacter(vGarret);
 
-        Entity vViego = new Entity("Viego", "Welcome to the dungeon!", "faceImages/viego.png");
+        Entity vViego = new Entity("Viego", "you will die", "faceImages/viego.png");
         this.aRooms.get("boss2room").setCharacter(vViego);
     }
     /**
