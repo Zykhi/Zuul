@@ -1,18 +1,19 @@
 public class Entity {
-    public String aName;
-    public String aDialog;
-    public String aImageName;
-    public String aMoves[][];
-    protected int aHP;
+    private String aName;
+    private String aDialog;
+    private String aImageName;
+    private String aFullImage;
+    protected String aMoves[][];
+    private int aHP;
     private int aDef;
     private int aSpeDef;
     private int aAtt;
     private int aSpeAtt;
-    protected int aSpeed;
+    private int aSpeed;
 
     public Entity(int pHP, int pDef, int pSpeDef, int pAtt,
             int pSpeAtt, int pSpeed) {
-        this.aMoves = new String[4][5];
+        this.aMoves = new String[4][4];
         this.aHP = pHP;
         this.aDef = pDef;
         this.aSpeDef = pSpeDef;
@@ -25,12 +26,30 @@ public class Entity {
         return this.aName;
     }
 
+    public void setName(String pName) {
+        this.aName = pName;
+    }
+
     public String getDialog() {
         return this.aDialog;
+    }
+    public void setDialog(String pDialog) {
+        this.aDialog = pDialog;
     }
 
     public String getImageName() {
         return this.aImageName;
+    }
+    public void setImageName(String pImageName){
+        this.aImageName = pImageName;
+    }
+
+    public int getSpeed(){
+        return this.aSpeed;
+    }
+
+    public int getHP(){
+        return this.aHP;
     }
 
     public String getMoves() {
@@ -40,9 +59,8 @@ public class Entity {
         return vMoves;
     }
 
-    void calculateDamage(Entity pEntity, int pMove) {
+    public void calculateDamage(Entity pEntity, int pMove) {
 
-        System.out.println("\n\n");
         double vDamage = 0.0;
         double vRandom = Math.random() * 100;
         if (vRandom > Double.parseDouble(aMoves[pMove][2])) {

@@ -2,9 +2,9 @@ public class Warmog extends Entity {
 
     public Warmog() {
         super(100, 100, 100, 100, 100, 100);
-        aName = "Warmog";
-        aDialog = "You are in my forest";
-        aImageName = "faceImages/warmog.png";
+        setName("Warmog");
+        setDialog("You are in my forest");
+        setImageName("faceImages/warmog.png");
         aMoves[0][0] = "Flamethrower";
         aMoves[0][1] = "90";
         aMoves[0][2] = "95";

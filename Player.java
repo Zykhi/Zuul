@@ -9,7 +9,6 @@ import java.util.Stack;
 public class Player extends Entity {
     private Room aCurrentRoom;
     private Stack<Room> aPreviousRooms;
-    private String aName;
     private UserInterface aGui;
     private Parser aParser;
     private ItemList aInventory;
@@ -24,7 +23,7 @@ public class Player extends Entity {
     public Player(final Room pCurrentRoom) {
         super(100, 100, 100, 100, 100, 100);
         this.aCurrentRoom = pCurrentRoom;
-        this.aName = "Edward";
+        this.setName("Edward");
         this.aPreviousRooms = new Stack<Room>();
         this.aParser = new Parser();
         this.aInventory = new ItemList();
@@ -73,15 +72,6 @@ public class Player extends Entity {
      */
     public int getMaxWeight() {
         return this.aMaxWeight;
-    }
-
-    /**
-     * This function is useless right now
-     * 
-     * @return name of the player
-     */
-    public String getName() {
-        return this.aName;
     }
 
     /**
@@ -374,40 +364,42 @@ public class Player extends Entity {
     public void fight() throws IOException {
         Entity vPlayer = this;
         Entity vEnemy = aCurrentRoom.getCharacter();
+        boolean isEnd = false;
 
         this.aGui.println("Let battle begin");
         Entity vPlayer1;
         Entity vPlayer2;
-        if (vPlayer.aSpeed > vEnemy.aSpeed) {
+        if (vPlayer.getSpeed() > vEnemy.getSpeed()) {
             vPlayer1 = vPlayer;
             vPlayer2 = vEnemy;
         } else {
             vPlayer1 = vEnemy;
             vPlayer2 = vPlayer;
         }
-        this.aGui.println(vPlayer1.aName + " starts");
-        while (true) {
-            this.aGui.println("\n\n" + vPlayer1.aName + "\nHP : " + vPlayer1.aHP + "\n");
+        this.aGui.println(vPlayer1.getName() + " starts");
+        while (!isEnd) {
+            this.aGui.println("\n\n" + vPlayer1.getName() + "\nHP : " + vPlayer1.getHP() + "\n");
             this.aGui.println("Moves:");
             this.aGui.println(vPlayer1.getMoves());
-            this.aGui.println("\n\n" + vPlayer2.aName + "\nHP : " + vPlayer2.aHP + "\n");
+            this.aGui.println("\n\n" + vPlayer2.getName() + "\nHP : " + vPlayer2.getHP() + "\n");
             this.aGui.println("Moves:");
             this.aGui.println(vPlayer2.getMoves());
-            this.aGui.println("\n\n" + vPlayer1.aName + ", choose a move (number)");
-            int vMove1 = Integer.parseInt(this.aGui.getEntryField());
+            this.aGui.println("\n\n" + vPlayer1.getName() + ", choose a move (number)");
+            int vMove1 = 1;
             vMove1--;
-            this.aGui.println("\n\n" + vPlayer2.aName + ", choose a move (number)");
-            int vMove2 = Integer.parseInt(this.aGui.getEntryField());
+            this.aGui.println("\n\n" + vPlayer2.getName() + ", choose a move (number)");
+            int vMove2 = 2;
             vMove2--;
 
             vPlayer1.calculateDamage(vPlayer2, vMove1);
-            if (vPlayer2.aHP <= 0) {
-                this.aGui.println(vPlayer2.aName + " is defeated!\n" + vPlayer1.aName + " wins!");
-
+            if (vPlayer2.getHP() <= 0) {
+                this.aGui.println(vPlayer2.getName() + " is defeated!\n" + vPlayer1.getName() + " wins!");
+                isEnd = true;
             }
             vPlayer2.calculateDamage(vPlayer1, vMove2);
-            if (vPlayer1.aHP <= 0) {
-                this.aGui.println(vPlayer1.aName + " is defeated!\n" + vPlayer2.aName + " wins!");
+            if (vPlayer1.getHP() <= 0) {
+                this.aGui.println(vPlayer1.getName() + " is defeated!\n" + vPlayer2.getName() + " wins!");
+                isEnd = true;
             }
         }
     }
