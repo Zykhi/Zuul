@@ -184,6 +184,10 @@ public class Room {
         return this.aCharacter;
     }
 
+    public String getCharacterName(){
+        return this.getCharacter().getName();
+    }
+
     public void setCharacter(final Entity pCharacter) {
         this.aCharacter = pCharacter;
     }

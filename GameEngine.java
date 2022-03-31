@@ -111,7 +111,7 @@ public class GameEngine {
      * This method init the player
      */
     private void createPlayer() {
-        this.aPlayer = new Player(this.aRooms.get("outside"), "Edward");
+        this.aPlayer = new Player(this.aRooms.get("outside"));
     }
 
     /**
@@ -152,18 +152,19 @@ public class GameEngine {
     }
 
     private void createCharacter() {
-        Entity vGarret = new Entity("Garret", "Welcome to the dungeon! How are you?", "faceImages/garret.png");
+        Garret vGarret = new Garret();
         this.aRooms.get("lobby").setCharacter(vGarret);
 
-        Entity vWarmog = new Entity("Warmog", "You are in my forest", "faceImages/warmog.png");
+        Warmog vWarmog = new Warmog();
         this.aRooms.get("boss1room").setCharacter(vWarmog);
 
-        Entity vViego = new Entity("Viego", "you will die", "faceImages/viego.png");
+        Viego vViego = new Viego();
         this.aRooms.get("boss2room").setCharacter(vViego);
 
-        Entity vHazelgash = new Entity("Hazelgash" , "Be careful of lava", "faceImages/hazelgash.png");
+        Hazelgash vHazelgash = new Hazelgash();
         this.aRooms.get("boss3room").setCharacter(vHazelgash);
     }
+
     /**
      * Given a command, process (that is: execute) the command.
      * 
@@ -245,6 +246,10 @@ public class GameEngine {
 
                     case ALEA:
                         this.alea(pCommandLine);
+                        break;
+
+                    case FIGHT:
+                        this.aPlayer.fight();
                         break;
 
                     default:

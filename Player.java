@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Stack;
 
 /**
@@ -5,7 +6,7 @@ import java.util.Stack;
  * 
  * @author C.Diouy
  */
-public class Player {
+public class Player extends Entity {
     private Room aCurrentRoom;
     private Stack<Room> aPreviousRooms;
     private String aName;
@@ -19,16 +20,32 @@ public class Player {
      * this constructor init the player
      * 
      * @param pCurrentRoom Start room
-     * @param pName        Name of the player
      */
-    public Player(final Room pCurrentRoom, final String pName) {
+    public Player(final Room pCurrentRoom) {
+        super(100, 100, 100, 100, 100, 100);
         this.aCurrentRoom = pCurrentRoom;
-        this.aName = pName;
+        this.aName = "Edward";
         this.aPreviousRooms = new Stack<Room>();
         this.aParser = new Parser();
         this.aInventory = new ItemList();
         this.aMaxWeight = 20;
         this.aMovement = 40;
+        aMoves[0][0] = "Flamethrower";
+        aMoves[0][1] = "90";
+        aMoves[0][2] = "95";
+        aMoves[0][3] = "physical";
+        aMoves[1][0] = "Earthquake";
+        aMoves[1][1] = "100";
+        aMoves[1][2] = "100";
+        aMoves[1][3] = "physical";
+        aMoves[2][0] = "Air Slash";
+        aMoves[2][1] = "85";
+        aMoves[2][2] = "80";
+        aMoves[2][3] = "physical";
+        aMoves[3][0] = "Rock Slide";
+        aMoves[3][1] = "80";
+        aMoves[3][2] = "85";
+        aMoves[3][3] = "physical";
     }
 
     /**
@@ -102,7 +119,7 @@ public class Player {
      */
     protected void printWelcome() {
         this.showImage();
-        this.aGui.playWelcomeSound();
+        this.aGui.playDialogSound("welcome");
         this.aGui.playSound("outside", -1);
         this.aGui.slowPrintln("Welcome to the world of Zuul.");
         this.aGui.slowPrintln("You are Edward, the hero of this story.");
@@ -180,6 +197,7 @@ public class Player {
             this.aGui.showCharacterPanel();
             showCharacter();
             printCharacterDialog();
+            // this.aGui.playDialogSound(this.aCurrentRoom.getCharacterName());
         } else {
             this.aGui.hideCharacterPanel();
         }
@@ -353,6 +371,47 @@ public class Player {
         this.aGui.println("you have left menu");
     }
 
+    public void fight() throws IOException {
+        Entity vPlayer = this;
+        Entity vEnemy = aCurrentRoom.getCharacter();
+
+        this.aGui.println("Let battle begin");
+        Entity vPlayer1;
+        Entity vPlayer2;
+        if (vPlayer.aSpeed > vEnemy.aSpeed) {
+            vPlayer1 = vPlayer;
+            vPlayer2 = vEnemy;
+        } else {
+            vPlayer1 = vEnemy;
+            vPlayer2 = vPlayer;
+        }
+        this.aGui.println(vPlayer1.aName + " starts");
+        while (true) {
+            this.aGui.println("\n\n" + vPlayer1.aName + "\nHP : " + vPlayer1.aHP + "\n");
+            this.aGui.println("Moves:");
+            this.aGui.println(vPlayer1.getMoves());
+            this.aGui.println("\n\n" + vPlayer2.aName + "\nHP : " + vPlayer2.aHP + "\n");
+            this.aGui.println("Moves:");
+            this.aGui.println(vPlayer2.getMoves());
+            this.aGui.println("\n\n" + vPlayer1.aName + ", choose a move (number)");
+            int vMove1 = Integer.parseInt(this.aGui.getEntryField());
+            vMove1--;
+            this.aGui.println("\n\n" + vPlayer2.aName + ", choose a move (number)");
+            int vMove2 = Integer.parseInt(this.aGui.getEntryField());
+            vMove2--;
+
+            vPlayer1.calculateDamage(vPlayer2, vMove1);
+            if (vPlayer2.aHP <= 0) {
+                this.aGui.println(vPlayer2.aName + " is defeated!\n" + vPlayer1.aName + " wins!");
+
+            }
+            vPlayer2.calculateDamage(vPlayer1, vMove2);
+            if (vPlayer1.aHP <= 0) {
+                this.aGui.println(vPlayer1.aName + " is defeated!\n" + vPlayer2.aName + " wins!");
+            }
+        }
+    }
+
     /**
      * This method print the info of the room with the exit when you enter on it
      */
@@ -361,7 +420,7 @@ public class Player {
     }
 
     private void printCharacterDialog() {
-        this.aGui.printlnEntity(this.getCurrentRoom().getDialog());
+        this.aGui.slowPrintEntity(this.getCurrentRoom().getDialog());
     }
 
     /**

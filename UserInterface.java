@@ -61,7 +61,7 @@ public class UserInterface implements ActionListener {
     private JButton aSkipButton;
     private Parser aParser;
     private Clip aClip;
-    private Clip aWelcomeClip;
+    private Clip aDialogClip;
     private Timer aTimer;
     private ActionListener aTaskTimer;
     private Font aFont;
@@ -72,6 +72,7 @@ public class UserInterface implements ActionListener {
     private int aSecond;
     private int aDelay = 1000;
     private int aEndTime = 20;
+    private int aIndex;
 
     /**
      * Construct a UserInterface. As a parameter, a Game Engine
@@ -161,6 +162,25 @@ public class UserInterface implements ActionListener {
         this.printEntity(pText + "\n");
     } // println(.)
 
+    //FIXME Exception in thread "AWT-EventQueue-0" java.lang.StringIndexOutOfBoundsException: begin 0, end 22, length 21
+    public void slowPrintEntity(final String pText) {
+
+        Timer timer = new Timer(60, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent pEvent) {
+                aEntityLog.setText(pText.substring(0, aIndex));
+                aIndex++;
+                if (aIndex > pText.length()) {
+                    ((Timer) pEvent.getSource()).stop();
+                }
+            }
+
+        });
+
+        timer.start();
+        aIndex = 0;
+    }
+
     public void clearDialogArea() {
         this.aEntityLog.setText("");
     }
@@ -171,7 +191,7 @@ public class UserInterface implements ActionListener {
      */
     public void skipMethod() {
         this.aTime = 1;
-        stopWelcomeSound();
+        stopDialogSound();
     }
 
     // sound methods
@@ -202,13 +222,13 @@ public class UserInterface implements ActionListener {
     /**
      * This method play sound of the narrator
      */
-    public void playWelcomeSound() {
+    public void playDialogSound(final String pFile) {
         try {
             AudioInputStream vAudioInputStream = AudioSystem
-                    .getAudioInputStream(new File("gameSounds/welcome.wav").getAbsoluteFile());
-            aWelcomeClip = AudioSystem.getClip();
-            aWelcomeClip.open(vAudioInputStream);
-            aWelcomeClip.start();
+                    .getAudioInputStream(new File("gameSounds/" + pFile + ".wav").getAbsoluteFile());
+            aDialogClip = AudioSystem.getClip();
+            aDialogClip.open(vAudioInputStream);
+            aDialogClip.start();
         } catch (Exception ex) {
             System.out.println("Error with playing sound.");
             ex.printStackTrace();
@@ -225,8 +245,8 @@ public class UserInterface implements ActionListener {
     /**
      * This method stop the sound of the narrator
      */
-    public void stopWelcomeSound() {
-        aWelcomeClip.stop();
+    public void stopDialogSound() {
+        aDialogClip.stop();
     }
 
     /**
@@ -648,6 +668,10 @@ public class UserInterface implements ActionListener {
         this.aEngine.interpretCommand(aParser.getCommand(vInput));
     } // processCommand()
 
+    public String getEntryField() {
+        return this.aEntryField.getText();
+    }
+
     // timer methods
 
     /**
@@ -713,8 +737,17 @@ public class UserInterface implements ActionListener {
         }
     }
 
+    /**
+     * @author https://riptutorial.com/swing/example/498/delay-a-ui-task-for-a-specific-period
+     */
     public void showCharacterPanel() {
-        this.aEntityPanel.setVisible(true);
+        int vDelay = 1000;// specify the delay for the timer
+        Timer vTimer = new Timer(vDelay, e -> {
+            // The following code will be executed once the delay is reached
+            this.aEntityPanel.setVisible(true);
+        });
+        vTimer.setRepeats(false);// make sure the timer only runs once
+        vTimer.start();
     }
 
     public void hideCharacterPanel() {
