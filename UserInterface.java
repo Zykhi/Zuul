@@ -161,31 +161,6 @@ public class UserInterface implements ActionListener {
         this.printEntity(pText + "\n");
     } // println(.)
 
-    public void slowPrintEntity(final String pText) {
-
-        for (char c : pText.toCharArray()) {
-            String vMessage = Character.toString(c);
-
-            this.aEntityLog.append(vMessage);
-            this.aEntityLog.setCaretPosition(this.aEntityLog.getDocument().getLength());
-
-            try {
-                Thread.sleep(aTime);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * This method is like SlowPrint but for println
-     * 
-     * @param pText Text you want to write slowly
-     */
-    public void slowPrintlnEntity(final String pText) {
-        this.slowPrintEntity(pText + "\n");
-    }
-
     public void clearDialogArea() {
         this.aEntityLog.setText("");
     }
