@@ -1,10 +1,11 @@
 public class Viego extends Entity {
 
     public Viego() {
-        super(100, 100, 100, 100, 100, 100);
+        super(200, 100, 100, 100, 100, 100);
         setName("Viego");
         setDialog("you will die");
         setImageName("faceImages/viego.png");
+        setFullImageName("faceImages/fullViego.png");
         aMoves[0][0] = "Flamethrower";
         aMoves[0][1] = "90";
         aMoves[0][2] = "95";

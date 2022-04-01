@@ -33,6 +33,7 @@ public class Entity {
     public String getDialog() {
         return this.aDialog;
     }
+
     public void setDialog(String pDialog) {
         this.aDialog = pDialog;
     }
@@ -40,22 +41,31 @@ public class Entity {
     public String getImageName() {
         return this.aImageName;
     }
-    public void setImageName(String pImageName){
+
+    public void setImageName(String pImageName) {
         this.aImageName = pImageName;
     }
 
-    public int getSpeed(){
+    public String getFullImageName() {
+        return this.aFullImage;
+    }
+
+    public void setFullImageName(String pFullImage) {
+        this.aFullImage = pFullImage;
+    }
+
+    public int getSpeed() {
         return this.aSpeed;
     }
 
-    public int getHP(){
+    public int getHP() {
         return this.aHP;
     }
 
     public String getMoves() {
-        String vMoves= "";
+        String vMoves = "";
         for (int i = 0; i < 4; i++)
-            vMoves+= ((i + 1) + ". " + aMoves[i][0])+"\n";
+            vMoves += ((i + 1) + ". " + aMoves[i][0]) + "\n";
         return vMoves;
     }
 
