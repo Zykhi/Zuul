@@ -14,11 +14,11 @@ public class Viego extends Entity {
         aMoves[1][1] = "100";
         aMoves[1][2] = "100";
         aMoves[1][3] = "physical";
-        aMoves[2][0] = "Air Slash";
+        aMoves[2][0] = "AirSlash";
         aMoves[2][1] = "85";
         aMoves[2][2] = "80";
         aMoves[2][3] = "physical";
-        aMoves[3][0] = "Rock Slide";
+        aMoves[3][0] = "RockSlide";
         aMoves[3][1] = "80";
         aMoves[3][2] = "85";
         aMoves[3][3] = "physical";

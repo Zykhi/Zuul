@@ -25,6 +25,7 @@ public class GameEngine {
     private ArrayList<TransporterRoom> aTransporterRoom;
     private UserInterface aGui;
     private boolean aTest;
+    private boolean aFighting;
 
     /**
      * Create the game and initialise its internal map.
@@ -37,6 +38,7 @@ public class GameEngine {
         this.createCharacter();
         this.aParser = new Parser();
         this.aTest = false;
+        this.aFighting = false;
     }
 
     /**
@@ -252,6 +254,10 @@ public class GameEngine {
                         this.aPlayer.fight();
                         break;
 
+                    case ATTACK:
+                        this.aPlayer.attack(pCommandLine);
+                        break;
+
                     default:
                         this.aGui.println("I don't know what you mean...");
                         break;
@@ -277,6 +283,14 @@ public class GameEngine {
     private void gameOver() {
         this.aGui.println("Game over.");
         this.aGui.enable(false);
+    }
+
+    protected boolean isFighting() {
+        return this.aFighting;
+    }
+
+    protected String getMovesString() {
+        return this.aPlayer.getMovesString();
     }
 
     /**

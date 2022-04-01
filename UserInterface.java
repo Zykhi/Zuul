@@ -73,6 +73,7 @@ public class UserInterface implements ActionListener {
     private int aDelay = 1000;
     private int aEndTime = 20;
     private int aIndex;
+    private int aSelectedMove;
 
     /**
      * Construct a UserInterface. As a parameter, a Game Engine
@@ -162,7 +163,8 @@ public class UserInterface implements ActionListener {
         this.printEntity(pText + "\n");
     } // println(.)
 
-    //FIXME Exception in thread "AWT-EventQueue-0" java.lang.StringIndexOutOfBoundsException: begin 0, end 22, length 21
+    // FIXME Exception in thread "AWT-EventQueue-0"
+    // java.lang.StringIndexOutOfBoundsException: begin 0, end 22, length 21
     public void slowPrintEntity(final String pText) {
 
         Timer timer = new Timer(60, new ActionListener() {
@@ -424,7 +426,7 @@ public class UserInterface implements ActionListener {
         this.aTakeButton.addActionListener(e -> takeButtonMethod());
         this.aFireButton.addActionListener(this);
         this.aChargeButton.addActionListener(this);
-        this.aInventoryButton.addActionListener(this);
+        this.aInventoryButton.addActionListener(e -> battleButtonMethod());
         this.aSkipButton.addActionListener(this);
 
         // set action to write differents names
@@ -474,8 +476,6 @@ public class UserInterface implements ActionListener {
         this.aEntityLog.setBackground(Color.darkGray);
         JScrollPane vEntityScroller = new JScrollPane(this.aEntityLog);
         vEntityScroller.setPreferredSize(new Dimension(430, 100));
-
-        // this.aEntityLog.append("this is a test");
 
         this.aEntityPanel = new JPanel();
         this.aEntityImage = new JLabel();
@@ -616,20 +616,43 @@ public class UserInterface implements ActionListener {
         }
     }
 
+    public void battleButtonMethod() {
+        JButton[] vButtons = { aBackButton, aHelpButton, aQuitButton, aDropButton, aTakeButton, aFireButton,
+                aChargeButton, aInventoryButton };
+        String[] vOutput = aEngine.getMovesString().split(" ");
+        for (int i = 0; i < vOutput.length; i++) {
+            vButtons[i].setText(vOutput[i]);
+            vButtons[i].setActionCommand("");
+            setSelectedMove(i+1);
+        }
+        for (int i = vOutput.length; i < 8; i++) {
+            vButtons[i].setText("");
+            vButtons[i].setActionCommand("");
+            vButtons[i].removeActionListener(this);
+        }
+        aSkipButton.setText("exit");
+        aSkipButton.setActionCommand("exit");
+        aSkipButton.addActionListener(e -> exitButtonMethod());
+        for (int i = vOutput.length; i < 8; i++) {
+            vButtons[i].addActionListener(this);
+        }
+
+    }
+
     /**
      * This method is called when the exit button is clicked
      * It's back to "main" menu of the UI
      */
     public void exitButtonMethod() {
         aQuitButton.setText("quit");
-        aBackButton.setText("back ↺");
+        aBackButton.setText("back");
         aHelpButton.setText("help ?");
-        aDropButton.setText("drop ☛");
-        aTakeButton.setText("take ☚");
-        aFireButton.setText("fire ◎");
-        aChargeButton.setText("charge ⌁");
-        aInventoryButton.setText("bag ₿");
-        aSkipButton.setText("skip ▹▹");
+        aDropButton.setText("drop");
+        aTakeButton.setText("take");
+        aFireButton.setText("fire");
+        aChargeButton.setText("charge");
+        aInventoryButton.setText("bag");
+        aSkipButton.setText("skip");
 
         aQuitButton.setActionCommand("quit");
         aBackButton.setActionCommand("back");
@@ -640,6 +663,14 @@ public class UserInterface implements ActionListener {
         aChargeButton.setActionCommand("charge");
         aInventoryButton.setActionCommand("inventory");
         aSkipButton.setActionCommand("skip");
+    }
+
+    private void setSelectedMove(int pSelectedMove) {
+        this.aSelectedMove = pSelectedMove;
+    }
+
+    public int getSelectedMove() {
+        return this.aSelectedMove;
     }
 
     /**

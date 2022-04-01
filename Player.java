@@ -14,6 +14,7 @@ public class Player extends Entity {
     private ItemList aInventory;
     private int aMaxWeight;
     private int aMovement;
+    private int aSelectedMove;
 
     /**
      * this constructor init the player
@@ -21,7 +22,7 @@ public class Player extends Entity {
      * @param pCurrentRoom Start room
      */
     public Player(final Room pCurrentRoom) {
-        super(100, 100, 100, 100, 100, 100);
+        super(200, 100, 100, 100, 100, 100);
         this.aCurrentRoom = pCurrentRoom;
         this.setName("Edward");
         this.aPreviousRooms = new Stack<Room>();
@@ -37,11 +38,11 @@ public class Player extends Entity {
         aMoves[1][1] = "100";
         aMoves[1][2] = "100";
         aMoves[1][3] = "physical";
-        aMoves[2][0] = "Air Slash";
+        aMoves[2][0] = "AirSlash";
         aMoves[2][1] = "85";
         aMoves[2][2] = "80";
         aMoves[2][3] = "physical";
-        aMoves[3][0] = "Rock Slide";
+        aMoves[3][0] = "RockSlide";
         aMoves[3][1] = "80";
         aMoves[3][2] = "85";
         aMoves[3][3] = "physical";
@@ -369,25 +370,21 @@ public class Player extends Entity {
         this.aGui.println("Let battle begin");
         Entity vPlayer1;
         Entity vPlayer2;
-        if (vPlayer.getSpeed() > vEnemy.getSpeed()) {
-            vPlayer1 = vPlayer;
-            vPlayer2 = vEnemy;
-        } else {
-            vPlayer1 = vEnemy;
-            vPlayer2 = vPlayer;
-        }
+
+        vPlayer1 = vPlayer;
+        vPlayer2 = vEnemy;
+
         this.aGui.println(vPlayer1.getName() + " starts");
+
         while (!isEnd) {
+
             this.aGui.println("\n\n" + vPlayer1.getName() + "\nHP : " + vPlayer1.getHP() + "\n");
             this.aGui.println("Moves:");
             this.aGui.println(vPlayer1.getMoves());
             this.aGui.println("\n\n" + vPlayer2.getName() + "\nHP : " + vPlayer2.getHP() + "\n");
-            this.aGui.println("Moves:");
-            this.aGui.println(vPlayer2.getMoves());
             this.aGui.println("\n\n" + vPlayer1.getName() + ", choose a move (number)");
-            int vMove1 = 1;
+            int vMove1 = this.getSelectedMove();
             vMove1--;
-            this.aGui.println("\n\n" + vPlayer2.getName() + ", choose a move (number)");
             int vMove2 = 2;
             vMove2--;
 
@@ -402,6 +399,28 @@ public class Player extends Entity {
                 isEnd = true;
             }
         }
+    }
+
+    public void attack(Command pMove) {
+
+        String vMoveString = pMove.getSecondWord();
+        int vMove = Integer.parseInt(vMoveString);
+        setSelectedMove(vMove);
+        System.out.println(getSelectedMove());
+        try {
+            fight();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    private void setSelectedMove(int pMove) {
+        this.aSelectedMove = pMove;
+    }
+
+    private int getSelectedMove() {
+        return aSelectedMove;
     }
 
     /**
@@ -453,5 +472,9 @@ public class Player extends Entity {
      */
     public String getCurrentInventoryItemsString() {
         return this.aInventory.getInventoryString();
+    }
+
+    public String getMovesString() {
+        return this.getMoves();
     }
 }

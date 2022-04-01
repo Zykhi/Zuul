@@ -65,7 +65,7 @@ public class Entity {
     public String getMoves() {
         String vMoves = "";
         for (int i = 0; i < 4; i++)
-            vMoves += ((i + 1) + ". " + aMoves[i][0]) + "\n";
+            vMoves += aMoves[i][0] + " ";
         return vMoves;
     }
 
