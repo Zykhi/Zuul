@@ -41,9 +41,14 @@ public class UserInterface implements ActionListener {
     private JTextArea aLog;
     private JTextArea aEntityLog;
     private JLabel aImage;
+    private JLabel aBattleGroundImage;
     private JLabel aEntityImage;
+    private JLabel aEntityFullImage;
     private JLabel aGameTimer;
+    private JLabel aEnemyHP;
+    private JLabel aPlayerHP;
     private JPanel aEntityPanel;
+    private JPanel aBattlerPanel;
     private JButton aQuitButton;
     private JButton aNorthButton;
     private JButton aSouthButton;
@@ -544,13 +549,46 @@ public class UserInterface implements ActionListener {
         vActionButtonPanel.setSize(vActionButtonPanel.getPreferredSize());
         vActionButtonPanel.setLocation(365, 650);
 
+        this.aBattlerPanel = new JPanel();
+        this.aBattlerPanel.setSize(new Dimension(650, 650));
+        this.aBattlerPanel.setLocation(0, 0);
+        
+        aBattleGroundImage = new JLabel();
+        aBattleGroundImage.setSize(650, 650);
+        aBattleGroundImage.setLocation(0, 0);
+        // use JProgressBar for health bar
+        aEnemyHP = new JLabel();
+        aEnemyHP.setForeground(Color.white);
+        aEnemyHP.setBackground(Color.darkGray);
+        aEnemyHP.setFont(aTextFont);
+        aEnemyHP.setSize(300, 50);
+        aEnemyHP.setLocation(315, 0);
+
+        aPlayerHP = new JLabel();
+        aPlayerHP.setForeground(Color.white);
+        aPlayerHP.setBackground(Color.darkGray);
+        aPlayerHP.setFont(aTextFont);
+        aPlayerHP.setSize(300, 50);
+        aPlayerHP.setLocation(15, 400);
+
+        aEntityFullImage = new JLabel();
+        aEntityFullImage.setSize(230, 340);
+        aEntityFullImage.setLocation(315, 50);
+
+        this.aBattlerPanel.add(aBattleGroundImage);
+        this.aBattlerPanel.add(aEnemyHP);
+        this.aBattlerPanel.add(aPlayerHP);
+        this.aBattlerPanel.add(aEntityFullImage);
+
         this.aLayeredPane = new JLayeredPane();
         this.aLayeredPane.add(vImagePanel, JLayeredPane.DEFAULT_LAYER);
         this.aLayeredPane.add(vTextPanel, JLayeredPane.DEFAULT_LAYER);
         this.aLayeredPane.add(vMovementButtonPanel, JLayeredPane.DEFAULT_LAYER);
         this.aLayeredPane.add(vActionButtonPanel, JLayeredPane.DEFAULT_LAYER);
-        this.aLayeredPane.add(aGameTimer, JLayeredPane.PALETTE_LAYER);
-        this.aLayeredPane.add(this.aEntityPanel, JLayeredPane.PALETTE_LAYER);
+        this.aLayeredPane.add(this.aBattlerPanel, JLayeredPane.PALETTE_LAYER);
+        this.aLayeredPane.add(aGameTimer, JLayeredPane.MODAL_LAYER);
+        this.aLayeredPane.add(this.aEntityPanel, JLayeredPane.MODAL_LAYER);
+        
     }
 
     // action listeners methods
@@ -623,7 +661,7 @@ public class UserInterface implements ActionListener {
         for (int i = 0; i < vOutput.length; i++) {
             vButtons[i].setText(vOutput[i]);
             vButtons[i].setActionCommand("");
-            setSelectedMove(i+1);
+            setSelectedMove(i + 1);
         }
         for (int i = vOutput.length; i < 8; i++) {
             vButtons[i].setText("");

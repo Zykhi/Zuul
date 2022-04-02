@@ -15,6 +15,8 @@ public class Player extends Entity {
     private int aMaxWeight;
     private int aMovement;
     private int aSelectedMove;
+    private boolean aFighting;
+
 
     /**
      * this constructor init the player
@@ -46,6 +48,7 @@ public class Player extends Entity {
         aMoves[3][1] = "80";
         aMoves[3][2] = "85";
         aMoves[3][3] = "physical";
+        this.aFighting = false;
     }
 
     /**
@@ -363,6 +366,7 @@ public class Player extends Entity {
     }
 
     public void fight() throws IOException {
+        this.aFighting = true;
         Entity vPlayer = this;
         Entity vEnemy = aCurrentRoom.getCharacter();
         boolean isEnd = false;
@@ -392,27 +396,31 @@ public class Player extends Entity {
             if (vPlayer2.getHP() <= 0) {
                 this.aGui.println(vPlayer2.getName() + " is defeated!\n" + vPlayer1.getName() + " wins!");
                 isEnd = true;
+                this.aFighting = false;
             }
             vPlayer2.calculateDamage(vPlayer1, vMove2);
             if (vPlayer1.getHP() <= 0) {
                 this.aGui.println(vPlayer1.getName() + " is defeated!\n" + vPlayer2.getName() + " wins!");
                 isEnd = true;
+                this.aFighting = false;
             }
         }
     }
 
     public void attack(Command pMove) {
-
+        if(isFighting()){
         String vMoveString = pMove.getSecondWord();
         int vMove = Integer.parseInt(vMoveString);
         setSelectedMove(vMove);
-        System.out.println(getSelectedMove());
         try {
             fight();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }else {
+        this.aGui.println("You cant attack right now");
+    }
     }
 
     private void setSelectedMove(int pMove) {
@@ -421,6 +429,10 @@ public class Player extends Entity {
 
     private int getSelectedMove() {
         return aSelectedMove;
+    }
+
+    protected boolean isFighting() {
+        return this.aFighting;
     }
 
     /**
