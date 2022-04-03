@@ -299,6 +299,23 @@ public class UserInterface implements ActionListener {
         }
     }
 
+    /**
+     * Show an image file in the interface.
+     * 
+     * @param pImageName name of the image for the room
+     */
+    public void showFullEntityImage(final String pImageName) {
+        String vImagePath = "" + pImageName; // to change the directory
+        URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
+        if (vImageURL == null)
+            System.out.println("Image not found : " + vImagePath);
+        else {
+            ImageIcon vIcon = new ImageIcon(vImageURL);
+            this.aEntityFullImage.setIcon(vIcon);
+            this.aMyFrame.pack();
+        }
+    }
+
     // enable method
 
     /**
