@@ -17,14 +17,13 @@ public class Player extends Entity {
     private int aSelectedMove;
     private boolean aFighting;
 
-
     /**
      * this constructor init the player
      * 
      * @param pCurrentRoom Start room
      */
     public Player(final Room pCurrentRoom) {
-        super(200, 100, 100, 100, 100, 100);
+        super(200, 200, 100, 100, 100, 100, 100);
         this.aCurrentRoom = pCurrentRoom;
         this.setName("Edward");
         this.aPreviousRooms = new Stack<Room>();
@@ -184,6 +183,7 @@ public class Player extends Entity {
      */
     private void changeRoom(Room vNextRoom) {
         this.setRoom(vNextRoom);
+        this.aGui.println("");
         showImage();
         printLocationInfo();
         if (aCurrentRoom.getCharacter() != null) {
@@ -366,61 +366,71 @@ public class Player extends Entity {
     }
 
     public void fight() throws IOException {
-        this.aFighting = true;
-        Entity vPlayer = this;
-        Entity vEnemy = aCurrentRoom.getCharacter();
-        boolean isEnd = false;
+        if (this.aCurrentRoom.getCharacter() != null) {
+            this.aFighting = true;
+            Entity vPlayer = this;
+            Entity vEnemy = aCurrentRoom.getCharacter();
+            boolean isEnd = false;
+            this.aGui.showBattlePanel();
+            showFullCharacter();
 
-        this.aGui.println("Let battle begin");
-        Entity vPlayer1;
-        Entity vPlayer2;
+            this.aGui.println("Let battle begin");
+            Entity vPlayer1;
+            Entity vPlayer2;
 
-        vPlayer1 = vPlayer;
-        vPlayer2 = vEnemy;
+            vPlayer1 = vPlayer;
+            vPlayer2 = vEnemy;
 
-        this.aGui.println(vPlayer1.getName() + " starts");
+            this.aGui.println(vPlayer1.getName() + " starts");
 
-        while (!isEnd) {
+            while (!isEnd) {
 
-            this.aGui.println("\n\n" + vPlayer1.getName() + "\nHP : " + vPlayer1.getHP() + "\n");
-            this.aGui.println("Moves:");
-            this.aGui.println(vPlayer1.getMoves());
-            this.aGui.println("\n\n" + vPlayer2.getName() + "\nHP : " + vPlayer2.getHP() + "\n");
-            this.aGui.println("\n\n" + vPlayer1.getName() + ", choose a move (number)");
-            int vMove1 = this.getSelectedMove();
-            vMove1--;
-            int vMove2 = 2;
-            vMove2--;
+                this.aGui.println("\n\n" + vPlayer1.getName() + "\nHP : " + vPlayer1.getHP() + "\n");
+                this.aGui.println("Moves:");
+                this.aGui.println(vPlayer1.getMoves());
+                this.aGui.println("\n\n" + vPlayer2.getName() + "\nHP : " + vPlayer2.getHP() + "\n");
+                this.aGui.println("\n\n" + vPlayer1.getName() + ", choose a move (number)");
+                int vMove1 = this.getSelectedMove();
+                vMove1--;
+                int vMove2 = 2;
+                vMove2--;
 
-            vPlayer1.calculateDamage(vPlayer2, vMove1);
-            if (vPlayer2.getHP() <= 0) {
-                this.aGui.println(vPlayer2.getName() + " is defeated!\n" + vPlayer1.getName() + " wins!");
-                isEnd = true;
-                this.aFighting = false;
+                vPlayer1.calculateDamage(vPlayer2, vMove1);
+                updateEnemyHealthBar(vPlayer2.getHP());
+                if (vPlayer2.getHP() <= 0) {
+                    this.aGui.println(vPlayer2.getName() + " is defeated!\n" + vPlayer1.getName() + " wins!");
+                    isEnd = true;
+                    this.aFighting = false;
+                    this.aGui.hideCharacterPanel();
+                }
+                vPlayer2.calculateDamage(vPlayer1, vMove2);
+                updatePlayerHealthBar(vPlayer1.getHP());
+                if (vPlayer1.getHP() <= 0) {
+                    this.aGui.println(vPlayer1.getName() + " is defeated!\n" + vPlayer2.getName() + " wins!");
+                    isEnd = true;
+                    this.aFighting = false;
+                    this.aGui.hideBattlePanel();
+                }
             }
-            vPlayer2.calculateDamage(vPlayer1, vMove2);
-            if (vPlayer1.getHP() <= 0) {
-                this.aGui.println(vPlayer1.getName() + " is defeated!\n" + vPlayer2.getName() + " wins!");
-                isEnd = true;
-                this.aFighting = false;
-            }
+        } else {
+            this.aGui.println("You cant start a battle here");
         }
     }
 
     public void attack(Command pMove) {
-        if(isFighting()){
-        String vMoveString = pMove.getSecondWord();
-        int vMove = Integer.parseInt(vMoveString);
-        setSelectedMove(vMove);
-        try {
-            fight();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        if (isFighting()) {
+            String vMoveString = pMove.getSecondWord();
+            int vMove = Integer.parseInt(vMoveString);
+            setSelectedMove(vMove);
+            try {
+                fight();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        } else {
+            this.aGui.println("You cant attack right now");
         }
-    }else {
-        this.aGui.println("You cant attack right now");
-    }
     }
 
     private void setSelectedMove(int pMove) {
@@ -429,6 +439,14 @@ public class Player extends Entity {
 
     private int getSelectedMove() {
         return aSelectedMove;
+    }
+
+    private void updateEnemyHealthBar(int pCurrentHealth) {
+        this.aGui.getEnemyHealthBar().setValue(pCurrentHealth);
+    }
+
+    private void updatePlayerHealthBar(int pCurrentHealth) {
+        this.aGui.getPlayerHealthBar().setValue(pCurrentHealth);
     }
 
     protected boolean isFighting() {
@@ -458,6 +476,12 @@ public class Player extends Entity {
     protected void showCharacter() {
         if (this.getCurrentRoom().getCharacter().getImageName() != null) {
             this.aGui.showEntityImage(this.getCurrentRoom().getCharacter().getImageName());
+        }
+    }
+
+    protected void showFullCharacter() {
+        if (this.getCurrentRoom().getCharacter().getImageName() != null) {
+            this.aGui.showFullEntityImage(this.getCurrentRoom().getCharacter().getFullImageName());
         }
     }
 

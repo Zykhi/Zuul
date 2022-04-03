@@ -287,13 +287,21 @@ public class GameEngine {
         return this.aPlayer.getMovesString();
     }
 
-    protected int getPlayerHP(){
+    protected int getPlayerHP() {
         return this.aPlayer.getHP();
     }
 
-    protected int getEnemyHP(){
+    protected int getEnemyHP() {
         return this.aPlayer.getCurrentRoom().getCharacter().getHP();
     }
+
+    /*public int getEnemyMaxHP() {
+        return this.aPlayer.getCurrentRoom().getCharacter().getMaxHP();
+    }
+
+    public int getPlayerMaxHP() {
+        return this.aPlayer.getMaxHP();
+    }*/
 
     /**
      * This function get the items in the room. This function is used for the

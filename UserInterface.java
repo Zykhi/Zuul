@@ -20,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -41,12 +42,11 @@ public class UserInterface implements ActionListener {
     private JTextArea aLog;
     private JTextArea aEntityLog;
     private JLabel aImage;
-    private JLabel aBattleGroundImage;
     private JLabel aEntityImage;
     private JLabel aEntityFullImage;
     private JLabel aGameTimer;
-    private JLabel aEnemyHP;
-    private JLabel aPlayerHP;
+    private JProgressBar aEnemyHP;
+    private JProgressBar aPlayerHP;
     private JPanel aEntityPanel;
     private JPanel aBattlerPanel;
     private JButton aQuitButton;
@@ -569,33 +569,28 @@ public class UserInterface implements ActionListener {
         this.aBattlerPanel = new JPanel();
         this.aBattlerPanel.setSize(new Dimension(650, 650));
         this.aBattlerPanel.setLocation(0, 0);
-        
-        aBattleGroundImage = new JLabel();
-        aBattleGroundImage.setSize(650, 650);
-        aBattleGroundImage.setLocation(0, 0);
+
         // use JProgressBar for health bar
-        aEnemyHP = new JLabel();
-        aEnemyHP.setForeground(Color.white);
-        aEnemyHP.setBackground(Color.darkGray);
-        aEnemyHP.setFont(aTextFont);
+        aEnemyHP = new JProgressBar();
+        aEnemyHP.setMinimum(0);
+        aEnemyHP.setMaximum(200);
         aEnemyHP.setSize(300, 50);
         aEnemyHP.setLocation(315, 0);
 
-        aPlayerHP = new JLabel();
-        aPlayerHP.setForeground(Color.white);
-        aPlayerHP.setBackground(Color.darkGray);
-        aPlayerHP.setFont(aTextFont);
+        aPlayerHP = new JProgressBar();
+        aEnemyHP.setMinimum(0);
+        aEnemyHP.setMaximum(200);
         aPlayerHP.setSize(300, 50);
         aPlayerHP.setLocation(15, 400);
 
         aEntityFullImage = new JLabel();
         aEntityFullImage.setSize(230, 340);
-        aEntityFullImage.setLocation(315, 50);
+        aEntityFullImage.setLocation(115, 50);
 
-        this.aBattlerPanel.add(aBattleGroundImage);
         this.aBattlerPanel.add(aEnemyHP);
         this.aBattlerPanel.add(aPlayerHP);
         this.aBattlerPanel.add(aEntityFullImage);
+        this.aBattlerPanel.setVisible(false);
 
         this.aLayeredPane = new JLayeredPane();
         this.aLayeredPane.add(vImagePanel, JLayeredPane.DEFAULT_LAYER);
@@ -606,6 +601,14 @@ public class UserInterface implements ActionListener {
         this.aLayeredPane.add(aGameTimer, JLayeredPane.MODAL_LAYER);
         this.aLayeredPane.add(this.aEntityPanel, JLayeredPane.MODAL_LAYER);
         
+    }
+
+    public JProgressBar getEnemyHealthBar(){
+        return this.aEnemyHP;
+    }
+
+    public JProgressBar getPlayerHealthBar(){
+        return this.aPlayerHP;
     }
 
     // action listeners methods
@@ -677,8 +680,7 @@ public class UserInterface implements ActionListener {
         String[] vOutput = aEngine.getMovesString().split(" ");
         for (int i = 0; i < vOutput.length; i++) {
             vButtons[i].setText(vOutput[i]);
-            vButtons[i].setActionCommand("");
-            setSelectedMove(i + 1);
+            vButtons[i].setActionCommand("attack" +i+1);
         }
         for (int i = vOutput.length; i < 8; i++) {
             vButtons[i].setText("");
@@ -718,14 +720,6 @@ public class UserInterface implements ActionListener {
         aChargeButton.setActionCommand("charge");
         aInventoryButton.setActionCommand("inventory");
         aSkipButton.setActionCommand("skip");
-    }
-
-    private void setSelectedMove(int pSelectedMove) {
-        this.aSelectedMove = pSelectedMove;
-    }
-
-    public int getSelectedMove() {
-        return this.aSelectedMove;
     }
 
     /**
@@ -838,6 +832,13 @@ public class UserInterface implements ActionListener {
 
     public void hideCharacterPanel() {
         this.aEntityPanel.setVisible(false);
+    }
+
+    public void showBattlePanel(){
+        this.aBattlerPanel.setVisible(true);
+    }
+    public void hideBattlePanel(){
+        this.aBattlerPanel.setVisible(false);
     }
 
 } // UserInterface

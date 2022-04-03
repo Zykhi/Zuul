@@ -5,16 +5,18 @@ public class Entity {
     private String aFullImage;
     protected String aMoves[][];
     private int aHP;
+    private int aMaxHP;
     private int aDef;
     private int aSpeDef;
     private int aAtt;
     private int aSpeAtt;
     private int aSpeed;
 
-    public Entity(int pHP, int pDef, int pSpeDef, int pAtt,
+    public Entity(int pHP, int pMaxHP, int pDef, int pSpeDef, int pAtt,
             int pSpeAtt, int pSpeed) {
         this.aMoves = new String[4][4];
         this.aHP = pHP;
+        this.aMaxHP = pMaxHP;
         this.aDef = pDef;
         this.aSpeDef = pSpeDef;
         this.aAtt = pAtt;
@@ -60,6 +62,10 @@ public class Entity {
 
     public int getHP() {
         return this.aHP;
+    }
+
+    public int getMaxHP() {
+        return this.aMaxHP;
     }
 
     public String getMoves() {

@@ -1,10 +1,10 @@
 public class Hazelgash extends Entity {
 
     public Hazelgash() {
-        super(100, 100, 100, 100, 100, 100);
+        super(100, 200, 100, 100, 100, 100, 100);
         setName("Hazelgash");
         setDialog("Be careful of lava");
-        setImageName( "faceImages/hazelgash.png");
+        setImageName("faceImages/hazelgash.png");
         aMoves[0][0] = "Flamethrower";
         aMoves[0][1] = "90";
         aMoves[0][2] = "95";
