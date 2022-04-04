@@ -414,7 +414,7 @@ public class UserInterface implements ActionListener {
         this.aTakeButton = new JButton("take");
         this.aFireButton = new JButton("fire");
         this.aChargeButton = new JButton("charge");
-        this.aInventoryButton = new JButton("bag");
+        this.aInventoryButton = new JButton("attack");
         this.aSkipButton = new JButton("skip");
 
         // add custom font on buttons
