@@ -67,6 +67,7 @@ public class UserInterface implements ActionListener {
     private Parser aParser;
     private Clip aClip;
     private Clip aDialogClip;
+    private Clip aSoundEffectClip;
     private Timer aTimer;
     private ActionListener aTaskTimer;
     private Font aFont;
@@ -243,6 +244,22 @@ public class UserInterface implements ActionListener {
     }
 
     /**
+     * This method play sound effect
+     */
+    public void playSoundEffect(final String pFile) {
+        try {
+            AudioInputStream vAudioInputStream = AudioSystem
+                    .getAudioInputStream(new File("gameSounds/" + pFile + ".wav").getAbsoluteFile());
+            aSoundEffectClip = AudioSystem.getClip();
+            aSoundEffectClip.open(vAudioInputStream);
+            aSoundEffectClip.start();
+        } catch (Exception ex) {
+            System.out.println("Error with playing sound.");
+            ex.printStackTrace();
+        }
+    }
+
+    /**
      * This method stop sound.
      */
     public void stopSound() {
@@ -254,6 +271,13 @@ public class UserInterface implements ActionListener {
      */
     public void stopDialogSound() {
         aDialogClip.stop();
+    }
+
+    /**
+     * This method stop the sound of the narrator
+     */
+    public void stopSoundEffect() {
+        aSoundEffectClip.stop();
     }
 
     /**
