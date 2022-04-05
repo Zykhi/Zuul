@@ -195,6 +195,7 @@ public class Player extends Entity {
         } else {
             this.aGui.hideCharacterPanel();
         }
+        this.aCurrentRoom.updateNbrRoom();
         this.aGui.playRoomSound();
         aMovement -= 1;
     }

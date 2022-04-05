@@ -21,6 +21,7 @@ public class Room {
     private ItemList aItems;
     private String aImageName;
     private Entity aCharacter;
+    private int aNbrEntry;
 
     /**
      * Create a room described by "aDescription" with a given image.
@@ -36,6 +37,7 @@ public class Room {
         this.aDoors = new HashMap<String, Door>();
         this.aItems = new ItemList();
         this.aImageName = pImage;
+        this.aNbrEntry = 0;
     }
 
     /**
@@ -194,6 +196,10 @@ public class Room {
 
     public String getDialog() {
         return this.getCharacter().getName() + " : " + "\n" + getCharacter().getDialog();
+    }
+
+    public void updateNbrRoom() {
+        this.aNbrEntry += 1;
     }
 
 } // Room
