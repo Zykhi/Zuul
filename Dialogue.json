@@ -1,0 +1,219 @@
+{
+  "Entity": [
+    { 
+        "Name": "Garret", 
+        "Dialogue": [
+            {
+
+            }
+        ]
+    },
+    { 
+        "Name": "Viego", 
+        "Dialogue": [
+            {
+                "Dialogue0": [
+                    {
+                        "text": "Answer for your crimes, Death. Answer me !",
+                        "audio": "gameSounds/viego_0.wav"
+                    }
+                ],
+                "Dialogue1": [
+                    {
+                        "text": "Why, Isolde?!.. Why do you hide your face from me ?!..",
+                        "audio": "gameSounds/viego_1.wav"
+                    }
+                ],
+                "Dialogue2": [
+                    {
+                        "text": "I will find my love again. You matter so little.",
+                        "audio": "gameSounds/viego_2.wav"
+                    }
+                ],
+                "Dialogue3": [
+                    {
+                        "text": "You are not the hero of this tale. You are not anything.",
+                        "audio": "gameSounds/viego_3.wav"
+                    }
+                ],
+                "Dialogue4": [
+                    {
+                        "text": "The dead will not rest until i am whole once more.",
+                        "audio": "gameSounds/viego_4.wav"
+                    }
+                ],
+                "Dialogue5": [
+                    {
+                        "text": "Your pain is nothing compared to mine !",
+                        "audio": "gameSounds/viego_5.wav"
+                    }
+                ],
+                "Dialogue6": [
+                    {
+                        "text": "Arise, Death and greet the king who conquered you back !",
+                        "audio": "gameSounds/viego_6.wav"
+                    }
+                ],
+                "Dialogue7": [
+                    {
+                        "text": "All this carnage. Do you see ?! I do it for you !",
+                        "audio": "gameSounds/viego_7.wav"
+                    }
+                ],
+                "Dialogue8": [
+                    {
+                        "text": "She waits for me beyond the mist. My queen. My love. My black and broken heart.",
+                        "audio": "gameSounds/viego_8.wav"
+                    }
+                ],
+                "Dialogue9": [
+                    {
+                        "text": "No price is too great. No atrocity beyond my reach. For her, i will do anything.",
+                        "audio": "gameSounds/viego_9.wav"
+                    }
+                ],
+                "Dialogue10": [
+                    {
+                        "text": "I will rip her from the jaws of death. Fate cannot stop me. Nothing can.",
+                        "audio": "gameSounds/viego_10.wav"
+                    }
+                ],
+                "Dialogue11": [
+                    {
+                        "text": "I remember her sinking beneath the waters... and then... and then...",
+                        "audio": "gameSounds/viego_11.wav"
+                    }
+                ],
+                "Dialogue12": [
+                    {
+                        "text": "Isolde was my life. Viego died when she did and the ruined king was born.",
+                        "audio": "gameSounds/viego_12.wav"
+                    }
+                ],
+                "Dialogue13": [
+                    {
+                        "text": "Every living thing is my subject !",
+                        "audio": "gameSounds/viego_13.wav"
+                    }
+                ],
+                "Dialogue14": [
+                    {
+                        "text": "She will reign again at my side and i shall be ruined no more.",
+                        "audio": "gameSounds/viego_14.wav"
+                    }
+                ],
+                "Dialogue15": [
+                    {
+                        "text": "I cast myself upon this broken throne awaiting her return.",
+                        "audio": "gameSounds/viego_15.wav"
+                    }
+                ],
+                "Dialogue16": [
+                    {
+                        "text": "The mist will consume all. My victory is simply a matter of time.",
+                        "audio": "gameSounds/viego_16.wav"
+                    }
+                ],
+                "Dialogue17": [
+                    {
+                        "text": "In a world without love death means nothing.",
+                        "audio": "gameSounds/viego_17.wav"
+                    }
+                ],
+                "Dialogue18": [
+                    {
+                        "text": "",
+                        "audio": "gameSounds/viego_18.wav"
+                    }
+                ],
+                "Dialogue19": [
+                    {
+                        "text": "",
+                        "audio": "gameSounds/viego_19.wav"
+                    }
+                ],
+                "Dialogue20": [
+                    {
+                        "text": "",
+                        "audio": "gameSounds/viego_20.wav"
+                    }
+                ],
+                "Dialogue21": [
+                    {
+                        "text": "",
+                        "audio": "gameSounds/viego_21.wav"
+                    }
+                ],
+                "Dialogue22": [
+                    {
+                        "text": "",
+                        "audio": "gameSounds/viego_22.wav"
+                    }
+                ],
+                "Dialogue23": [
+                    {
+                        "text": "",
+                        "audio": "gameSounds/viego_23.wav"
+                    }
+                ],
+                "Dialogue24": [
+                    {
+                        "text": "",
+                        "audio": "gameSounds/viego_24.wav"
+                    }
+                ],
+                "Dialogue25": [
+                    {
+                        "text": "",
+                        "audio": "gameSounds/viego_25.wav"
+                    }
+                ],
+                "Dialogue26": [
+                    {
+                        "text": "",
+                        "audio": "gameSounds/viego_26.wav"
+                    }
+                ],
+                "Dialogue27": [
+                    {
+                        "text": "",
+                        "audio": "gameSounds/viego_27.wav"
+                    }
+                ],
+                "Dialogue28": [
+                    {
+                        "text": "",
+                        "audio": "gameSounds/viego_28.wav"
+                    }
+                ],
+                "Dialogue29": [
+                    {
+                        "text": "",
+                        "audio": "gameSounds/viego_29.wav"
+                    }
+                ],
+                "Dialogue30": [
+                    {
+                        "text": "",
+                        "audio": "gameSounds/viego_30.wav"
+                    }
+                ],
+                "Dialogue31": [
+                    {
+                        "text": "",
+                        "audio": "gameSounds/viego_31.wav"
+                    }
+                ]
+            }
+        ]
+    },
+    { 
+        "Name": "Warmog", 
+        "Dialogue": [
+            {
+
+            }
+        ]
+    }
+  ]
+}
