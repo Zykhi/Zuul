@@ -202,4 +202,8 @@ public class Room {
         this.aNbrEntry += 1;
     }
 
+    public int getNbrRoom() {
+        return aNbrEntry;
+    }
+
 } // Room

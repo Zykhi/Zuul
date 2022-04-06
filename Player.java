@@ -1,6 +1,8 @@
 import java.io.IOException;
 import java.util.Stack;
 
+import javax.swing.Timer;
+
 /**
  * This class implements player
  * 
@@ -30,7 +32,7 @@ public class Player extends Entity {
         this.aParser = new Parser();
         this.aInventory = new ItemList();
         this.aMaxWeight = 20;
-        this.aMovement = 40;
+        this.aMovement = 41;
         aMoves[0][0] = "Flamethrower";
         aMoves[0][1] = "90";
         aMoves[0][2] = "95";
@@ -111,25 +113,14 @@ public class Player extends Entity {
      * Print out the opening message for the player.
      */
     protected void printWelcome() {
-        this.showImage();
         this.aGui.playDialogSound("welcome");
-        this.aGui.playSound("outside", -1);
-        this.aGui.slowPrintln("Welcome to the world of Zuul.");
-        this.aGui.slowPrintln("You are Edward, the hero of this story.");
-        this.aGui.slowPrintln(
-                "You are a knight, the war has been raging for decades and you cannot sleep. You decide to go out to clear your mind by walking away from the castle. You come across a waterfall that hides a cave, mist emanating from it.");
-        this.aGui.slowPrintln("It is at this moment that your adventure takes all its meaning.");
-        this.aGui.slowPrintln("Good luck knight. If you need help, let me know.");
+        this.aGui.slowPrintln("Welcome to the world of Zuul." + '\n' + "You are Edward, the hero of this story." + '\n'
+                +
+                "You are a knight, the war has been raging for decades and you cannot sleep. You decide to go out to clear your mind by walking away from the castle. You come across a waterfall that hides a cave, mist emanating from it."
+                + '\n' +
+                "It is at this moment that your adventure takes all its meaning." + '\n' +
+                "Good luck knight. If you need help, let me know." + '\n');
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        this.aGui.println("Type '" + CommandWord.HELP.toString() + "' if you need help.");
-        this.aGui.println("You have 20 minutes to escape from the dungeon before being trapped forever");
-        this.printLocationInfo();
     }
 
     /**
@@ -198,6 +189,27 @@ public class Player extends Entity {
         this.aCurrentRoom.updateNbrRoom();
         this.aGui.playRoomSound();
         aMovement -= 1;
+
+        if (this.getMovement() == 40) {
+            int vDelay = 100;// specify the delay for the timer
+            Timer vTimer = new Timer(vDelay, e -> {
+                // The following code will be executed once the delay is reached
+                this.printWelcome();
+            });
+            vTimer.setRepeats(false);// make sure the timer only runs once
+            vTimer.start();
+
+            int vDelay2 = 26000;// specify the delay for the timer
+            Timer vTimer2 = new Timer(vDelay2, e -> {
+                // The following code will be executed once the delay is reached
+                this.aGui.println("Type '" + CommandWord.HELP.toString() + "' if you need help." + '\n'
+                        + "You have 20 minutes to escape from the dungeon before being trapped forever"+ '\n');
+                this.printLocationInfo();
+                this.aGui.startTimer();
+            });
+            vTimer2.setRepeats(false);// make sure the timer only runs once
+            vTimer2.start();
+        }
     }
 
     /**

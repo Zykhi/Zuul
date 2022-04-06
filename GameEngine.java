@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import javax.swing.Timer;
+
 /**
  * This class is part of the "Zuul GOTY Edition" application.
  * "Zuul GOTY Edition" is a very simple, text based adventure game.
@@ -47,7 +49,7 @@ public class GameEngine {
     public void setGUI(final UserInterface pUserInterface) {
         this.aGui = pUserInterface;
         this.aPlayer.setGUI(pUserInterface);
-        this.aPlayer.printWelcome();
+        this.aGui.playSound("mainmenu", -1);
     }
 
     /**
@@ -59,7 +61,8 @@ public class GameEngine {
 
         this.aTransporterRoom = new ArrayList<TransporterRoom>();
 
-        Room vOutside = new Room("outside, the entrance to a cave catches your eye. ", "gameImages/outside.gif");
+        Room vMainMenu = new Room("", "");
+        Room vOutside = new Room("outside, the entrance to a cave catches your eye", "gameImages/outside.gif");
         Room vCatacombs = new Room("in the catacombs", "gameImages/catacombs.gif");
         Room vLobby = new Room("the main room of the dungeon", "gameImages/lobby.gif");
         Room vTreasure = new Room("an empty room", "gameImages/treasure.gif"); // or not ;)
@@ -73,6 +76,7 @@ public class GameEngine {
 
         this.aTransporterRoom.add(vTestRoom);
 
+        aRooms.put("mainmenu", vMainMenu);
         aRooms.put("outside", vOutside);
         aRooms.put("catacombs", vCatacombs);
         aRooms.put("lobby", vLobby);
@@ -83,6 +87,8 @@ public class GameEngine {
         aRooms.put("testroom", vTestRoom);
 
         // exit
+        vMainMenu.setExit("play", vOutside);
+
         vOutside.setExit("down", vLobby);
 
         vCatacombs.setExit("west", vBoss2Room);
@@ -111,7 +117,7 @@ public class GameEngine {
      * This method init the player
      */
     private void createPlayer() {
-        this.aPlayer = new Player(this.aRooms.get("outside"));
+        this.aPlayer = new Player(this.aRooms.get("mainmenu"));
     }
 
     /**
@@ -294,14 +300,6 @@ public class GameEngine {
     protected int getEnemyHP() {
         return this.aPlayer.getCurrentRoom().getCharacter().getHP();
     }
-
-    /*public int getEnemyMaxHP() {
-        return this.aPlayer.getCurrentRoom().getCharacter().getMaxHP();
-    }
-
-    public int getPlayerMaxHP() {
-        return this.aPlayer.getMaxHP();
-    }*/
 
     /**
      * This function get the items in the room. This function is used for the
