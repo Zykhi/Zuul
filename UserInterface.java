@@ -78,6 +78,7 @@ public class UserInterface implements ActionListener {
     private Clip aDialogClip;
     private Clip aSoundEffectClip;
     private Timer aTimer;
+    private Timer aTextTimer;
     private ActionListener aTaskTimer;
     private Font aFont;
     private Font aButtonsFont;
@@ -135,7 +136,7 @@ public class UserInterface implements ActionListener {
      */
     public void slowPrint(final String pText) {
 
-        Timer timer = new Timer(aTime, new ActionListener() {
+        aTextTimer = new Timer(aTime, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent pEvent) {
                 aLog.setText(pText.substring(0, aIndex));
@@ -147,7 +148,7 @@ public class UserInterface implements ActionListener {
 
         });
 
-        timer.start();
+        aTextTimer.start();
         aIndex = 0;
     }
 
@@ -208,7 +209,10 @@ public class UserInterface implements ActionListener {
      * It's write quikly the text of the slowPrint method
      */
     public void skipMethod() {
-        this.aTime = 1;
+        aTime = 1;
+        aTextTimer.stop();
+        aTextTimer.setDelay(aTime);
+        aTextTimer.start();
         stopDialogSound();
     }
 
@@ -501,7 +505,7 @@ public class UserInterface implements ActionListener {
         this.aFireButton.addActionListener(this);
         this.aChargeButton.addActionListener(this);
         this.aInventoryButton.addActionListener(e -> battleButtonMethod());
-        this.aSkipButton.addActionListener(this);
+        this.aSkipButton.addActionListener(e -> skipMethod());
         this.aPlay.addActionListener(e -> playButton());
         this.aPlay.addActionListener(this);
         this.aSetting.addActionListener(e -> settingsButton());
@@ -531,6 +535,21 @@ public class UserInterface implements ActionListener {
      */
     private void createPanel() {
 
+        createNPCPanel();
+        createGamePanel();
+        createBattlePanel();
+        createMainMenuPanel();
+
+        aSceneManager = aMyFrame.getContentPane();
+        aCardLayout = new CardLayout();
+        aSceneManager.setLayout(aCardLayout);
+        aSceneManager.add(aMainMenuPanel, "MainMenu");
+        aSceneManager.add(aGamePanel, "Game");
+        aSceneManager.add(aBattlerPanel, "Battle");
+
+    }
+
+    private void createGamePanel() {
         this.aEntryField = new JTextField(34);
         this.aEntryField.addActionListener(this);
 
@@ -544,27 +563,6 @@ public class UserInterface implements ActionListener {
         this.aLog.setBackground(Color.darkGray);
         JScrollPane vListScroller = new JScrollPane(this.aLog);
         vListScroller.setPreferredSize(new Dimension(414, 707));
-
-        this.aEntityLog = new JTextArea();
-        this.aEntityLog.setEditable(false);
-        this.aEntityLog.setLineWrap(true);
-        this.aEntityLog.setWrapStyleWord(true);
-        this.aEntityLog.setMargin(new Insets(10, 10, 10, 10));
-        this.aEntityLog.setFont(aTextFont);
-        this.aEntityLog.setForeground(Color.white);
-        this.aEntityLog.setBackground(Color.darkGray);
-        JScrollPane vEntityScroller = new JScrollPane(this.aEntityLog);
-        vEntityScroller.setPreferredSize(new Dimension(430, 100));
-
-        this.aEntityPanel = new JPanel();
-        this.aEntityImage = new JLabel();
-        this.aEntityPanel.setPreferredSize(new Dimension(630, 100));
-        this.aEntityPanel.setLayout(new BorderLayout());
-        this.aEntityPanel.add(vEntityScroller, BorderLayout.CENTER);
-        this.aEntityPanel.add(this.aEntityImage, BorderLayout.EAST);
-        this.aEntityPanel.setSize(this.aEntityPanel.getPreferredSize());
-        this.aEntityPanel.setLocation(10, 540);
-        this.aEntityPanel.setVisible(false);
 
         JPanel vImagePanel = new JPanel();
         this.aImage = new JLabel();
@@ -590,7 +588,6 @@ public class UserInterface implements ActionListener {
 
         JPanel vMovementButtonPanel = new JPanel();
         JPanel vCenterButtonPanel = new JPanel();
-
         vCenterButtonPanel.setLayout(new GridLayout(1, 2));
         vCenterButtonPanel.setBackground(Color.DARK_GRAY);
         vCenterButtonPanel.add(this.aUpButton);
@@ -623,6 +620,17 @@ public class UserInterface implements ActionListener {
         vActionButtonPanel.setSize(vActionButtonPanel.getPreferredSize());
         vActionButtonPanel.setLocation(365, 650);
 
+        this.aGamePanel = new JLayeredPane();
+        this.aGamePanel.add(vImagePanel, JLayeredPane.DEFAULT_LAYER);
+        this.aGamePanel.add(vTextPanel, JLayeredPane.DEFAULT_LAYER);
+        this.aGamePanel.add(vMovementButtonPanel, JLayeredPane.DEFAULT_LAYER);
+        this.aGamePanel.add(vActionButtonPanel, JLayeredPane.DEFAULT_LAYER);
+        this.aGamePanel.add(aGameTimer, JLayeredPane.PALETTE_LAYER);
+        this.aGamePanel.add(this.aEntityPanel, JLayeredPane.PALETTE_LAYER);
+    }
+
+    private void createBattlePanel() {
+
         this.aBattlerPanel = new JPanel();
         this.aBattlerPanel.setSize(new Dimension(650, 650));
         this.aBattlerPanel.setLocation(0, 0);
@@ -648,15 +656,9 @@ public class UserInterface implements ActionListener {
         this.aBattlerPanel.add(aPlayerHP);
         this.aBattlerPanel.add(aEntityFullImage);
         this.aBattlerPanel.setVisible(false);
+    }
 
-        this.aGamePanel = new JLayeredPane();
-        this.aGamePanel.add(vImagePanel, JLayeredPane.DEFAULT_LAYER);
-        this.aGamePanel.add(vTextPanel, JLayeredPane.DEFAULT_LAYER);
-        this.aGamePanel.add(vMovementButtonPanel, JLayeredPane.DEFAULT_LAYER);
-        this.aGamePanel.add(vActionButtonPanel, JLayeredPane.DEFAULT_LAYER);
-        this.aGamePanel.add(aGameTimer, JLayeredPane.PALETTE_LAYER);
-        this.aGamePanel.add(this.aEntityPanel, JLayeredPane.PALETTE_LAYER);
-
+    private void createMainMenuPanel() {
         this.aMainMenuPanel = new JLayeredPane();
         this.aMainMenuBackGroundImage = new JLabel();
         this.aMainMenuPanel.setPreferredSize(new Dimension(1077, 765));
@@ -677,24 +679,30 @@ public class UserInterface implements ActionListener {
 
         this.aMainMenuPanel.add(aMainMenuBackGroundImage, JLayeredPane.DEFAULT_LAYER);
         this.aMainMenuPanel.add(vButtonsPanel, JLayeredPane.PALETTE_LAYER);
-
-        aSceneManager = aMyFrame.getContentPane();
-        aCardLayout = new CardLayout();
-        aSceneManager.setLayout(aCardLayout);
-        aSceneManager.add(aMainMenuPanel, "MainMenu");
-        aSceneManager.add(aGamePanel, "Game");
-        aSceneManager.add(aBattlerPanel, "Battle");
-
     }
 
-    public JProgressBar getEnemyHealthBar() {
-        return this.aEnemyHP;
-    }
+    private void createNPCPanel() {
+        this.aEntityLog = new JTextArea();
+        this.aEntityLog.setEditable(false);
+        this.aEntityLog.setLineWrap(true);
+        this.aEntityLog.setWrapStyleWord(true);
+        this.aEntityLog.setMargin(new Insets(10, 10, 10, 10));
+        this.aEntityLog.setFont(aTextFont);
+        this.aEntityLog.setForeground(Color.white);
+        this.aEntityLog.setBackground(Color.darkGray);
+        JScrollPane vEntityScroller = new JScrollPane(this.aEntityLog);
+        vEntityScroller.setPreferredSize(new Dimension(430, 100));
 
-    public JProgressBar getPlayerHealthBar() {
-        return this.aPlayerHP;
+        this.aEntityPanel = new JPanel();
+        this.aEntityImage = new JLabel();
+        this.aEntityPanel.setPreferredSize(new Dimension(630, 100));
+        this.aEntityPanel.setLayout(new BorderLayout());
+        this.aEntityPanel.add(vEntityScroller, BorderLayout.CENTER);
+        this.aEntityPanel.add(this.aEntityImage, BorderLayout.EAST);
+        this.aEntityPanel.setSize(this.aEntityPanel.getPreferredSize());
+        this.aEntityPanel.setLocation(10, 540);
+        this.aEntityPanel.setVisible(false);
     }
-
     // action listeners methods
 
     /**
@@ -845,10 +853,6 @@ public class UserInterface implements ActionListener {
         this.aEngine.interpretCommand(aParser.getCommand(vInput));
     } // processCommand()
 
-    public String getEntryField() {
-        return this.aEntryField.getText();
-    }
-
     // timer methods
 
     /**
@@ -918,7 +922,7 @@ public class UserInterface implements ActionListener {
      * @author https://riptutorial.com/swing/example/498/delay-a-ui-task-for-a-specific-period
      */
     public void showCharacterPanel() {
-        int vDelay = 1000;// specify the delay for the timer
+        int vDelay = 100;// specify the delay for the timer
         Timer vTimer = new Timer(vDelay, e -> {
             // The following code will be executed once the delay is reached
             this.aEntityPanel.setVisible(true);
