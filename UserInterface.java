@@ -13,7 +13,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -39,7 +38,6 @@ import javax.swing.JButton;
 public class UserInterface implements ActionListener {
     private GameEngine aEngine;
     private JFrame aMyFrame;
-    private JLayeredPane aGamePanel;
     private CardLayout aCardLayout;
     private JTextField aEntryField;
     private JTextArea aLog;
@@ -48,12 +46,20 @@ public class UserInterface implements ActionListener {
     private JLabel aEntityImage;
     private JLabel aEntityFullImage;
     private JLabel aMainMenuBackGroundImage;
+    private JLabel aBattleBackground;
+    private JLabel aEnemyName;
+    private JLabel aSettingBackground;
+    private JLabel aSoundBackground;
     private JLabel aGameTimer;
     private JProgressBar aEnemyHP;
     private JProgressBar aPlayerHP;
     private JPanel aEntityPanel;
-    private JPanel aBattlerPanel;
+    private JPanel aEnemyHPPanel;
+    private JLayeredPane aGamePanel;
+    private JLayeredPane aBattlerPanel;
     private JLayeredPane aMainMenuPanel;
+    private JLayeredPane aSoundPanel;
+    private JLayeredPane aSettingPanel;
     private Container aSceneManager;
     private JButton aQuitButton;
     private JButton aNorthButton;
@@ -73,6 +79,17 @@ public class UserInterface implements ActionListener {
     private JButton aPlay;
     private JButton aSetting;
     private JButton aQuit;
+    private JButton aBack;
+    private JButton aBack2;
+    private JButton aSound;
+    private JButton aSoundOn;
+    private JButton aSoundOff;
+    private JButton aAttack1Button;
+    private JButton aAttack2Button;
+    private JButton aAttack3Button;
+    private JButton aAttack4Button;
+    private JButton aRunButton;
+    private JButton aBagButton;
     private Parser aParser;
     private Clip aClip;
     private Clip aDialogClip;
@@ -369,6 +386,48 @@ public class UserInterface implements ActionListener {
         }
     }
 
+    /**
+     * 
+     */
+    public void showBattleBackground() {
+        String vImagePath = "gameImages/battleground.png"; // to change the directory
+        URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
+        if (vImageURL == null)
+            System.out.println("Image not found : " + vImagePath);
+        else {
+            ImageIcon vIcon = new ImageIcon(vImageURL);
+            this.aBattleBackground.setIcon(vIcon);
+            this.aMyFrame.pack();
+        }
+    }
+
+    /**
+     * 
+     */
+    private void showSettingBackground() {
+        String vImagePath = "gameImages/setting.jpg"; // to change the directory
+        URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
+        if (vImageURL == null)
+            System.out.println("Image not found : " + vImagePath);
+        else {
+            ImageIcon vIcon = new ImageIcon(vImageURL);
+            this.aSettingBackground.setIcon(vIcon);
+            this.aMyFrame.pack();
+        }
+    }
+
+    private void showSoundBackground() {
+        String vImagePath = "gameImages/sound.jpg"; // to change the directory
+        URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
+        if (vImageURL == null)
+            System.out.println("Image not found : " + vImagePath);
+        else {
+            ImageIcon vIcon = new ImageIcon(vImageURL);
+            this.aSoundBackground.setIcon(vIcon);
+            this.aMyFrame.pack();
+        }
+    }
+
     // enable method
 
     /**
@@ -469,6 +528,17 @@ public class UserInterface implements ActionListener {
         this.aPlay = new JButton("Play");
         this.aSetting = new JButton("Settings");
         this.aQuit = new JButton("Quit");
+        this.aBack = new JButton("Back");
+        this.aBack2 = new JButton("Back");
+        this.aSound = new JButton("Sound");
+        this.aSoundOn = new JButton("Sound On");
+        this.aSoundOff = new JButton("Sound Off");
+        this.aAttack1Button = new JButton("Attack 1");
+        this.aAttack2Button = new JButton("Attack 2");
+        this.aAttack3Button = new JButton("Attack 3");
+        this.aAttack4Button = new JButton("Attack 4");
+        this.aRunButton = new JButton("Run");
+        this.aBagButton = new JButton("Bag");
 
         // add custom font on buttons
         this.aQuitButton.setFont(aButtonsFont);
@@ -489,6 +559,11 @@ public class UserInterface implements ActionListener {
         this.aPlay.setFont(aMenuFont);
         this.aSetting.setFont(aMenuFont);
         this.aQuit.setFont(aMenuFont);
+        this.aBack.setFont(aMenuFont);
+        this.aBack2.setFont(aMenuFont);
+        this.aSound.setFont(aMenuFont);
+        this.aSoundOn.setFont(aMenuFont);
+        this.aSoundOff.setFont(aMenuFont);
 
         // add some event listeners to some components
         this.aQuitButton.addActionListener(this);
@@ -510,6 +585,11 @@ public class UserInterface implements ActionListener {
         this.aPlay.addActionListener(this);
         this.aSetting.addActionListener(e -> settingsButton());
         this.aQuit.addActionListener(e -> quitButton());
+        this.aBack.addActionListener(e -> backButton());
+        this.aBack2.addActionListener(e -> backButton2());
+        this.aSound.addActionListener(e -> soundButton());
+        this.aSoundOn.addActionListener(e -> soundOnButton());
+        this.aSoundOff.addActionListener(e -> soundOffButton());
 
         // set action to write differents names
         this.aQuitButton.setActionCommand("quit");
@@ -534,11 +614,12 @@ public class UserInterface implements ActionListener {
      * This method create all the panels
      */
     private void createPanel() {
-
         createNPCPanel();
         createGamePanel();
         createBattlePanel();
         createMainMenuPanel();
+        createSettingPanel();
+        createSoundPanel();
 
         aSceneManager = aMyFrame.getContentPane();
         aCardLayout = new CardLayout();
@@ -546,7 +627,8 @@ public class UserInterface implements ActionListener {
         aSceneManager.add(aMainMenuPanel, "MainMenu");
         aSceneManager.add(aGamePanel, "Game");
         aSceneManager.add(aBattlerPanel, "Battle");
-
+        aSceneManager.add(aSettingPanel, "Settings");
+        aSceneManager.add(aSoundPanel, "Sound");
     }
 
     private void createGamePanel() {
@@ -631,31 +713,61 @@ public class UserInterface implements ActionListener {
 
     private void createBattlePanel() {
 
-        this.aBattlerPanel = new JPanel();
-        this.aBattlerPanel.setSize(new Dimension(650, 650));
+        this.aBattlerPanel = new JLayeredPane();
+        this.aBattlerPanel.setPreferredSize(new Dimension(1077, 765));
+        this.aBattlerPanel.setSize(this.aBattlerPanel.getPreferredSize());
         this.aBattlerPanel.setLocation(0, 0);
 
-        // use JProgressBar for health bar
-        aEnemyHP = new JProgressBar();
-        aEnemyHP.setMinimum(0);
-        aEnemyHP.setMaximum(200);
-        aEnemyHP.setSize(300, 50);
-        aEnemyHP.setLocation(315, 0);
+        aBattleBackground = new JLabel();
+        aBattleBackground.setSize(aBattlerPanel.getPreferredSize());
+        aBattleBackground.setLocation(0, 0);
+        showBattleBackground();
 
-        aPlayerHP = new JProgressBar();
-        aEnemyHP.setMinimum(0);
-        aEnemyHP.setMaximum(200);
-        aPlayerHP.setSize(300, 50);
-        aPlayerHP.setLocation(15, 400);
+        aEnemyHPPanel = new JPanel();
+        aEnemyHPPanel.setPreferredSize(new Dimension(200, 100));
+        aEnemyHPPanel.setBackground(Color.darkGray);
+        aEnemyHPPanel.setSize(aEnemyHPPanel.getPreferredSize());
+        aEnemyHPPanel.setLocation(600, 15);
+        aEnemyName = new JLabel();
+        aEnemyName.setForeground(Color.white);
+        aEnemyName.setFont(aTextFont);
+        aEnemyName.setSize(300, 50);
+        aEnemyName.setLocation(610, 15);
+        aEnemyName.setText("Name : "/* +aEngine.getEnemyName() */);
+
+        JPanel vAttackButtonPanel = new JPanel();
+        vAttackButtonPanel.setPreferredSize(new Dimension(400, 150));
+        vAttackButtonPanel.setOpaque(false);
+        vAttackButtonPanel.setSize(vAttackButtonPanel.getPreferredSize());
+        vAttackButtonPanel.setLocation(338, 565);
+        vAttackButtonPanel.setLayout(new GridLayout(2, 2));
+        vAttackButtonPanel.add(aAttack1Button);
+        vAttackButtonPanel.add(aAttack2Button);
+        vAttackButtonPanel.add(aAttack3Button);
+        vAttackButtonPanel.add(aAttack4Button);
+
+        JPanel vOtherButtonPanel = new JPanel();
+        vOtherButtonPanel.setPreferredSize(new Dimension(200, 150));
+        vOtherButtonPanel.setOpaque(false);
+        vOtherButtonPanel.setSize(vOtherButtonPanel.getPreferredSize());
+        vOtherButtonPanel.setLocation(850, 565);
+        vOtherButtonPanel.setLayout(new GridLayout(2, 1));
+        vOtherButtonPanel.add(aBagButton);
+        vOtherButtonPanel.add(aRunButton);
 
         aEntityFullImage = new JLabel();
-        aEntityFullImage.setSize(230, 340);
-        aEntityFullImage.setLocation(115, 50);
+        aEntityFullImage.setPreferredSize(new Dimension(230, 340));
+        aEntityFullImage.setSize(aEntityFullImage.getPreferredSize());
+        aEntityFullImage.setLocation(650, 35);
 
-        this.aBattlerPanel.add(aEnemyHP);
-        this.aBattlerPanel.add(aPlayerHP);
-        this.aBattlerPanel.add(aEntityFullImage);
-        this.aBattlerPanel.setVisible(false);
+        this.aBattlerPanel.add(aBattleBackground, JLayeredPane.DEFAULT_LAYER);
+        this.aBattlerPanel.add(aEntityFullImage, JLayeredPane.PALETTE_LAYER);
+        this.aBattlerPanel.add(vAttackButtonPanel, JLayeredPane.PALETTE_LAYER);
+        this.aBattlerPanel.add(vOtherButtonPanel, JLayeredPane.PALETTE_LAYER);
+        this.aBattlerPanel.add(aEnemyHPPanel, JLayeredPane.MODAL_LAYER);
+        this.aBattlerPanel.add(aEnemyName, JLayeredPane.POPUP_LAYER);
+        // this.aBattlerPanel.add(aEnemyHP, JLayeredPane.POPUP_LAYER);
+
     }
 
     private void createMainMenuPanel() {
@@ -681,6 +793,51 @@ public class UserInterface implements ActionListener {
         this.aMainMenuPanel.add(vButtonsPanel, JLayeredPane.PALETTE_LAYER);
     }
 
+    private void createSettingPanel() {
+        this.aSettingPanel = new JLayeredPane();
+        this.aSettingBackground = new JLabel();
+        this.aSettingPanel.setPreferredSize(new Dimension(1077, 765));
+        this.aSettingPanel.setSize(aSettingPanel.getPreferredSize());
+        this.aSettingBackground.setSize(aSettingPanel.getPreferredSize());
+        this.aSettingBackground.setLocation(0, 0);
+        showSettingBackground();
+
+        JPanel vButtonsPanel = new JPanel();
+        vButtonsPanel.setOpaque(false);
+        vButtonsPanel.setPreferredSize(new Dimension(201, 150));
+        vButtonsPanel.setSize(vButtonsPanel.getPreferredSize());
+        vButtonsPanel.setLayout(new GridLayout(3, 1));
+        vButtonsPanel.add(aSound);
+        vButtonsPanel.add(aBack);
+        vButtonsPanel.setLocation(438, 400);
+
+        this.aSettingPanel.add(aSettingBackground, JLayeredPane.DEFAULT_LAYER);
+        this.aSettingPanel.add(vButtonsPanel, JLayeredPane.PALETTE_LAYER);
+    }
+
+    private void createSoundPanel() {
+        this.aSoundPanel = new JLayeredPane();
+        this.aSoundBackground = new JLabel();
+        this.aSoundPanel.setPreferredSize(new Dimension(1077, 765));
+        this.aSoundPanel.setSize(aSoundPanel.getPreferredSize());
+        this.aSoundBackground.setSize(aSoundPanel.getPreferredSize());
+        this.aSoundBackground.setLocation(0, 0);
+        showSoundBackground();
+
+        JPanel vButtonsPanel = new JPanel();
+        vButtonsPanel.setOpaque(false);
+        vButtonsPanel.setPreferredSize(new Dimension(201, 150));
+        vButtonsPanel.setSize(vButtonsPanel.getPreferredSize());
+        vButtonsPanel.setLayout(new GridLayout(3, 1));
+        vButtonsPanel.add(aSoundOn);
+        vButtonsPanel.add(aSoundOff);
+        vButtonsPanel.add(aBack2);
+        vButtonsPanel.setLocation(438, 400);
+
+        this.aSoundPanel.add(aSoundBackground, JLayeredPane.DEFAULT_LAYER);
+        this.aSoundPanel.add(vButtonsPanel, JLayeredPane.PALETTE_LAYER);
+    }
+
     private void createNPCPanel() {
         this.aEntityLog = new JTextArea();
         this.aEntityLog.setEditable(false);
@@ -703,6 +860,7 @@ public class UserInterface implements ActionListener {
         this.aEntityPanel.setLocation(10, 540);
         this.aEntityPanel.setVisible(false);
     }
+
     // action listeners methods
 
     /**
@@ -825,6 +983,35 @@ public class UserInterface implements ActionListener {
 
     private void quitButton() {
         System.exit(0);
+    }
+
+    private void backButton() {
+        this.aCardLayout.show(aSceneManager, "MainMenu");
+    }
+
+    private void backButton2() {
+        this.aCardLayout.show(aSceneManager, "Settings");
+    }
+
+    private void soundButton() {
+        this.aCardLayout.show(aSceneManager, "Sound");
+    }
+
+    // TODO : make sound on method works
+    private void soundOnButton() {
+        File vRepository = new File("gameSounds/");
+        String vList[] = vRepository.list();
+
+        if (vList != null) {
+            // soundOn();
+        } else {
+            System.err.println("This version has no sound to satisfy the rendering requirements of Mr. Bureau");
+        }
+    }
+
+    // TODO: make sound off method works
+    private void soundOffButton() {
+        System.out.println("Sound Off");
     }
 
     /**

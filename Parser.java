@@ -1,4 +1,3 @@
-import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,7 +42,6 @@ public class Parser {
         String vWord2 = null;
 
         Matcher vMatcher = PATTERN.matcher(pInputLine);
-        MatchResult vResult = vMatcher.toMatchResult();
 
         if (vMatcher.find()) {
             String vCommandWord = vMatcher.group("commandword");

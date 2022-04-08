@@ -409,7 +409,7 @@ public class Player extends Entity {
                 vMove2--;
 
                 vPlayer1.calculateDamage(vPlayer2, vMove1);
-                updateEnemyHealthBar(vPlayer2.getHP());
+                //updateEnemyHealthBar(vPlayer2.getHP());
                 if (vPlayer2.getHP() <= 0) {
                     this.aGui.println(vPlayer2.getName() + " is defeated!\n" + vPlayer1.getName() + " wins!");
                     isEnd = true;
@@ -417,7 +417,7 @@ public class Player extends Entity {
                     this.aGui.hideCharacterPanel();
                 }
                 vPlayer2.calculateDamage(vPlayer1, vMove2);
-                updatePlayerHealthBar(vPlayer1.getHP());
+                //updatePlayerHealthBar(vPlayer1.getHP());
                 if (vPlayer1.getHP() <= 0) {
                     this.aGui.println(vPlayer1.getName() + " is defeated!\n" + vPlayer2.getName() + " wins!");
                     isEnd = true;
@@ -454,14 +454,6 @@ public class Player extends Entity {
         return aSelectedMove;
     }
 
-    private void updateEnemyHealthBar(int pCurrentHealth) {
-        this.aGui.getEnemyHealthBar().setValue(pCurrentHealth);
-    }
-
-    private void updatePlayerHealthBar(int pCurrentHealth) {
-        this.aGui.getPlayerHealthBar().setValue(pCurrentHealth);
-    }
-
     protected boolean isFighting() {
         return this.aFighting;
     }
@@ -495,6 +487,14 @@ public class Player extends Entity {
     protected void showFullCharacter() {
         if (this.getCurrentRoom().getCharacter().getImageName() != null) {
             this.aGui.showFullEntityImage(this.getCurrentRoom().getCharacter().getFullImageName());
+        }
+    }
+
+    protected String getEnemyName() {
+        if (this.getCurrentRoom().getCharacter().getName() != null) {
+            return this.getCurrentRoom().getCharacter().getName();
+        } else {
+            return "";
         }
     }
 

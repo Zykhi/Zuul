@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import javax.swing.Timer;
-
 /**
  * This class is part of the "Zuul GOTY Edition" application.
  * "Zuul GOTY Edition" is a very simple, text based adventure game.
@@ -299,6 +297,10 @@ public class GameEngine {
 
     protected int getEnemyHP() {
         return this.aPlayer.getCurrentRoom().getCharacter().getHP();
+    }
+
+    protected String getEnemyName() {
+        return this.aPlayer.getEnemyName();
     }
 
     /**
