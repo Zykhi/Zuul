@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Entity {
     private String aName;
     private String aDialog;
@@ -5,23 +7,9 @@ public class Entity {
     private String aFullImage;
     protected String aMoves[][];
     private int aHP;
-    private int aMaxHP;
-    private int aDef;
-    private int aSpeDef;
-    private int aAtt;
-    private int aSpeAtt;
-    private int aSpeed;
 
-    public Entity(int pHP, int pMaxHP, int pDef, int pSpeDef, int pAtt,
-            int pSpeAtt, int pSpeed) {
-        this.aMoves = new String[4][4];
+    public Entity(int pHP) {
         this.aHP = pHP;
-        this.aMaxHP = pMaxHP;
-        this.aDef = pDef;
-        this.aSpeDef = pSpeDef;
-        this.aAtt = pAtt;
-        this.aSpeAtt = pSpeAtt;
-        this.aSpeed = pSpeed;
     }
 
     public String getName() {
@@ -56,39 +44,24 @@ public class Entity {
         this.aFullImage = pFullImage;
     }
 
-    public int getSpeed() {
-        return this.aSpeed;
-    }
-
     public int getHP() {
         return this.aHP;
     }
 
-    public int getMaxHP() {
-        return this.aMaxHP;
+    public void attack(Entity pEnemy) {
+        Random vRandomNumber = new Random();
+        int vDamage = vRandomNumber.nextInt(21) + 1;
+        pEnemy.dealDamage(vDamage);
+        System.out.println(getName() + " dealt " + vDamage + " to " + pEnemy.getName());
+        System.out.println(pEnemy.getName() + " has " + pEnemy.getHP() + " HP left!");
     }
 
-    public String getMoves() {
-        String vMoves = "";
-        for (int i = 0; i < 4; i++)
-            vMoves += aMoves[i][0] + " ";
-        return vMoves;
+    public void dealDamage(int pDamage) {
+        aHP -= pDamage;
+        aHP = aHP < 0 ? 0 : aHP;
     }
 
-    public void calculateDamage(Entity pEntity, int pMove) {
-
-        double vDamage = 0.0;
-        double vRandom = Math.random() * 100;
-        if (vRandom > Double.parseDouble(aMoves[pMove][2])) {
-            System.out.println("Attack missed!");
-            return;
-        }
-        if (aMoves[pMove][3].equals("special")) {
-            vDamage = aSpeAtt * Double.parseDouble(aMoves[pMove][1]) / pEntity.aSpeDef;
-        } else {
-            vDamage = aAtt * Double.parseDouble(aMoves[pMove][1]) / pEntity.aDef;
-        }
-        pEntity.aHP -= (int) (vDamage);
+    public boolean isDead() {
+        return aHP <= 0;
     }
-
 }

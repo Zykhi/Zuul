@@ -42,6 +42,7 @@ public class UserInterface implements ActionListener {
     private JTextField aEntryField;
     private JTextArea aLog;
     private JTextArea aEntityLog;
+    private JTextArea aBattleLog;
     private JLabel aImage;
     private JLabel aEntityImage;
     private JLabel aEntityFullImage;
@@ -84,10 +85,6 @@ public class UserInterface implements ActionListener {
     private JButton aSound;
     private JButton aSoundOn;
     private JButton aSoundOff;
-    private JButton aAttack1Button;
-    private JButton aAttack2Button;
-    private JButton aAttack3Button;
-    private JButton aAttack4Button;
     private JButton aRunButton;
     private JButton aBagButton;
     private Parser aParser;
@@ -216,6 +213,25 @@ public class UserInterface implements ActionListener {
         timer.start();
         aIndex = 0;
     }
+
+    /**
+     * Print out some text into the text area.
+     * 
+     * @param pText like sysout but for gui, is the text in " "
+     */
+    public void printBattle(final String pText) {
+        this.aBattleLog.append(pText);
+        this.aBattleLog.setCaretPosition(this.aBattleLog.getDocument().getLength());
+    } // print(.)
+
+    /**
+     * Print out some text into the text area, followed by a line break.
+     * 
+     * @param pText like sysout but for gui, is the text in " "
+     */
+    public void printlnBattle(final String pText) {
+        this.printBattle(pText + "\n");
+    } // println(.)
 
     public void clearDialogArea() {
         this.aEntityLog.setText("");
@@ -533,10 +549,6 @@ public class UserInterface implements ActionListener {
         this.aSound = new JButton("Sound");
         this.aSoundOn = new JButton("Sound On");
         this.aSoundOff = new JButton("Sound Off");
-        this.aAttack1Button = new JButton("Attack 1");
-        this.aAttack2Button = new JButton("Attack 2");
-        this.aAttack3Button = new JButton("Attack 3");
-        this.aAttack4Button = new JButton("Attack 4");
         this.aRunButton = new JButton("Run");
         this.aBagButton = new JButton("Bag");
 
@@ -564,6 +576,8 @@ public class UserInterface implements ActionListener {
         this.aSound.setFont(aMenuFont);
         this.aSoundOn.setFont(aMenuFont);
         this.aSoundOff.setFont(aMenuFont);
+        this.aRunButton.setFont(aMenuFont);
+        this.aBagButton.setFont(aMenuFont);
 
         // add some event listeners to some components
         this.aQuitButton.addActionListener(this);
@@ -579,7 +593,7 @@ public class UserInterface implements ActionListener {
         this.aTakeButton.addActionListener(e -> takeButtonMethod());
         this.aFireButton.addActionListener(this);
         this.aChargeButton.addActionListener(this);
-        this.aInventoryButton.addActionListener(e -> battleButtonMethod());
+        /*this.aInventoryButton.addActionListener(e -> battleButtonMethod());*/
         this.aSkipButton.addActionListener(e -> skipMethod());
         this.aPlay.addActionListener(e -> playButton());
         this.aPlay.addActionListener(this);
@@ -735,16 +749,24 @@ public class UserInterface implements ActionListener {
         aEnemyName.setLocation(610, 15);
         aEnemyName.setText("Name : "/* +aEngine.getEnemyName() */);
 
-        JPanel vAttackButtonPanel = new JPanel();
-        vAttackButtonPanel.setPreferredSize(new Dimension(400, 150));
-        vAttackButtonPanel.setOpaque(false);
-        vAttackButtonPanel.setSize(vAttackButtonPanel.getPreferredSize());
-        vAttackButtonPanel.setLocation(338, 565);
-        vAttackButtonPanel.setLayout(new GridLayout(2, 2));
-        vAttackButtonPanel.add(aAttack1Button);
-        vAttackButtonPanel.add(aAttack2Button);
-        vAttackButtonPanel.add(aAttack3Button);
-        vAttackButtonPanel.add(aAttack4Button);
+        JPanel vBattleTextPanel = new JPanel();
+        this.aBattleLog = new JTextArea();
+        vBattleTextPanel.setPreferredSize(new Dimension(600, 150));
+        vBattleTextPanel.setOpaque(false);
+        vBattleTextPanel.setSize(vBattleTextPanel.getPreferredSize());
+        vBattleTextPanel.setLocation(238, 565);
+        vBattleTextPanel.setLayout(new BorderLayout());
+        this.aBattleLog.setEditable(false);
+        this.aBattleLog.setLineWrap(true);
+        this.aBattleLog.setWrapStyleWord(true);
+        this.aBattleLog.setMargin(new Insets(10, 10, 10, 10));
+        this.aBattleLog.setFont(aTextFont);
+        this.aBattleLog.setForeground(Color.white);
+        this.aBattleLog.setBackground(Color.darkGray);
+        JScrollPane vEntityScroller = new JScrollPane(this.aBattleLog);
+        vEntityScroller.setPreferredSize(vBattleTextPanel.getPreferredSize());
+
+        vBattleTextPanel.add(vEntityScroller, BorderLayout.CENTER);
 
         JPanel vOtherButtonPanel = new JPanel();
         vOtherButtonPanel.setPreferredSize(new Dimension(200, 150));
@@ -762,7 +784,7 @@ public class UserInterface implements ActionListener {
 
         this.aBattlerPanel.add(aBattleBackground, JLayeredPane.DEFAULT_LAYER);
         this.aBattlerPanel.add(aEntityFullImage, JLayeredPane.PALETTE_LAYER);
-        this.aBattlerPanel.add(vAttackButtonPanel, JLayeredPane.PALETTE_LAYER);
+        this.aBattlerPanel.add(vBattleTextPanel, JLayeredPane.PALETTE_LAYER);
         this.aBattlerPanel.add(vOtherButtonPanel, JLayeredPane.PALETTE_LAYER);
         this.aBattlerPanel.add(aEnemyHPPanel, JLayeredPane.MODAL_LAYER);
         this.aBattlerPanel.add(aEnemyName, JLayeredPane.POPUP_LAYER);
@@ -923,28 +945,7 @@ public class UserInterface implements ActionListener {
             this.println("There is nothing to take here");
         }
     }
-
-    public void battleButtonMethod() {
-        JButton[] vButtons = { aBackButton, aHelpButton, aQuitButton, aDropButton, aTakeButton, aFireButton,
-                aChargeButton, aInventoryButton };
-        String[] vOutput = aEngine.getMovesString().split(" ");
-        for (int i = 0; i < vOutput.length; i++) {
-            vButtons[i].setText(vOutput[i]);
-            vButtons[i].setActionCommand("attack" + i + 1);
-        }
-        for (int i = vOutput.length; i < 8; i++) {
-            vButtons[i].setText("");
-            vButtons[i].setActionCommand("");
-            vButtons[i].removeActionListener(this);
-        }
-        aSkipButton.setText("exit");
-        aSkipButton.setActionCommand("exit");
-        aSkipButton.addActionListener(e -> exitButtonMethod());
-        for (int i = vOutput.length; i < 8; i++) {
-            vButtons[i].addActionListener(this);
-        }
-
-    }
+        
 
     /**
      * This method is called when the exit button is clicked

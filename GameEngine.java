@@ -256,10 +256,6 @@ public class GameEngine {
                         this.aPlayer.fight();
                         break;
 
-                    case ATTACK:
-                        this.aPlayer.attack(pCommandLine);
-                        break;
-
                     default:
                         this.aGui.println("I don't know what you mean...");
                         break;
@@ -285,10 +281,6 @@ public class GameEngine {
     private void gameOver() {
         this.aGui.println("Game over.");
         this.aGui.enable(false);
-    }
-
-    protected String getMovesString() {
-        return this.aPlayer.getMovesString();
     }
 
     protected int getPlayerHP() {
