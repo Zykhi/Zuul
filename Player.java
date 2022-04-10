@@ -1,6 +1,7 @@
-import java.io.IOException;
 import java.util.Stack;
 import javax.swing.Timer;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  * This class implements player
@@ -13,9 +14,13 @@ public class Player extends Entity {
     private UserInterface aGui;
     private Parser aParser;
     private ItemList aInventory;
+    private Timer aTimer;
+    private ActionListener aBattleTask;
+    private int aDelay = 2000;
     private int aMaxWeight;
     private int aMovement;
     private boolean aFighting;
+    private boolean aEnd;
 
     /**
      * this constructor init the player
@@ -363,6 +368,7 @@ public class Player extends Entity {
     public void fight() throws InterruptedException {
         if (this.aCurrentRoom.getCharacter() != null) {
             this.aFighting = true;
+            this.aEnd = false;
             Entity vPlayer = this;
             Entity vEnemy = aCurrentRoom.getCharacter();
             this.aGui.showBattlePanel();
@@ -375,33 +381,47 @@ public class Player extends Entity {
             vPlayer1 = vPlayer;
             vPlayer2 = vEnemy;
 
-            while (true) {
-                vPlayer1.attack(vPlayer2);
-                if (vPlayer2.isDead()) {
-                    this.aGui.printlnBattle("Opponent is dead!");
-                    victory();
-                    return;
-                }
+            aBattleTask = new ActionListener() {
+                public void actionPerformed(ActionEvent pE) {
+                    while (!aEnd) {
+                        vPlayer1.attack(vPlayer2);
+                        if (vPlayer2.isDead()) {      
+                            victory();
+                            aEnd = true;
+                            return;
+                        }
 
-                vPlayer2.attack(vPlayer1);
-                if (vPlayer1.isDead()) {
-                    this.aGui.printlnBattle("You are dead!");
-                    defeat();
-                    return;
+                        vPlayer2.attack(vPlayer1);
+                        if (vPlayer1.isDead()) {
+                            defeat();
+                            aEnd = true;
+                            return;
+                        }
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
                 }
+            };
 
-                Thread.sleep(1000);
-            }
+            aTimer = new Timer(aDelay, aBattleTask);
+            aTimer.start();
+
         } else {
             this.aGui.println("You cant start a battle here");
         }
     }
 
     private void victory() {
+        this.aGui.printlnBattle("Opponent is dead!");
         this.aGui.printlnBattle("You are the ultimate warrior.");
     }
 
     private void defeat() {
+        this.aGui.printlnBattle("You are dead!");
         this.aGui.printlnBattle("You have been slain.");
     }
 

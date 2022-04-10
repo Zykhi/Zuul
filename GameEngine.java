@@ -182,7 +182,9 @@ public class GameEngine {
         } else if (this.aGui.isTimerEnd()) {
             this.gameOver();
             this.aGui.stopTimer();
-        } else {
+        } else if(this.aPlayer.getHP() <= 0) {
+            this.gameOver();
+        }else{
 
             try {
 
