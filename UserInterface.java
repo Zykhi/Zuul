@@ -37,7 +37,7 @@ import javax.swing.JButton;
  */
 public class UserInterface implements ActionListener {
     private GameEngine aEngine;
-    private JFrame aMyFrame;
+    private JFrame aGameWindow;
     private CardLayout aCardLayout;
     private JTextField aEntryField;
     private JTextArea aLog;
@@ -49,18 +49,22 @@ public class UserInterface implements ActionListener {
     private JLabel aMainMenuBackGroundImage;
     private JLabel aBattleBackground;
     private JLabel aEnemyName;
+    private JLabel aPlayerName;
     private JLabel aSettingBackground;
     private JLabel aSoundBackground;
+    private JLabel aGameOverBackGroundImage;
     private JLabel aGameTimer;
     private JProgressBar aEnemyHP;
     private JProgressBar aPlayerHP;
     private JPanel aEntityPanel;
     private JPanel aEnemyHPPanel;
+    private JPanel aPlayerHPPanel;
     private JLayeredPane aGamePanel;
     private JLayeredPane aBattlerPanel;
     private JLayeredPane aMainMenuPanel;
     private JLayeredPane aSoundPanel;
     private JLayeredPane aSettingPanel;
+    private JLayeredPane aGameOverPanel;
     private Container aSceneManager;
     private JButton aQuitButton;
     private JButton aNorthButton;
@@ -80,6 +84,7 @@ public class UserInterface implements ActionListener {
     private JButton aPlay;
     private JButton aSetting;
     private JButton aQuit;
+    private JButton aQuit2;
     private JButton aBack;
     private JButton aBack2;
     private JButton aSound;
@@ -87,6 +92,8 @@ public class UserInterface implements ActionListener {
     private JButton aSoundOff;
     private JButton aRunButton;
     private JButton aBagButton;
+    private JButton aAttackButton;
+    private JButton aDefendButton;
     private Parser aParser;
     private Clip aClip;
     private Clip aDialogClip;
@@ -349,7 +356,7 @@ public class UserInterface implements ActionListener {
         else {
             ImageIcon vIcon = new ImageIcon(vImageURL);
             this.aImage.setIcon(vIcon);
-            this.aMyFrame.pack();
+            this.aGameWindow.pack();
         }
     } // showImage(.)
 
@@ -366,7 +373,7 @@ public class UserInterface implements ActionListener {
         else {
             ImageIcon vIcon = new ImageIcon(vImageURL);
             this.aEntityImage.setIcon(vIcon);
-            this.aMyFrame.pack();
+            this.aGameWindow.pack();
         }
     }
 
@@ -383,7 +390,7 @@ public class UserInterface implements ActionListener {
         else {
             ImageIcon vIcon = new ImageIcon(vImageURL);
             this.aEntityFullImage.setIcon(vIcon);
-            this.aMyFrame.pack();
+            this.aGameWindow.pack();
         }
     }
 
@@ -398,7 +405,7 @@ public class UserInterface implements ActionListener {
         else {
             ImageIcon vIcon = new ImageIcon(vImageURL);
             this.aMainMenuBackGroundImage.setIcon(vIcon);
-            this.aMyFrame.pack();
+            this.aGameWindow.pack();
         }
     }
 
@@ -413,7 +420,7 @@ public class UserInterface implements ActionListener {
         else {
             ImageIcon vIcon = new ImageIcon(vImageURL);
             this.aBattleBackground.setIcon(vIcon);
-            this.aMyFrame.pack();
+            this.aGameWindow.pack();
         }
     }
 
@@ -428,7 +435,7 @@ public class UserInterface implements ActionListener {
         else {
             ImageIcon vIcon = new ImageIcon(vImageURL);
             this.aSettingBackground.setIcon(vIcon);
-            this.aMyFrame.pack();
+            this.aGameWindow.pack();
         }
     }
 
@@ -440,7 +447,19 @@ public class UserInterface implements ActionListener {
         else {
             ImageIcon vIcon = new ImageIcon(vImageURL);
             this.aSoundBackground.setIcon(vIcon);
-            this.aMyFrame.pack();
+            this.aGameWindow.pack();
+        }
+    }
+
+    public void showGameOverImage() {
+        String vImagePath = "gameImages/GameOver.jpg"; // to change the directory
+        URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
+        if (vImageURL == null)
+            System.out.println("Image not found : " + vImagePath);
+        else {
+            ImageIcon vIcon = new ImageIcon(vImageURL);
+            this.aGameOverBackGroundImage.setIcon(vIcon);
+            this.aGameWindow.pack();
         }
     }
 
@@ -502,22 +521,22 @@ public class UserInterface implements ActionListener {
      * Set up graphical user interface.
      */
     private void createGUI() {
-        this.aMyFrame = new JFrame();
-        this.aMyFrame.setTitle("Zuul GOTY Edition");
-        this.aMyFrame.setResizable(false);
-        this.aMyFrame.setPreferredSize(new Dimension(1077, 765));
+        this.aGameWindow = new JFrame();
+        this.aGameWindow.setTitle("Zuul GOTY Edition");
+        this.aGameWindow.setResizable(false);
+        this.aGameWindow.setPreferredSize(new Dimension(1077, 765));
 
         ImageIcon aGameIcon = new ImageIcon("gameImages/game.png");
 
-        this.aMyFrame.setIconImage(aGameIcon.getImage());
+        this.aGameWindow.setIconImage(aGameIcon.getImage());
 
         this.createButton();
         this.createPanel();
 
-        this.aMyFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.aGameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        this.aMyFrame.pack();
-        this.aMyFrame.setVisible(true);
+        this.aGameWindow.pack();
+        this.aGameWindow.setVisible(true);
         this.aEntryField.requestFocus();
 
     } // createGUI()
@@ -544,6 +563,7 @@ public class UserInterface implements ActionListener {
         this.aPlay = new JButton("Play");
         this.aSetting = new JButton("Settings");
         this.aQuit = new JButton("Quit");
+        this.aQuit2 = new JButton("Quit");
         this.aBack = new JButton("Back");
         this.aBack2 = new JButton("Back");
         this.aSound = new JButton("Sound");
@@ -551,6 +571,8 @@ public class UserInterface implements ActionListener {
         this.aSoundOff = new JButton("Sound Off");
         this.aRunButton = new JButton("Run");
         this.aBagButton = new JButton("Bag");
+        this.aAttackButton = new JButton("Attack");
+        this.aDefendButton = new JButton("Defend");
 
         // add custom font on buttons
         this.aQuitButton.setFont(aButtonsFont);
@@ -571,6 +593,7 @@ public class UserInterface implements ActionListener {
         this.aPlay.setFont(aMenuFont);
         this.aSetting.setFont(aMenuFont);
         this.aQuit.setFont(aMenuFont);
+        this.aQuit2.setFont(aMenuFont);
         this.aBack.setFont(aMenuFont);
         this.aBack2.setFont(aMenuFont);
         this.aSound.setFont(aMenuFont);
@@ -578,6 +601,8 @@ public class UserInterface implements ActionListener {
         this.aSoundOff.setFont(aMenuFont);
         this.aRunButton.setFont(aMenuFont);
         this.aBagButton.setFont(aMenuFont);
+        this.aAttackButton.setFont(aMenuFont);
+        this.aDefendButton.setFont(aMenuFont);
 
         // add some event listeners to some components
         this.aQuitButton.addActionListener(this);
@@ -593,17 +618,23 @@ public class UserInterface implements ActionListener {
         this.aTakeButton.addActionListener(e -> takeButtonMethod());
         this.aFireButton.addActionListener(this);
         this.aChargeButton.addActionListener(this);
-        /*this.aInventoryButton.addActionListener(e -> battleButtonMethod());*/
+        /* this.aInventoryButton.addActionListener(e -> battleButtonMethod()); */
         this.aSkipButton.addActionListener(e -> skipMethod());
         this.aPlay.addActionListener(e -> playButton());
         this.aPlay.addActionListener(this);
         this.aSetting.addActionListener(e -> settingsButton());
         this.aQuit.addActionListener(e -> quitButton());
+        this.aQuit2.addActionListener(e -> quitButton());
         this.aBack.addActionListener(e -> backButton());
         this.aBack2.addActionListener(e -> backButton2());
         this.aSound.addActionListener(e -> soundButton());
         this.aSoundOn.addActionListener(e -> soundOnButton());
         this.aSoundOff.addActionListener(e -> soundOffButton());
+        this.aBagButton.addActionListener(this);
+        this.aAttackButton.addActionListener(e -> attackButton());
+        this.aDefendButton.addActionListener(e -> this.aEngine.defendButton());
+        this.aBagButton.addActionListener(this);
+        this.aRunButton.addActionListener(this);
 
         // set action to write differents names
         this.aQuitButton.setActionCommand("quit");
@@ -634,8 +665,9 @@ public class UserInterface implements ActionListener {
         createMainMenuPanel();
         createSettingPanel();
         createSoundPanel();
+        createGameOverPanel();
 
-        aSceneManager = aMyFrame.getContentPane();
+        aSceneManager = aGameWindow.getContentPane();
         aCardLayout = new CardLayout();
         aSceneManager.setLayout(aCardLayout);
         aSceneManager.add(aMainMenuPanel, "MainMenu");
@@ -643,6 +675,7 @@ public class UserInterface implements ActionListener {
         aSceneManager.add(aBattlerPanel, "Battle");
         aSceneManager.add(aSettingPanel, "Settings");
         aSceneManager.add(aSoundPanel, "Sound");
+        aSceneManager.add(aGameOverPanel, "GameOver");
     }
 
     private void createGamePanel() {
@@ -737,24 +770,63 @@ public class UserInterface implements ActionListener {
         aBattleBackground.setLocation(0, 0);
         showBattleBackground();
 
+        int enemyX = 600;
+        int enemyY = 15;
+
         aEnemyHPPanel = new JPanel();
-        aEnemyHPPanel.setPreferredSize(new Dimension(200, 100));
+        aEnemyHPPanel.setPreferredSize(new Dimension(200, 70));
         aEnemyHPPanel.setBackground(Color.darkGray);
         aEnemyHPPanel.setSize(aEnemyHPPanel.getPreferredSize());
-        aEnemyHPPanel.setLocation(600, 15);
+        aEnemyHPPanel.setLocation(enemyX, enemyY);
         aEnemyName = new JLabel();
         aEnemyName.setForeground(Color.white);
         aEnemyName.setFont(aTextFont);
         aEnemyName.setSize(300, 50);
-        aEnemyName.setLocation(610, 15);
-        aEnemyName.setText("Name : "/* +aEngine.getEnemyName() */);
+        aEnemyName.setLocation(enemyX + 10, enemyY);
+        // TODO : Fix enemy name
+        aEnemyName.setText("Name : " /* + aEngine.getEnemyName() */);
+        // TODO : Fix enemy max HP
+        aEnemyHP = new JProgressBar(0, 200);
+        // TODO : Fix color
+        // aEnemyHP.setBackground(Color.WHITE);
+        // aEnemyHP.setForeground(Color.GREEN);
+
+        aEnemyHP.setPreferredSize(new Dimension(180, 30));
+        aEnemyHP.setSize(aEnemyHP.getPreferredSize());
+        aEnemyHP.setLocation(enemyX + 10, enemyY + 35);
+        // TODO : Fix enemy HP
+        aEnemyHP.setValue(200);
+
+        int playerX = 30;
+        int playerY = 400;
+
+        aPlayerHPPanel = new JPanel();
+        aPlayerHPPanel.setPreferredSize(new Dimension(200, 70));
+        aPlayerHPPanel.setBackground(Color.darkGray);
+        aPlayerHPPanel.setSize(aPlayerHPPanel.getPreferredSize());
+        aPlayerHPPanel.setLocation(playerX, playerY);
+        aPlayerName = new JLabel();
+        aPlayerName.setForeground(Color.white);
+        aPlayerName.setFont(aTextFont);
+        aPlayerName.setSize(300, 50);
+        aPlayerName.setLocation(playerX + 10, playerY);
+        aPlayerName.setText("Name : " + aEngine.getPlayerName());
+        // TODO : fix max hp
+        aPlayerHP = new JProgressBar(0, 200);
+        // TODO : fix color
+        // aPlayerHP.setBackground(Color.white);
+        // aPlayerHP.setForeground(Color.green);
+        aPlayerHP.setPreferredSize(new Dimension(180, 30));
+        aPlayerHP.setSize(aEnemyHP.getPreferredSize());
+        aPlayerHP.setLocation(playerX + 10, playerY + 35);
+        aPlayerHP.setValue(this.aEngine.getPlayerHP());
 
         JPanel vBattleTextPanel = new JPanel();
         this.aBattleLog = new JTextArea();
         vBattleTextPanel.setPreferredSize(new Dimension(600, 150));
         vBattleTextPanel.setOpaque(false);
         vBattleTextPanel.setSize(vBattleTextPanel.getPreferredSize());
-        vBattleTextPanel.setLocation(238, 565);
+        vBattleTextPanel.setLocation(38, 565);
         vBattleTextPanel.setLayout(new BorderLayout());
         this.aBattleLog.setEditable(false);
         this.aBattleLog.setLineWrap(true);
@@ -768,14 +840,16 @@ public class UserInterface implements ActionListener {
 
         vBattleTextPanel.add(vEntityScroller, BorderLayout.CENTER);
 
-        JPanel vOtherButtonPanel = new JPanel();
-        vOtherButtonPanel.setPreferredSize(new Dimension(200, 150));
-        vOtherButtonPanel.setOpaque(false);
-        vOtherButtonPanel.setSize(vOtherButtonPanel.getPreferredSize());
-        vOtherButtonPanel.setLocation(850, 565);
-        vOtherButtonPanel.setLayout(new GridLayout(2, 1));
-        vOtherButtonPanel.add(aBagButton);
-        vOtherButtonPanel.add(aRunButton);
+        JPanel vBattleButtonPanel = new JPanel();
+        vBattleButtonPanel.setPreferredSize(new Dimension(400, 150));
+        vBattleButtonPanel.setOpaque(false);
+        vBattleButtonPanel.setSize(vBattleButtonPanel.getPreferredSize());
+        vBattleButtonPanel.setLocation(650, 565);
+        vBattleButtonPanel.setLayout(new GridLayout(2, 2));
+        vBattleButtonPanel.add(aAttackButton);
+        vBattleButtonPanel.add(aBagButton);
+        vBattleButtonPanel.add(aDefendButton);
+        vBattleButtonPanel.add(aRunButton);
 
         aEntityFullImage = new JLabel();
         aEntityFullImage.setPreferredSize(new Dimension(230, 340));
@@ -785,10 +859,13 @@ public class UserInterface implements ActionListener {
         this.aBattlerPanel.add(aBattleBackground, JLayeredPane.DEFAULT_LAYER);
         this.aBattlerPanel.add(aEntityFullImage, JLayeredPane.PALETTE_LAYER);
         this.aBattlerPanel.add(vBattleTextPanel, JLayeredPane.PALETTE_LAYER);
-        this.aBattlerPanel.add(vOtherButtonPanel, JLayeredPane.PALETTE_LAYER);
+        this.aBattlerPanel.add(vBattleButtonPanel, JLayeredPane.PALETTE_LAYER);
         this.aBattlerPanel.add(aEnemyHPPanel, JLayeredPane.MODAL_LAYER);
         this.aBattlerPanel.add(aEnemyName, JLayeredPane.POPUP_LAYER);
-        // this.aBattlerPanel.add(aEnemyHP, JLayeredPane.POPUP_LAYER);
+        this.aBattlerPanel.add(aEnemyHP, JLayeredPane.POPUP_LAYER);
+        this.aBattlerPanel.add(aPlayerHPPanel, JLayeredPane.MODAL_LAYER);
+        this.aBattlerPanel.add(aPlayerName, JLayeredPane.POPUP_LAYER);
+        this.aBattlerPanel.add(aPlayerHP, JLayeredPane.POPUP_LAYER);
 
     }
 
@@ -883,6 +960,27 @@ public class UserInterface implements ActionListener {
         this.aEntityPanel.setVisible(false);
     }
 
+    private void createGameOverPanel() {
+        this.aGameOverPanel = new JLayeredPane();
+        this.aGameOverBackGroundImage = new JLabel();
+        this.aGameOverPanel.setPreferredSize(new Dimension(1077, 765));
+        this.aGameOverPanel.setSize(aGameOverPanel.getPreferredSize());
+        this.aGameOverBackGroundImage.setSize(aGameOverPanel.getPreferredSize());
+        this.aGameOverBackGroundImage.setLocation(0, 0);
+        showGameOverImage();
+
+        JPanel vButtonsPanel = new JPanel();
+        vButtonsPanel.setOpaque(false);
+        vButtonsPanel.setPreferredSize(new Dimension(201, 150));
+        vButtonsPanel.setSize(vButtonsPanel.getPreferredSize());
+        vButtonsPanel.setLayout(new GridLayout(1, 1));
+        vButtonsPanel.add(aQuit2);
+        vButtonsPanel.setLocation(438, 400);
+
+        this.aGameOverPanel.add(aGameOverBackGroundImage, JLayeredPane.DEFAULT_LAYER);
+        this.aGameOverPanel.add(vButtonsPanel, JLayeredPane.PALETTE_LAYER);
+    }
+
     // action listeners methods
 
     /**
@@ -945,7 +1043,6 @@ public class UserInterface implements ActionListener {
             this.println("There is nothing to take here");
         }
     }
-        
 
     /**
      * This method is called when the exit button is clicked
@@ -996,6 +1093,51 @@ public class UserInterface implements ActionListener {
 
     private void soundButton() {
         this.aCardLayout.show(aSceneManager, "Sound");
+    }
+
+    public void attackButton() {
+        JButton[] vButtons = { aAttackButton, aDefendButton, aBagButton, aRunButton };
+
+        String[] vOutput = aEngine.getMovesString().split(" ");
+        for (int i = 0; i < 3; i++) {
+            vButtons[i].setText(vOutput[i]);
+            
+        }
+        for( JButton currentButton: vButtons ) {
+            for( ActionListener al : currentButton.getActionListeners() ) {
+                currentButton.removeActionListener( al );
+            }
+        }
+        aAttackButton.addActionListener(e -> this.aEngine.attack1Button());
+        aDefendButton.addActionListener(e -> this.aEngine.attack2Button());
+        aBagButton.addActionListener(e -> this.aEngine.attack3Button());
+        aRunButton.setText("Back");
+        aRunButton.addActionListener(e -> exitBattleButton());
+
+    }
+
+    public void exitBattleButton() {
+        JButton[] vButtons = { aAttackButton, aDefendButton, aBagButton, aRunButton };
+
+        for( JButton currentButton: vButtons ) {
+            for( ActionListener al : currentButton.getActionListeners() ) {
+                currentButton.removeActionListener( al );
+            }
+        }
+        aAttackButton.setText("Attack");
+        aAttackButton.addActionListener(e -> attackButton());
+        aDefendButton.setText("Defend");
+        aDefendButton.addActionListener(e -> this.aEngine.defendButton());
+        aBagButton.setText("Bag");
+        aBagButton.addActionListener(this);
+        aRunButton.setText("Run");
+        aRunButton.addActionListener(this);
+
+    }
+
+    public void updateBattleUI() {
+        aEnemyHP.setValue(aEngine.getEnemyHP());
+        aPlayerHP.setValue(aEngine.getPlayerHP());
     }
 
     // TODO : make sound on method works
@@ -1129,6 +1271,10 @@ public class UserInterface implements ActionListener {
 
     public void hideBattlePanel() {
         this.aCardLayout.show(aSceneManager, "Game");
+    }
+
+    public void showGameOverPanel() {
+        this.aCardLayout.show(aSceneManager, "GameOver");
     }
 
 } // UserInterface

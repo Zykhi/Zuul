@@ -60,6 +60,8 @@ public class GameEngine {
         this.aTransporterRoom = new ArrayList<TransporterRoom>();
 
         Room vMainMenu = new Room("", "");
+        Room vGameOver = new Room("", "");
+
         Room vOutside = new Room("outside, the entrance to a cave catches your eye", "gameImages/outside.gif");
         Room vCatacombs = new Room("in the catacombs", "gameImages/catacombs.gif");
         Room vLobby = new Room("the main room of the dungeon", "gameImages/lobby.gif");
@@ -75,6 +77,8 @@ public class GameEngine {
         this.aTransporterRoom.add(vTestRoom);
 
         aRooms.put("mainmenu", vMainMenu);
+        aRooms.put("gameover", vGameOver);
+
         aRooms.put("outside", vOutside);
         aRooms.put("catacombs", vCatacombs);
         aRooms.put("lobby", vLobby);
@@ -182,7 +186,7 @@ public class GameEngine {
         } else if (this.aGui.isTimerEnd()) {
             this.gameOver();
             this.aGui.stopTimer();
-        } else if(this.aPlayer.getHP() <= 0) {
+        } else if(this.getPlayerHP() <= 0) {
             this.gameOver();
         }else{
 
@@ -283,10 +287,18 @@ public class GameEngine {
     private void gameOver() {
         this.aGui.println("Game over.");
         this.aGui.enable(false);
+        this.aPlayer.setRoom(this.aRooms.get("gameover"));
+        this.aGui.playRoomSound();
+        this.aGui.showGameOverPanel();
     }
 
+    
     protected int getPlayerHP() {
         return this.aPlayer.getHP();
+    }
+
+    protected String getPlayerName() {
+        return this.aPlayer.getName();
     }
 
     protected int getEnemyHP() {
@@ -295,6 +307,26 @@ public class GameEngine {
 
     protected String getEnemyName() {
         return this.aPlayer.getEnemyName();
+    }
+
+    protected void attack1Button() {
+        this.aPlayer.attack1();
+    }
+
+    protected void attack2Button() {
+        this.aPlayer.attack2();
+    }
+
+    protected void attack3Button() {
+        this.aPlayer.attack3();
+    }
+
+    protected void defendButton(){
+        this.aPlayer.defend();
+    }
+
+    protected String getMovesString() {
+        return this.aPlayer.getMovesString();
     }
 
     /**

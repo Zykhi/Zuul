@@ -1,7 +1,6 @@
 import java.util.Stack;
 import javax.swing.Timer;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
 
 /**
  * This class implements player
@@ -14,13 +13,9 @@ public class Player extends Entity {
     private UserInterface aGui;
     private Parser aParser;
     private ItemList aInventory;
-    private Timer aTimer;
-    private ActionListener aBattleTask;
-    private int aDelay = 2000;
     private int aMaxWeight;
     private int aMovement;
     private boolean aFighting;
-    private boolean aEnd;
 
     /**
      * this constructor init the player
@@ -28,7 +23,7 @@ public class Player extends Entity {
      * @param pCurrentRoom Start room
      */
     public Player(final Room pCurrentRoom) {
-        super(200);
+        super(200, 100, 100, 100, 100);
         this.aCurrentRoom = pCurrentRoom;
         this.setName("Edward");
         this.aPreviousRooms = new Stack<Room>();
@@ -37,6 +32,18 @@ public class Player extends Entity {
         this.aMaxWeight = 20;
         this.aMovement = 41;
         this.aFighting = false;
+        aMoves[0][0] = "Flamethrower";
+        aMoves[0][1] = "90";
+        aMoves[0][2] = "95";
+        aMoves[0][3] = "physical";
+        aMoves[1][0] = "Earthquake";
+        aMoves[1][1] = "100";
+        aMoves[1][2] = "100";
+        aMoves[1][3] = "physical";
+        aMoves[2][0] = "AirSlash";
+        aMoves[2][1] = "85";
+        aMoves[2][2] = "80";
+        aMoves[2][3] = "physical";
     }
 
     /**
@@ -365,50 +372,13 @@ public class Player extends Entity {
         this.aGui.println("you have left menu");
     }
 
-    public void fight() throws InterruptedException {
+    public void fight(){
         if (this.aCurrentRoom.getCharacter() != null) {
             this.aFighting = true;
-            this.aEnd = false;
-            Entity vPlayer = this;
-            Entity vEnemy = aCurrentRoom.getCharacter();
             this.aGui.showBattlePanel();
             showFullCharacter();
 
             this.aGui.printlnBattle("Let battle begin");
-            Entity vPlayer1;
-            Entity vPlayer2;
-
-            vPlayer1 = vPlayer;
-            vPlayer2 = vEnemy;
-
-            aBattleTask = new ActionListener() {
-                public void actionPerformed(ActionEvent pE) {
-                    while (!aEnd) {
-                        vPlayer1.attack(vPlayer2);
-                        if (vPlayer2.isDead()) {      
-                            victory();
-                            aEnd = true;
-                            return;
-                        }
-
-                        vPlayer2.attack(vPlayer1);
-                        if (vPlayer1.isDead()) {
-                            defeat();
-                            aEnd = true;
-                            return;
-                        }
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            };
-
-            aTimer = new Timer(aDelay, aBattleTask);
-            aTimer.start();
 
         } else {
             this.aGui.println("You cant start a battle here");
@@ -423,10 +393,143 @@ public class Player extends Entity {
     private void defeat() {
         this.aGui.printlnBattle("You are dead!");
         this.aGui.printlnBattle("You have been slain.");
+        //this.aGui.hideBattlePanel();
+    }
+
+    public void attack1() {
+        Entity vPlayer = this;
+        Entity vEnemy = aCurrentRoom.getCharacter();
+
+        Entity vPlayer1;
+        Entity vPlayer2;
+
+        vPlayer1 = vPlayer;
+        vPlayer2 = vEnemy;
+
+        int vMove1 =0;
+        int vMove2 =1;
+
+        vPlayer1.attack(vPlayer2, vMove1);
+        playerAttackString(vMove1);
+            if (vPlayer2.isDead()) {
+                victory();
+                return;
+            }
+
+        vPlayer2.attack(vPlayer1, vMove2);
+        enemyAttackString(vMove2);
+        if (vPlayer1.isDead()) {
+            defeat();
+            return;
+        }
+        this.aGui.updateBattleUI();
+        this.aGui.exitBattleButton();
+    }
+
+    public void attack2() {
+        Entity vPlayer = this;
+        Entity vEnemy = aCurrentRoom.getCharacter();
+
+        Entity vPlayer1;
+        Entity vPlayer2;
+
+        vPlayer1 = vPlayer;
+        vPlayer2 = vEnemy;
+
+        int vMove1 =1;
+        int vMove2 =1;
+
+        vPlayer1.attack(vPlayer2, vMove1);
+        playerAttackString(vMove1);
+            if (vPlayer2.isDead()) {
+                victory();
+                return;
+            }
+
+        vPlayer2.attack(vPlayer1, vMove2);
+        enemyAttackString(vMove2);
+        if (vPlayer1.isDead()) {
+            defeat();
+            return;
+        }
+        this.aGui.updateBattleUI();
+        this.aGui.exitBattleButton();
+    }
+
+    public void attack3() {
+        Entity vPlayer = this;
+        Entity vEnemy = aCurrentRoom.getCharacter();
+
+        Entity vPlayer1;
+        Entity vPlayer2;
+
+        vPlayer1 = vPlayer;
+        vPlayer2 = vEnemy;
+
+        int vMove1 =2;
+        int vMove2 =1;
+
+        vPlayer1.attack(vPlayer2, vMove1);
+        playerAttackString(vMove1);
+            if (vPlayer2.isDead()) {
+                victory();
+                return;
+            }
+
+        vPlayer2.attack(vPlayer1, vMove2);
+        enemyAttackString(vMove2);
+        if (vPlayer1.isDead()) {
+            defeat();
+            return;
+        }
+        this.aGui.updateBattleUI();
+        this.aGui.exitBattleButton();
+    }
+
+    public void defend(){
+        this.improveDefence();
+        this.aGui.printlnBattle("Your defence is improved");
+        this.aGui.printlnBattle("Your defence is now : " + this.getDef()+ " and your special defense is now : " + this.getSpeDef());
+        this.aGui.printlnBattle("");
+        Entity vPlayer = this;
+        Entity vEnemy = aCurrentRoom.getCharacter();
+
+        Entity vPlayer1;
+        Entity vPlayer2;
+
+        vPlayer1 = vPlayer;
+        vPlayer2 = vEnemy;
+
+        int vMove2 =1;
+
+        vPlayer2.attack(vPlayer1, vMove2);
+        enemyAttackString(vMove2);
+        if (vPlayer1.isDead()) {
+            defeat();
+            return;
+        }
+        this.aGui.updateBattleUI();
     }
 
     protected boolean isFighting() {
         return this.aFighting;
+    }
+
+    private String getAttackString(int pMove){
+        String vAttackString = "";
+        vAttackString += aMoves[pMove][0];
+        return vAttackString;
+    }
+
+    private void enemyAttackString(int pMove){
+        String vName = this.aCurrentRoom.getCharacter().getName();
+        this.aGui.printlnBattle(vName + " used " + getAttackString(pMove));
+        this.aGui.printlnBattle("");
+    }
+
+    private void playerAttackString(int pMove){
+        this.aGui.printlnBattle("You used " + getAttackString(pMove));
+        this.aGui.printlnBattle("");
     }
 
     /**
@@ -462,11 +565,15 @@ public class Player extends Entity {
     }
 
     protected String getEnemyName() {
-        if (this.getCurrentRoom().getCharacter().getName() != null) {
-            return this.getCurrentRoom().getCharacter().getName();
+        if (this.getCurrentRoom().getCharacter().getName() == null) {
+            return null;
         } else {
-            return "";
+            return this.getCurrentRoom().getCharacter().getName();
         }
+    }
+
+    public String getMovesString() {
+        return this.getMoves();
     }
 
     /**
