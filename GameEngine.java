@@ -297,6 +297,10 @@ public class GameEngine {
         return this.aPlayer.getHP();
     }
 
+    protected int getMaxPlayerHP() {
+        return this.aPlayer.getMaxHP();
+    }
+
     protected String getPlayerName() {
         return this.aPlayer.getName();
     }

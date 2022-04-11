@@ -5,14 +5,16 @@ public class Entity {
     private String aFullImage;
     protected String aMoves[][];
     private int aHP;
+    private int aMaxHP;
     private int aDef;
     private int aSpeDef;
     private int aAtt;
     private int aSpeAtt;
 
-    public Entity(int pHP, int pDef, int pSpeDef, int pAtt,
+    public Entity(int pHP, int pMaxHP, int pDef, int pSpeDef, int pAtt,
             int pSpeAtt) {
         this.aHP = pHP;
+        this.aMaxHP = pMaxHP;
         this.aDef = pDef;
         this.aSpeDef = pSpeDef;
         this.aAtt = pAtt;
@@ -64,20 +66,24 @@ public class Entity {
         return this.aHP;
     }
 
-    public void improveDefence(){
-        this.aDef+=20;
-        this.aSpeDef+=20;
+    public int getMaxHP() {
+        return this.aMaxHP;
     }
 
-    public void heal(){
-        this.aHP+=50;
+    public void improveDefence() {
+        this.aDef += 20;
+        this.aSpeDef += 20;
+    }
+
+    public void heal() {
+        this.aHP += 50;
     }
 
     public void attack(Entity pEnemy, int pMove) {
         double vDamage = 0.0;
         double vRandom = Math.random() * 100;
         if (vRandom > Double.parseDouble(aMoves[pMove][2])) {
-            System.out.println("Attack missed!");
+            System.out.println("attack missed");
             return;
         }
         if (aMoves[pMove][3].equals("special")) {

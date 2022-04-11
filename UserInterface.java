@@ -787,11 +787,10 @@ public class UserInterface implements ActionListener {
         aEnemyName.setText("Name : " /* + aEngine.getEnemyName() */);
         // TODO : Fix enemy max HP
         aEnemyHP = new JProgressBar(0, 200);
-        // TODO : Fix color
-        // aEnemyHP.setBackground(Color.WHITE);
-        // aEnemyHP.setForeground(Color.GREEN);
+        aEnemyHP.setBackground(Color.WHITE);
+        aEnemyHP.setForeground(Color.GREEN);
 
-        aEnemyHP.setPreferredSize(new Dimension(180, 30));
+        aEnemyHP.setPreferredSize(new Dimension(180, 10));
         aEnemyHP.setSize(aEnemyHP.getPreferredSize());
         aEnemyHP.setLocation(enemyX + 10, enemyY + 35);
         // TODO : Fix enemy HP
@@ -811,12 +810,10 @@ public class UserInterface implements ActionListener {
         aPlayerName.setSize(300, 50);
         aPlayerName.setLocation(playerX + 10, playerY);
         aPlayerName.setText("Name : " + aEngine.getPlayerName());
-        // TODO : fix max hp
-        aPlayerHP = new JProgressBar(0, 200);
-        // TODO : fix color
-        // aPlayerHP.setBackground(Color.white);
-        // aPlayerHP.setForeground(Color.green);
-        aPlayerHP.setPreferredSize(new Dimension(180, 30));
+        aPlayerHP = new JProgressBar(0, this.aEngine.getMaxPlayerHP());
+        aPlayerHP.setBackground(Color.white);
+        aPlayerHP.setForeground(Color.green);
+        aPlayerHP.setPreferredSize(new Dimension(180, 10));
         aPlayerHP.setSize(aEnemyHP.getPreferredSize());
         aPlayerHP.setLocation(playerX + 10, playerY + 35);
         aPlayerHP.setValue(this.aEngine.getPlayerHP());

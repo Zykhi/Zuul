@@ -1,7 +1,6 @@
 import java.util.Stack;
 import javax.swing.Timer;
 
-
 /**
  * This class implements player
  * 
@@ -23,7 +22,7 @@ public class Player extends Entity {
      * @param pCurrentRoom Start room
      */
     public Player(final Room pCurrentRoom) {
-        super(200, 100, 100, 100, 100);
+        super(200, 200, 100, 100, 100, 100);
         this.aCurrentRoom = pCurrentRoom;
         this.setName("Edward");
         this.aPreviousRooms = new Stack<Room>();
@@ -42,7 +41,7 @@ public class Player extends Entity {
         aMoves[1][3] = "physical";
         aMoves[2][0] = "AirSlash";
         aMoves[2][1] = "85";
-        aMoves[2][2] = "80";
+        aMoves[2][2] = "0";
         aMoves[2][3] = "physical";
     }
 
@@ -372,7 +371,7 @@ public class Player extends Entity {
         this.aGui.println("you have left menu");
     }
 
-    public void fight(){
+    public void fight() {
         if (this.aCurrentRoom.getCharacter() != null) {
             this.aFighting = true;
             this.aGui.showBattlePanel();
@@ -393,7 +392,7 @@ public class Player extends Entity {
     private void defeat() {
         this.aGui.printlnBattle("You are dead!");
         this.aGui.printlnBattle("You have been slain.");
-        //this.aGui.hideBattlePanel();
+        // this.aGui.hideBattlePanel();
     }
 
     public void attack1() {
@@ -406,23 +405,24 @@ public class Player extends Entity {
         vPlayer1 = vPlayer;
         vPlayer2 = vEnemy;
 
-        int vMove1 =0;
-        int vMove2 =1;
+        int vMove1 = 0;
+        int vMove2 = 1;
 
         vPlayer1.attack(vPlayer2, vMove1);
         playerAttackString(vMove1);
-            if (vPlayer2.isDead()) {
-                victory();
-                return;
-            }
+        this.aGui.updateBattleUI();
+        if (vPlayer2.isDead()) {
+            victory();
+            return;
+        }
 
         vPlayer2.attack(vPlayer1, vMove2);
         enemyAttackString(vMove2);
+        this.aGui.updateBattleUI();
         if (vPlayer1.isDead()) {
             defeat();
             return;
         }
-        this.aGui.updateBattleUI();
         this.aGui.exitBattleButton();
     }
 
@@ -436,23 +436,24 @@ public class Player extends Entity {
         vPlayer1 = vPlayer;
         vPlayer2 = vEnemy;
 
-        int vMove1 =1;
-        int vMove2 =1;
+        int vMove1 = 1;
+        int vMove2 = 1;
 
         vPlayer1.attack(vPlayer2, vMove1);
         playerAttackString(vMove1);
-            if (vPlayer2.isDead()) {
-                victory();
-                return;
-            }
+        this.aGui.updateBattleUI();
+        if (vPlayer2.isDead()) {
+            victory();
+            return;
+        }
 
         vPlayer2.attack(vPlayer1, vMove2);
         enemyAttackString(vMove2);
+        this.aGui.updateBattleUI();
         if (vPlayer1.isDead()) {
             defeat();
             return;
         }
-        this.aGui.updateBattleUI();
         this.aGui.exitBattleButton();
     }
 
@@ -466,30 +467,32 @@ public class Player extends Entity {
         vPlayer1 = vPlayer;
         vPlayer2 = vEnemy;
 
-        int vMove1 =2;
-        int vMove2 =1;
+        int vMove1 = 2;
+        int vMove2 = 1;
 
         vPlayer1.attack(vPlayer2, vMove1);
         playerAttackString(vMove1);
-            if (vPlayer2.isDead()) {
-                victory();
-                return;
-            }
+        this.aGui.updateBattleUI();
+        if (vPlayer2.isDead()) {
+            victory();
+            return;
+        }
 
         vPlayer2.attack(vPlayer1, vMove2);
         enemyAttackString(vMove2);
+        this.aGui.updateBattleUI();
         if (vPlayer1.isDead()) {
             defeat();
             return;
         }
-        this.aGui.updateBattleUI();
         this.aGui.exitBattleButton();
     }
 
-    public void defend(){
+    public void defend() {
         this.improveDefence();
         this.aGui.printlnBattle("Your defence is improved");
-        this.aGui.printlnBattle("Your defence is now : " + this.getDef()+ " and your special defense is now : " + this.getSpeDef());
+        this.aGui.printlnBattle(
+                "Your defence is now : " + this.getDef() + " and your special defense is now : " + this.getSpeDef());
         this.aGui.printlnBattle("");
         Entity vPlayer = this;
         Entity vEnemy = aCurrentRoom.getCharacter();
@@ -500,36 +503,49 @@ public class Player extends Entity {
         vPlayer1 = vPlayer;
         vPlayer2 = vEnemy;
 
-        int vMove2 =1;
+        int vMove2 = 1;
 
         vPlayer2.attack(vPlayer1, vMove2);
         enemyAttackString(vMove2);
+        this.aGui.updateBattleUI();
         if (vPlayer1.isDead()) {
             defeat();
             return;
         }
-        this.aGui.updateBattleUI();
+
     }
 
     protected boolean isFighting() {
         return this.aFighting;
     }
 
-    private String getAttackString(int pMove){
+    private String getAttackString(int pMove) {
         String vAttackString = "";
         vAttackString += aMoves[pMove][0];
         return vAttackString;
     }
 
-    private void enemyAttackString(int pMove){
+    private void enemyAttackString(int pMove) {
         String vName = this.aCurrentRoom.getCharacter().getName();
-        this.aGui.printlnBattle(vName + " used " + getAttackString(pMove));
-        this.aGui.printlnBattle("");
+        //TODO : add text when attack missed
+        /*if () {
+            this.aGui.printlnBattle(vName + " missed");
+            this.aGui.printlnBattle("");
+        } else {*/
+            this.aGui.printlnBattle(vName + " used " + getAttackString(pMove));
+            this.aGui.printlnBattle("");
+        //}
     }
 
-    private void playerAttackString(int pMove){
-        this.aGui.printlnBattle("You used " + getAttackString(pMove));
-        this.aGui.printlnBattle("");
+    private void playerAttackString(int pMove) {
+        //TODO : add text when attack missed
+        /*if () {
+            this.aGui.printlnBattle("You missed");
+            this.aGui.printlnBattle("");
+        } else {*/
+            this.aGui.printlnBattle("You used " + getAttackString(pMove));
+            this.aGui.printlnBattle("");
+        //}
     }
 
     /**
