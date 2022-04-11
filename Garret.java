@@ -1,3 +1,8 @@
+/**
+ * This class implements Garret
+ * 
+ * @author C.Diouy
+ */
 public class Garret extends Entity {
 
     public Garret() {

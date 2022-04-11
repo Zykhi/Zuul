@@ -1,3 +1,8 @@
+/**
+ * This class implements Hazelgash
+ * 
+ * @author C.Diouy
+ */
 public class Hazelgash extends Entity {
 
     public Hazelgash() {

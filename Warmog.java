@@ -1,3 +1,8 @@
+/**
+ * This class implements Warmog
+ * 
+ * @author C.Diouy
+ */
 public class Warmog extends Entity {
 
     public Warmog() {

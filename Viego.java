@@ -1,3 +1,8 @@
+/**
+ * This class implements Viego
+ * 
+ * @author C.Diouy
+ */
 public class Viego extends Entity {
 
     public Viego() {
