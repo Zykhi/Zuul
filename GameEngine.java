@@ -186,9 +186,9 @@ public class GameEngine {
         } else if (this.aGui.isTimerEnd()) {
             this.gameOver();
             this.aGui.stopTimer();
-        } else if(this.getPlayerHP() <= 0) {
+        } else if (this.getPlayerHP() <= 0) {
             this.gameOver();
-        }else{
+        } else {
 
             try {
 
@@ -292,43 +292,84 @@ public class GameEngine {
         this.aGui.showGameOverPanel();
     }
 
-    
+    /**
+     * This method get the HP of the player
+     * 
+     * @return the HP of the player
+     */
     protected int getPlayerHP() {
         return this.aPlayer.getHP();
     }
 
+    /**
+     * This method get the max HP of the player
+     * 
+     * @return the max HP of the player
+     */
     protected int getMaxPlayerHP() {
         return this.aPlayer.getMaxHP();
     }
 
+    /**
+     * This method get the name of the player
+     * 
+     * @return the name of the player
+     */
     protected String getPlayerName() {
         return this.aPlayer.getName();
     }
 
+    /**
+     * This method get the HP of the enemy
+     * 
+     * @return the HP of the enemy
+     */
     protected int getEnemyHP() {
         return this.aPlayer.getCurrentRoom().getCharacter().getHP();
     }
 
+    /**
+     * This method get the name of the enemy
+     * 
+     * @return the name of the enemy
+     */
     protected String getEnemyName() {
         return this.aPlayer.getEnemyName();
     }
 
+    /**
+     * This method is called when the player click on attack 1 button
+     */
     protected void attack1Button() {
         this.aPlayer.attack1();
     }
 
+    /**
+     * This method is called when the player click on attack 2 button
+     */
     protected void attack2Button() {
         this.aPlayer.attack2();
     }
 
+    /**
+     * This method is called when the player click on attack 3 button
+     */
     protected void attack3Button() {
         this.aPlayer.attack3();
     }
 
-    protected void defendButton(){
+    /**
+     * This method is called when the player click on defend button
+     */
+    protected void defendButton() {
         this.aPlayer.defend();
     }
 
+    /**
+     * This function get the String of player's moves
+     * 
+     * @return the String of player's moves
+     */
     protected String getMovesString() {
         return this.aPlayer.getMovesString();
     }

@@ -283,6 +283,8 @@ public class UserInterface implements ActionListener {
 
     /**
      * This method play sound of the narrator
+     * 
+     * @param pFile Audio file of the dialog
      */
     public void playDialogSound(final String pFile) {
         try {
@@ -299,6 +301,8 @@ public class UserInterface implements ActionListener {
 
     /**
      * This method play sound effect
+     * 
+     * @param pFile Audio file of the sound effect
      */
     public void playSoundEffect(final String pFile) {
         try {
@@ -395,7 +399,7 @@ public class UserInterface implements ActionListener {
     }
 
     /**
-     * 
+     * Show background image of the main menu.
      */
     public void showBackGroundImage() {
         String vImagePath = "gameImages/MainMenu.jpg"; // to change the directory
@@ -410,7 +414,7 @@ public class UserInterface implements ActionListener {
     }
 
     /**
-     * 
+     * Show background image of the battle
      */
     public void showBattleBackground() {
         String vImagePath = "gameImages/battleground.png"; // to change the directory
@@ -425,7 +429,7 @@ public class UserInterface implements ActionListener {
     }
 
     /**
-     * 
+     * Show the background of setting menu
      */
     private void showSettingBackground() {
         String vImagePath = "gameImages/setting.jpg"; // to change the directory
@@ -439,6 +443,9 @@ public class UserInterface implements ActionListener {
         }
     }
 
+    /**
+     * Show the background of the sound menu
+     */
     private void showSoundBackground() {
         String vImagePath = "gameImages/sound.jpg"; // to change the directory
         URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
@@ -451,6 +458,9 @@ public class UserInterface implements ActionListener {
         }
     }
 
+    /**
+     * Show the background of the game over menu
+     */
     public void showGameOverImage() {
         String vImagePath = "gameImages/GameOver.jpg"; // to change the directory
         URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
@@ -618,7 +628,7 @@ public class UserInterface implements ActionListener {
         this.aTakeButton.addActionListener(e -> takeButtonMethod());
         this.aFireButton.addActionListener(this);
         this.aChargeButton.addActionListener(this);
-        /* this.aInventoryButton.addActionListener(e -> battleButtonMethod()); */
+        this.aInventoryButton.addActionListener(this);
         this.aSkipButton.addActionListener(e -> skipMethod());
         this.aPlay.addActionListener(e -> playButton());
         this.aPlay.addActionListener(this);
@@ -678,6 +688,9 @@ public class UserInterface implements ActionListener {
         aSceneManager.add(aGameOverPanel, "GameOver");
     }
 
+    /**
+     * This method create the panel of the game
+     */
     private void createGamePanel() {
         this.aEntryField = new JTextField(34);
         this.aEntryField.addActionListener(this);
@@ -758,6 +771,9 @@ public class UserInterface implements ActionListener {
         this.aGamePanel.add(this.aEntityPanel, JLayeredPane.PALETTE_LAYER);
     }
 
+    /**
+     * This method create the panel of the battle
+     */
     private void createBattlePanel() {
 
         this.aBattlerPanel = new JLayeredPane();
@@ -866,6 +882,9 @@ public class UserInterface implements ActionListener {
 
     }
 
+    /**
+     * This method create the panel of the main menu
+     */
     private void createMainMenuPanel() {
         this.aMainMenuPanel = new JLayeredPane();
         this.aMainMenuBackGroundImage = new JLabel();
@@ -889,6 +908,9 @@ public class UserInterface implements ActionListener {
         this.aMainMenuPanel.add(vButtonsPanel, JLayeredPane.PALETTE_LAYER);
     }
 
+    /**
+     * This method create the panel of the setting menu
+     */
     private void createSettingPanel() {
         this.aSettingPanel = new JLayeredPane();
         this.aSettingBackground = new JLabel();
@@ -911,6 +933,9 @@ public class UserInterface implements ActionListener {
         this.aSettingPanel.add(vButtonsPanel, JLayeredPane.PALETTE_LAYER);
     }
 
+    /**
+     * This method create the panel of the sound menu
+     */
     private void createSoundPanel() {
         this.aSoundPanel = new JLayeredPane();
         this.aSoundBackground = new JLabel();
@@ -934,6 +959,9 @@ public class UserInterface implements ActionListener {
         this.aSoundPanel.add(vButtonsPanel, JLayeredPane.PALETTE_LAYER);
     }
 
+    /**
+     * This method create the panel of the npc
+     */
     private void createNPCPanel() {
         this.aEntityLog = new JTextArea();
         this.aEntityLog.setEditable(false);
@@ -957,6 +985,9 @@ public class UserInterface implements ActionListener {
         this.aEntityPanel.setVisible(false);
     }
 
+    /**
+     * This method create the panel of game over
+     */
     private void createGameOverPanel() {
         this.aGameOverPanel = new JLayeredPane();
         this.aGameOverBackGroundImage = new JLabel();
@@ -1067,31 +1098,52 @@ public class UserInterface implements ActionListener {
         aSkipButton.setActionCommand("skip");
     }
 
+    /**
+     * This method is called when the player click on play button in main menu
+     */
     private void playButton() {
         this.aCardLayout.show(aSceneManager, "Game");
         this.aLog.setText("");
     }
 
+    /**
+     * This method is called when the player click on settings button in main menu
+     */
     private void settingsButton() {
         this.aCardLayout.show(aSceneManager, "Settings");
     }
 
+    /**
+     * This method is called when the player click on quit button in main menu
+     */
     private void quitButton() {
         System.exit(0);
     }
 
+    /**
+     * This method is called when the player click on back button in setting menu
+     */
     private void backButton() {
         this.aCardLayout.show(aSceneManager, "MainMenu");
     }
 
+    /**
+     * This method is called when the player click on back button in sound menu
+     */
     private void backButton2() {
         this.aCardLayout.show(aSceneManager, "Settings");
     }
 
+    /**
+     * This method is called when the player click on sound button in settings menu
+     */
     private void soundButton() {
         this.aCardLayout.show(aSceneManager, "Sound");
     }
 
+    /**
+     * This method is called when the player click on attack button in battle menu
+     */
     public void attackButton() {
         JButton[] vButtons = { aAttackButton, aDefendButton, aBagButton, aRunButton };
 
@@ -1113,6 +1165,9 @@ public class UserInterface implements ActionListener {
 
     }
 
+    /**
+     * This method is called when the player click on exit button in battle menu
+     */
     public void exitBattleButton() {
         JButton[] vButtons = { aAttackButton, aDefendButton, aBagButton, aRunButton };
 
@@ -1132,11 +1187,17 @@ public class UserInterface implements ActionListener {
 
     }
 
+    /**
+     * This method is update UI during the battle
+     */
     public void updateBattleUI() {
         aEnemyHP.setValue(aEngine.getEnemyHP());
         aPlayerHP.setValue(aEngine.getPlayerHP());
     }
 
+    /**
+     * This method is called when the player click on SoundOn button in main menu
+     */
     // TODO : make sound on method works
     private void soundOnButton() {
         File vRepository = new File("gameSounds/");
@@ -1149,6 +1210,9 @@ public class UserInterface implements ActionListener {
         }
     }
 
+    /**
+     * This method is called when the player click on SoundOff button in main menu
+     */
     // TODO: make sound off method works
     private void soundOffButton() {
         System.out.println("Sound Off");
@@ -1258,18 +1322,30 @@ public class UserInterface implements ActionListener {
         vTimer.start();
     }
 
+    /**
+     * This method hide the character panel
+     */
     public void hideCharacterPanel() {
         this.aEntityPanel.setVisible(false);
     }
 
+    /**
+     * This method show the battle panel
+     */
     public void showBattlePanel() {
         this.aCardLayout.show(aSceneManager, "Battle");
     }
 
+    /**
+     * This method hide the battle panel
+     */
     public void hideBattlePanel() {
         this.aCardLayout.show(aSceneManager, "Game");
     }
 
+    /**
+     * This method show the game over panel
+     */
     public void showGameOverPanel() {
         this.aCardLayout.show(aSceneManager, "GameOver");
     }

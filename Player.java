@@ -371,6 +371,9 @@ public class Player extends Entity {
         this.aGui.println("you have left menu");
     }
 
+    /**
+     * This method is called when player want to fight
+     */
     public void fight() {
         if (this.aCurrentRoom.getCharacter() != null) {
             this.aFighting = true;
@@ -384,17 +387,26 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * This method is called when the player win the fight
+     */
     private void victory() {
         this.aGui.printlnBattle("Opponent is dead!");
         this.aGui.printlnBattle("You are the ultimate warrior.");
     }
 
+    /**
+     * This method is called when the player loose the fight
+     */
     private void defeat() {
         this.aGui.printlnBattle("You are dead!");
         this.aGui.printlnBattle("You have been slain.");
         // this.aGui.hideBattlePanel();
     }
 
+    /**
+     * This method is called when the player click on attack 1 button
+     */
     public void attack1() {
         Entity vPlayer = this;
         Entity vEnemy = aCurrentRoom.getCharacter();
@@ -426,6 +438,9 @@ public class Player extends Entity {
         this.aGui.exitBattleButton();
     }
 
+    /**
+     * This method is called when the player click on attack 2 button
+     */
     public void attack2() {
         Entity vPlayer = this;
         Entity vEnemy = aCurrentRoom.getCharacter();
@@ -457,6 +472,9 @@ public class Player extends Entity {
         this.aGui.exitBattleButton();
     }
 
+    /**
+     * This method is called when the player click on attack 3 button
+     */
     public void attack3() {
         Entity vPlayer = this;
         Entity vEnemy = aCurrentRoom.getCharacter();
@@ -488,6 +506,9 @@ public class Player extends Entity {
         this.aGui.exitBattleButton();
     }
 
+    /**
+     * This method is called when the player click on defend button
+     */
     public void defend() {
         this.improveDefence();
         this.aGui.printlnBattle("Your defence is improved");
@@ -515,16 +536,28 @@ public class Player extends Entity {
 
     }
 
+    /*
     protected boolean isFighting() {
         return this.aFighting;
-    }
+    }*/
 
+    /**
+     * This function print the string of the attack
+     *
+     * @param pMove Number of the move in the table
+     * @return String of the attack
+     */
     private String getAttackString(int pMove) {
         String vAttackString = "";
         vAttackString += aMoves[pMove][0];
         return vAttackString;
     }
 
+    /**
+     * This method is called when enemy attack
+     *
+     * @param pMove Number of the move in the table
+     */
     private void enemyAttackString(int pMove) {
         String vName = this.aCurrentRoom.getCharacter().getName();
         //TODO : add text when attack missed
@@ -537,6 +570,11 @@ public class Player extends Entity {
         //}
     }
 
+    /**
+     * This method is called when player attack
+     *
+     * @param pMove Number of the move in the table
+     */
     private void playerAttackString(int pMove) {
         //TODO : add text when attack missed
         /*if () {
@@ -555,6 +593,9 @@ public class Player extends Entity {
         this.aGui.println(this.getCurrentRoom().getLongDescription());
     }
 
+    /**
+     * This method print the dialog of the character in the room
+     */
     private void printCharacterDialog() {
         this.aGui.slowPrintEntity(this.getCurrentRoom().getDialog());
     }
@@ -568,18 +609,29 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * This method show the character in the dialog
+     */
     protected void showCharacter() {
         if (this.getCurrentRoom().getCharacter().getImageName() != null) {
             this.aGui.showEntityImage(this.getCurrentRoom().getCharacter().getImageName());
         }
     }
 
+    /**
+     * This method show the character for the battle
+     */
     protected void showFullCharacter() {
         if (this.getCurrentRoom().getCharacter().getImageName() != null) {
             this.aGui.showFullEntityImage(this.getCurrentRoom().getCharacter().getFullImageName());
         }
     }
 
+    /**
+     * This function get the enemy name
+     * 
+     * @return String of the enemy name
+     */
     protected String getEnemyName() {
         if (this.getCurrentRoom().getCharacter().getName() == null) {
             return null;
@@ -588,6 +640,11 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * This function get the moves 
+     * 
+     * @return String of the moves
+     */
     public String getMovesString() {
         return this.getMoves();
     }
