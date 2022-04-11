@@ -9,8 +9,8 @@ public class Viego extends Entity {
         super(200, 200, 100, 100, 100, 100);
         setName("Viego");
         setDialog("you will die");
-        setImageName("faceImages/viego.png");
-        setFullImageName("faceImages/fullViego.png");
+        setImageName("faceImages/viego.jpg");
+        setFullImageName("faceImages/fullViego.gif");
         aMoves[0][0] = "Flamethrower";
         aMoves[0][1] = "90";
         aMoves[0][2] = "95";
