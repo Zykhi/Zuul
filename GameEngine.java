@@ -433,6 +433,17 @@ public class GameEngine {
     }
 
     /**
+     * This method play the sound of the battle
+     */
+    public void playBattleRoomSound(){
+        HashMap<String, Room> vRooms = aRooms;
+        Room vRoom = aPlayer.getCurrentRoom();
+        String vCurrentRoomString = getKey(vRooms, vRoom);
+        this.aGui.stopSound();
+        this.aGui.playBattleSound(vCurrentRoomString, -1);
+    }
+
+    /**
      * This method is used to test game command
      * 
      * @param pFile test file

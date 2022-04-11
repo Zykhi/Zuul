@@ -14,8 +14,6 @@ public class Player extends Entity {
     private ItemList aInventory;
     private int aMaxWeight;
     private int aMovement;
-    private boolean aFighting;
-
     /**
      * this constructor init the player
      * 
@@ -30,7 +28,6 @@ public class Player extends Entity {
         this.aInventory = new ItemList();
         this.aMaxWeight = 20;
         this.aMovement = 41;
-        this.aFighting = false;
         aMoves[0][0] = "Flamethrower";
         aMoves[0][1] = "90";
         aMoves[0][2] = "95";
@@ -376,10 +373,10 @@ public class Player extends Entity {
      */
     public void fight() {
         if (this.aCurrentRoom.getCharacter() != null) {
-            this.aFighting = true;
+            this.aGui.updateBattleUI();
+            this.aGui.playBattleRoomSound();
             this.aGui.showBattlePanel();
             showFullCharacter();
-
             this.aGui.printlnBattle("Let battle begin");
 
         } else {
@@ -408,6 +405,7 @@ public class Player extends Entity {
      * This method is called when the player click on attack 1 button
      */
     public void attack1() {
+        this.aGui.clearBattleArea();
         Entity vPlayer = this;
         Entity vEnemy = aCurrentRoom.getCharacter();
 
@@ -442,6 +440,7 @@ public class Player extends Entity {
      * This method is called when the player click on attack 2 button
      */
     public void attack2() {
+        this.aGui.clearBattleArea();
         Entity vPlayer = this;
         Entity vEnemy = aCurrentRoom.getCharacter();
 
@@ -476,6 +475,7 @@ public class Player extends Entity {
      * This method is called when the player click on attack 3 button
      */
     public void attack3() {
+        this.aGui.clearBattleArea();
         Entity vPlayer = this;
         Entity vEnemy = aCurrentRoom.getCharacter();
 
@@ -510,10 +510,11 @@ public class Player extends Entity {
      * This method is called when the player click on defend button
      */
     public void defend() {
+        this.aGui.clearBattleArea();
         this.improveDefence();
-        this.aGui.printlnBattle("Your defence is improved");
+        this.aGui.printlnBattle("Your defense has improved");
         this.aGui.printlnBattle(
-                "Your defence is now : " + this.getDef() + " and your special defense is now : " + this.getSpeDef());
+                "Your defense is now : " + this.getDef() + " and your special defense is now : " + this.getSpeDef());
         this.aGui.printlnBattle("");
         Entity vPlayer = this;
         Entity vEnemy = aCurrentRoom.getCharacter();
@@ -535,11 +536,6 @@ public class Player extends Entity {
         }
 
     }
-
-    /*
-    protected boolean isFighting() {
-        return this.aFighting;
-    }*/
 
     /**
      * This function print the string of the attack

@@ -1,10 +1,10 @@
 import java.net.URL;
+import java.io.File;
+import java.io.IOException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.io.File;
-import java.io.IOException;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Container;
@@ -27,6 +27,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 
 /**
  * This class implements a simple graphical user interface with a text entry
@@ -104,6 +105,7 @@ public class UserInterface implements ActionListener {
     private Font aFont;
     private Font aButtonsFont;
     private Font aTextFont;
+    private Font aBattleFont;
     private Font aMenuFont;
     private int aTime = 60;
     private int aMinute;
@@ -244,6 +246,10 @@ public class UserInterface implements ActionListener {
         this.aEntityLog.setText("");
     }
 
+    public void clearBattleArea() {
+        this.aBattleLog.setText("");
+    }
+
     /**
      * This method is called when skip button is clicked
      * It's write quikly the text of the slowPrint method
@@ -271,6 +277,23 @@ public class UserInterface implements ActionListener {
         try {
             AudioInputStream vAudioInputStream = AudioSystem
                     .getAudioInputStream(new File("gameSounds/" + pFile + ".wav").getAbsoluteFile());
+            aClip = AudioSystem.getClip();
+            aClip.open(vAudioInputStream);
+            aClip.start();
+            aClip.loop(pLoop);
+        } catch (Exception ex) {
+            System.out.println("Error with playing sound.");
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * This method play the sound of the battle
+     */
+    public void playBattleSound(final String pFile, final int pLoop) {
+        try {
+            AudioInputStream vAudioInputStream = AudioSystem
+                    .getAudioInputStream(new File("gameSounds/battle" + pFile + ".wav").getAbsoluteFile());
             aClip = AudioSystem.getClip();
             aClip.open(vAudioInputStream);
             aClip.start();
@@ -343,6 +366,13 @@ public class UserInterface implements ActionListener {
      */
     public void playRoomSound() {
         this.aEngine.playRoomSound();
+    }
+
+    /**
+     * This method play the sound of the battle
+     */
+    public void playBattleRoomSound() {
+        this.aEngine.playBattleRoomSound();
     }
 
     // image method
@@ -486,21 +516,15 @@ public class UserInterface implements ActionListener {
         if (!pOnOff) { // disable
             this.aEntryField.getCaret().setBlinkRate(0); // cursor won't blink
             this.aEntryField.removeActionListener(this); // won't react to entry
-            this.aQuitButton.removeActionListener(this);
-            this.aNorthButton.removeActionListener(this);
-            this.aSouthButton.removeActionListener(this);
-            this.aEastButton.removeActionListener(this);
-            this.aWestButton.removeActionListener(this);
-            this.aUpButton.removeActionListener(this);
-            this.aDownButton.removeActionListener(this);
-            this.aBackButton.removeActionListener(this);
-            this.aHelpButton.removeActionListener(this);
-            this.aDropButton.removeActionListener(this);
-            this.aTakeButton.removeActionListener(this);
-            this.aFireButton.removeActionListener(this);
-            this.aChargeButton.removeActionListener(this);
-            this.aInventoryButton.removeActionListener(this);
-            this.aSkipButton.removeActionListener(this);
+
+            JButton[] vButtons = { aBackButton, aHelpButton, aQuitButton, aDropButton, aTakeButton, aFireButton,
+                    aChargeButton, aInventoryButton };
+
+            for (JButton currentButton : vButtons) {
+                for (ActionListener al : currentButton.getActionListeners()) {
+                    currentButton.removeActionListener(al);
+                }
+            }
         }
     } // enable(.)
 
@@ -519,6 +543,7 @@ public class UserInterface implements ActionListener {
 
             aTextFont = aFont.deriveFont(18f);
             aButtonsFont = aFont.deriveFont(14f);
+            aBattleFont = aFont.deriveFont(24f);
             aMenuFont = aFont.deriveFont(25f);
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
@@ -791,16 +816,16 @@ public class UserInterface implements ActionListener {
 
         aEnemyHPPanel = new JPanel();
         aEnemyHPPanel.setPreferredSize(new Dimension(200, 70));
-        aEnemyHPPanel.setBackground(Color.darkGray);
         aEnemyHPPanel.setSize(aEnemyHPPanel.getPreferredSize());
         aEnemyHPPanel.setLocation(enemyX, enemyY);
+        aEnemyHPPanel.setBorder(new HealthPanelBorder());
+        aEnemyHPPanel.setOpaque(false);
         aEnemyName = new JLabel();
         aEnemyName.setForeground(Color.white);
         aEnemyName.setFont(aTextFont);
         aEnemyName.setSize(300, 50);
         aEnemyName.setLocation(enemyX + 10, enemyY);
-        // TODO : Fix enemy name
-        aEnemyName.setText("Name : " /* + aEngine.getEnemyName() */);
+
         // TODO : Fix enemy max HP
         aEnemyHP = new JProgressBar(0, 200);
         aEnemyHP.setBackground(Color.WHITE);
@@ -808,7 +833,7 @@ public class UserInterface implements ActionListener {
 
         aEnemyHP.setPreferredSize(new Dimension(180, 10));
         aEnemyHP.setSize(aEnemyHP.getPreferredSize());
-        aEnemyHP.setLocation(enemyX + 10, enemyY + 35);
+        aEnemyHP.setLocation(enemyX + 10, enemyY + 45);
         // TODO : Fix enemy HP
         aEnemyHP.setValue(200);
 
@@ -817,25 +842,26 @@ public class UserInterface implements ActionListener {
 
         aPlayerHPPanel = new JPanel();
         aPlayerHPPanel.setPreferredSize(new Dimension(200, 70));
-        aPlayerHPPanel.setBackground(Color.darkGray);
         aPlayerHPPanel.setSize(aPlayerHPPanel.getPreferredSize());
         aPlayerHPPanel.setLocation(playerX, playerY);
+        aPlayerHPPanel.setBorder(new HealthPanelBorder());
+        aPlayerHPPanel.setOpaque(false);
         aPlayerName = new JLabel();
         aPlayerName.setForeground(Color.white);
         aPlayerName.setFont(aTextFont);
         aPlayerName.setSize(300, 50);
         aPlayerName.setLocation(playerX + 10, playerY);
-        aPlayerName.setText("Name : " + aEngine.getPlayerName());
+        aPlayerName.setText(aEngine.getPlayerName());
         aPlayerHP = new JProgressBar(0, this.aEngine.getMaxPlayerHP());
         aPlayerHP.setBackground(Color.white);
         aPlayerHP.setForeground(Color.green);
         aPlayerHP.setPreferredSize(new Dimension(180, 10));
         aPlayerHP.setSize(aEnemyHP.getPreferredSize());
-        aPlayerHP.setLocation(playerX + 10, playerY + 35);
+        aPlayerHP.setLocation(playerX + 10, playerY + 45);
         aPlayerHP.setValue(this.aEngine.getPlayerHP());
 
         JPanel vBattleTextPanel = new JPanel();
-        this.aBattleLog = new JTextArea();
+        this.aBattleLog = new RoundJTextArea();
         vBattleTextPanel.setPreferredSize(new Dimension(600, 150));
         vBattleTextPanel.setOpaque(false);
         vBattleTextPanel.setSize(vBattleTextPanel.getPreferredSize());
@@ -845,13 +871,11 @@ public class UserInterface implements ActionListener {
         this.aBattleLog.setLineWrap(true);
         this.aBattleLog.setWrapStyleWord(true);
         this.aBattleLog.setMargin(new Insets(10, 10, 10, 10));
-        this.aBattleLog.setFont(aTextFont);
+        this.aBattleLog.setFont(aBattleFont);
         this.aBattleLog.setForeground(Color.white);
         this.aBattleLog.setBackground(Color.darkGray);
-        JScrollPane vEntityScroller = new JScrollPane(this.aBattleLog);
-        vEntityScroller.setPreferredSize(vBattleTextPanel.getPreferredSize());
 
-        vBattleTextPanel.add(vEntityScroller, BorderLayout.CENTER);
+        vBattleTextPanel.add(this.aBattleLog, BorderLayout.CENTER);
 
         JPanel vBattleButtonPanel = new JPanel();
         vBattleButtonPanel.setPreferredSize(new Dimension(400, 150));
@@ -865,7 +889,7 @@ public class UserInterface implements ActionListener {
         vBattleButtonPanel.add(aRunButton);
 
         aEntityFullImage = new JLabel();
-        aEntityFullImage.setPreferredSize(new Dimension(230, 340));
+        aEntityFullImage.setPreferredSize(new Dimension(260, 280));
         aEntityFullImage.setSize(aEntityFullImage.getPreferredSize());
         aEntityFullImage.setLocation(650, 35);
 
@@ -1150,11 +1174,11 @@ public class UserInterface implements ActionListener {
         String[] vOutput = aEngine.getMovesString().split(" ");
         for (int i = 0; i < 3; i++) {
             vButtons[i].setText(vOutput[i]);
-            
+
         }
-        for( JButton currentButton: vButtons ) {
-            for( ActionListener al : currentButton.getActionListeners() ) {
-                currentButton.removeActionListener( al );
+        for (JButton currentButton : vButtons) {
+            for (ActionListener al : currentButton.getActionListeners()) {
+                currentButton.removeActionListener(al);
             }
         }
         aAttackButton.addActionListener(e -> this.aEngine.attack1Button());
@@ -1171,9 +1195,9 @@ public class UserInterface implements ActionListener {
     public void exitBattleButton() {
         JButton[] vButtons = { aAttackButton, aDefendButton, aBagButton, aRunButton };
 
-        for( JButton currentButton: vButtons ) {
-            for( ActionListener al : currentButton.getActionListeners() ) {
-                currentButton.removeActionListener( al );
+        for (JButton currentButton : vButtons) {
+            for (ActionListener al : currentButton.getActionListeners()) {
+                currentButton.removeActionListener(al);
             }
         }
         aAttackButton.setText("Attack");
@@ -1191,6 +1215,7 @@ public class UserInterface implements ActionListener {
      * This method is update UI during the battle
      */
     public void updateBattleUI() {
+        aEnemyName.setText(aEngine.getEnemyName());
         aEnemyHP.setValue(aEngine.getEnemyHP());
         aPlayerHP.setValue(aEngine.getPlayerHP());
     }
@@ -1206,7 +1231,13 @@ public class UserInterface implements ActionListener {
         if (vList != null) {
             // soundOn();
         } else {
-            System.err.println("This version has no sound to satisfy the rendering requirements of Mr. Bureau");
+            JDialog vDialog = new JDialog();
+            JLabel vLabel = new JLabel("This version has no sound to satisfy the rendering requirements of Mr. Bureau");
+            vLabel.setFont(aTextFont);
+            vDialog.add(vLabel);
+            vDialog.setSize(800, 100);
+            vDialog.setLocation(100, 100);
+            vDialog.setVisible(true);
         }
     }
 
