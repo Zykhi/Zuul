@@ -447,7 +447,7 @@ public class UserInterface implements ActionListener {
      * Show background image of the battle
      */
     public void showBattleBackground() {
-        String vImagePath = "gameImages/battleground.png"; // to change the directory
+        String vImagePath = "gameImages/battleground.gif"; // to change the directory
         URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
         if (vImageURL == null)
             System.out.println("Image not found : " + vImagePath);
@@ -811,8 +811,8 @@ public class UserInterface implements ActionListener {
         aBattleBackground.setLocation(0, 0);
         showBattleBackground();
 
-        int enemyX = 600;
-        int enemyY = 15;
+        int enemyX = 400;
+        int enemyY = 55;
 
         aEnemyHPPanel = new JPanel();
         aEnemyHPPanel.setPreferredSize(new Dimension(200, 70));
@@ -837,8 +837,8 @@ public class UserInterface implements ActionListener {
         // TODO : Fix enemy HP
         aEnemyHP.setValue(200);
 
-        int playerX = 30;
-        int playerY = 400;
+        int playerX = 38;
+        int playerY = 375;
 
         aPlayerHPPanel = new JPanel();
         aPlayerHPPanel.setPreferredSize(new Dimension(200, 70));
@@ -889,9 +889,9 @@ public class UserInterface implements ActionListener {
         vBattleButtonPanel.add(aRunButton);
 
         aEntityFullImage = new JLabel();
-        aEntityFullImage.setPreferredSize(new Dimension(260, 280));
+        aEntityFullImage.setPreferredSize(new Dimension(455, 490));
         aEntityFullImage.setSize(aEntityFullImage.getPreferredSize());
-        aEntityFullImage.setLocation(650, 35);
+        aEntityFullImage.setLocation(560, 0);
 
         this.aBattlerPanel.add(aBattleBackground, JLayeredPane.DEFAULT_LAYER);
         this.aBattlerPanel.add(aEntityFullImage, JLayeredPane.PALETTE_LAYER);
