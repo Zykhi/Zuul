@@ -377,6 +377,7 @@ public class Player extends Entity {
             this.aGui.playBattleRoomSound();
             this.aGui.showBattlePanel();
             showFullCharacter();
+            //showFullPlayerCharacter();
             this.aGui.printlnBattle("Let battle begin");
 
         } else {
@@ -620,8 +621,18 @@ public class Player extends Entity {
     protected void showFullCharacter() {
         if (this.getCurrentRoom().getCharacter().getImageName() != null) {
             this.aGui.showFullEntityImage(this.getCurrentRoom().getCharacter().getFullImageName());
+            this.aGui.showFullPlayerImage();
         }
     }
+
+    /**
+     * This method show the player for the battle
+     
+    protected void showFullPlayerCharacter() {
+        if (this.getCurrentRoom().getCharacter().getImageName() != null) {
+            this.aGui.showFullPlayerImage();
+        }
+    }*/
 
     /**
      * This function get the enemy name

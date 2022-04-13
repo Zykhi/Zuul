@@ -47,6 +47,7 @@ public class UserInterface implements ActionListener {
     private JLabel aImage;
     private JLabel aEntityImage;
     private JLabel aEntityFullImage;
+    private JLabel aPlayerFullImage;
     private JLabel aMainMenuBackGroundImage;
     private JLabel aBattleBackground;
     private JLabel aEnemyName;
@@ -424,6 +425,21 @@ public class UserInterface implements ActionListener {
         else {
             ImageIcon vIcon = new ImageIcon(vImageURL);
             this.aEntityFullImage.setIcon(vIcon);
+            this.aGameWindow.pack();
+        }
+    }
+
+    /**
+     * Show an image file in the interface.
+     */
+    public void showFullPlayerImage() {
+        String vImagePath = "faceImages/player.gif"; // to change the directory
+        URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
+        if (vImageURL == null)
+            System.out.println("Image not found : " + vImagePath);
+        else {
+            ImageIcon vIcon = new ImageIcon(vImageURL);
+            this.aPlayerFullImage.setIcon(vIcon);
             this.aGameWindow.pack();
         }
     }
@@ -838,7 +854,7 @@ public class UserInterface implements ActionListener {
         aEnemyHP.setValue(200);
 
         int playerX = 38;
-        int playerY = 375;
+        int playerY = 490;
 
         aPlayerHPPanel = new JPanel();
         aPlayerHPPanel.setPreferredSize(new Dimension(200, 70));
@@ -893,9 +909,15 @@ public class UserInterface implements ActionListener {
         aEntityFullImage.setSize(aEntityFullImage.getPreferredSize());
         aEntityFullImage.setLocation(560, 0);
 
+        aPlayerFullImage = new JLabel();
+        aPlayerFullImage.setPreferredSize(new Dimension(320, 480));
+        aPlayerFullImage.setSize(aPlayerFullImage.getPreferredSize());
+        aPlayerFullImage.setLocation(100, 200);
+
         this.aBattlerPanel.add(aBattleBackground, JLayeredPane.DEFAULT_LAYER);
         this.aBattlerPanel.add(aEntityFullImage, JLayeredPane.PALETTE_LAYER);
-        this.aBattlerPanel.add(vBattleTextPanel, JLayeredPane.PALETTE_LAYER);
+        this.aBattlerPanel.add(aPlayerFullImage, JLayeredPane.PALETTE_LAYER);
+        this.aBattlerPanel.add(vBattleTextPanel, JLayeredPane.MODAL_LAYER);
         this.aBattlerPanel.add(vBattleButtonPanel, JLayeredPane.PALETTE_LAYER);
         this.aBattlerPanel.add(aEnemyHPPanel, JLayeredPane.MODAL_LAYER);
         this.aBattlerPanel.add(aEnemyName, JLayeredPane.POPUP_LAYER);
