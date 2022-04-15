@@ -10,6 +10,7 @@ public class Hazelgash extends Entity {
         setName("Hazelgash");
         setDialog("Be careful of lava");
         setImageName("faceImages/hazelgash.png");
+        setFullImageName("faceImages/fullhazelgash.png");
     }
 
 }
