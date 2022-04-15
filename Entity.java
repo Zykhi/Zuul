@@ -10,15 +10,17 @@ public class Entity {
     private int aSpeDef;
     private int aAtt;
     private int aSpeAtt;
+    private boolean aFightable;
 
     public Entity(int pHP, int pMaxHP, int pDef, int pSpeDef, int pAtt,
-            int pSpeAtt) {
+            int pSpeAtt, boolean pFightable) {
         this.aHP = pHP;
         this.aMaxHP = pMaxHP;
         this.aDef = pDef;
         this.aSpeDef = pSpeDef;
         this.aAtt = pAtt;
         this.aSpeAtt = pSpeAtt;
+        this.aFightable = pFightable;
         this.aMoves = new String[3][4];
     }
 
@@ -68,6 +70,10 @@ public class Entity {
 
     public int getMaxHP() {
         return this.aMaxHP;
+    }
+
+    public boolean isFightable(){
+        return this.aFightable;
     }
 
     public void improveDefence() {

@@ -6,7 +6,7 @@
 public class Viego extends Entity {
 
     public Viego() {
-        super(200, 200, 100, 100, 100, 100);
+        super(200, 200, 100, 100, 100, 100, true);
         setName("Viego");
         setDialog("you will die");
         setImageName("faceImages/viego.jpg");

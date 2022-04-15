@@ -20,7 +20,7 @@ public class Player extends Entity {
      * @param pCurrentRoom Start room
      */
     public Player(final Room pCurrentRoom) {
-        super(200, 200, 100, 100, 100, 100);
+        super(200, 200, 100, 100, 100, 100, true);
         this.aCurrentRoom = pCurrentRoom;
         this.setName("Edward");
         this.aPreviousRooms = new Stack<Room>();
@@ -372,7 +372,7 @@ public class Player extends Entity {
      * This method is called when player want to fight
      */
     public void fight() {
-        if (this.aCurrentRoom.getCharacter() != null) {
+        if (this.aCurrentRoom.getCharacter() != null && this.aCurrentRoom.getCharacter().isFightable()) {
             this.aGui.updateBattleUI();
             this.aGui.playBattleRoomSound();
             this.aGui.showBattlePanel();
