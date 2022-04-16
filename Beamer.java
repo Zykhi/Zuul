@@ -12,7 +12,7 @@ public class Beamer extends Item {
      * Create beamer
      */
     public Beamer() {
-        super("teleporter", 10, 5, "teleport where it's charged");
+        super("teleporter", 10, 5, "teleport where it's charged", false);
         this.aIsCharged = false;
         this.aRoomCharged = null;
     }

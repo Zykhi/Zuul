@@ -126,25 +126,25 @@ public class GameEngine {
      * This method init item in the room
      */
     private void createItems() {
-        Item vTest = new Item("TestItem", 10, 5, "This is a test item"); // Name, price, weight, desc
-        Item vTest2 = new Item("TestItem2", 20, 10, "This is a test item 2"); // Name, price, weight, desc
+        Item vTest = new Item("TestItem", 10, 5, "This is a test item", false); // Name, price, weight, desc
+        Item vPotion = new Potion(50); // Name, price, weight, desc
         this.aRooms.get("outside").addItem("test", vTest);
-        this.aRooms.get("outside").addItem("test2", vTest2);
+        this.aRooms.get("outside").addItem("potion", vPotion);
 
-        Item vWarmogArmor = new Item("warmog's_armor", 0, 40, "This is the armor of Warmog the Giant");
+        Item vWarmogArmor = new Item("warmog's_armor", 0, 40, "This is the armor of Warmog the Giant",false);
         this.aRooms.get("boss1room").addItem("warmog's_armor", vWarmogArmor);
 
         Item vBOTRK = new Item("Blade_Of_The_Ruined King", 0, 20,
-                "This is the blade of Viego, it weighs nothing compared to its burden");
+                "This is the blade of Viego, it weighs nothing compared to its burden", false);
         this.aRooms.get("boss2room").addItem("blade_of_the_ruined_king", vBOTRK);
 
-        Item vFrostFireGauntlet = new Item("Frostfire_Gauntlet", 0, 10, "This is the last artefact of the dungeon");
+        Item vFrostFireGauntlet = new Item("Frostfire_Gauntlet", 0, 10, "This is the last artefact of the dungeon", false);
         this.aRooms.get("boss3room").addItem("frostfire_gauntlet", vFrostFireGauntlet);
 
-        Item vWeddingRing = new Item("wedding_ring", 0, 0, "This is a wedding ring, it's will be usefull");
+        Item vWeddingRing = new Item("wedding_ring", 0, 0, "This is a wedding ring, it's will be usefull", false);
         this.aRooms.get("catacombs").addItem("wedding_ring", vWeddingRing);
 
-        Item vMagicCookie = new Item("cookie", 0, 0, "This is a magic cookie");
+        Item vMagicCookie = new Item("cookie", 0, 0, "This is a magic cookie", false);
         this.aRooms.get("treasure").addItem("cookie", vMagicCookie);
 
         Beamer vBeamer = new Beamer();
@@ -260,6 +260,10 @@ public class GameEngine {
 
                     case FIGHT:
                         this.aPlayer.fight();
+                        break;
+
+                    case USE:
+                        this.aPlayer.use(pCommandLine);
                         break;
 
                     default:
@@ -397,6 +401,21 @@ public class GameEngine {
      */
     protected String getCurrentInventoryItemsString() {
         String[] vCIIS = aPlayer.getCurrentInventoryItemsString().split(" : ");
+        if (vCIIS.length > 1) {
+            return vCIIS[1];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * This function get the fightable item in the inventory. This function is used for the
+     * UserInterface
+     * 
+     * @return String with all fightable items in inventory
+     */
+    protected String getCurrentInventoryFightableItemsString() {
+        String[] vCIIS = aPlayer.getCurrentInventoryFightableItemsString().split(" : ");
         if (vCIIS.length > 1) {
             return vCIIS[1];
         } else {

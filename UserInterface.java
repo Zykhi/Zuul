@@ -609,7 +609,7 @@ public class UserInterface implements ActionListener {
         this.aTakeButton = new JButton("take");
         this.aFireButton = new JButton("fire");
         this.aChargeButton = new JButton("charge");
-        this.aInventoryButton = new JButton("attack");
+        this.aInventoryButton = new JButton("inventory");
         this.aSkipButton = new JButton("skip");
         this.aPlay = new JButton("Play");
         this.aSetting = new JButton("Settings");
@@ -684,7 +684,7 @@ public class UserInterface implements ActionListener {
         this.aBagButton.addActionListener(this);
         this.aAttackButton.addActionListener(e -> attackButton());
         this.aDefendButton.addActionListener(e -> this.aEngine.defendButton());
-        this.aBagButton.addActionListener(this);
+        this.aBagButton.addActionListener(e -> bagButtonMethod());
         this.aRunButton.addActionListener(this);
 
         // set action to write differents names
@@ -1196,19 +1196,35 @@ public class UserInterface implements ActionListener {
         String[] vOutput = aEngine.getMovesString().split(" ");
         for (int i = 0; i < 3; i++) {
             vButtons[i].setText(vOutput[i]);
-
         }
-        for (JButton currentButton : vButtons) {
-            for (ActionListener al : currentButton.getActionListeners()) {
-                currentButton.removeActionListener(al);
-            }
-        }
+        removeAL(vButtons);
         aAttackButton.addActionListener(e -> this.aEngine.attack1Button());
         aDefendButton.addActionListener(e -> this.aEngine.attack2Button());
         aBagButton.addActionListener(e -> this.aEngine.attack3Button());
         aRunButton.setText("Back");
         aRunButton.addActionListener(e -> exitBattleButton());
 
+    }
+
+    public void bagButtonMethod() {
+        JButton[] vButtons = { aAttackButton, aDefendButton, aBagButton, aRunButton };
+        if (aEngine.getCurrentInventoryFightableItemsString() != null) {
+            String[] vOutput = aEngine.getCurrentInventoryFightableItemsString().split(" ");
+            removeAL(vButtons);
+            for (int i = 0; i < vOutput.length; i++) {
+                vButtons[i].setText(vOutput[i]);
+                vButtons[i].setActionCommand("use " + vOutput[i]);
+                vButtons[i].addActionListener(this);
+            }for (int i = vOutput.length; i < 3; i++) {
+                vButtons[i].setText("");
+                vButtons[i].setActionCommand("");
+                vButtons[i].removeActionListener(this);
+            }
+            aRunButton.setText("Back");
+            aRunButton.addActionListener(e -> exitBattleButton());
+        } else {
+            this.printlnBattle("Your inventory is empty");
+        }
     }
 
     /**
@@ -1227,7 +1243,7 @@ public class UserInterface implements ActionListener {
         aDefendButton.setText("Defend");
         aDefendButton.addActionListener(e -> this.aEngine.defendButton());
         aBagButton.setText("Bag");
-        aBagButton.addActionListener(this);
+        aBagButton.addActionListener(e -> bagButtonMethod());
         aRunButton.setText("Run");
         aRunButton.addActionListener(this);
 
@@ -1401,6 +1417,14 @@ public class UserInterface implements ActionListener {
      */
     public void showGameOverPanel() {
         this.aCardLayout.show(aSceneManager, "GameOver");
+    }
+
+    private void removeAL(JButton[] pButtons) {
+        for (JButton currentButton : pButtons) {
+            for (ActionListener al : currentButton.getActionListeners()) {
+                currentButton.removeActionListener(al);
+            }
+        }
     }
 
 } // UserInterface

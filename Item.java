@@ -9,6 +9,7 @@ public class Item {
     private double aPrice;
     private double aWeight;
     private String aDescription;
+    private boolean aFightableItem;
 
     /**
      * Create an item with a name, a price, a weight and a description
@@ -18,11 +19,12 @@ public class Item {
      * @param pWeight      weight of the item
      * @param pDescription description of the item
      */
-    public Item(final String pName, final double pPrice, final double pWeight, final String pDescription) {
+    public Item(final String pName, final double pPrice, final double pWeight, final String pDescription, boolean pFightableItem) {
         this.aName = pName;
         this.aPrice = pPrice;
         this.aWeight = pWeight;
         this.aDescription = pDescription;
+        this.aFightableItem = pFightableItem;
     }
 
     /**
@@ -76,6 +78,10 @@ public class Item {
      */
     public double getWeight() {
         return this.aWeight;
+    }
+
+    public boolean isFightableItem(){
+        return this.aFightableItem;
     }
 
 }

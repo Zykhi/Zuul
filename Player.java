@@ -361,6 +361,25 @@ public class Player extends Entity {
         }
     }
 
+    public void use(Command pItemName) {
+        Potion vPotion = (Potion) this.aInventory.getItemName("potion");
+        String vItemName = pItemName.getSecondWord();
+        Item vItem = this.aInventory.getItemName(vItemName);
+        if (!pItemName.hasSecondWord()) {
+
+        } else if (vItem == null) {
+
+        } else {
+            if (this.aInventory.contain(vPotion)) {
+                this.heal(vPotion.getHealingPoint());
+                this.aGui.updateBattleUI();
+            }
+            this.aInventory.removeItem(vItemName, vItem);
+            this.aInventory.removeWeight(vItem.getWeight());
+            
+        }
+    }
+
     /**
      * This method write in UI when you left the menu
      */
@@ -678,6 +697,16 @@ public class Player extends Entity {
      * @return a String with items in inventory
      */
     public String getCurrentInventoryItemsString() {
+        return this.aInventory.getInventoryString();
+    }
+
+    /**
+     * This function get items in inventory
+     * 
+     * @return a String with items in inventory
+     */
+    //FIXME: return only fightable item
+    public String getCurrentInventoryFightableItemsString() {
         return this.aInventory.getInventoryString();
     }
 }

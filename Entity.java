@@ -81,8 +81,8 @@ public class Entity {
         this.aSpeDef += 20;
     }
 
-    public void heal() {
-        this.aHP += 50;
+    public void heal(int pHealingPoint) {
+        this.aHP += pHealingPoint;
     }
 
     public void attack(Entity pEnemy, int pMove) {

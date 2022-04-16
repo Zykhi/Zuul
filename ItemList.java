@@ -9,6 +9,7 @@ import java.util.Set;
  */
 public class ItemList {
     private HashMap<String, Item> aItems;
+    private Item aItem;
     private double aWeight;
 
     /**
