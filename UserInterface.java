@@ -685,7 +685,7 @@ public class UserInterface implements ActionListener {
         this.aAttackButton.addActionListener(e -> attackButton());
         this.aDefendButton.addActionListener(e -> this.aEngine.defendButton());
         this.aBagButton.addActionListener(e -> bagButtonMethod());
-        this.aRunButton.addActionListener(this);
+        this.aRunButton.addActionListener(e -> runButtonMethod());
 
         // set action to write differents names
         this.aQuitButton.setActionCommand("quit");
@@ -1215,7 +1215,8 @@ public class UserInterface implements ActionListener {
                 vButtons[i].setText(vOutput[i]);
                 vButtons[i].setActionCommand("use " + vOutput[i]);
                 vButtons[i].addActionListener(this);
-            }for (int i = vOutput.length; i < 3; i++) {
+            }
+            for (int i = vOutput.length; i < 3; i++) {
                 vButtons[i].setText("");
                 vButtons[i].setActionCommand("");
                 vButtons[i].removeActionListener(this);
@@ -1225,6 +1226,10 @@ public class UserInterface implements ActionListener {
         } else {
             this.printlnBattle("Your inventory is empty");
         }
+    }
+
+    public void runButtonMethod() {
+        hideBattlePanel();
     }
 
     /**
@@ -1245,8 +1250,7 @@ public class UserInterface implements ActionListener {
         aBagButton.setText("Bag");
         aBagButton.addActionListener(e -> bagButtonMethod());
         aRunButton.setText("Run");
-        aRunButton.addActionListener(this);
-
+        aRunButton.addActionListener(e -> runButtonMethod());
     }
 
     /**
