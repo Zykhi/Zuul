@@ -842,16 +842,13 @@ public class UserInterface implements ActionListener {
         aEnemyName.setSize(300, 50);
         aEnemyName.setLocation(enemyX + 10, enemyY);
 
-        // TODO : Fix enemy max HP
-        aEnemyHP = new JProgressBar(0, 200);
+        startBattleUI();
         aEnemyHP.setBackground(Color.WHITE);
         aEnemyHP.setForeground(Color.GREEN);
 
         aEnemyHP.setPreferredSize(new Dimension(180, 10));
         aEnemyHP.setSize(aEnemyHP.getPreferredSize());
         aEnemyHP.setLocation(enemyX + 10, enemyY + 45);
-        // TODO : Fix enemy HP
-        aEnemyHP.setValue(200);
 
         int playerX = 38;
         int playerY = 490;
@@ -1257,9 +1254,14 @@ public class UserInterface implements ActionListener {
      * This method is update UI during the battle
      */
     public void updateBattleUI() {
-        aEnemyName.setText(aEngine.getEnemyName());
         aEnemyHP.setValue(aEngine.getEnemyHP());
         aPlayerHP.setValue(aEngine.getPlayerHP());
+    }
+
+    public void startBattleUI(){
+        aEnemyHP = new JProgressBar(0, aEngine.getEnemyHP());
+        aEnemyName.setText(aEngine.getEnemyName());
+        aEnemyHP.setValue(aEngine.getEnemyHP());
     }
 
     /**

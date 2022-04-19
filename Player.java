@@ -392,7 +392,7 @@ public class Player extends Entity {
      */
     public void fight() {
         if (this.aCurrentRoom.getCharacter() != null && this.aCurrentRoom.getCharacter().isFightable()) {
-            this.aGui.updateBattleUI();
+            this.aGui.startBattleUI();
             this.aGui.playBattleRoomSound();
             this.aGui.showBattlePanel();
             showFullCharacter();

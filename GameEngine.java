@@ -160,6 +160,9 @@ public class GameEngine {
     }
 
     private void createCharacter() {
+        BasicEntity vBasicEntity = new BasicEntity();
+        this.aRooms.get("mainmenu").setCharacter(vBasicEntity);
+
         Garret vGarret = new Garret();
         this.aRooms.get("lobby").setCharacter(vGarret);
 
