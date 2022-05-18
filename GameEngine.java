@@ -460,7 +460,11 @@ public class GameEngine {
         Room vRoom = aPlayer.getCurrentRoom();
         String vCurrentRoomString = getKey(vRooms, vRoom);
         this.aGui.stopSound();
+        if(this.aGui.isSound()==false){
+            this.aGui.soundOff();
+        }else{
         this.aGui.playBattleSound(vCurrentRoomString, -1);
+        }
     }
 
     /**

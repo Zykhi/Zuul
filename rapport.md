@@ -2461,14 +2461,14 @@ public void takeButtonMethod() {
 
 public void exitButtonMethod() {
     aQuitButton.setText("quit");
-    aBackButton.setText("back ↺");
-    aHelpButton.setText("help ?");
-    aDropButton.setText("drop ☛");
-    aTakeButton.setText("take ☚");
-    aFireButton.setText("fire ◎");
-    aChargeButton.setText("charge ⌁");
-    aInventoryButton.setText("bag ₿");
-    aSkipButton.setText("skip ▹▹");
+    aBackButton.setText("back");
+    aHelpButton.setText("help");
+    aDropButton.setText("drop");
+    aTakeButton.setText("take");
+    aFireButton.setText("fire");
+    aChargeButton.setText("charge");
+    aInventoryButton.setText("bag");
+    aSkipButton.setText("skip");
 
     aQuitButton.setActionCommand("quit");
     aBackButton.setActionCommand("back");

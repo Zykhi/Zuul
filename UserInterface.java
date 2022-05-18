@@ -16,6 +16,7 @@ import java.awt.GraphicsEnvironment;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -114,6 +115,7 @@ public class UserInterface implements ActionListener {
     private int aDelay = 1000;
     private int aEndTime = 20;
     private int aIndex;
+    private boolean aSoundToggle;
 
     /**
      * Construct a UserInterface. As a parameter, a Game Engine
@@ -127,6 +129,7 @@ public class UserInterface implements ActionListener {
         this.createFont();
         this.createGUI();
         this.aParser = new Parser();
+        this.aSoundToggle = true;
     } // UserInterface(.)
 
     // print methods
@@ -1259,21 +1262,21 @@ public class UserInterface implements ActionListener {
     }
 
     public void startBattleUI(){
-        aEnemyHP = new JProgressBar(0, aEngine.getEnemyHP());
-        aEnemyName.setText(aEngine.getEnemyName());
-        aEnemyHP.setValue(aEngine.getEnemyHP());
+        aEnemyHP = new JProgressBar(0, /*aEngine.getEnemyHP()*/ 200);
+        aEnemyName.setText(/*aEngine.getEnemyName()*/"test");
+        aEnemyHP.setValue(/*aEngine.getEnemyHP()*/ 200);
     }
 
     /**
      * This method is called when the player click on SoundOn button in main menu
      */
-    // TODO : make sound on method works
     private void soundOnButton() {
         File vRepository = new File("gameSounds/");
         String vList[] = vRepository.list();
 
         if (vList != null) {
-            // soundOn();
+            soundOn();
+            aSoundToggle = true;
         } else {
             JDialog vDialog = new JDialog();
             JLabel vLabel = new JLabel("This version has no sound to satisfy the rendering requirements of Mr. Bureau");
@@ -1288,11 +1291,41 @@ public class UserInterface implements ActionListener {
     /**
      * This method is called when the player click on SoundOff button in main menu
      */
-    // TODO: make sound off method works
     private void soundOffButton() {
-        System.out.println("Sound Off");
+        soundOff();
+        aSoundToggle = false;
     }
 
+    //https://stackoverflow.com/questions/40514910/set-volume-of-java-clip
+    private void setVolume(float pVolume, Clip pClip) {
+        if (pVolume < 0f || pVolume > 1f)
+            throw new IllegalArgumentException("Volume not valid: " + pVolume);
+        FloatControl gainControl = (FloatControl) pClip.getControl(FloatControl.Type.MASTER_GAIN);        
+        gainControl.setValue(20f * (float) Math.log10(pVolume));
+    }
+
+    private void soundOn(){
+        Clip[] vClips = {aClip, aDialogClip};
+        for (int i = 0; i < vClips.length; i++) {
+            if (vClips[i] != null) {
+                setVolume(1f, vClips[i]);
+            }
+        }
+    }
+
+    public void soundOff(){
+        Clip[] vClips = {aClip, aDialogClip};
+        for (int i = 0; i < vClips.length; i++) {
+            if (vClips[i] != null) {
+                setVolume(0.0001f, vClips[i]);
+            }
+        }
+    }
+    
+    public boolean isSound(){
+        return aSoundToggle;
+    }
+    
     /**
      * Actionlistener interface for entry textfield.
      * 

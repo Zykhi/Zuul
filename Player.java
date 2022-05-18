@@ -103,7 +103,11 @@ public class Player extends Entity {
      * Print out the opening message for the player.
      */
     protected void printWelcome() {
+        if(this.aGui.isSound()==false){
+            this.aGui.soundOff();
+        }else{
         this.aGui.playDialogSound("welcome");
+        }
         this.aGui.slowPrintln("Welcome to the world of Zuul." + '\n' + "You are Edward, the hero of this story." + '\n'
                 +
                 "You are a knight, the war has been raging for decades and you cannot sleep. You decide to go out to clear your mind by walking away from the castle. You come across a waterfall that hides a cave, mist emanating from it."
@@ -163,6 +167,7 @@ public class Player extends Entity {
      * @param vNextRoom the next room
      */
     private void changeRoom(Room vNextRoom) {
+        
         this.setRoom(vNextRoom);
         this.aGui.println("");
         showImage();
@@ -177,7 +182,11 @@ public class Player extends Entity {
             this.aGui.hideCharacterPanel();
         }
         this.aCurrentRoom.updateNbrRoom();
+        if(this.aGui.isSound()==false){
+            this.aGui.soundOff();
+        }else{
         this.aGui.playRoomSound();
+        }
         aMovement -= 1;
 
         if (this.getMovement() == 40) {
