@@ -14,6 +14,7 @@ public class Player extends Entity {
     private ItemList aInventory;
     private int aMaxWeight;
     private int aMovement;
+
     /**
      * this constructor init the player
      * 
@@ -103,10 +104,10 @@ public class Player extends Entity {
      * Print out the opening message for the player.
      */
     protected void printWelcome() {
-        if(this.aGui.isSound()==false){
+        if (this.aGui.isSound() == false) {
             this.aGui.soundOff();
-        }else{
-        this.aGui.playDialogSound("welcome");
+        } else {
+            this.aGui.playDialogSound("welcome");
         }
         this.aGui.slowPrintln("Welcome to the world of Zuul." + '\n' + "You are Edward, the hero of this story." + '\n'
                 +
@@ -167,7 +168,7 @@ public class Player extends Entity {
      * @param vNextRoom the next room
      */
     private void changeRoom(Room vNextRoom) {
-        
+
         this.setRoom(vNextRoom);
         this.aGui.println("");
         showImage();
@@ -182,10 +183,10 @@ public class Player extends Entity {
             this.aGui.hideCharacterPanel();
         }
         this.aCurrentRoom.updateNbrRoom();
-        if(this.aGui.isSound()==false){
+        if (this.aGui.isSound() == false) {
             this.aGui.soundOff();
-        }else{
-        this.aGui.playRoomSound();
+        } else {
+            this.aGui.playRoomSound();
         }
         aMovement -= 1;
 
@@ -385,7 +386,7 @@ public class Player extends Entity {
             }
             this.aInventory.removeItem(vItemName, vItem);
             this.aInventory.removeWeight(vItem.getWeight());
-            
+
         }
     }
 
@@ -405,7 +406,7 @@ public class Player extends Entity {
             this.aGui.playBattleRoomSound();
             this.aGui.showBattlePanel();
             showFullCharacter();
-            //showFullPlayerCharacter();
+            // showFullPlayerCharacter();
             this.aGui.printlnBattle("Let battle begin");
 
         } else {
@@ -585,14 +586,15 @@ public class Player extends Entity {
      */
     private void enemyAttackString(int pMove) {
         String vName = this.aCurrentRoom.getCharacter().getName();
-        //TODO : add text when attack missed
-        /*if () {
+        if (isMissed()) {
             this.aGui.printlnBattle(vName + " missed");
             this.aGui.printlnBattle("");
-        } else {*/
+            setMissed(false);
+            return;
+        } else {
             this.aGui.printlnBattle(vName + " used " + getAttackString(pMove));
             this.aGui.printlnBattle("");
-        //}
+        }
     }
 
     /**
@@ -601,14 +603,15 @@ public class Player extends Entity {
      * @param pMove Number of the move in the table
      */
     private void playerAttackString(int pMove) {
-        //TODO : add text when attack missed
-        /*if () {
+        if (isMissed()) {
             this.aGui.printlnBattle("You missed");
             this.aGui.printlnBattle("");
-        } else {*/
+            setMissed(false);
+            return;
+        } else {
             this.aGui.printlnBattle("You used " + getAttackString(pMove));
             this.aGui.printlnBattle("");
-        //}
+        }
     }
 
     /**
@@ -655,12 +658,13 @@ public class Player extends Entity {
 
     /**
      * This method show the player for the battle
-     
-    protected void showFullPlayerCharacter() {
-        if (this.getCurrentRoom().getCharacter().getImageName() != null) {
-            this.aGui.showFullPlayerImage();
-        }
-    }*/
+     * 
+     * protected void showFullPlayerCharacter() {
+     * if (this.getCurrentRoom().getCharacter().getImageName() != null) {
+     * this.aGui.showFullPlayerImage();
+     * }
+     * }
+     */
 
     /**
      * This function get the enemy name
@@ -676,7 +680,7 @@ public class Player extends Entity {
     }
 
     /**
-     * This function get the moves 
+     * This function get the moves
      * 
      * @return String of the moves
      */
@@ -714,7 +718,7 @@ public class Player extends Entity {
      * 
      * @return a String with items in inventory
      */
-    //FIXME: return only fightable item
+    // FIXME: return only fightable item
     public String getCurrentInventoryFightableItemsString() {
         return this.aInventory.getInventoryString();
     }

@@ -11,6 +11,7 @@ public class Entity {
     private int aAtt;
     private int aSpeAtt;
     private boolean aFightable;
+    private boolean aMissed;
 
     public Entity(int pHP, int pMaxHP, int pDef, int pSpeDef, int pAtt,
             int pSpeAtt, boolean pFightable) {
@@ -72,7 +73,7 @@ public class Entity {
         return this.aMaxHP;
     }
 
-    public boolean isFightable(){
+    public boolean isFightable() {
         return this.aFightable;
     }
 
@@ -86,10 +87,12 @@ public class Entity {
     }
 
     public void attack(Entity pEnemy, int pMove) {
+        aMissed = false;
         double vDamage = 0.0;
         double vRandom = Math.random() * 100;
         if (vRandom > Double.parseDouble(aMoves[pMove][2])) {
             System.out.println("attack missed");
+            aMissed = true;
             return;
         }
         if (aMoves[pMove][3].equals("special")) {
@@ -102,6 +105,14 @@ public class Entity {
 
     public boolean isDead() {
         return aHP <= 0;
+    }
+
+    public boolean isMissed() {
+        return aMissed;
+    }
+
+    public void setMissed(boolean pMissed) {
+        aMissed = pMissed;
     }
 
     public String getMoves() {

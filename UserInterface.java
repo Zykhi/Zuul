@@ -1261,10 +1261,10 @@ public class UserInterface implements ActionListener {
         aPlayerHP.setValue(aEngine.getPlayerHP());
     }
 
-    public void startBattleUI(){
-        aEnemyHP = new JProgressBar(0, /*aEngine.getEnemyHP()*/ 200);
-        aEnemyName.setText(/*aEngine.getEnemyName()*/"test");
-        aEnemyHP.setValue(/*aEngine.getEnemyHP()*/ 200);
+    public void startBattleUI() {
+        aEnemyHP = new JProgressBar(0, /* aEngine.getEnemyHP() */ 200);
+        aEnemyName.setText(/* aEngine.getEnemyName() */"test");
+        aEnemyHP.setValue(/* aEngine.getEnemyHP() */ 200);
     }
 
     /**
@@ -1296,16 +1296,16 @@ public class UserInterface implements ActionListener {
         aSoundToggle = false;
     }
 
-    //https://stackoverflow.com/questions/40514910/set-volume-of-java-clip
+    // https://stackoverflow.com/questions/40514910/set-volume-of-java-clip
     private void setVolume(float pVolume, Clip pClip) {
         if (pVolume < 0f || pVolume > 1f)
             throw new IllegalArgumentException("Volume not valid: " + pVolume);
-        FloatControl gainControl = (FloatControl) pClip.getControl(FloatControl.Type.MASTER_GAIN);        
+        FloatControl gainControl = (FloatControl) pClip.getControl(FloatControl.Type.MASTER_GAIN);
         gainControl.setValue(20f * (float) Math.log10(pVolume));
     }
 
-    private void soundOn(){
-        Clip[] vClips = {aClip, aDialogClip};
+    private void soundOn() {
+        Clip[] vClips = { aClip, aDialogClip };
         for (int i = 0; i < vClips.length; i++) {
             if (vClips[i] != null) {
                 setVolume(1f, vClips[i]);
@@ -1313,19 +1313,19 @@ public class UserInterface implements ActionListener {
         }
     }
 
-    public void soundOff(){
-        Clip[] vClips = {aClip, aDialogClip};
+    public void soundOff() {
+        Clip[] vClips = { aClip, aDialogClip };
         for (int i = 0; i < vClips.length; i++) {
             if (vClips[i] != null) {
                 setVolume(0.0001f, vClips[i]);
             }
         }
     }
-    
-    public boolean isSound(){
+
+    public boolean isSound() {
         return aSoundToggle;
     }
-    
+
     /**
      * Actionlistener interface for entry textfield.
      * 
