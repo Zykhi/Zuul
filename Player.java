@@ -205,6 +205,7 @@ public class Player extends Entity {
                 this.aGui.println("Type '" + CommandWord.HELP.toString() + "' if you need help." + '\n'
                         + "You have 20 minutes to escape from the dungeon before being trapped forever" + '\n');
                 this.printLocationInfo();
+                this.aGui.enable(true);
                 this.aGui.startTimer();
             });
             vTimer2.setRepeats(false);// make sure the timer only runs once
@@ -720,6 +721,6 @@ public class Player extends Entity {
      */
     // FIXME: return only fightable item
     public String getCurrentInventoryFightableItemsString() {
-        return this.aInventory.getInventoryString();
+        return this.aInventory.getInventoryFightableString();
     }
 }

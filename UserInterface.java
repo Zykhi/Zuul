@@ -207,10 +207,9 @@ public class UserInterface implements ActionListener {
         this.printEntity(pText + "\n");
     } // println(.)
 
-    // FIXME Exception in thread "AWT-EventQueue-0"
-    // java.lang.StringIndexOutOfBoundsException: begin 0, end 22, length 21
     public void slowPrintEntity(final String pText) {
 
+        enable(false);
         Timer timer = new Timer(60, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent pEvent) {
@@ -218,6 +217,7 @@ public class UserInterface implements ActionListener {
                 aIndex++;
                 if (aIndex > pText.length()) {
                     ((Timer) pEvent.getSource()).stop();
+                    enable(true);
                 }
             }
 
@@ -537,13 +537,45 @@ public class UserInterface implements ActionListener {
             this.aEntryField.removeActionListener(this); // won't react to entry
 
             JButton[] vButtons = { aBackButton, aHelpButton, aQuitButton, aDropButton, aTakeButton, aFireButton,
-                    aChargeButton, aInventoryButton };
+                    aChargeButton, aInventoryButton, aNorthButton, aSouthButton, aEastButton, aWestButton, aUpButton,
+                    aDownButton };
 
             for (JButton currentButton : vButtons) {
                 for (ActionListener al : currentButton.getActionListeners()) {
                     currentButton.removeActionListener(al);
                 }
             }
+        } else {
+            this.aQuitButton.addActionListener(this);
+            this.aNorthButton.addActionListener(this);
+            this.aSouthButton.addActionListener(this);
+            this.aEastButton.addActionListener(this);
+            this.aWestButton.addActionListener(this);
+            this.aUpButton.addActionListener(this);
+            this.aDownButton.addActionListener(this);
+            this.aBackButton.addActionListener(this);
+            this.aHelpButton.addActionListener(this);
+            this.aDropButton.addActionListener(e -> dropButtonMethod());
+            this.aTakeButton.addActionListener(e -> takeButtonMethod());
+            this.aFireButton.addActionListener(this);
+            this.aChargeButton.addActionListener(this);
+            this.aInventoryButton.addActionListener(this);
+            this.aSkipButton.addActionListener(e -> skipMethod());
+            this.aPlay.addActionListener(e -> playButton());
+            this.aPlay.addActionListener(this);
+            this.aSetting.addActionListener(e -> settingsButton());
+            this.aQuit.addActionListener(e -> quitButton());
+            this.aQuit2.addActionListener(e -> quitButton());
+            this.aBack.addActionListener(e -> backButton());
+            this.aBack2.addActionListener(e -> backButton2());
+            this.aSound.addActionListener(e -> soundButton());
+            this.aSoundOn.addActionListener(e -> soundOnButton());
+            this.aSoundOff.addActionListener(e -> soundOffButton());
+            this.aBagButton.addActionListener(this);
+            this.aAttackButton.addActionListener(e -> attackButton());
+            this.aDefendButton.addActionListener(e -> this.aEngine.defendButton());
+            this.aBagButton.addActionListener(e -> bagButtonMethod());
+            this.aRunButton.addActionListener(e -> runButtonMethod());
         }
     } // enable(.)
 
