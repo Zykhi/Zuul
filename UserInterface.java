@@ -130,6 +130,7 @@ public class UserInterface implements ActionListener {
         this.createGUI();
         this.aParser = new Parser();
         this.aSoundToggle = true;
+        this.enable(false);
     } // UserInterface(.)
 
     // print methods
@@ -538,7 +539,7 @@ public class UserInterface implements ActionListener {
 
             JButton[] vButtons = { aBackButton, aHelpButton, aQuitButton, aDropButton, aTakeButton, aFireButton,
                     aChargeButton, aInventoryButton, aNorthButton, aSouthButton, aEastButton, aWestButton, aUpButton,
-                    aDownButton };
+                    aDownButton, aSkipButton };
 
             for (JButton currentButton : vButtons) {
                 for (ActionListener al : currentButton.getActionListeners()) {
@@ -546,6 +547,7 @@ public class UserInterface implements ActionListener {
                 }
             }
         } else {
+            this.aEntryField.addActionListener(this);
             this.aQuitButton.addActionListener(this);
             this.aNorthButton.addActionListener(this);
             this.aSouthButton.addActionListener(this);
@@ -561,21 +563,6 @@ public class UserInterface implements ActionListener {
             this.aChargeButton.addActionListener(this);
             this.aInventoryButton.addActionListener(this);
             this.aSkipButton.addActionListener(e -> skipMethod());
-            this.aPlay.addActionListener(e -> playButton());
-            this.aPlay.addActionListener(this);
-            this.aSetting.addActionListener(e -> settingsButton());
-            this.aQuit.addActionListener(e -> quitButton());
-            this.aQuit2.addActionListener(e -> quitButton());
-            this.aBack.addActionListener(e -> backButton());
-            this.aBack2.addActionListener(e -> backButton2());
-            this.aSound.addActionListener(e -> soundButton());
-            this.aSoundOn.addActionListener(e -> soundOnButton());
-            this.aSoundOff.addActionListener(e -> soundOffButton());
-            this.aBagButton.addActionListener(this);
-            this.aAttackButton.addActionListener(e -> attackButton());
-            this.aDefendButton.addActionListener(e -> this.aEngine.defendButton());
-            this.aBagButton.addActionListener(e -> bagButtonMethod());
-            this.aRunButton.addActionListener(e -> runButtonMethod());
         }
     } // enable(.)
 

@@ -719,7 +719,6 @@ public class Player extends Entity {
      * 
      * @return a String with items in inventory
      */
-    // FIXME: return only fightable item
     public String getCurrentInventoryFightableItemsString() {
         return this.aInventory.getInventoryFightableString();
     }

@@ -71,6 +71,21 @@ public class ItemList {
         }
     }
 
+    public String getInventoryFightableString() {
+        if (this.aItems.isEmpty()) {
+            return "Your inventory is empty";
+        } else {
+            StringBuilder vInventoryBuilder = new StringBuilder("Your inventory : ");
+            Set<String> vKeys = aItems.keySet();
+            for (String vS : vKeys) {
+                if (aItems.get(vS).isFightableItem() == true) {
+                    vInventoryBuilder.append(" " + vS);
+                }
+            }
+            return vInventoryBuilder.toString();
+        }
+    }
+
     /**
      * This function get the inventory
      * 
