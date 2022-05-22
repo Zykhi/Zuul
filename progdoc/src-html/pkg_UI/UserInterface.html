@@ -1,0 +1,1610 @@
+<!DOCTYPE HTML>
+<html lang="fr">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">package pkg_UI;</a>
+<span class="sourceLineNo">002</span><a id="line.2"></a>
+<span class="sourceLineNo">003</span><a id="line.3">import java.net.URL;</a>
+<span class="sourceLineNo">004</span><a id="line.4">import java.io.File;</a>
+<span class="sourceLineNo">005</span><a id="line.5">import java.io.IOException;</a>
+<span class="sourceLineNo">006</span><a id="line.6">import java.awt.event.ActionListener;</a>
+<span class="sourceLineNo">007</span><a id="line.7">import java.awt.event.ActionEvent;</a>
+<span class="sourceLineNo">008</span><a id="line.8">import java.awt.GridLayout;</a>
+<span class="sourceLineNo">009</span><a id="line.9">import java.awt.Insets;</a>
+<span class="sourceLineNo">010</span><a id="line.10">import java.awt.BorderLayout;</a>
+<span class="sourceLineNo">011</span><a id="line.11">import java.awt.CardLayout;</a>
+<span class="sourceLineNo">012</span><a id="line.12">import java.awt.Container;</a>
+<span class="sourceLineNo">013</span><a id="line.13">import java.awt.Color;</a>
+<span class="sourceLineNo">014</span><a id="line.14">import java.awt.Dimension;</a>
+<span class="sourceLineNo">015</span><a id="line.15">import java.awt.Font;</a>
+<span class="sourceLineNo">016</span><a id="line.16">import java.awt.FontFormatException;</a>
+<span class="sourceLineNo">017</span><a id="line.17">import java.awt.GraphicsEnvironment;</a>
+<span class="sourceLineNo">018</span><a id="line.18">import javax.sound.sampled.AudioInputStream;</a>
+<span class="sourceLineNo">019</span><a id="line.19">import javax.sound.sampled.AudioSystem;</a>
+<span class="sourceLineNo">020</span><a id="line.20">import javax.sound.sampled.Clip;</a>
+<span class="sourceLineNo">021</span><a id="line.21">import javax.sound.sampled.FloatControl;</a>
+<span class="sourceLineNo">022</span><a id="line.22">import javax.swing.ImageIcon;</a>
+<span class="sourceLineNo">023</span><a id="line.23">import javax.swing.JFrame;</a>
+<span class="sourceLineNo">024</span><a id="line.24">import javax.swing.JLabel;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import javax.swing.JLayeredPane;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import javax.swing.JPanel;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import javax.swing.JProgressBar;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import javax.swing.JScrollPane;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import javax.swing.JTextArea;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import javax.swing.JTextField;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import javax.swing.Timer;</a>
+<span class="sourceLineNo">032</span><a id="line.32"></a>
+<span class="sourceLineNo">033</span><a id="line.33">import pkg_Command.Parser;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import pkg_Core.GameEngine;</a>
+<span class="sourceLineNo">035</span><a id="line.35"></a>
+<span class="sourceLineNo">036</span><a id="line.36">import javax.swing.JButton;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import javax.swing.JDialog;</a>
+<span class="sourceLineNo">038</span><a id="line.38"></a>
+<span class="sourceLineNo">039</span><a id="line.39">/**</a>
+<span class="sourceLineNo">040</span><a id="line.40"> * This class implements a simple graphical user interface with a text entry</a>
+<span class="sourceLineNo">041</span><a id="line.41"> * area, a text output area and an optional image.</a>
+<span class="sourceLineNo">042</span><a id="line.42"> * </a>
+<span class="sourceLineNo">043</span><a id="line.43"> * @author Michael Kolling</a>
+<span class="sourceLineNo">044</span><a id="line.44"> * @version 1.0 (Jan 2003) DB edited (2019) CD edited (2022)</a>
+<span class="sourceLineNo">045</span><a id="line.45"> */</a>
+<span class="sourceLineNo">046</span><a id="line.46">public class UserInterface implements ActionListener {</a>
+<span class="sourceLineNo">047</span><a id="line.47">    private GameEngine aEngine;</a>
+<span class="sourceLineNo">048</span><a id="line.48">    private JFrame aGameWindow;</a>
+<span class="sourceLineNo">049</span><a id="line.49">    private CardLayout aCardLayout;</a>
+<span class="sourceLineNo">050</span><a id="line.50">    private JTextField aEntryField;</a>
+<span class="sourceLineNo">051</span><a id="line.51">    private JTextArea aLog;</a>
+<span class="sourceLineNo">052</span><a id="line.52">    private JTextArea aEntityLog;</a>
+<span class="sourceLineNo">053</span><a id="line.53">    private JTextArea aBattleLog;</a>
+<span class="sourceLineNo">054</span><a id="line.54">    private JLabel aImage;</a>
+<span class="sourceLineNo">055</span><a id="line.55">    private JLabel aEntityImage;</a>
+<span class="sourceLineNo">056</span><a id="line.56">    private JLabel aEntityFullImage;</a>
+<span class="sourceLineNo">057</span><a id="line.57">    private JLabel aPlayerFullImage;</a>
+<span class="sourceLineNo">058</span><a id="line.58">    private JLabel aMainMenuBackGroundImage;</a>
+<span class="sourceLineNo">059</span><a id="line.59">    private JLabel aBattleBackground;</a>
+<span class="sourceLineNo">060</span><a id="line.60">    private JLabel aEnemyName;</a>
+<span class="sourceLineNo">061</span><a id="line.61">    private JLabel aPlayerName;</a>
+<span class="sourceLineNo">062</span><a id="line.62">    private JLabel aSettingBackground;</a>
+<span class="sourceLineNo">063</span><a id="line.63">    private JLabel aSoundBackground;</a>
+<span class="sourceLineNo">064</span><a id="line.64">    private JLabel aGameOverBackGroundImage;</a>
+<span class="sourceLineNo">065</span><a id="line.65">    private JLabel aGameTimer;</a>
+<span class="sourceLineNo">066</span><a id="line.66">    private JProgressBar aEnemyHP;</a>
+<span class="sourceLineNo">067</span><a id="line.67">    private JProgressBar aPlayerHP;</a>
+<span class="sourceLineNo">068</span><a id="line.68">    private JPanel aEntityPanel;</a>
+<span class="sourceLineNo">069</span><a id="line.69">    private JPanel aEnemyHPPanel;</a>
+<span class="sourceLineNo">070</span><a id="line.70">    private JPanel aPlayerHPPanel;</a>
+<span class="sourceLineNo">071</span><a id="line.71">    private JLayeredPane aGamePanel;</a>
+<span class="sourceLineNo">072</span><a id="line.72">    private JLayeredPane aBattlerPanel;</a>
+<span class="sourceLineNo">073</span><a id="line.73">    private JLayeredPane aMainMenuPanel;</a>
+<span class="sourceLineNo">074</span><a id="line.74">    private JLayeredPane aSoundPanel;</a>
+<span class="sourceLineNo">075</span><a id="line.75">    private JLayeredPane aSettingPanel;</a>
+<span class="sourceLineNo">076</span><a id="line.76">    private JLayeredPane aGameOverPanel;</a>
+<span class="sourceLineNo">077</span><a id="line.77">    private Container aSceneManager;</a>
+<span class="sourceLineNo">078</span><a id="line.78">    private JButton aQuitButton;</a>
+<span class="sourceLineNo">079</span><a id="line.79">    private JButton aNorthButton;</a>
+<span class="sourceLineNo">080</span><a id="line.80">    private JButton aSouthButton;</a>
+<span class="sourceLineNo">081</span><a id="line.81">    private JButton aEastButton;</a>
+<span class="sourceLineNo">082</span><a id="line.82">    private JButton aWestButton;</a>
+<span class="sourceLineNo">083</span><a id="line.83">    private JButton aUpButton;</a>
+<span class="sourceLineNo">084</span><a id="line.84">    private JButton aDownButton;</a>
+<span class="sourceLineNo">085</span><a id="line.85">    private JButton aBackButton;</a>
+<span class="sourceLineNo">086</span><a id="line.86">    private JButton aHelpButton;</a>
+<span class="sourceLineNo">087</span><a id="line.87">    private JButton aDropButton;</a>
+<span class="sourceLineNo">088</span><a id="line.88">    private JButton aTakeButton;</a>
+<span class="sourceLineNo">089</span><a id="line.89">    private JButton aChargeButton;</a>
+<span class="sourceLineNo">090</span><a id="line.90">    private JButton aFireButton;</a>
+<span class="sourceLineNo">091</span><a id="line.91">    private JButton aInventoryButton;</a>
+<span class="sourceLineNo">092</span><a id="line.92">    private JButton aBattleButton;</a>
+<span class="sourceLineNo">093</span><a id="line.93">    private JButton aPlay;</a>
+<span class="sourceLineNo">094</span><a id="line.94">    private JButton aSetting;</a>
+<span class="sourceLineNo">095</span><a id="line.95">    private JButton aQuit;</a>
+<span class="sourceLineNo">096</span><a id="line.96">    private JButton aQuit2;</a>
+<span class="sourceLineNo">097</span><a id="line.97">    private JButton aBack;</a>
+<span class="sourceLineNo">098</span><a id="line.98">    private JButton aBack2;</a>
+<span class="sourceLineNo">099</span><a id="line.99">    private JButton aSound;</a>
+<span class="sourceLineNo">100</span><a id="line.100">    private JButton aSoundOn;</a>
+<span class="sourceLineNo">101</span><a id="line.101">    private JButton aSoundOff;</a>
+<span class="sourceLineNo">102</span><a id="line.102">    private JButton aRunButton;</a>
+<span class="sourceLineNo">103</span><a id="line.103">    private JButton aBagButton;</a>
+<span class="sourceLineNo">104</span><a id="line.104">    private JButton aAttackButton;</a>
+<span class="sourceLineNo">105</span><a id="line.105">    private JButton aDefendButton;</a>
+<span class="sourceLineNo">106</span><a id="line.106">    private Parser aParser;</a>
+<span class="sourceLineNo">107</span><a id="line.107">    private Clip aClip;</a>
+<span class="sourceLineNo">108</span><a id="line.108">    private Clip aDialogClip;</a>
+<span class="sourceLineNo">109</span><a id="line.109">    private Clip aSoundEffectClip;</a>
+<span class="sourceLineNo">110</span><a id="line.110">    private Timer aTimer;</a>
+<span class="sourceLineNo">111</span><a id="line.111">    private Timer aTextTimer;</a>
+<span class="sourceLineNo">112</span><a id="line.112">    private ActionListener aTaskTimer;</a>
+<span class="sourceLineNo">113</span><a id="line.113">    private Font aFont;</a>
+<span class="sourceLineNo">114</span><a id="line.114">    private Font aButtonsFont;</a>
+<span class="sourceLineNo">115</span><a id="line.115">    private Font aTextFont;</a>
+<span class="sourceLineNo">116</span><a id="line.116">    private Font aBattleFont;</a>
+<span class="sourceLineNo">117</span><a id="line.117">    private Font aMenuFont;</a>
+<span class="sourceLineNo">118</span><a id="line.118">    private int aTime = 60;</a>
+<span class="sourceLineNo">119</span><a id="line.119">    private int aMinute;</a>
+<span class="sourceLineNo">120</span><a id="line.120">    private int aSecond;</a>
+<span class="sourceLineNo">121</span><a id="line.121">    private int aDelay = 1000;</a>
+<span class="sourceLineNo">122</span><a id="line.122">    private int aEndTime = 20;</a>
+<span class="sourceLineNo">123</span><a id="line.123">    private int aIndex;</a>
+<span class="sourceLineNo">124</span><a id="line.124">    private boolean aSoundToggle;</a>
+<span class="sourceLineNo">125</span><a id="line.125"></a>
+<span class="sourceLineNo">126</span><a id="line.126">    /**</a>
+<span class="sourceLineNo">127</span><a id="line.127">     * Construct a UserInterface. As a parameter, a Game Engine</a>
+<span class="sourceLineNo">128</span><a id="line.128">     * (an object processing and executing the game commands) is</a>
+<span class="sourceLineNo">129</span><a id="line.129">     * needed.</a>
+<span class="sourceLineNo">130</span><a id="line.130">     * </a>
+<span class="sourceLineNo">131</span><a id="line.131">     * @param pGameEngine The GameEngine object implementing the game logic.</a>
+<span class="sourceLineNo">132</span><a id="line.132">     */</a>
+<span class="sourceLineNo">133</span><a id="line.133">    public UserInterface(final GameEngine pGameEngine) {</a>
+<span class="sourceLineNo">134</span><a id="line.134">        this.aEngine = pGameEngine;</a>
+<span class="sourceLineNo">135</span><a id="line.135">        this.createFont();</a>
+<span class="sourceLineNo">136</span><a id="line.136">        this.createGUI();</a>
+<span class="sourceLineNo">137</span><a id="line.137">        this.aParser = new Parser();</a>
+<span class="sourceLineNo">138</span><a id="line.138">        this.aSoundToggle = true;</a>
+<span class="sourceLineNo">139</span><a id="line.139">        this.enable(false);</a>
+<span class="sourceLineNo">140</span><a id="line.140">    } // UserInterface(.)</a>
+<span class="sourceLineNo">141</span><a id="line.141"></a>
+<span class="sourceLineNo">142</span><a id="line.142">    // print methods</a>
+<span class="sourceLineNo">143</span><a id="line.143"></a>
+<span class="sourceLineNo">144</span><a id="line.144">    /**</a>
+<span class="sourceLineNo">145</span><a id="line.145">     * Print out some text into the text area.</a>
+<span class="sourceLineNo">146</span><a id="line.146">     * </a>
+<span class="sourceLineNo">147</span><a id="line.147">     * @param pText like sysout but for gui, is the text in " "</a>
+<span class="sourceLineNo">148</span><a id="line.148">     */</a>
+<span class="sourceLineNo">149</span><a id="line.149">    public void print(final String pText) {</a>
+<span class="sourceLineNo">150</span><a id="line.150">        this.aLog.append(pText);</a>
+<span class="sourceLineNo">151</span><a id="line.151">        this.aLog.setCaretPosition(this.aLog.getDocument().getLength());</a>
+<span class="sourceLineNo">152</span><a id="line.152">    } // print(.)</a>
+<span class="sourceLineNo">153</span><a id="line.153"></a>
+<span class="sourceLineNo">154</span><a id="line.154">    /**</a>
+<span class="sourceLineNo">155</span><a id="line.155">     * Print out some text into the text area, followed by a line break.</a>
+<span class="sourceLineNo">156</span><a id="line.156">     * </a>
+<span class="sourceLineNo">157</span><a id="line.157">     * @param pText like sysout but for gui, is the text in " "</a>
+<span class="sourceLineNo">158</span><a id="line.158">     */</a>
+<span class="sourceLineNo">159</span><a id="line.159">    public void println(final String pText) {</a>
+<span class="sourceLineNo">160</span><a id="line.160">        this.print(pText + "\n");</a>
+<span class="sourceLineNo">161</span><a id="line.161">    } // println(.)</a>
+<span class="sourceLineNo">162</span><a id="line.162"></a>
+<span class="sourceLineNo">163</span><a id="line.163">    /**</a>
+<span class="sourceLineNo">164</span><a id="line.164">     * This method prints slowly the text in param</a>
+<span class="sourceLineNo">165</span><a id="line.165">     * </a>
+<span class="sourceLineNo">166</span><a id="line.166">     * This code was found on internet and update for my use</a>
+<span class="sourceLineNo">167</span><a id="line.167">     * </a>
+<span class="sourceLineNo">168</span><a id="line.168">     * @author https://github.com/Vourem/SlowPrint-Method/blob/master/SlowPrint</a>
+<span class="sourceLineNo">169</span><a id="line.169">     * @param pText Text you want to write slowly</a>
+<span class="sourceLineNo">170</span><a id="line.170">     */</a>
+<span class="sourceLineNo">171</span><a id="line.171">    private void slowPrint(final String pText) {</a>
+<span class="sourceLineNo">172</span><a id="line.172"></a>
+<span class="sourceLineNo">173</span><a id="line.173">        aTextTimer = new Timer(aTime, new ActionListener() {</a>
+<span class="sourceLineNo">174</span><a id="line.174">            @Override</a>
+<span class="sourceLineNo">175</span><a id="line.175">            public void actionPerformed(ActionEvent pEvent) {</a>
+<span class="sourceLineNo">176</span><a id="line.176">                aLog.setText(pText.substring(0, aIndex));</a>
+<span class="sourceLineNo">177</span><a id="line.177">                aIndex++;</a>
+<span class="sourceLineNo">178</span><a id="line.178">                if (aIndex &gt; pText.length()) {</a>
+<span class="sourceLineNo">179</span><a id="line.179">                    ((Timer) pEvent.getSource()).stop();</a>
+<span class="sourceLineNo">180</span><a id="line.180">                }</a>
+<span class="sourceLineNo">181</span><a id="line.181">            }</a>
+<span class="sourceLineNo">182</span><a id="line.182"></a>
+<span class="sourceLineNo">183</span><a id="line.183">        });</a>
+<span class="sourceLineNo">184</span><a id="line.184"></a>
+<span class="sourceLineNo">185</span><a id="line.185">        aTextTimer.start();</a>
+<span class="sourceLineNo">186</span><a id="line.186">        aIndex = 0;</a>
+<span class="sourceLineNo">187</span><a id="line.187">    }</a>
+<span class="sourceLineNo">188</span><a id="line.188"></a>
+<span class="sourceLineNo">189</span><a id="line.189">    /**</a>
+<span class="sourceLineNo">190</span><a id="line.190">     * This method is like SlowPrint but for println</a>
+<span class="sourceLineNo">191</span><a id="line.191">     * </a>
+<span class="sourceLineNo">192</span><a id="line.192">     * @param pText Text you want to write slowly</a>
+<span class="sourceLineNo">193</span><a id="line.193">     */</a>
+<span class="sourceLineNo">194</span><a id="line.194">    public void slowPrintln(final String pText) {</a>
+<span class="sourceLineNo">195</span><a id="line.195">        this.slowPrint(pText + "\n");</a>
+<span class="sourceLineNo">196</span><a id="line.196">    }</a>
+<span class="sourceLineNo">197</span><a id="line.197"></a>
+<span class="sourceLineNo">198</span><a id="line.198">    /**</a>
+<span class="sourceLineNo">199</span><a id="line.199">     * Print out some text into the entity text area.</a>
+<span class="sourceLineNo">200</span><a id="line.200">     * </a>
+<span class="sourceLineNo">201</span><a id="line.201">     * @param pText like sysout but for gui, is the text in " "</a>
+<span class="sourceLineNo">202</span><a id="line.202">     */</a>
+<span class="sourceLineNo">203</span><a id="line.203">    private void printEntity(final String pText) {</a>
+<span class="sourceLineNo">204</span><a id="line.204">        this.aEntityLog.append(pText);</a>
+<span class="sourceLineNo">205</span><a id="line.205">        this.aEntityLog.setCaretPosition(this.aEntityLog.getDocument().getLength());</a>
+<span class="sourceLineNo">206</span><a id="line.206">    } // print(.)</a>
+<span class="sourceLineNo">207</span><a id="line.207"></a>
+<span class="sourceLineNo">208</span><a id="line.208">    /**</a>
+<span class="sourceLineNo">209</span><a id="line.209">     * Print out some text into the entity text area, followed by a line break.</a>
+<span class="sourceLineNo">210</span><a id="line.210">     * </a>
+<span class="sourceLineNo">211</span><a id="line.211">     * @param pText like sysout but for gui, is the text in " "</a>
+<span class="sourceLineNo">212</span><a id="line.212">     */</a>
+<span class="sourceLineNo">213</span><a id="line.213">    public void printlnEntity(final String pText) {</a>
+<span class="sourceLineNo">214</span><a id="line.214">        this.printEntity(pText + "\n");</a>
+<span class="sourceLineNo">215</span><a id="line.215">    } // println(.)</a>
+<span class="sourceLineNo">216</span><a id="line.216"></a>
+<span class="sourceLineNo">217</span><a id="line.217">    /**</a>
+<span class="sourceLineNo">218</span><a id="line.218">     * Print out slowly some text into the entity text area.</a>
+<span class="sourceLineNo">219</span><a id="line.219">     * </a>
+<span class="sourceLineNo">220</span><a id="line.220">     * @param pText like sysout but for gui, is the text in " "</a>
+<span class="sourceLineNo">221</span><a id="line.221">     */</a>
+<span class="sourceLineNo">222</span><a id="line.222">    public void slowPrintEntity(final String pText) {</a>
+<span class="sourceLineNo">223</span><a id="line.223"></a>
+<span class="sourceLineNo">224</span><a id="line.224">        enable(false);</a>
+<span class="sourceLineNo">225</span><a id="line.225">        Timer timer = new Timer(60, new ActionListener() {</a>
+<span class="sourceLineNo">226</span><a id="line.226">            @Override</a>
+<span class="sourceLineNo">227</span><a id="line.227">            public void actionPerformed(ActionEvent pEvent) {</a>
+<span class="sourceLineNo">228</span><a id="line.228">                aEntityLog.setText(pText.substring(0, aIndex));</a>
+<span class="sourceLineNo">229</span><a id="line.229">                aIndex++;</a>
+<span class="sourceLineNo">230</span><a id="line.230">                if (aIndex &gt; pText.length()) {</a>
+<span class="sourceLineNo">231</span><a id="line.231">                    ((Timer) pEvent.getSource()).stop();</a>
+<span class="sourceLineNo">232</span><a id="line.232">                    enable(true);</a>
+<span class="sourceLineNo">233</span><a id="line.233">                }</a>
+<span class="sourceLineNo">234</span><a id="line.234">            }</a>
+<span class="sourceLineNo">235</span><a id="line.235"></a>
+<span class="sourceLineNo">236</span><a id="line.236">        });</a>
+<span class="sourceLineNo">237</span><a id="line.237"></a>
+<span class="sourceLineNo">238</span><a id="line.238">        timer.start();</a>
+<span class="sourceLineNo">239</span><a id="line.239">        aIndex = 0;</a>
+<span class="sourceLineNo">240</span><a id="line.240">    }</a>
+<span class="sourceLineNo">241</span><a id="line.241"></a>
+<span class="sourceLineNo">242</span><a id="line.242">    /**</a>
+<span class="sourceLineNo">243</span><a id="line.243">     * Print out some text into the text area.</a>
+<span class="sourceLineNo">244</span><a id="line.244">     * </a>
+<span class="sourceLineNo">245</span><a id="line.245">     * @param pText like sysout but for gui, is the text in " "</a>
+<span class="sourceLineNo">246</span><a id="line.246">     */</a>
+<span class="sourceLineNo">247</span><a id="line.247">    private void printBattle(final String pText) {</a>
+<span class="sourceLineNo">248</span><a id="line.248">        this.aBattleLog.append(pText);</a>
+<span class="sourceLineNo">249</span><a id="line.249">        this.aBattleLog.setCaretPosition(this.aBattleLog.getDocument().getLength());</a>
+<span class="sourceLineNo">250</span><a id="line.250">    } // print(.)</a>
+<span class="sourceLineNo">251</span><a id="line.251"></a>
+<span class="sourceLineNo">252</span><a id="line.252">    /**</a>
+<span class="sourceLineNo">253</span><a id="line.253">     * Print out some text into the text area, followed by a line break.</a>
+<span class="sourceLineNo">254</span><a id="line.254">     * </a>
+<span class="sourceLineNo">255</span><a id="line.255">     * @param pText like sysout but for gui, is the text in " "</a>
+<span class="sourceLineNo">256</span><a id="line.256">     */</a>
+<span class="sourceLineNo">257</span><a id="line.257">    public void printlnBattle(final String pText) {</a>
+<span class="sourceLineNo">258</span><a id="line.258">        this.printBattle(pText + "\n");</a>
+<span class="sourceLineNo">259</span><a id="line.259">    } // println(.)</a>
+<span class="sourceLineNo">260</span><a id="line.260"></a>
+<span class="sourceLineNo">261</span><a id="line.261">    /**</a>
+<span class="sourceLineNo">262</span><a id="line.262">     * This method clear the dialog text area</a>
+<span class="sourceLineNo">263</span><a id="line.263">     */</a>
+<span class="sourceLineNo">264</span><a id="line.264">    public void clearDialogArea() {</a>
+<span class="sourceLineNo">265</span><a id="line.265">        this.aEntityLog.setText("");</a>
+<span class="sourceLineNo">266</span><a id="line.266">    }</a>
+<span class="sourceLineNo">267</span><a id="line.267"></a>
+<span class="sourceLineNo">268</span><a id="line.268">    /**</a>
+<span class="sourceLineNo">269</span><a id="line.269">     * This method clear the battle text area</a>
+<span class="sourceLineNo">270</span><a id="line.270">     */</a>
+<span class="sourceLineNo">271</span><a id="line.271">    public void clearBattleArea() {</a>
+<span class="sourceLineNo">272</span><a id="line.272">        this.aBattleLog.setText("");</a>
+<span class="sourceLineNo">273</span><a id="line.273">    }</a>
+<span class="sourceLineNo">274</span><a id="line.274"></a>
+<span class="sourceLineNo">275</span><a id="line.275">    // sound methods</a>
+<span class="sourceLineNo">276</span><a id="line.276"></a>
+<span class="sourceLineNo">277</span><a id="line.277">    /**</a>
+<span class="sourceLineNo">278</span><a id="line.278">     * This method play sound.</a>
+<span class="sourceLineNo">279</span><a id="line.279">     * </a>
+<span class="sourceLineNo">280</span><a id="line.280">     * This code was found on internet and update for my use</a>
+<span class="sourceLineNo">281</span><a id="line.281">     * </a>
+<span class="sourceLineNo">282</span><a id="line.282">     * @author https://stackoverflow.com/questions/6045384/playing-mp3-and-wav-in-java</a>
+<span class="sourceLineNo">283</span><a id="line.283">     * @param pFile File you want to play</a>
+<span class="sourceLineNo">284</span><a id="line.284">     * @param pLoop Number of repetitions of the sound (-1 is infinite)</a>
+<span class="sourceLineNo">285</span><a id="line.285">     */</a>
+<span class="sourceLineNo">286</span><a id="line.286">    public void playSound(final String pFile, final int pLoop) {</a>
+<span class="sourceLineNo">287</span><a id="line.287">        try {</a>
+<span class="sourceLineNo">288</span><a id="line.288">            AudioInputStream vAudioInputStream = AudioSystem</a>
+<span class="sourceLineNo">289</span><a id="line.289">                    .getAudioInputStream(new File("gameSounds/" + pFile + ".wav").getAbsoluteFile());</a>
+<span class="sourceLineNo">290</span><a id="line.290">            aClip = AudioSystem.getClip();</a>
+<span class="sourceLineNo">291</span><a id="line.291">            aClip.open(vAudioInputStream);</a>
+<span class="sourceLineNo">292</span><a id="line.292">            aClip.start();</a>
+<span class="sourceLineNo">293</span><a id="line.293">            aClip.loop(pLoop);</a>
+<span class="sourceLineNo">294</span><a id="line.294">        } catch (Exception ex) {</a>
+<span class="sourceLineNo">295</span><a id="line.295">            System.out.println("Error with playing sound.");</a>
+<span class="sourceLineNo">296</span><a id="line.296">            ex.printStackTrace();</a>
+<span class="sourceLineNo">297</span><a id="line.297">        }</a>
+<span class="sourceLineNo">298</span><a id="line.298">    }</a>
+<span class="sourceLineNo">299</span><a id="line.299"></a>
+<span class="sourceLineNo">300</span><a id="line.300">    /**</a>
+<span class="sourceLineNo">301</span><a id="line.301">     * This method play the sound of the battle</a>
+<span class="sourceLineNo">302</span><a id="line.302">     * </a>
+<span class="sourceLineNo">303</span><a id="line.303">     * @param pFile File you want to play</a>
+<span class="sourceLineNo">304</span><a id="line.304">     * @param pLoop Number of repetitions of the sound (-1 is infinite)</a>
+<span class="sourceLineNo">305</span><a id="line.305">     */</a>
+<span class="sourceLineNo">306</span><a id="line.306">    public void playBattleSound(final String pFile, final int pLoop) {</a>
+<span class="sourceLineNo">307</span><a id="line.307">        try {</a>
+<span class="sourceLineNo">308</span><a id="line.308">            AudioInputStream vAudioInputStream = AudioSystem</a>
+<span class="sourceLineNo">309</span><a id="line.309">                    .getAudioInputStream(new File("gameSounds/battle" + pFile + ".wav").getAbsoluteFile());</a>
+<span class="sourceLineNo">310</span><a id="line.310">            aClip = AudioSystem.getClip();</a>
+<span class="sourceLineNo">311</span><a id="line.311">            aClip.open(vAudioInputStream);</a>
+<span class="sourceLineNo">312</span><a id="line.312">            aClip.start();</a>
+<span class="sourceLineNo">313</span><a id="line.313">            aClip.loop(pLoop);</a>
+<span class="sourceLineNo">314</span><a id="line.314">        } catch (Exception ex) {</a>
+<span class="sourceLineNo">315</span><a id="line.315">            System.out.println("Error with playing sound.");</a>
+<span class="sourceLineNo">316</span><a id="line.316">            ex.printStackTrace();</a>
+<span class="sourceLineNo">317</span><a id="line.317">        }</a>
+<span class="sourceLineNo">318</span><a id="line.318">    }</a>
+<span class="sourceLineNo">319</span><a id="line.319"></a>
+<span class="sourceLineNo">320</span><a id="line.320">    /**</a>
+<span class="sourceLineNo">321</span><a id="line.321">     * This method play sound of the narrator</a>
+<span class="sourceLineNo">322</span><a id="line.322">     * </a>
+<span class="sourceLineNo">323</span><a id="line.323">     * @param pFile Audio file of the dialog</a>
+<span class="sourceLineNo">324</span><a id="line.324">     */</a>
+<span class="sourceLineNo">325</span><a id="line.325">    public void playDialogSound(final String pFile) {</a>
+<span class="sourceLineNo">326</span><a id="line.326">        try {</a>
+<span class="sourceLineNo">327</span><a id="line.327">            AudioInputStream vAudioInputStream = AudioSystem</a>
+<span class="sourceLineNo">328</span><a id="line.328">                    .getAudioInputStream(new File("gameSounds/" + pFile + ".wav").getAbsoluteFile());</a>
+<span class="sourceLineNo">329</span><a id="line.329">            aDialogClip = AudioSystem.getClip();</a>
+<span class="sourceLineNo">330</span><a id="line.330">            aDialogClip.open(vAudioInputStream);</a>
+<span class="sourceLineNo">331</span><a id="line.331">            aDialogClip.start();</a>
+<span class="sourceLineNo">332</span><a id="line.332">        } catch (Exception ex) {</a>
+<span class="sourceLineNo">333</span><a id="line.333">            System.out.println("Error with playing sound.");</a>
+<span class="sourceLineNo">334</span><a id="line.334">            ex.printStackTrace();</a>
+<span class="sourceLineNo">335</span><a id="line.335">        }</a>
+<span class="sourceLineNo">336</span><a id="line.336">    }</a>
+<span class="sourceLineNo">337</span><a id="line.337"></a>
+<span class="sourceLineNo">338</span><a id="line.338">    /**</a>
+<span class="sourceLineNo">339</span><a id="line.339">     * This method play sound effect</a>
+<span class="sourceLineNo">340</span><a id="line.340">     * </a>
+<span class="sourceLineNo">341</span><a id="line.341">     * @param pFile Audio file of the sound effect</a>
+<span class="sourceLineNo">342</span><a id="line.342">     */</a>
+<span class="sourceLineNo">343</span><a id="line.343">    public void playSoundEffect(final String pFile) {</a>
+<span class="sourceLineNo">344</span><a id="line.344">        try {</a>
+<span class="sourceLineNo">345</span><a id="line.345">            AudioInputStream vAudioInputStream = AudioSystem</a>
+<span class="sourceLineNo">346</span><a id="line.346">                    .getAudioInputStream(new File("gameSounds/" + pFile + ".wav").getAbsoluteFile());</a>
+<span class="sourceLineNo">347</span><a id="line.347">            aSoundEffectClip = AudioSystem.getClip();</a>
+<span class="sourceLineNo">348</span><a id="line.348">            aSoundEffectClip.open(vAudioInputStream);</a>
+<span class="sourceLineNo">349</span><a id="line.349">            aSoundEffectClip.start();</a>
+<span class="sourceLineNo">350</span><a id="line.350">        } catch (Exception ex) {</a>
+<span class="sourceLineNo">351</span><a id="line.351">            System.out.println("Error with playing sound.");</a>
+<span class="sourceLineNo">352</span><a id="line.352">            ex.printStackTrace();</a>
+<span class="sourceLineNo">353</span><a id="line.353">        }</a>
+<span class="sourceLineNo">354</span><a id="line.354">    }</a>
+<span class="sourceLineNo">355</span><a id="line.355"></a>
+<span class="sourceLineNo">356</span><a id="line.356">    /**</a>
+<span class="sourceLineNo">357</span><a id="line.357">     * This method stop sound.</a>
+<span class="sourceLineNo">358</span><a id="line.358">     */</a>
+<span class="sourceLineNo">359</span><a id="line.359">    public void stopSound() {</a>
+<span class="sourceLineNo">360</span><a id="line.360">        aClip.stop();</a>
+<span class="sourceLineNo">361</span><a id="line.361">    }</a>
+<span class="sourceLineNo">362</span><a id="line.362"></a>
+<span class="sourceLineNo">363</span><a id="line.363">    /**</a>
+<span class="sourceLineNo">364</span><a id="line.364">     * This method stop the sound of the narrator</a>
+<span class="sourceLineNo">365</span><a id="line.365">     */</a>
+<span class="sourceLineNo">366</span><a id="line.366">    public void stopDialogSound() {</a>
+<span class="sourceLineNo">367</span><a id="line.367">        aDialogClip.stop();</a>
+<span class="sourceLineNo">368</span><a id="line.368">    }</a>
+<span class="sourceLineNo">369</span><a id="line.369"></a>
+<span class="sourceLineNo">370</span><a id="line.370">    /**</a>
+<span class="sourceLineNo">371</span><a id="line.371">     * This method stop the sound of the narrator</a>
+<span class="sourceLineNo">372</span><a id="line.372">     */</a>
+<span class="sourceLineNo">373</span><a id="line.373">    public void stopSoundEffect() {</a>
+<span class="sourceLineNo">374</span><a id="line.374">        aSoundEffectClip.stop();</a>
+<span class="sourceLineNo">375</span><a id="line.375">    }</a>
+<span class="sourceLineNo">376</span><a id="line.376"></a>
+<span class="sourceLineNo">377</span><a id="line.377">    /**</a>
+<span class="sourceLineNo">378</span><a id="line.378">     * This method play sound of the room</a>
+<span class="sourceLineNo">379</span><a id="line.379">     */</a>
+<span class="sourceLineNo">380</span><a id="line.380">    public void playRoomSound() {</a>
+<span class="sourceLineNo">381</span><a id="line.381">        this.aEngine.playRoomSound();</a>
+<span class="sourceLineNo">382</span><a id="line.382">    }</a>
+<span class="sourceLineNo">383</span><a id="line.383"></a>
+<span class="sourceLineNo">384</span><a id="line.384">    /**</a>
+<span class="sourceLineNo">385</span><a id="line.385">     * This method play the sound of the battle</a>
+<span class="sourceLineNo">386</span><a id="line.386">     */</a>
+<span class="sourceLineNo">387</span><a id="line.387">    public void playBattleRoomSound() {</a>
+<span class="sourceLineNo">388</span><a id="line.388">        this.aEngine.playBattleRoomSound();</a>
+<span class="sourceLineNo">389</span><a id="line.389">    }</a>
+<span class="sourceLineNo">390</span><a id="line.390"></a>
+<span class="sourceLineNo">391</span><a id="line.391">    // image method</a>
+<span class="sourceLineNo">392</span><a id="line.392"></a>
+<span class="sourceLineNo">393</span><a id="line.393">    /**</a>
+<span class="sourceLineNo">394</span><a id="line.394">     * Show an image file in the interface.</a>
+<span class="sourceLineNo">395</span><a id="line.395">     * </a>
+<span class="sourceLineNo">396</span><a id="line.396">     * @param pImageName name of the image for the room</a>
+<span class="sourceLineNo">397</span><a id="line.397">     */</a>
+<span class="sourceLineNo">398</span><a id="line.398">    public void showImage(final String pImageName) {</a>
+<span class="sourceLineNo">399</span><a id="line.399">        String vImagePath = "" + pImageName; // to change the directory</a>
+<span class="sourceLineNo">400</span><a id="line.400">        URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);</a>
+<span class="sourceLineNo">401</span><a id="line.401">        if (vImageURL == null)</a>
+<span class="sourceLineNo">402</span><a id="line.402">            System.out.println("Image not found : " + vImagePath);</a>
+<span class="sourceLineNo">403</span><a id="line.403">        else {</a>
+<span class="sourceLineNo">404</span><a id="line.404">            ImageIcon vIcon = new ImageIcon(vImageURL);</a>
+<span class="sourceLineNo">405</span><a id="line.405">            this.aImage.setIcon(vIcon);</a>
+<span class="sourceLineNo">406</span><a id="line.406">            this.aGameWindow.pack();</a>
+<span class="sourceLineNo">407</span><a id="line.407">        }</a>
+<span class="sourceLineNo">408</span><a id="line.408">    } // showImage(.)</a>
+<span class="sourceLineNo">409</span><a id="line.409"></a>
+<span class="sourceLineNo">410</span><a id="line.410">    /**</a>
+<span class="sourceLineNo">411</span><a id="line.411">     * Show an image file in the interface.</a>
+<span class="sourceLineNo">412</span><a id="line.412">     * </a>
+<span class="sourceLineNo">413</span><a id="line.413">     * @param pImageName name of the image for the room</a>
+<span class="sourceLineNo">414</span><a id="line.414">     */</a>
+<span class="sourceLineNo">415</span><a id="line.415">    public void showEntityImage(final String pImageName) {</a>
+<span class="sourceLineNo">416</span><a id="line.416">        String vImagePath = "" + pImageName; // to change the directory</a>
+<span class="sourceLineNo">417</span><a id="line.417">        URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);</a>
+<span class="sourceLineNo">418</span><a id="line.418">        if (vImageURL == null)</a>
+<span class="sourceLineNo">419</span><a id="line.419">            System.out.println("Image not found : " + vImagePath);</a>
+<span class="sourceLineNo">420</span><a id="line.420">        else {</a>
+<span class="sourceLineNo">421</span><a id="line.421">            ImageIcon vIcon = new ImageIcon(vImageURL);</a>
+<span class="sourceLineNo">422</span><a id="line.422">            this.aEntityImage.setIcon(vIcon);</a>
+<span class="sourceLineNo">423</span><a id="line.423">            this.aGameWindow.pack();</a>
+<span class="sourceLineNo">424</span><a id="line.424">        }</a>
+<span class="sourceLineNo">425</span><a id="line.425">    }</a>
+<span class="sourceLineNo">426</span><a id="line.426"></a>
+<span class="sourceLineNo">427</span><a id="line.427">    /**</a>
+<span class="sourceLineNo">428</span><a id="line.428">     * Show an image file in the interface.</a>
+<span class="sourceLineNo">429</span><a id="line.429">     * </a>
+<span class="sourceLineNo">430</span><a id="line.430">     * @param pImageName name of the image for the room</a>
+<span class="sourceLineNo">431</span><a id="line.431">     */</a>
+<span class="sourceLineNo">432</span><a id="line.432">    public void showFullEntityImage(final String pImageName) {</a>
+<span class="sourceLineNo">433</span><a id="line.433">        String vImagePath = "" + pImageName; // to change the directory</a>
+<span class="sourceLineNo">434</span><a id="line.434">        URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);</a>
+<span class="sourceLineNo">435</span><a id="line.435">        if (vImageURL == null)</a>
+<span class="sourceLineNo">436</span><a id="line.436">            System.out.println("Image not found : " + vImagePath);</a>
+<span class="sourceLineNo">437</span><a id="line.437">        else {</a>
+<span class="sourceLineNo">438</span><a id="line.438">            ImageIcon vIcon = new ImageIcon(vImageURL);</a>
+<span class="sourceLineNo">439</span><a id="line.439">            this.aEntityFullImage.setIcon(vIcon);</a>
+<span class="sourceLineNo">440</span><a id="line.440">            this.aGameWindow.pack();</a>
+<span class="sourceLineNo">441</span><a id="line.441">        }</a>
+<span class="sourceLineNo">442</span><a id="line.442">    }</a>
+<span class="sourceLineNo">443</span><a id="line.443"></a>
+<span class="sourceLineNo">444</span><a id="line.444">    /**</a>
+<span class="sourceLineNo">445</span><a id="line.445">     * Show an image file in the interface.</a>
+<span class="sourceLineNo">446</span><a id="line.446">     */</a>
+<span class="sourceLineNo">447</span><a id="line.447">    public void showFullPlayerImage() {</a>
+<span class="sourceLineNo">448</span><a id="line.448">        String vImagePath = "faceImages/player.gif"; // to change the directory</a>
+<span class="sourceLineNo">449</span><a id="line.449">        URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);</a>
+<span class="sourceLineNo">450</span><a id="line.450">        if (vImageURL == null)</a>
+<span class="sourceLineNo">451</span><a id="line.451">            System.out.println("Image not found : " + vImagePath);</a>
+<span class="sourceLineNo">452</span><a id="line.452">        else {</a>
+<span class="sourceLineNo">453</span><a id="line.453">            ImageIcon vIcon = new ImageIcon(vImageURL);</a>
+<span class="sourceLineNo">454</span><a id="line.454">            this.aPlayerFullImage.setIcon(vIcon);</a>
+<span class="sourceLineNo">455</span><a id="line.455">            this.aGameWindow.pack();</a>
+<span class="sourceLineNo">456</span><a id="line.456">        }</a>
+<span class="sourceLineNo">457</span><a id="line.457">    }</a>
+<span class="sourceLineNo">458</span><a id="line.458"></a>
+<span class="sourceLineNo">459</span><a id="line.459">    /**</a>
+<span class="sourceLineNo">460</span><a id="line.460">     * Show background image of the main menu.</a>
+<span class="sourceLineNo">461</span><a id="line.461">     */</a>
+<span class="sourceLineNo">462</span><a id="line.462">    public void showBackGroundImage() {</a>
+<span class="sourceLineNo">463</span><a id="line.463">        String vImagePath = "gameImages/MainMenu.jpg"; // to change the directory</a>
+<span class="sourceLineNo">464</span><a id="line.464">        URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);</a>
+<span class="sourceLineNo">465</span><a id="line.465">        if (vImageURL == null)</a>
+<span class="sourceLineNo">466</span><a id="line.466">            System.out.println("Image not found : " + vImagePath);</a>
+<span class="sourceLineNo">467</span><a id="line.467">        else {</a>
+<span class="sourceLineNo">468</span><a id="line.468">            ImageIcon vIcon = new ImageIcon(vImageURL);</a>
+<span class="sourceLineNo">469</span><a id="line.469">            this.aMainMenuBackGroundImage.setIcon(vIcon);</a>
+<span class="sourceLineNo">470</span><a id="line.470">            this.aGameWindow.pack();</a>
+<span class="sourceLineNo">471</span><a id="line.471">        }</a>
+<span class="sourceLineNo">472</span><a id="line.472">    }</a>
+<span class="sourceLineNo">473</span><a id="line.473"></a>
+<span class="sourceLineNo">474</span><a id="line.474">    /**</a>
+<span class="sourceLineNo">475</span><a id="line.475">     * Show background image of the battle</a>
+<span class="sourceLineNo">476</span><a id="line.476">     */</a>
+<span class="sourceLineNo">477</span><a id="line.477">    public void showBattleBackground() {</a>
+<span class="sourceLineNo">478</span><a id="line.478">        String vImagePath = "gameImages/battleground.gif"; // to change the directory</a>
+<span class="sourceLineNo">479</span><a id="line.479">        URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);</a>
+<span class="sourceLineNo">480</span><a id="line.480">        if (vImageURL == null)</a>
+<span class="sourceLineNo">481</span><a id="line.481">            System.out.println("Image not found : " + vImagePath);</a>
+<span class="sourceLineNo">482</span><a id="line.482">        else {</a>
+<span class="sourceLineNo">483</span><a id="line.483">            ImageIcon vIcon = new ImageIcon(vImageURL);</a>
+<span class="sourceLineNo">484</span><a id="line.484">            this.aBattleBackground.setIcon(vIcon);</a>
+<span class="sourceLineNo">485</span><a id="line.485">            this.aGameWindow.pack();</a>
+<span class="sourceLineNo">486</span><a id="line.486">        }</a>
+<span class="sourceLineNo">487</span><a id="line.487">    }</a>
+<span class="sourceLineNo">488</span><a id="line.488"></a>
+<span class="sourceLineNo">489</span><a id="line.489">    /**</a>
+<span class="sourceLineNo">490</span><a id="line.490">     * Show the background of setting menu</a>
+<span class="sourceLineNo">491</span><a id="line.491">     */</a>
+<span class="sourceLineNo">492</span><a id="line.492">    private void showSettingBackground() {</a>
+<span class="sourceLineNo">493</span><a id="line.493">        String vImagePath = "gameImages/setting.jpg"; // to change the directory</a>
+<span class="sourceLineNo">494</span><a id="line.494">        URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);</a>
+<span class="sourceLineNo">495</span><a id="line.495">        if (vImageURL == null)</a>
+<span class="sourceLineNo">496</span><a id="line.496">            System.out.println("Image not found : " + vImagePath);</a>
+<span class="sourceLineNo">497</span><a id="line.497">        else {</a>
+<span class="sourceLineNo">498</span><a id="line.498">            ImageIcon vIcon = new ImageIcon(vImageURL);</a>
+<span class="sourceLineNo">499</span><a id="line.499">            this.aSettingBackground.setIcon(vIcon);</a>
+<span class="sourceLineNo">500</span><a id="line.500">            this.aGameWindow.pack();</a>
+<span class="sourceLineNo">501</span><a id="line.501">        }</a>
+<span class="sourceLineNo">502</span><a id="line.502">    }</a>
+<span class="sourceLineNo">503</span><a id="line.503"></a>
+<span class="sourceLineNo">504</span><a id="line.504">    /**</a>
+<span class="sourceLineNo">505</span><a id="line.505">     * Show the background of the sound menu</a>
+<span class="sourceLineNo">506</span><a id="line.506">     */</a>
+<span class="sourceLineNo">507</span><a id="line.507">    private void showSoundBackground() {</a>
+<span class="sourceLineNo">508</span><a id="line.508">        String vImagePath = "gameImages/sound.jpg"; // to change the directory</a>
+<span class="sourceLineNo">509</span><a id="line.509">        URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);</a>
+<span class="sourceLineNo">510</span><a id="line.510">        if (vImageURL == null)</a>
+<span class="sourceLineNo">511</span><a id="line.511">            System.out.println("Image not found : " + vImagePath);</a>
+<span class="sourceLineNo">512</span><a id="line.512">        else {</a>
+<span class="sourceLineNo">513</span><a id="line.513">            ImageIcon vIcon = new ImageIcon(vImageURL);</a>
+<span class="sourceLineNo">514</span><a id="line.514">            this.aSoundBackground.setIcon(vIcon);</a>
+<span class="sourceLineNo">515</span><a id="line.515">            this.aGameWindow.pack();</a>
+<span class="sourceLineNo">516</span><a id="line.516">        }</a>
+<span class="sourceLineNo">517</span><a id="line.517">    }</a>
+<span class="sourceLineNo">518</span><a id="line.518"></a>
+<span class="sourceLineNo">519</span><a id="line.519">    /**</a>
+<span class="sourceLineNo">520</span><a id="line.520">     * Show the background of the game over menu</a>
+<span class="sourceLineNo">521</span><a id="line.521">     */</a>
+<span class="sourceLineNo">522</span><a id="line.522">    public void showGameOverImage() {</a>
+<span class="sourceLineNo">523</span><a id="line.523">        String vImagePath = "gameImages/GameOver.jpg"; // to change the directory</a>
+<span class="sourceLineNo">524</span><a id="line.524">        URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);</a>
+<span class="sourceLineNo">525</span><a id="line.525">        if (vImageURL == null)</a>
+<span class="sourceLineNo">526</span><a id="line.526">            System.out.println("Image not found : " + vImagePath);</a>
+<span class="sourceLineNo">527</span><a id="line.527">        else {</a>
+<span class="sourceLineNo">528</span><a id="line.528">            ImageIcon vIcon = new ImageIcon(vImageURL);</a>
+<span class="sourceLineNo">529</span><a id="line.529">            this.aGameOverBackGroundImage.setIcon(vIcon);</a>
+<span class="sourceLineNo">530</span><a id="line.530">            this.aGameWindow.pack();</a>
+<span class="sourceLineNo">531</span><a id="line.531">        }</a>
+<span class="sourceLineNo">532</span><a id="line.532">    }</a>
+<span class="sourceLineNo">533</span><a id="line.533"></a>
+<span class="sourceLineNo">534</span><a id="line.534">    // enable method</a>
+<span class="sourceLineNo">535</span><a id="line.535"></a>
+<span class="sourceLineNo">536</span><a id="line.536">    /**</a>
+<span class="sourceLineNo">537</span><a id="line.537">     * Enable or disable input in the input field.</a>
+<span class="sourceLineNo">538</span><a id="line.538">     * </a>
+<span class="sourceLineNo">539</span><a id="line.539">     * @param pOnOff true when enable</a>
+<span class="sourceLineNo">540</span><a id="line.540">     *               false when disable</a>
+<span class="sourceLineNo">541</span><a id="line.541">     */</a>
+<span class="sourceLineNo">542</span><a id="line.542">    public void enable(final boolean pOnOff) {</a>
+<span class="sourceLineNo">543</span><a id="line.543">        this.aEntryField.setEditable(pOnOff); // enable/disable</a>
+<span class="sourceLineNo">544</span><a id="line.544">        if (!pOnOff) { // disable</a>
+<span class="sourceLineNo">545</span><a id="line.545">            this.aEntryField.getCaret().setBlinkRate(0); // cursor won't blink</a>
+<span class="sourceLineNo">546</span><a id="line.546">            this.aEntryField.removeActionListener(this); // won't react to entry</a>
+<span class="sourceLineNo">547</span><a id="line.547"></a>
+<span class="sourceLineNo">548</span><a id="line.548">            JButton[] vButtons = { aBackButton, aHelpButton, aQuitButton, aDropButton, aTakeButton, aFireButton,</a>
+<span class="sourceLineNo">549</span><a id="line.549">                    aChargeButton, aInventoryButton, aNorthButton, aSouthButton, aEastButton, aWestButton, aUpButton,</a>
+<span class="sourceLineNo">550</span><a id="line.550">                    aDownButton, aBattleButton };</a>
+<span class="sourceLineNo">551</span><a id="line.551"></a>
+<span class="sourceLineNo">552</span><a id="line.552">            for (JButton currentButton : vButtons) {</a>
+<span class="sourceLineNo">553</span><a id="line.553">                for (ActionListener al : currentButton.getActionListeners()) {</a>
+<span class="sourceLineNo">554</span><a id="line.554">                    currentButton.removeActionListener(al);</a>
+<span class="sourceLineNo">555</span><a id="line.555">                }</a>
+<span class="sourceLineNo">556</span><a id="line.556">            }</a>
+<span class="sourceLineNo">557</span><a id="line.557">        } else {</a>
+<span class="sourceLineNo">558</span><a id="line.558">            this.aEntryField.addActionListener(this);</a>
+<span class="sourceLineNo">559</span><a id="line.559">            this.aQuitButton.addActionListener(this);</a>
+<span class="sourceLineNo">560</span><a id="line.560">            this.aNorthButton.addActionListener(this);</a>
+<span class="sourceLineNo">561</span><a id="line.561">            this.aSouthButton.addActionListener(this);</a>
+<span class="sourceLineNo">562</span><a id="line.562">            this.aEastButton.addActionListener(this);</a>
+<span class="sourceLineNo">563</span><a id="line.563">            this.aWestButton.addActionListener(this);</a>
+<span class="sourceLineNo">564</span><a id="line.564">            this.aUpButton.addActionListener(this);</a>
+<span class="sourceLineNo">565</span><a id="line.565">            this.aDownButton.addActionListener(this);</a>
+<span class="sourceLineNo">566</span><a id="line.566">            this.aBackButton.addActionListener(this);</a>
+<span class="sourceLineNo">567</span><a id="line.567">            this.aHelpButton.addActionListener(this);</a>
+<span class="sourceLineNo">568</span><a id="line.568">            this.aDropButton.addActionListener(e -&gt; dropButtonMethod());</a>
+<span class="sourceLineNo">569</span><a id="line.569">            this.aTakeButton.addActionListener(e -&gt; takeButtonMethod());</a>
+<span class="sourceLineNo">570</span><a id="line.570">            this.aFireButton.addActionListener(this);</a>
+<span class="sourceLineNo">571</span><a id="line.571">            this.aChargeButton.addActionListener(this);</a>
+<span class="sourceLineNo">572</span><a id="line.572">            this.aInventoryButton.addActionListener(this);</a>
+<span class="sourceLineNo">573</span><a id="line.573">            this.aBattleButton.addActionListener(this);</a>
+<span class="sourceLineNo">574</span><a id="line.574">        }</a>
+<span class="sourceLineNo">575</span><a id="line.575">    } // enable(.)</a>
+<span class="sourceLineNo">576</span><a id="line.576"></a>
+<span class="sourceLineNo">577</span><a id="line.577">    // font method</a>
+<span class="sourceLineNo">578</span><a id="line.578"></a>
+<span class="sourceLineNo">579</span><a id="line.579">    /**</a>
+<span class="sourceLineNo">580</span><a id="line.580">     * This method create custom font</a>
+<span class="sourceLineNo">581</span><a id="line.581">     */</a>
+<span class="sourceLineNo">582</span><a id="line.582">    private void createFont() {</a>
+<span class="sourceLineNo">583</span><a id="line.583">        // to import custom font</a>
+<span class="sourceLineNo">584</span><a id="line.584">        // https://www.ryisnow.online/2021/04/java-for-beginner-how-to-use-custom-font.html</a>
+<span class="sourceLineNo">585</span><a id="line.585">        try {</a>
+<span class="sourceLineNo">586</span><a id="line.586">            aFont = Font.createFont(Font.TRUETYPE_FONT, new File("font/8bit.ttf"));</a>
+<span class="sourceLineNo">587</span><a id="line.587">            GraphicsEnvironment vGraphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();</a>
+<span class="sourceLineNo">588</span><a id="line.588">            vGraphicsEnvironment.registerFont(aFont);</a>
+<span class="sourceLineNo">589</span><a id="line.589"></a>
+<span class="sourceLineNo">590</span><a id="line.590">            aTextFont = aFont.deriveFont(18f);</a>
+<span class="sourceLineNo">591</span><a id="line.591">            aButtonsFont = aFont.deriveFont(14f);</a>
+<span class="sourceLineNo">592</span><a id="line.592">            aBattleFont = aFont.deriveFont(24f);</a>
+<span class="sourceLineNo">593</span><a id="line.593">            aMenuFont = aFont.deriveFont(25f);</a>
+<span class="sourceLineNo">594</span><a id="line.594">        } catch (IOException | FontFormatException e) {</a>
+<span class="sourceLineNo">595</span><a id="line.595">            e.printStackTrace();</a>
+<span class="sourceLineNo">596</span><a id="line.596">        }</a>
+<span class="sourceLineNo">597</span><a id="line.597">    }</a>
+<span class="sourceLineNo">598</span><a id="line.598"></a>
+<span class="sourceLineNo">599</span><a id="line.599">    // gui method</a>
+<span class="sourceLineNo">600</span><a id="line.600"></a>
+<span class="sourceLineNo">601</span><a id="line.601">    /**</a>
+<span class="sourceLineNo">602</span><a id="line.602">     * Set up graphical user interface.</a>
+<span class="sourceLineNo">603</span><a id="line.603">     */</a>
+<span class="sourceLineNo">604</span><a id="line.604">    private void createGUI() {</a>
+<span class="sourceLineNo">605</span><a id="line.605">        this.aGameWindow = new JFrame();</a>
+<span class="sourceLineNo">606</span><a id="line.606">        this.aGameWindow.setTitle("Zuul GOTY Edition");</a>
+<span class="sourceLineNo">607</span><a id="line.607">        this.aGameWindow.setResizable(false);</a>
+<span class="sourceLineNo">608</span><a id="line.608">        this.aGameWindow.setPreferredSize(new Dimension(1077, 765));</a>
+<span class="sourceLineNo">609</span><a id="line.609"></a>
+<span class="sourceLineNo">610</span><a id="line.610">        ImageIcon aGameIcon = new ImageIcon("gameImages/game.png");</a>
+<span class="sourceLineNo">611</span><a id="line.611"></a>
+<span class="sourceLineNo">612</span><a id="line.612">        this.aGameWindow.setIconImage(aGameIcon.getImage());</a>
+<span class="sourceLineNo">613</span><a id="line.613"></a>
+<span class="sourceLineNo">614</span><a id="line.614">        this.createButton();</a>
+<span class="sourceLineNo">615</span><a id="line.615">        this.createPanel();</a>
+<span class="sourceLineNo">616</span><a id="line.616"></a>
+<span class="sourceLineNo">617</span><a id="line.617">        this.aGameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</a>
+<span class="sourceLineNo">618</span><a id="line.618"></a>
+<span class="sourceLineNo">619</span><a id="line.619">        this.aGameWindow.pack();</a>
+<span class="sourceLineNo">620</span><a id="line.620">        this.aGameWindow.setVisible(true);</a>
+<span class="sourceLineNo">621</span><a id="line.621">        this.aEntryField.requestFocus();</a>
+<span class="sourceLineNo">622</span><a id="line.622"></a>
+<span class="sourceLineNo">623</span><a id="line.623">    } // createGUI()</a>
+<span class="sourceLineNo">624</span><a id="line.624"></a>
+<span class="sourceLineNo">625</span><a id="line.625">    /**</a>
+<span class="sourceLineNo">626</span><a id="line.626">     * This method creates all the button</a>
+<span class="sourceLineNo">627</span><a id="line.627">     */</a>
+<span class="sourceLineNo">628</span><a id="line.628">    private void createButton() {</a>
+<span class="sourceLineNo">629</span><a id="line.629">        this.aQuitButton = new JButton("quit");</a>
+<span class="sourceLineNo">630</span><a id="line.630">        this.aNorthButton = new JButton("north ▲");</a>
+<span class="sourceLineNo">631</span><a id="line.631">        this.aEastButton = new JButton("east ▶");</a>
+<span class="sourceLineNo">632</span><a id="line.632">        this.aSouthButton = new JButton("south ▼");</a>
+<span class="sourceLineNo">633</span><a id="line.633">        this.aWestButton = new JButton("◀ west");</a>
+<span class="sourceLineNo">634</span><a id="line.634">        this.aUpButton = new JButton("up △");</a>
+<span class="sourceLineNo">635</span><a id="line.635">        this.aDownButton = new JButton("down ▽");</a>
+<span class="sourceLineNo">636</span><a id="line.636">        this.aBackButton = new JButton("back ");</a>
+<span class="sourceLineNo">637</span><a id="line.637">        this.aHelpButton = new JButton("help ?");</a>
+<span class="sourceLineNo">638</span><a id="line.638">        this.aDropButton = new JButton("drop");</a>
+<span class="sourceLineNo">639</span><a id="line.639">        this.aTakeButton = new JButton("take");</a>
+<span class="sourceLineNo">640</span><a id="line.640">        this.aFireButton = new JButton("fire");</a>
+<span class="sourceLineNo">641</span><a id="line.641">        this.aChargeButton = new JButton("charge");</a>
+<span class="sourceLineNo">642</span><a id="line.642">        this.aInventoryButton = new JButton("inventory");</a>
+<span class="sourceLineNo">643</span><a id="line.643">        this.aBattleButton = new JButton("fight");</a>
+<span class="sourceLineNo">644</span><a id="line.644">        this.aPlay = new JButton("Play");</a>
+<span class="sourceLineNo">645</span><a id="line.645">        this.aSetting = new JButton("Settings");</a>
+<span class="sourceLineNo">646</span><a id="line.646">        this.aQuit = new JButton("Quit");</a>
+<span class="sourceLineNo">647</span><a id="line.647">        this.aQuit2 = new JButton("Quit");</a>
+<span class="sourceLineNo">648</span><a id="line.648">        this.aBack = new JButton("Back");</a>
+<span class="sourceLineNo">649</span><a id="line.649">        this.aBack2 = new JButton("Back");</a>
+<span class="sourceLineNo">650</span><a id="line.650">        this.aSound = new JButton("Sound");</a>
+<span class="sourceLineNo">651</span><a id="line.651">        this.aSoundOn = new JButton("Sound On");</a>
+<span class="sourceLineNo">652</span><a id="line.652">        this.aSoundOff = new JButton("Sound Off");</a>
+<span class="sourceLineNo">653</span><a id="line.653">        this.aRunButton = new JButton("Run");</a>
+<span class="sourceLineNo">654</span><a id="line.654">        this.aBagButton = new JButton("Bag");</a>
+<span class="sourceLineNo">655</span><a id="line.655">        this.aAttackButton = new JButton("Attack");</a>
+<span class="sourceLineNo">656</span><a id="line.656">        this.aDefendButton = new JButton("Defend");</a>
+<span class="sourceLineNo">657</span><a id="line.657"></a>
+<span class="sourceLineNo">658</span><a id="line.658">        // add custom font on buttons</a>
+<span class="sourceLineNo">659</span><a id="line.659">        this.aQuitButton.setFont(aButtonsFont);</a>
+<span class="sourceLineNo">660</span><a id="line.660">        this.aNorthButton.setFont(aButtonsFont);</a>
+<span class="sourceLineNo">661</span><a id="line.661">        this.aEastButton.setFont(aButtonsFont);</a>
+<span class="sourceLineNo">662</span><a id="line.662">        this.aSouthButton.setFont(aButtonsFont);</a>
+<span class="sourceLineNo">663</span><a id="line.663">        this.aWestButton.setFont(aButtonsFont);</a>
+<span class="sourceLineNo">664</span><a id="line.664">        this.aUpButton.setFont(aButtonsFont);</a>
+<span class="sourceLineNo">665</span><a id="line.665">        this.aDownButton.setFont(aButtonsFont);</a>
+<span class="sourceLineNo">666</span><a id="line.666">        this.aBackButton.setFont(aButtonsFont);</a>
+<span class="sourceLineNo">667</span><a id="line.667">        this.aHelpButton.setFont(aButtonsFont);</a>
+<span class="sourceLineNo">668</span><a id="line.668">        this.aDropButton.setFont(aButtonsFont);</a>
+<span class="sourceLineNo">669</span><a id="line.669">        this.aTakeButton.setFont(aButtonsFont);</a>
+<span class="sourceLineNo">670</span><a id="line.670">        this.aFireButton.setFont(aButtonsFont);</a>
+<span class="sourceLineNo">671</span><a id="line.671">        this.aChargeButton.setFont(aButtonsFont);</a>
+<span class="sourceLineNo">672</span><a id="line.672">        this.aInventoryButton.setFont(aButtonsFont);</a>
+<span class="sourceLineNo">673</span><a id="line.673">        this.aBattleButton.setFont(aButtonsFont);</a>
+<span class="sourceLineNo">674</span><a id="line.674">        this.aPlay.setFont(aMenuFont);</a>
+<span class="sourceLineNo">675</span><a id="line.675">        this.aSetting.setFont(aMenuFont);</a>
+<span class="sourceLineNo">676</span><a id="line.676">        this.aQuit.setFont(aMenuFont);</a>
+<span class="sourceLineNo">677</span><a id="line.677">        this.aQuit2.setFont(aMenuFont);</a>
+<span class="sourceLineNo">678</span><a id="line.678">        this.aBack.setFont(aMenuFont);</a>
+<span class="sourceLineNo">679</span><a id="line.679">        this.aBack2.setFont(aMenuFont);</a>
+<span class="sourceLineNo">680</span><a id="line.680">        this.aSound.setFont(aMenuFont);</a>
+<span class="sourceLineNo">681</span><a id="line.681">        this.aSoundOn.setFont(aMenuFont);</a>
+<span class="sourceLineNo">682</span><a id="line.682">        this.aSoundOff.setFont(aMenuFont);</a>
+<span class="sourceLineNo">683</span><a id="line.683">        this.aRunButton.setFont(aMenuFont);</a>
+<span class="sourceLineNo">684</span><a id="line.684">        this.aBagButton.setFont(aMenuFont);</a>
+<span class="sourceLineNo">685</span><a id="line.685">        this.aAttackButton.setFont(aMenuFont);</a>
+<span class="sourceLineNo">686</span><a id="line.686">        this.aDefendButton.setFont(aMenuFont);</a>
+<span class="sourceLineNo">687</span><a id="line.687"></a>
+<span class="sourceLineNo">688</span><a id="line.688">        // add some event listeners to some components</a>
+<span class="sourceLineNo">689</span><a id="line.689">        this.aQuitButton.addActionListener(this);</a>
+<span class="sourceLineNo">690</span><a id="line.690">        this.aNorthButton.addActionListener(this);</a>
+<span class="sourceLineNo">691</span><a id="line.691">        this.aSouthButton.addActionListener(this);</a>
+<span class="sourceLineNo">692</span><a id="line.692">        this.aEastButton.addActionListener(this);</a>
+<span class="sourceLineNo">693</span><a id="line.693">        this.aWestButton.addActionListener(this);</a>
+<span class="sourceLineNo">694</span><a id="line.694">        this.aUpButton.addActionListener(this);</a>
+<span class="sourceLineNo">695</span><a id="line.695">        this.aDownButton.addActionListener(this);</a>
+<span class="sourceLineNo">696</span><a id="line.696">        this.aBackButton.addActionListener(this);</a>
+<span class="sourceLineNo">697</span><a id="line.697">        this.aHelpButton.addActionListener(this);</a>
+<span class="sourceLineNo">698</span><a id="line.698">        this.aDropButton.addActionListener(e -&gt; dropButtonMethod());</a>
+<span class="sourceLineNo">699</span><a id="line.699">        this.aTakeButton.addActionListener(e -&gt; takeButtonMethod());</a>
+<span class="sourceLineNo">700</span><a id="line.700">        this.aFireButton.addActionListener(this);</a>
+<span class="sourceLineNo">701</span><a id="line.701">        this.aChargeButton.addActionListener(this);</a>
+<span class="sourceLineNo">702</span><a id="line.702">        this.aInventoryButton.addActionListener(this);</a>
+<span class="sourceLineNo">703</span><a id="line.703">        this.aBattleButton.addActionListener(this);</a>
+<span class="sourceLineNo">704</span><a id="line.704">        this.aPlay.addActionListener(e -&gt; playButton());</a>
+<span class="sourceLineNo">705</span><a id="line.705">        this.aPlay.addActionListener(this);</a>
+<span class="sourceLineNo">706</span><a id="line.706">        this.aSetting.addActionListener(e -&gt; settingsButton());</a>
+<span class="sourceLineNo">707</span><a id="line.707">        this.aQuit.addActionListener(e -&gt; quitButton());</a>
+<span class="sourceLineNo">708</span><a id="line.708">        this.aQuit2.addActionListener(e -&gt; quitButton());</a>
+<span class="sourceLineNo">709</span><a id="line.709">        this.aBack.addActionListener(e -&gt; backButton());</a>
+<span class="sourceLineNo">710</span><a id="line.710">        this.aBack2.addActionListener(e -&gt; backButton2());</a>
+<span class="sourceLineNo">711</span><a id="line.711">        this.aSound.addActionListener(e -&gt; soundButton());</a>
+<span class="sourceLineNo">712</span><a id="line.712">        this.aSoundOn.addActionListener(e -&gt; soundOnButton());</a>
+<span class="sourceLineNo">713</span><a id="line.713">        this.aSoundOff.addActionListener(e -&gt; soundOffButton());</a>
+<span class="sourceLineNo">714</span><a id="line.714">        this.aBagButton.addActionListener(this);</a>
+<span class="sourceLineNo">715</span><a id="line.715">        this.aAttackButton.addActionListener(e -&gt; attackButton());</a>
+<span class="sourceLineNo">716</span><a id="line.716">        this.aDefendButton.addActionListener(e -&gt; this.aEngine.defendButton());</a>
+<span class="sourceLineNo">717</span><a id="line.717">        this.aBagButton.addActionListener(e -&gt; bagButtonMethod());</a>
+<span class="sourceLineNo">718</span><a id="line.718">        this.aRunButton.addActionListener(e -&gt; runButtonMethod());</a>
+<span class="sourceLineNo">719</span><a id="line.719"></a>
+<span class="sourceLineNo">720</span><a id="line.720">        // set action to write differents names</a>
+<span class="sourceLineNo">721</span><a id="line.721">        this.aQuitButton.setActionCommand("quit");</a>
+<span class="sourceLineNo">722</span><a id="line.722">        this.aNorthButton.setActionCommand("go north");</a>
+<span class="sourceLineNo">723</span><a id="line.723">        this.aSouthButton.setActionCommand("go south");</a>
+<span class="sourceLineNo">724</span><a id="line.724">        this.aEastButton.setActionCommand("go east");</a>
+<span class="sourceLineNo">725</span><a id="line.725">        this.aWestButton.setActionCommand("go west");</a>
+<span class="sourceLineNo">726</span><a id="line.726">        this.aUpButton.setActionCommand("go up");</a>
+<span class="sourceLineNo">727</span><a id="line.727">        this.aDownButton.setActionCommand("go down");</a>
+<span class="sourceLineNo">728</span><a id="line.728">        this.aBackButton.setActionCommand("back");</a>
+<span class="sourceLineNo">729</span><a id="line.729">        this.aHelpButton.setActionCommand("help");</a>
+<span class="sourceLineNo">730</span><a id="line.730">        this.aDropButton.setActionCommand("drop");</a>
+<span class="sourceLineNo">731</span><a id="line.731">        this.aTakeButton.setActionCommand("take");</a>
+<span class="sourceLineNo">732</span><a id="line.732">        this.aFireButton.setActionCommand("fire");</a>
+<span class="sourceLineNo">733</span><a id="line.733">        this.aChargeButton.setActionCommand("charge");</a>
+<span class="sourceLineNo">734</span><a id="line.734">        this.aInventoryButton.setActionCommand("inventory");</a>
+<span class="sourceLineNo">735</span><a id="line.735">        this.aBattleButton.setActionCommand("fight");</a>
+<span class="sourceLineNo">736</span><a id="line.736">        this.aPlay.setActionCommand("go play");</a>
+<span class="sourceLineNo">737</span><a id="line.737">    }</a>
+<span class="sourceLineNo">738</span><a id="line.738"></a>
+<span class="sourceLineNo">739</span><a id="line.739">    /**</a>
+<span class="sourceLineNo">740</span><a id="line.740">     * This method create all the panels</a>
+<span class="sourceLineNo">741</span><a id="line.741">     */</a>
+<span class="sourceLineNo">742</span><a id="line.742">    private void createPanel() {</a>
+<span class="sourceLineNo">743</span><a id="line.743">        createNPCPanel();</a>
+<span class="sourceLineNo">744</span><a id="line.744">        createGamePanel();</a>
+<span class="sourceLineNo">745</span><a id="line.745">        createBattlePanel();</a>
+<span class="sourceLineNo">746</span><a id="line.746">        createMainMenuPanel();</a>
+<span class="sourceLineNo">747</span><a id="line.747">        createSettingPanel();</a>
+<span class="sourceLineNo">748</span><a id="line.748">        createSoundPanel();</a>
+<span class="sourceLineNo">749</span><a id="line.749">        createGameOverPanel();</a>
+<span class="sourceLineNo">750</span><a id="line.750"></a>
+<span class="sourceLineNo">751</span><a id="line.751">        aSceneManager = aGameWindow.getContentPane();</a>
+<span class="sourceLineNo">752</span><a id="line.752">        aCardLayout = new CardLayout();</a>
+<span class="sourceLineNo">753</span><a id="line.753">        aSceneManager.setLayout(aCardLayout);</a>
+<span class="sourceLineNo">754</span><a id="line.754">        aSceneManager.add(aMainMenuPanel, "MainMenu");</a>
+<span class="sourceLineNo">755</span><a id="line.755">        aSceneManager.add(aGamePanel, "Game");</a>
+<span class="sourceLineNo">756</span><a id="line.756">        aSceneManager.add(aBattlerPanel, "Battle");</a>
+<span class="sourceLineNo">757</span><a id="line.757">        aSceneManager.add(aSettingPanel, "Settings");</a>
+<span class="sourceLineNo">758</span><a id="line.758">        aSceneManager.add(aSoundPanel, "Sound");</a>
+<span class="sourceLineNo">759</span><a id="line.759">        aSceneManager.add(aGameOverPanel, "GameOver");</a>
+<span class="sourceLineNo">760</span><a id="line.760">    }</a>
+<span class="sourceLineNo">761</span><a id="line.761"></a>
+<span class="sourceLineNo">762</span><a id="line.762">    /**</a>
+<span class="sourceLineNo">763</span><a id="line.763">     * This method create the panel of the game</a>
+<span class="sourceLineNo">764</span><a id="line.764">     */</a>
+<span class="sourceLineNo">765</span><a id="line.765">    private void createGamePanel() {</a>
+<span class="sourceLineNo">766</span><a id="line.766">        this.aEntryField = new JTextField(34);</a>
+<span class="sourceLineNo">767</span><a id="line.767">        this.aEntryField.addActionListener(this);</a>
+<span class="sourceLineNo">768</span><a id="line.768"></a>
+<span class="sourceLineNo">769</span><a id="line.769">        this.aLog = new JTextArea();</a>
+<span class="sourceLineNo">770</span><a id="line.770">        this.aLog.setEditable(false);</a>
+<span class="sourceLineNo">771</span><a id="line.771">        this.aLog.setLineWrap(true);</a>
+<span class="sourceLineNo">772</span><a id="line.772">        this.aLog.setWrapStyleWord(true);</a>
+<span class="sourceLineNo">773</span><a id="line.773">        this.aLog.setMargin(new Insets(10, 10, 10, 10));</a>
+<span class="sourceLineNo">774</span><a id="line.774">        this.aLog.setFont(aTextFont);</a>
+<span class="sourceLineNo">775</span><a id="line.775">        this.aLog.setForeground(Color.white);</a>
+<span class="sourceLineNo">776</span><a id="line.776">        this.aLog.setBackground(Color.darkGray);</a>
+<span class="sourceLineNo">777</span><a id="line.777">        JScrollPane vListScroller = new JScrollPane(this.aLog);</a>
+<span class="sourceLineNo">778</span><a id="line.778">        vListScroller.setPreferredSize(new Dimension(414, 707));</a>
+<span class="sourceLineNo">779</span><a id="line.779"></a>
+<span class="sourceLineNo">780</span><a id="line.780">        JPanel vImagePanel = new JPanel();</a>
+<span class="sourceLineNo">781</span><a id="line.781">        this.aImage = new JLabel();</a>
+<span class="sourceLineNo">782</span><a id="line.782">        vImagePanel.setPreferredSize(new Dimension(650, 650));</a>
+<span class="sourceLineNo">783</span><a id="line.783">        vImagePanel.setSize(vImagePanel.getPreferredSize());</a>
+<span class="sourceLineNo">784</span><a id="line.784">        vImagePanel.setLocation(0, 0);</a>
+<span class="sourceLineNo">785</span><a id="line.785">        vImagePanel.setLayout(new BorderLayout());</a>
+<span class="sourceLineNo">786</span><a id="line.786">        vImagePanel.add(this.aImage, BorderLayout.CENTER);</a>
+<span class="sourceLineNo">787</span><a id="line.787"></a>
+<span class="sourceLineNo">788</span><a id="line.788">        // this is timer label</a>
+<span class="sourceLineNo">789</span><a id="line.789">        aGameTimer = new JLabel();</a>
+<span class="sourceLineNo">790</span><a id="line.790">        aGameTimer.setForeground(Color.white);</a>
+<span class="sourceLineNo">791</span><a id="line.791">        aGameTimer.setFont(aTextFont);</a>
+<span class="sourceLineNo">792</span><a id="line.792">        aGameTimer.setSize(300, 50);</a>
+<span class="sourceLineNo">793</span><a id="line.793">        aGameTimer.setLocation(15, 0);</a>
+<span class="sourceLineNo">794</span><a id="line.794"></a>
+<span class="sourceLineNo">795</span><a id="line.795">        JPanel vTextPanel = new JPanel();</a>
+<span class="sourceLineNo">796</span><a id="line.796">        vTextPanel.setLayout(new BorderLayout());</a>
+<span class="sourceLineNo">797</span><a id="line.797">        vTextPanel.add(vListScroller, BorderLayout.CENTER);</a>
+<span class="sourceLineNo">798</span><a id="line.798">        vTextPanel.add(this.aEntryField, BorderLayout.SOUTH);</a>
+<span class="sourceLineNo">799</span><a id="line.799">        vTextPanel.setSize(vTextPanel.getPreferredSize());</a>
+<span class="sourceLineNo">800</span><a id="line.800">        vTextPanel.setLocation(660, 0);</a>
+<span class="sourceLineNo">801</span><a id="line.801"></a>
+<span class="sourceLineNo">802</span><a id="line.802">        JPanel vMovementButtonPanel = new JPanel();</a>
+<span class="sourceLineNo">803</span><a id="line.803">        JPanel vCenterButtonPanel = new JPanel();</a>
+<span class="sourceLineNo">804</span><a id="line.804">        vCenterButtonPanel.setLayout(new GridLayout(1, 2));</a>
+<span class="sourceLineNo">805</span><a id="line.805">        vCenterButtonPanel.setBackground(Color.DARK_GRAY);</a>
+<span class="sourceLineNo">806</span><a id="line.806">        vCenterButtonPanel.add(this.aUpButton);</a>
+<span class="sourceLineNo">807</span><a id="line.807">        vCenterButtonPanel.add(this.aDownButton);</a>
+<span class="sourceLineNo">808</span><a id="line.808"></a>
+<span class="sourceLineNo">809</span><a id="line.809">        vMovementButtonPanel.setPreferredSize(new Dimension(365, 87));</a>
+<span class="sourceLineNo">810</span><a id="line.810">        vMovementButtonPanel.setLayout(new BorderLayout());</a>
+<span class="sourceLineNo">811</span><a id="line.811">        vMovementButtonPanel.setBackground(Color.DARK_GRAY);</a>
+<span class="sourceLineNo">812</span><a id="line.812">        vMovementButtonPanel.add(this.aNorthButton, BorderLayout.NORTH);</a>
+<span class="sourceLineNo">813</span><a id="line.813">        vMovementButtonPanel.add(this.aWestButton, BorderLayout.WEST);</a>
+<span class="sourceLineNo">814</span><a id="line.814">        vMovementButtonPanel.add(this.aSouthButton, BorderLayout.SOUTH);</a>
+<span class="sourceLineNo">815</span><a id="line.815">        vMovementButtonPanel.add(this.aEastButton, BorderLayout.EAST);</a>
+<span class="sourceLineNo">816</span><a id="line.816">        vMovementButtonPanel.add(vCenterButtonPanel, BorderLayout.CENTER);</a>
+<span class="sourceLineNo">817</span><a id="line.817">        vMovementButtonPanel.setSize(vMovementButtonPanel.getPreferredSize());</a>
+<span class="sourceLineNo">818</span><a id="line.818">        vMovementButtonPanel.setLocation(0, 650);</a>
+<span class="sourceLineNo">819</span><a id="line.819"></a>
+<span class="sourceLineNo">820</span><a id="line.820">        JPanel vActionButtonPanel = new JPanel();</a>
+<span class="sourceLineNo">821</span><a id="line.821">        vActionButtonPanel.setPreferredSize(new Dimension(294, 87));</a>
+<span class="sourceLineNo">822</span><a id="line.822">        vActionButtonPanel.setLayout(new GridLayout(3, 3));</a>
+<span class="sourceLineNo">823</span><a id="line.823">        vActionButtonPanel.setBackground(Color.DARK_GRAY);</a>
+<span class="sourceLineNo">824</span><a id="line.824">        vActionButtonPanel.add(this.aBackButton);</a>
+<span class="sourceLineNo">825</span><a id="line.825">        vActionButtonPanel.add(this.aHelpButton);</a>
+<span class="sourceLineNo">826</span><a id="line.826">        vActionButtonPanel.add(this.aQuitButton);</a>
+<span class="sourceLineNo">827</span><a id="line.827">        vActionButtonPanel.add(this.aDropButton);</a>
+<span class="sourceLineNo">828</span><a id="line.828">        vActionButtonPanel.add(this.aTakeButton);</a>
+<span class="sourceLineNo">829</span><a id="line.829">        vActionButtonPanel.add(this.aFireButton);</a>
+<span class="sourceLineNo">830</span><a id="line.830">        vActionButtonPanel.add(this.aChargeButton);</a>
+<span class="sourceLineNo">831</span><a id="line.831">        vActionButtonPanel.add(this.aInventoryButton);</a>
+<span class="sourceLineNo">832</span><a id="line.832">        vActionButtonPanel.add(this.aBattleButton);</a>
+<span class="sourceLineNo">833</span><a id="line.833">        vActionButtonPanel.setSize(vActionButtonPanel.getPreferredSize());</a>
+<span class="sourceLineNo">834</span><a id="line.834">        vActionButtonPanel.setLocation(365, 650);</a>
+<span class="sourceLineNo">835</span><a id="line.835"></a>
+<span class="sourceLineNo">836</span><a id="line.836">        this.aGamePanel = new JLayeredPane();</a>
+<span class="sourceLineNo">837</span><a id="line.837">        this.aGamePanel.add(vImagePanel, JLayeredPane.DEFAULT_LAYER);</a>
+<span class="sourceLineNo">838</span><a id="line.838">        this.aGamePanel.add(vTextPanel, JLayeredPane.DEFAULT_LAYER);</a>
+<span class="sourceLineNo">839</span><a id="line.839">        this.aGamePanel.add(vMovementButtonPanel, JLayeredPane.DEFAULT_LAYER);</a>
+<span class="sourceLineNo">840</span><a id="line.840">        this.aGamePanel.add(vActionButtonPanel, JLayeredPane.DEFAULT_LAYER);</a>
+<span class="sourceLineNo">841</span><a id="line.841">        this.aGamePanel.add(aGameTimer, JLayeredPane.PALETTE_LAYER);</a>
+<span class="sourceLineNo">842</span><a id="line.842">        this.aGamePanel.add(this.aEntityPanel, JLayeredPane.PALETTE_LAYER);</a>
+<span class="sourceLineNo">843</span><a id="line.843">    }</a>
+<span class="sourceLineNo">844</span><a id="line.844"></a>
+<span class="sourceLineNo">845</span><a id="line.845">    /**</a>
+<span class="sourceLineNo">846</span><a id="line.846">     * This method create the panel of the battle</a>
+<span class="sourceLineNo">847</span><a id="line.847">     */</a>
+<span class="sourceLineNo">848</span><a id="line.848">    private void createBattlePanel() {</a>
+<span class="sourceLineNo">849</span><a id="line.849"></a>
+<span class="sourceLineNo">850</span><a id="line.850">        this.aBattlerPanel = new JLayeredPane();</a>
+<span class="sourceLineNo">851</span><a id="line.851">        this.aBattlerPanel.setPreferredSize(new Dimension(1077, 765));</a>
+<span class="sourceLineNo">852</span><a id="line.852">        this.aBattlerPanel.setSize(this.aBattlerPanel.getPreferredSize());</a>
+<span class="sourceLineNo">853</span><a id="line.853">        this.aBattlerPanel.setLocation(0, 0);</a>
+<span class="sourceLineNo">854</span><a id="line.854"></a>
+<span class="sourceLineNo">855</span><a id="line.855">        aBattleBackground = new JLabel();</a>
+<span class="sourceLineNo">856</span><a id="line.856">        aBattleBackground.setSize(aBattlerPanel.getPreferredSize());</a>
+<span class="sourceLineNo">857</span><a id="line.857">        aBattleBackground.setLocation(0, 0);</a>
+<span class="sourceLineNo">858</span><a id="line.858">        showBattleBackground();</a>
+<span class="sourceLineNo">859</span><a id="line.859"></a>
+<span class="sourceLineNo">860</span><a id="line.860">        int enemyX = 400;</a>
+<span class="sourceLineNo">861</span><a id="line.861">        int enemyY = 55;</a>
+<span class="sourceLineNo">862</span><a id="line.862"></a>
+<span class="sourceLineNo">863</span><a id="line.863">        aEnemyHPPanel = new JPanel();</a>
+<span class="sourceLineNo">864</span><a id="line.864">        aEnemyHPPanel.setPreferredSize(new Dimension(200, 70));</a>
+<span class="sourceLineNo">865</span><a id="line.865">        aEnemyHPPanel.setSize(aEnemyHPPanel.getPreferredSize());</a>
+<span class="sourceLineNo">866</span><a id="line.866">        aEnemyHPPanel.setLocation(enemyX, enemyY);</a>
+<span class="sourceLineNo">867</span><a id="line.867">        aEnemyHPPanel.setBorder(new HealthPanelBorder());</a>
+<span class="sourceLineNo">868</span><a id="line.868">        aEnemyHPPanel.setOpaque(false);</a>
+<span class="sourceLineNo">869</span><a id="line.869">        aEnemyName = new JLabel();</a>
+<span class="sourceLineNo">870</span><a id="line.870">        aEnemyName.setForeground(Color.white);</a>
+<span class="sourceLineNo">871</span><a id="line.871">        aEnemyName.setFont(aTextFont);</a>
+<span class="sourceLineNo">872</span><a id="line.872">        aEnemyName.setSize(300, 50);</a>
+<span class="sourceLineNo">873</span><a id="line.873">        aEnemyName.setLocation(enemyX + 10, enemyY);</a>
+<span class="sourceLineNo">874</span><a id="line.874"></a>
+<span class="sourceLineNo">875</span><a id="line.875">        startDefaultBattleUI();</a>
+<span class="sourceLineNo">876</span><a id="line.876">        aEnemyHP.setBackground(Color.WHITE);</a>
+<span class="sourceLineNo">877</span><a id="line.877">        aEnemyHP.setForeground(Color.GREEN);</a>
+<span class="sourceLineNo">878</span><a id="line.878"></a>
+<span class="sourceLineNo">879</span><a id="line.879">        aEnemyHP.setPreferredSize(new Dimension(180, 10));</a>
+<span class="sourceLineNo">880</span><a id="line.880">        aEnemyHP.setSize(aEnemyHP.getPreferredSize());</a>
+<span class="sourceLineNo">881</span><a id="line.881">        aEnemyHP.setLocation(enemyX + 10, enemyY + 45);</a>
+<span class="sourceLineNo">882</span><a id="line.882"></a>
+<span class="sourceLineNo">883</span><a id="line.883">        int playerX = 38;</a>
+<span class="sourceLineNo">884</span><a id="line.884">        int playerY = 490;</a>
+<span class="sourceLineNo">885</span><a id="line.885"></a>
+<span class="sourceLineNo">886</span><a id="line.886">        aPlayerHPPanel = new JPanel();</a>
+<span class="sourceLineNo">887</span><a id="line.887">        aPlayerHPPanel.setPreferredSize(new Dimension(200, 70));</a>
+<span class="sourceLineNo">888</span><a id="line.888">        aPlayerHPPanel.setSize(aPlayerHPPanel.getPreferredSize());</a>
+<span class="sourceLineNo">889</span><a id="line.889">        aPlayerHPPanel.setLocation(playerX, playerY);</a>
+<span class="sourceLineNo">890</span><a id="line.890">        aPlayerHPPanel.setBorder(new HealthPanelBorder());</a>
+<span class="sourceLineNo">891</span><a id="line.891">        aPlayerHPPanel.setOpaque(false);</a>
+<span class="sourceLineNo">892</span><a id="line.892">        aPlayerName = new JLabel();</a>
+<span class="sourceLineNo">893</span><a id="line.893">        aPlayerName.setForeground(Color.white);</a>
+<span class="sourceLineNo">894</span><a id="line.894">        aPlayerName.setFont(aTextFont);</a>
+<span class="sourceLineNo">895</span><a id="line.895">        aPlayerName.setSize(300, 50);</a>
+<span class="sourceLineNo">896</span><a id="line.896">        aPlayerName.setLocation(playerX + 10, playerY);</a>
+<span class="sourceLineNo">897</span><a id="line.897">        aPlayerName.setText(aEngine.getPlayerName());</a>
+<span class="sourceLineNo">898</span><a id="line.898">        aPlayerHP = new JProgressBar(0, this.aEngine.getMaxPlayerHP());</a>
+<span class="sourceLineNo">899</span><a id="line.899">        aPlayerHP.setBackground(Color.white);</a>
+<span class="sourceLineNo">900</span><a id="line.900">        aPlayerHP.setForeground(Color.green);</a>
+<span class="sourceLineNo">901</span><a id="line.901">        aPlayerHP.setPreferredSize(new Dimension(180, 10));</a>
+<span class="sourceLineNo">902</span><a id="line.902">        aPlayerHP.setSize(aPlayerHP.getPreferredSize());</a>
+<span class="sourceLineNo">903</span><a id="line.903">        aPlayerHP.setLocation(playerX + 10, playerY + 45);</a>
+<span class="sourceLineNo">904</span><a id="line.904">        aPlayerHP.setValue(this.aEngine.getPlayerHP());</a>
+<span class="sourceLineNo">905</span><a id="line.905"></a>
+<span class="sourceLineNo">906</span><a id="line.906">        JPanel vBattleTextPanel = new JPanel();</a>
+<span class="sourceLineNo">907</span><a id="line.907">        this.aBattleLog = new RoundJTextArea();</a>
+<span class="sourceLineNo">908</span><a id="line.908">        vBattleTextPanel.setPreferredSize(new Dimension(600, 150));</a>
+<span class="sourceLineNo">909</span><a id="line.909">        vBattleTextPanel.setOpaque(false);</a>
+<span class="sourceLineNo">910</span><a id="line.910">        vBattleTextPanel.setSize(vBattleTextPanel.getPreferredSize());</a>
+<span class="sourceLineNo">911</span><a id="line.911">        vBattleTextPanel.setLocation(38, 565);</a>
+<span class="sourceLineNo">912</span><a id="line.912">        vBattleTextPanel.setLayout(new BorderLayout());</a>
+<span class="sourceLineNo">913</span><a id="line.913">        this.aBattleLog.setEditable(false);</a>
+<span class="sourceLineNo">914</span><a id="line.914">        this.aBattleLog.setLineWrap(true);</a>
+<span class="sourceLineNo">915</span><a id="line.915">        this.aBattleLog.setWrapStyleWord(true);</a>
+<span class="sourceLineNo">916</span><a id="line.916">        this.aBattleLog.setMargin(new Insets(10, 10, 10, 10));</a>
+<span class="sourceLineNo">917</span><a id="line.917">        this.aBattleLog.setFont(aBattleFont);</a>
+<span class="sourceLineNo">918</span><a id="line.918">        this.aBattleLog.setForeground(Color.white);</a>
+<span class="sourceLineNo">919</span><a id="line.919">        this.aBattleLog.setBackground(Color.darkGray);</a>
+<span class="sourceLineNo">920</span><a id="line.920"></a>
+<span class="sourceLineNo">921</span><a id="line.921">        vBattleTextPanel.add(this.aBattleLog, BorderLayout.CENTER);</a>
+<span class="sourceLineNo">922</span><a id="line.922"></a>
+<span class="sourceLineNo">923</span><a id="line.923">        JPanel vBattleButtonPanel = new JPanel();</a>
+<span class="sourceLineNo">924</span><a id="line.924">        vBattleButtonPanel.setPreferredSize(new Dimension(400, 150));</a>
+<span class="sourceLineNo">925</span><a id="line.925">        vBattleButtonPanel.setOpaque(false);</a>
+<span class="sourceLineNo">926</span><a id="line.926">        vBattleButtonPanel.setSize(vBattleButtonPanel.getPreferredSize());</a>
+<span class="sourceLineNo">927</span><a id="line.927">        vBattleButtonPanel.setLocation(650, 565);</a>
+<span class="sourceLineNo">928</span><a id="line.928">        vBattleButtonPanel.setLayout(new GridLayout(2, 2));</a>
+<span class="sourceLineNo">929</span><a id="line.929">        vBattleButtonPanel.add(aAttackButton);</a>
+<span class="sourceLineNo">930</span><a id="line.930">        vBattleButtonPanel.add(aBagButton);</a>
+<span class="sourceLineNo">931</span><a id="line.931">        vBattleButtonPanel.add(aDefendButton);</a>
+<span class="sourceLineNo">932</span><a id="line.932">        vBattleButtonPanel.add(aRunButton);</a>
+<span class="sourceLineNo">933</span><a id="line.933"></a>
+<span class="sourceLineNo">934</span><a id="line.934">        aEntityFullImage = new JLabel();</a>
+<span class="sourceLineNo">935</span><a id="line.935">        aEntityFullImage.setPreferredSize(new Dimension(455, 490));</a>
+<span class="sourceLineNo">936</span><a id="line.936">        aEntityFullImage.setSize(aEntityFullImage.getPreferredSize());</a>
+<span class="sourceLineNo">937</span><a id="line.937">        aEntityFullImage.setLocation(560, 0);</a>
+<span class="sourceLineNo">938</span><a id="line.938"></a>
+<span class="sourceLineNo">939</span><a id="line.939">        aPlayerFullImage = new JLabel();</a>
+<span class="sourceLineNo">940</span><a id="line.940">        aPlayerFullImage.setPreferredSize(new Dimension(320, 480));</a>
+<span class="sourceLineNo">941</span><a id="line.941">        aPlayerFullImage.setSize(aPlayerFullImage.getPreferredSize());</a>
+<span class="sourceLineNo">942</span><a id="line.942">        aPlayerFullImage.setLocation(100, 200);</a>
+<span class="sourceLineNo">943</span><a id="line.943"></a>
+<span class="sourceLineNo">944</span><a id="line.944">        this.aBattlerPanel.add(aBattleBackground, JLayeredPane.DEFAULT_LAYER);</a>
+<span class="sourceLineNo">945</span><a id="line.945">        this.aBattlerPanel.add(aEntityFullImage, JLayeredPane.PALETTE_LAYER);</a>
+<span class="sourceLineNo">946</span><a id="line.946">        this.aBattlerPanel.add(aPlayerFullImage, JLayeredPane.PALETTE_LAYER);</a>
+<span class="sourceLineNo">947</span><a id="line.947">        this.aBattlerPanel.add(vBattleTextPanel, JLayeredPane.MODAL_LAYER);</a>
+<span class="sourceLineNo">948</span><a id="line.948">        this.aBattlerPanel.add(vBattleButtonPanel, JLayeredPane.PALETTE_LAYER);</a>
+<span class="sourceLineNo">949</span><a id="line.949">        this.aBattlerPanel.add(aEnemyHPPanel, JLayeredPane.MODAL_LAYER);</a>
+<span class="sourceLineNo">950</span><a id="line.950">        this.aBattlerPanel.add(aEnemyName, JLayeredPane.POPUP_LAYER);</a>
+<span class="sourceLineNo">951</span><a id="line.951">        this.aBattlerPanel.add(aEnemyHP, JLayeredPane.POPUP_LAYER);</a>
+<span class="sourceLineNo">952</span><a id="line.952">        this.aBattlerPanel.add(aPlayerHPPanel, JLayeredPane.MODAL_LAYER);</a>
+<span class="sourceLineNo">953</span><a id="line.953">        this.aBattlerPanel.add(aPlayerName, JLayeredPane.POPUP_LAYER);</a>
+<span class="sourceLineNo">954</span><a id="line.954">        this.aBattlerPanel.add(aPlayerHP, JLayeredPane.POPUP_LAYER);</a>
+<span class="sourceLineNo">955</span><a id="line.955"></a>
+<span class="sourceLineNo">956</span><a id="line.956">    }</a>
+<span class="sourceLineNo">957</span><a id="line.957"></a>
+<span class="sourceLineNo">958</span><a id="line.958">    /**</a>
+<span class="sourceLineNo">959</span><a id="line.959">     * This method create the panel of the main menu</a>
+<span class="sourceLineNo">960</span><a id="line.960">     */</a>
+<span class="sourceLineNo">961</span><a id="line.961">    private void createMainMenuPanel() {</a>
+<span class="sourceLineNo">962</span><a id="line.962">        this.aMainMenuPanel = new JLayeredPane();</a>
+<span class="sourceLineNo">963</span><a id="line.963">        this.aMainMenuBackGroundImage = new JLabel();</a>
+<span class="sourceLineNo">964</span><a id="line.964">        this.aMainMenuPanel.setPreferredSize(new Dimension(1077, 765));</a>
+<span class="sourceLineNo">965</span><a id="line.965">        this.aMainMenuPanel.setSize(aMainMenuPanel.getPreferredSize());</a>
+<span class="sourceLineNo">966</span><a id="line.966">        this.aMainMenuBackGroundImage.setSize(aMainMenuPanel.getPreferredSize());</a>
+<span class="sourceLineNo">967</span><a id="line.967">        this.aMainMenuBackGroundImage.setLocation(0, 0);</a>
+<span class="sourceLineNo">968</span><a id="line.968">        showBackGroundImage();</a>
+<span class="sourceLineNo">969</span><a id="line.969"></a>
+<span class="sourceLineNo">970</span><a id="line.970">        JPanel vButtonsPanel = new JPanel();</a>
+<span class="sourceLineNo">971</span><a id="line.971">        vButtonsPanel.setOpaque(false);</a>
+<span class="sourceLineNo">972</span><a id="line.972">        vButtonsPanel.setPreferredSize(new Dimension(201, 150));</a>
+<span class="sourceLineNo">973</span><a id="line.973">        vButtonsPanel.setSize(vButtonsPanel.getPreferredSize());</a>
+<span class="sourceLineNo">974</span><a id="line.974">        vButtonsPanel.setLayout(new GridLayout(3, 1));</a>
+<span class="sourceLineNo">975</span><a id="line.975">        vButtonsPanel.add(aPlay);</a>
+<span class="sourceLineNo">976</span><a id="line.976">        vButtonsPanel.add(aSetting);</a>
+<span class="sourceLineNo">977</span><a id="line.977">        vButtonsPanel.add(aQuit);</a>
+<span class="sourceLineNo">978</span><a id="line.978">        vButtonsPanel.setLocation(438, 400);</a>
+<span class="sourceLineNo">979</span><a id="line.979"></a>
+<span class="sourceLineNo">980</span><a id="line.980">        this.aMainMenuPanel.add(aMainMenuBackGroundImage, JLayeredPane.DEFAULT_LAYER);</a>
+<span class="sourceLineNo">981</span><a id="line.981">        this.aMainMenuPanel.add(vButtonsPanel, JLayeredPane.PALETTE_LAYER);</a>
+<span class="sourceLineNo">982</span><a id="line.982">    }</a>
+<span class="sourceLineNo">983</span><a id="line.983"></a>
+<span class="sourceLineNo">984</span><a id="line.984">    /**</a>
+<span class="sourceLineNo">985</span><a id="line.985">     * This method create the panel of the setting menu</a>
+<span class="sourceLineNo">986</span><a id="line.986">     */</a>
+<span class="sourceLineNo">987</span><a id="line.987">    private void createSettingPanel() {</a>
+<span class="sourceLineNo">988</span><a id="line.988">        this.aSettingPanel = new JLayeredPane();</a>
+<span class="sourceLineNo">989</span><a id="line.989">        this.aSettingBackground = new JLabel();</a>
+<span class="sourceLineNo">990</span><a id="line.990">        this.aSettingPanel.setPreferredSize(new Dimension(1077, 765));</a>
+<span class="sourceLineNo">991</span><a id="line.991">        this.aSettingPanel.setSize(aSettingPanel.getPreferredSize());</a>
+<span class="sourceLineNo">992</span><a id="line.992">        this.aSettingBackground.setSize(aSettingPanel.getPreferredSize());</a>
+<span class="sourceLineNo">993</span><a id="line.993">        this.aSettingBackground.setLocation(0, 0);</a>
+<span class="sourceLineNo">994</span><a id="line.994">        showSettingBackground();</a>
+<span class="sourceLineNo">995</span><a id="line.995"></a>
+<span class="sourceLineNo">996</span><a id="line.996">        JPanel vButtonsPanel = new JPanel();</a>
+<span class="sourceLineNo">997</span><a id="line.997">        vButtonsPanel.setOpaque(false);</a>
+<span class="sourceLineNo">998</span><a id="line.998">        vButtonsPanel.setPreferredSize(new Dimension(201, 150));</a>
+<span class="sourceLineNo">999</span><a id="line.999">        vButtonsPanel.setSize(vButtonsPanel.getPreferredSize());</a>
+<span class="sourceLineNo">1000</span><a id="line.1000">        vButtonsPanel.setLayout(new GridLayout(3, 1));</a>
+<span class="sourceLineNo">1001</span><a id="line.1001">        vButtonsPanel.add(aSound);</a>
+<span class="sourceLineNo">1002</span><a id="line.1002">        vButtonsPanel.add(aBack);</a>
+<span class="sourceLineNo">1003</span><a id="line.1003">        vButtonsPanel.setLocation(438, 400);</a>
+<span class="sourceLineNo">1004</span><a id="line.1004"></a>
+<span class="sourceLineNo">1005</span><a id="line.1005">        this.aSettingPanel.add(aSettingBackground, JLayeredPane.DEFAULT_LAYER);</a>
+<span class="sourceLineNo">1006</span><a id="line.1006">        this.aSettingPanel.add(vButtonsPanel, JLayeredPane.PALETTE_LAYER);</a>
+<span class="sourceLineNo">1007</span><a id="line.1007">    }</a>
+<span class="sourceLineNo">1008</span><a id="line.1008"></a>
+<span class="sourceLineNo">1009</span><a id="line.1009">    /**</a>
+<span class="sourceLineNo">1010</span><a id="line.1010">     * This method create the panel of the sound menu</a>
+<span class="sourceLineNo">1011</span><a id="line.1011">     */</a>
+<span class="sourceLineNo">1012</span><a id="line.1012">    private void createSoundPanel() {</a>
+<span class="sourceLineNo">1013</span><a id="line.1013">        this.aSoundPanel = new JLayeredPane();</a>
+<span class="sourceLineNo">1014</span><a id="line.1014">        this.aSoundBackground = new JLabel();</a>
+<span class="sourceLineNo">1015</span><a id="line.1015">        this.aSoundPanel.setPreferredSize(new Dimension(1077, 765));</a>
+<span class="sourceLineNo">1016</span><a id="line.1016">        this.aSoundPanel.setSize(aSoundPanel.getPreferredSize());</a>
+<span class="sourceLineNo">1017</span><a id="line.1017">        this.aSoundBackground.setSize(aSoundPanel.getPreferredSize());</a>
+<span class="sourceLineNo">1018</span><a id="line.1018">        this.aSoundBackground.setLocation(0, 0);</a>
+<span class="sourceLineNo">1019</span><a id="line.1019">        showSoundBackground();</a>
+<span class="sourceLineNo">1020</span><a id="line.1020"></a>
+<span class="sourceLineNo">1021</span><a id="line.1021">        JPanel vButtonsPanel = new JPanel();</a>
+<span class="sourceLineNo">1022</span><a id="line.1022">        vButtonsPanel.setOpaque(false);</a>
+<span class="sourceLineNo">1023</span><a id="line.1023">        vButtonsPanel.setPreferredSize(new Dimension(201, 150));</a>
+<span class="sourceLineNo">1024</span><a id="line.1024">        vButtonsPanel.setSize(vButtonsPanel.getPreferredSize());</a>
+<span class="sourceLineNo">1025</span><a id="line.1025">        vButtonsPanel.setLayout(new GridLayout(3, 1));</a>
+<span class="sourceLineNo">1026</span><a id="line.1026">        vButtonsPanel.add(aSoundOn);</a>
+<span class="sourceLineNo">1027</span><a id="line.1027">        vButtonsPanel.add(aSoundOff);</a>
+<span class="sourceLineNo">1028</span><a id="line.1028">        vButtonsPanel.add(aBack2);</a>
+<span class="sourceLineNo">1029</span><a id="line.1029">        vButtonsPanel.setLocation(438, 400);</a>
+<span class="sourceLineNo">1030</span><a id="line.1030"></a>
+<span class="sourceLineNo">1031</span><a id="line.1031">        this.aSoundPanel.add(aSoundBackground, JLayeredPane.DEFAULT_LAYER);</a>
+<span class="sourceLineNo">1032</span><a id="line.1032">        this.aSoundPanel.add(vButtonsPanel, JLayeredPane.PALETTE_LAYER);</a>
+<span class="sourceLineNo">1033</span><a id="line.1033">    }</a>
+<span class="sourceLineNo">1034</span><a id="line.1034"></a>
+<span class="sourceLineNo">1035</span><a id="line.1035">    /**</a>
+<span class="sourceLineNo">1036</span><a id="line.1036">     * This method create the panel of the npc</a>
+<span class="sourceLineNo">1037</span><a id="line.1037">     */</a>
+<span class="sourceLineNo">1038</span><a id="line.1038">    private void createNPCPanel() {</a>
+<span class="sourceLineNo">1039</span><a id="line.1039">        this.aEntityLog = new JTextArea();</a>
+<span class="sourceLineNo">1040</span><a id="line.1040">        this.aEntityLog.setEditable(false);</a>
+<span class="sourceLineNo">1041</span><a id="line.1041">        this.aEntityLog.setLineWrap(true);</a>
+<span class="sourceLineNo">1042</span><a id="line.1042">        this.aEntityLog.setWrapStyleWord(true);</a>
+<span class="sourceLineNo">1043</span><a id="line.1043">        this.aEntityLog.setMargin(new Insets(10, 10, 10, 10));</a>
+<span class="sourceLineNo">1044</span><a id="line.1044">        this.aEntityLog.setFont(aTextFont);</a>
+<span class="sourceLineNo">1045</span><a id="line.1045">        this.aEntityLog.setForeground(Color.white);</a>
+<span class="sourceLineNo">1046</span><a id="line.1046">        this.aEntityLog.setBackground(Color.darkGray);</a>
+<span class="sourceLineNo">1047</span><a id="line.1047">        JScrollPane vEntityScroller = new JScrollPane(this.aEntityLog);</a>
+<span class="sourceLineNo">1048</span><a id="line.1048">        vEntityScroller.setPreferredSize(new Dimension(430, 100));</a>
+<span class="sourceLineNo">1049</span><a id="line.1049"></a>
+<span class="sourceLineNo">1050</span><a id="line.1050">        this.aEntityPanel = new JPanel();</a>
+<span class="sourceLineNo">1051</span><a id="line.1051">        this.aEntityImage = new JLabel();</a>
+<span class="sourceLineNo">1052</span><a id="line.1052">        this.aEntityPanel.setPreferredSize(new Dimension(630, 100));</a>
+<span class="sourceLineNo">1053</span><a id="line.1053">        this.aEntityPanel.setLayout(new BorderLayout());</a>
+<span class="sourceLineNo">1054</span><a id="line.1054">        this.aEntityPanel.add(vEntityScroller, BorderLayout.CENTER);</a>
+<span class="sourceLineNo">1055</span><a id="line.1055">        this.aEntityPanel.add(this.aEntityImage, BorderLayout.EAST);</a>
+<span class="sourceLineNo">1056</span><a id="line.1056">        this.aEntityPanel.setSize(this.aEntityPanel.getPreferredSize());</a>
+<span class="sourceLineNo">1057</span><a id="line.1057">        this.aEntityPanel.setLocation(10, 540);</a>
+<span class="sourceLineNo">1058</span><a id="line.1058">        this.aEntityPanel.setVisible(false);</a>
+<span class="sourceLineNo">1059</span><a id="line.1059">    }</a>
+<span class="sourceLineNo">1060</span><a id="line.1060"></a>
+<span class="sourceLineNo">1061</span><a id="line.1061">    /**</a>
+<span class="sourceLineNo">1062</span><a id="line.1062">     * This method create the panel of game over</a>
+<span class="sourceLineNo">1063</span><a id="line.1063">     */</a>
+<span class="sourceLineNo">1064</span><a id="line.1064">    private void createGameOverPanel() {</a>
+<span class="sourceLineNo">1065</span><a id="line.1065">        this.aGameOverPanel = new JLayeredPane();</a>
+<span class="sourceLineNo">1066</span><a id="line.1066">        this.aGameOverBackGroundImage = new JLabel();</a>
+<span class="sourceLineNo">1067</span><a id="line.1067">        this.aGameOverPanel.setPreferredSize(new Dimension(1077, 765));</a>
+<span class="sourceLineNo">1068</span><a id="line.1068">        this.aGameOverPanel.setSize(aGameOverPanel.getPreferredSize());</a>
+<span class="sourceLineNo">1069</span><a id="line.1069">        this.aGameOverBackGroundImage.setSize(aGameOverPanel.getPreferredSize());</a>
+<span class="sourceLineNo">1070</span><a id="line.1070">        this.aGameOverBackGroundImage.setLocation(0, 0);</a>
+<span class="sourceLineNo">1071</span><a id="line.1071">        showGameOverImage();</a>
+<span class="sourceLineNo">1072</span><a id="line.1072"></a>
+<span class="sourceLineNo">1073</span><a id="line.1073">        JPanel vButtonsPanel = new JPanel();</a>
+<span class="sourceLineNo">1074</span><a id="line.1074">        vButtonsPanel.setOpaque(false);</a>
+<span class="sourceLineNo">1075</span><a id="line.1075">        vButtonsPanel.setPreferredSize(new Dimension(201, 150));</a>
+<span class="sourceLineNo">1076</span><a id="line.1076">        vButtonsPanel.setSize(vButtonsPanel.getPreferredSize());</a>
+<span class="sourceLineNo">1077</span><a id="line.1077">        vButtonsPanel.setLayout(new GridLayout(1, 1));</a>
+<span class="sourceLineNo">1078</span><a id="line.1078">        vButtonsPanel.add(aQuit2);</a>
+<span class="sourceLineNo">1079</span><a id="line.1079">        vButtonsPanel.setLocation(438, 400);</a>
+<span class="sourceLineNo">1080</span><a id="line.1080"></a>
+<span class="sourceLineNo">1081</span><a id="line.1081">        this.aGameOverPanel.add(aGameOverBackGroundImage, JLayeredPane.DEFAULT_LAYER);</a>
+<span class="sourceLineNo">1082</span><a id="line.1082">        this.aGameOverPanel.add(vButtonsPanel, JLayeredPane.PALETTE_LAYER);</a>
+<span class="sourceLineNo">1083</span><a id="line.1083">    }</a>
+<span class="sourceLineNo">1084</span><a id="line.1084"></a>
+<span class="sourceLineNo">1085</span><a id="line.1085">    // action listeners methods</a>
+<span class="sourceLineNo">1086</span><a id="line.1086"></a>
+<span class="sourceLineNo">1087</span><a id="line.1087">    /**</a>
+<span class="sourceLineNo">1088</span><a id="line.1088">     * This method is called when you click on the drop button</a>
+<span class="sourceLineNo">1089</span><a id="line.1089">     * It's to change UI to show items in inventory</a>
+<span class="sourceLineNo">1090</span><a id="line.1090">     */</a>
+<span class="sourceLineNo">1091</span><a id="line.1091">    private void dropButtonMethod() {</a>
+<span class="sourceLineNo">1092</span><a id="line.1092">        JButton[] vButtons = { aBackButton, aHelpButton, aQuitButton, aDropButton, aTakeButton, aFireButton,</a>
+<span class="sourceLineNo">1093</span><a id="line.1093">                aChargeButton, aInventoryButton };</a>
+<span class="sourceLineNo">1094</span><a id="line.1094">        if (aEngine.getCurrentInventoryItemsString() != null) {</a>
+<span class="sourceLineNo">1095</span><a id="line.1095">            String[] vOutput = aEngine.getCurrentInventoryItemsString().split(" ");</a>
+<span class="sourceLineNo">1096</span><a id="line.1096">            for (int i = 0; i &lt; vOutput.length; i++) {</a>
+<span class="sourceLineNo">1097</span><a id="line.1097">                vButtons[i].setText(vOutput[i]);</a>
+<span class="sourceLineNo">1098</span><a id="line.1098">                vButtons[i].setActionCommand("drop " + vOutput[i]);</a>
+<span class="sourceLineNo">1099</span><a id="line.1099">            }</a>
+<span class="sourceLineNo">1100</span><a id="line.1100">            for (int i = vOutput.length; i &lt; 8; i++) {</a>
+<span class="sourceLineNo">1101</span><a id="line.1101">                vButtons[i].setText("");</a>
+<span class="sourceLineNo">1102</span><a id="line.1102">                vButtons[i].setActionCommand("");</a>
+<span class="sourceLineNo">1103</span><a id="line.1103">                vButtons[i].removeActionListener(this);</a>
+<span class="sourceLineNo">1104</span><a id="line.1104">            }</a>
+<span class="sourceLineNo">1105</span><a id="line.1105">            aBattleButton.setText("exit");</a>
+<span class="sourceLineNo">1106</span><a id="line.1106">            aBattleButton.setActionCommand("exit");</a>
+<span class="sourceLineNo">1107</span><a id="line.1107">            aBattleButton.addActionListener(e -&gt; exitButtonMethod());</a>
+<span class="sourceLineNo">1108</span><a id="line.1108">            for (int i = vOutput.length; i &lt; 8; i++) {</a>
+<span class="sourceLineNo">1109</span><a id="line.1109">                vButtons[i].addActionListener(this);</a>
+<span class="sourceLineNo">1110</span><a id="line.1110">            }</a>
+<span class="sourceLineNo">1111</span><a id="line.1111">            this.println("What do you want to drop ?");</a>
+<span class="sourceLineNo">1112</span><a id="line.1112">        } else {</a>
+<span class="sourceLineNo">1113</span><a id="line.1113">            this.println("Your inventory is empty");</a>
+<span class="sourceLineNo">1114</span><a id="line.1114">        }</a>
+<span class="sourceLineNo">1115</span><a id="line.1115">    }</a>
+<span class="sourceLineNo">1116</span><a id="line.1116"></a>
+<span class="sourceLineNo">1117</span><a id="line.1117">    /**</a>
+<span class="sourceLineNo">1118</span><a id="line.1118">     * This method is called when you click on the take button</a>
+<span class="sourceLineNo">1119</span><a id="line.1119">     * It's to change UI to show items in the room</a>
+<span class="sourceLineNo">1120</span><a id="line.1120">     */</a>
+<span class="sourceLineNo">1121</span><a id="line.1121">    private void takeButtonMethod() {</a>
+<span class="sourceLineNo">1122</span><a id="line.1122">        JButton[] vButtons = { aBackButton, aHelpButton, aQuitButton, aDropButton, aTakeButton, aFireButton,</a>
+<span class="sourceLineNo">1123</span><a id="line.1123">                aChargeButton, aInventoryButton };</a>
+<span class="sourceLineNo">1124</span><a id="line.1124"></a>
+<span class="sourceLineNo">1125</span><a id="line.1125">        if (aEngine.getCurrentRoomItemsString() != null) {</a>
+<span class="sourceLineNo">1126</span><a id="line.1126">            String[] vOutput = aEngine.getCurrentRoomItemsString().split(" ");</a>
+<span class="sourceLineNo">1127</span><a id="line.1127">            for (int i = 0; i &lt; vOutput.length; i++) {</a>
+<span class="sourceLineNo">1128</span><a id="line.1128">                vButtons[i].setText(vOutput[i]);</a>
+<span class="sourceLineNo">1129</span><a id="line.1129">                vButtons[i].setActionCommand("take " + vOutput[i]);</a>
+<span class="sourceLineNo">1130</span><a id="line.1130">            }</a>
+<span class="sourceLineNo">1131</span><a id="line.1131">            for (int i = vOutput.length; i &lt; 8; i++) {</a>
+<span class="sourceLineNo">1132</span><a id="line.1132">                vButtons[i].setText("");</a>
+<span class="sourceLineNo">1133</span><a id="line.1133">                vButtons[i].setActionCommand("");</a>
+<span class="sourceLineNo">1134</span><a id="line.1134">                vButtons[i].removeActionListener(this);</a>
+<span class="sourceLineNo">1135</span><a id="line.1135">            }</a>
+<span class="sourceLineNo">1136</span><a id="line.1136">            aBattleButton.setText("exit");</a>
+<span class="sourceLineNo">1137</span><a id="line.1137">            aBattleButton.setActionCommand("exit");</a>
+<span class="sourceLineNo">1138</span><a id="line.1138">            aBattleButton.addActionListener(e -&gt; exitButtonMethod());</a>
+<span class="sourceLineNo">1139</span><a id="line.1139">            for (int i = vOutput.length; i &lt; 8; i++) {</a>
+<span class="sourceLineNo">1140</span><a id="line.1140">                vButtons[i].addActionListener(this);</a>
+<span class="sourceLineNo">1141</span><a id="line.1141">            }</a>
+<span class="sourceLineNo">1142</span><a id="line.1142">            this.println("What do you want to take ?");</a>
+<span class="sourceLineNo">1143</span><a id="line.1143">        } else {</a>
+<span class="sourceLineNo">1144</span><a id="line.1144">            this.println("There is nothing to take here");</a>
+<span class="sourceLineNo">1145</span><a id="line.1145">        }</a>
+<span class="sourceLineNo">1146</span><a id="line.1146">    }</a>
+<span class="sourceLineNo">1147</span><a id="line.1147"></a>
+<span class="sourceLineNo">1148</span><a id="line.1148">    /**</a>
+<span class="sourceLineNo">1149</span><a id="line.1149">     * This method is called when the exit button is clicked</a>
+<span class="sourceLineNo">1150</span><a id="line.1150">     * It's back to "main" menu of the UI</a>
+<span class="sourceLineNo">1151</span><a id="line.1151">     */</a>
+<span class="sourceLineNo">1152</span><a id="line.1152">    private void exitButtonMethod() {</a>
+<span class="sourceLineNo">1153</span><a id="line.1153">        aQuitButton.setText("quit");</a>
+<span class="sourceLineNo">1154</span><a id="line.1154">        aBackButton.setText("back");</a>
+<span class="sourceLineNo">1155</span><a id="line.1155">        aHelpButton.setText("help ?");</a>
+<span class="sourceLineNo">1156</span><a id="line.1156">        aDropButton.setText("drop");</a>
+<span class="sourceLineNo">1157</span><a id="line.1157">        aTakeButton.setText("take");</a>
+<span class="sourceLineNo">1158</span><a id="line.1158">        aFireButton.setText("fire");</a>
+<span class="sourceLineNo">1159</span><a id="line.1159">        aChargeButton.setText("charge");</a>
+<span class="sourceLineNo">1160</span><a id="line.1160">        aInventoryButton.setText("bag");</a>
+<span class="sourceLineNo">1161</span><a id="line.1161">        aBattleButton.setText("fight");</a>
+<span class="sourceLineNo">1162</span><a id="line.1162"></a>
+<span class="sourceLineNo">1163</span><a id="line.1163">        aQuitButton.setActionCommand("quit");</a>
+<span class="sourceLineNo">1164</span><a id="line.1164">        aBackButton.setActionCommand("back");</a>
+<span class="sourceLineNo">1165</span><a id="line.1165">        aHelpButton.setActionCommand("help");</a>
+<span class="sourceLineNo">1166</span><a id="line.1166">        aDropButton.setActionCommand("drop");</a>
+<span class="sourceLineNo">1167</span><a id="line.1167">        aTakeButton.setActionCommand("take");</a>
+<span class="sourceLineNo">1168</span><a id="line.1168">        aFireButton.setActionCommand("fire");</a>
+<span class="sourceLineNo">1169</span><a id="line.1169">        aChargeButton.setActionCommand("charge");</a>
+<span class="sourceLineNo">1170</span><a id="line.1170">        aInventoryButton.setActionCommand("inventory");</a>
+<span class="sourceLineNo">1171</span><a id="line.1171">        aBattleButton.setActionCommand("fight");</a>
+<span class="sourceLineNo">1172</span><a id="line.1172">    }</a>
+<span class="sourceLineNo">1173</span><a id="line.1173"></a>
+<span class="sourceLineNo">1174</span><a id="line.1174">    /**</a>
+<span class="sourceLineNo">1175</span><a id="line.1175">     * This method is called when the player click on play button in main menu</a>
+<span class="sourceLineNo">1176</span><a id="line.1176">     */</a>
+<span class="sourceLineNo">1177</span><a id="line.1177">    private void playButton() {</a>
+<span class="sourceLineNo">1178</span><a id="line.1178">        this.aCardLayout.show(aSceneManager, "Game");</a>
+<span class="sourceLineNo">1179</span><a id="line.1179">        this.aLog.setText("");</a>
+<span class="sourceLineNo">1180</span><a id="line.1180">    }</a>
+<span class="sourceLineNo">1181</span><a id="line.1181"></a>
+<span class="sourceLineNo">1182</span><a id="line.1182">    /**</a>
+<span class="sourceLineNo">1183</span><a id="line.1183">     * This method is called when the player click on settings button in main menu</a>
+<span class="sourceLineNo">1184</span><a id="line.1184">     */</a>
+<span class="sourceLineNo">1185</span><a id="line.1185">    private void settingsButton() {</a>
+<span class="sourceLineNo">1186</span><a id="line.1186">        this.aCardLayout.show(aSceneManager, "Settings");</a>
+<span class="sourceLineNo">1187</span><a id="line.1187">    }</a>
+<span class="sourceLineNo">1188</span><a id="line.1188"></a>
+<span class="sourceLineNo">1189</span><a id="line.1189">    /**</a>
+<span class="sourceLineNo">1190</span><a id="line.1190">     * This method is called when the player click on quit button in main menu</a>
+<span class="sourceLineNo">1191</span><a id="line.1191">     */</a>
+<span class="sourceLineNo">1192</span><a id="line.1192">    private void quitButton() {</a>
+<span class="sourceLineNo">1193</span><a id="line.1193">        System.exit(0);</a>
+<span class="sourceLineNo">1194</span><a id="line.1194">    }</a>
+<span class="sourceLineNo">1195</span><a id="line.1195"></a>
+<span class="sourceLineNo">1196</span><a id="line.1196">    /**</a>
+<span class="sourceLineNo">1197</span><a id="line.1197">     * This method is called when the player click on back button in setting menu</a>
+<span class="sourceLineNo">1198</span><a id="line.1198">     */</a>
+<span class="sourceLineNo">1199</span><a id="line.1199">    private void backButton() {</a>
+<span class="sourceLineNo">1200</span><a id="line.1200">        this.aCardLayout.show(aSceneManager, "MainMenu");</a>
+<span class="sourceLineNo">1201</span><a id="line.1201">    }</a>
+<span class="sourceLineNo">1202</span><a id="line.1202"></a>
+<span class="sourceLineNo">1203</span><a id="line.1203">    /**</a>
+<span class="sourceLineNo">1204</span><a id="line.1204">     * This method is called when the player click on back button in sound menu</a>
+<span class="sourceLineNo">1205</span><a id="line.1205">     */</a>
+<span class="sourceLineNo">1206</span><a id="line.1206">    private void backButton2() {</a>
+<span class="sourceLineNo">1207</span><a id="line.1207">        this.aCardLayout.show(aSceneManager, "Settings");</a>
+<span class="sourceLineNo">1208</span><a id="line.1208">    }</a>
+<span class="sourceLineNo">1209</span><a id="line.1209"></a>
+<span class="sourceLineNo">1210</span><a id="line.1210">    /**</a>
+<span class="sourceLineNo">1211</span><a id="line.1211">     * This method is called when the player click on sound button in settings menu</a>
+<span class="sourceLineNo">1212</span><a id="line.1212">     */</a>
+<span class="sourceLineNo">1213</span><a id="line.1213">    private void soundButton() {</a>
+<span class="sourceLineNo">1214</span><a id="line.1214">        this.aCardLayout.show(aSceneManager, "Sound");</a>
+<span class="sourceLineNo">1215</span><a id="line.1215">    }</a>
+<span class="sourceLineNo">1216</span><a id="line.1216"></a>
+<span class="sourceLineNo">1217</span><a id="line.1217">    /**</a>
+<span class="sourceLineNo">1218</span><a id="line.1218">     * This method is called when the player click on attack button in battle menu</a>
+<span class="sourceLineNo">1219</span><a id="line.1219">     */</a>
+<span class="sourceLineNo">1220</span><a id="line.1220">    private void attackButton() {</a>
+<span class="sourceLineNo">1221</span><a id="line.1221">        JButton[] vButtons = { aAttackButton, aDefendButton, aBagButton, aRunButton };</a>
+<span class="sourceLineNo">1222</span><a id="line.1222"></a>
+<span class="sourceLineNo">1223</span><a id="line.1223">        String[] vOutput = aEngine.getMovesString().split(" ");</a>
+<span class="sourceLineNo">1224</span><a id="line.1224">        for (int i = 0; i &lt; 3; i++) {</a>
+<span class="sourceLineNo">1225</span><a id="line.1225">            vButtons[i].setText(vOutput[i]);</a>
+<span class="sourceLineNo">1226</span><a id="line.1226">        }</a>
+<span class="sourceLineNo">1227</span><a id="line.1227">        removeAL(vButtons);</a>
+<span class="sourceLineNo">1228</span><a id="line.1228">        aAttackButton.addActionListener(e -&gt; this.aEngine.attack1Button());</a>
+<span class="sourceLineNo">1229</span><a id="line.1229">        aDefendButton.addActionListener(e -&gt; this.aEngine.attack2Button());</a>
+<span class="sourceLineNo">1230</span><a id="line.1230">        aBagButton.addActionListener(e -&gt; this.aEngine.attack3Button());</a>
+<span class="sourceLineNo">1231</span><a id="line.1231">        aRunButton.setText("Back");</a>
+<span class="sourceLineNo">1232</span><a id="line.1232">        aRunButton.addActionListener(e -&gt; exitBattleButton());</a>
+<span class="sourceLineNo">1233</span><a id="line.1233"></a>
+<span class="sourceLineNo">1234</span><a id="line.1234">    }</a>
+<span class="sourceLineNo">1235</span><a id="line.1235"></a>
+<span class="sourceLineNo">1236</span><a id="line.1236">    /**</a>
+<span class="sourceLineNo">1237</span><a id="line.1237">     * This method is called when the player click on bag button in battle menu</a>
+<span class="sourceLineNo">1238</span><a id="line.1238">     */</a>
+<span class="sourceLineNo">1239</span><a id="line.1239">    private void bagButtonMethod() {</a>
+<span class="sourceLineNo">1240</span><a id="line.1240">        JButton[] vButtons = { aAttackButton, aDefendButton, aBagButton, aRunButton };</a>
+<span class="sourceLineNo">1241</span><a id="line.1241">        if (aEngine.getCurrentInventoryFightableItemsString() != null) {</a>
+<span class="sourceLineNo">1242</span><a id="line.1242">            String[] vOutput = aEngine.getCurrentInventoryFightableItemsString().split(" ");</a>
+<span class="sourceLineNo">1243</span><a id="line.1243">            removeAL(vButtons);</a>
+<span class="sourceLineNo">1244</span><a id="line.1244">            for (int i = 0; i &lt; vOutput.length; i++) {</a>
+<span class="sourceLineNo">1245</span><a id="line.1245">                vButtons[i].setText(vOutput[i]);</a>
+<span class="sourceLineNo">1246</span><a id="line.1246">                vButtons[i].setActionCommand("use " + vOutput[i]);</a>
+<span class="sourceLineNo">1247</span><a id="line.1247">                vButtons[i].addActionListener(this);</a>
+<span class="sourceLineNo">1248</span><a id="line.1248">            }</a>
+<span class="sourceLineNo">1249</span><a id="line.1249">            for (int i = vOutput.length; i &lt; 3; i++) {</a>
+<span class="sourceLineNo">1250</span><a id="line.1250">                vButtons[i].setText("");</a>
+<span class="sourceLineNo">1251</span><a id="line.1251">                vButtons[i].setActionCommand("");</a>
+<span class="sourceLineNo">1252</span><a id="line.1252">                vButtons[i].removeActionListener(this);</a>
+<span class="sourceLineNo">1253</span><a id="line.1253">            }</a>
+<span class="sourceLineNo">1254</span><a id="line.1254">            aRunButton.setText("Back");</a>
+<span class="sourceLineNo">1255</span><a id="line.1255">            aRunButton.addActionListener(e -&gt; exitBattleButton());</a>
+<span class="sourceLineNo">1256</span><a id="line.1256">        } else {</a>
+<span class="sourceLineNo">1257</span><a id="line.1257">            this.printlnBattle("Your inventory is empty");</a>
+<span class="sourceLineNo">1258</span><a id="line.1258">        }</a>
+<span class="sourceLineNo">1259</span><a id="line.1259">    }</a>
+<span class="sourceLineNo">1260</span><a id="line.1260"></a>
+<span class="sourceLineNo">1261</span><a id="line.1261">    /**</a>
+<span class="sourceLineNo">1262</span><a id="line.1262">     * This method is called when the player click on run button in battle menu</a>
+<span class="sourceLineNo">1263</span><a id="line.1263">     */</a>
+<span class="sourceLineNo">1264</span><a id="line.1264">    private void runButtonMethod() {</a>
+<span class="sourceLineNo">1265</span><a id="line.1265">        hideBattlePanel();</a>
+<span class="sourceLineNo">1266</span><a id="line.1266">    }</a>
+<span class="sourceLineNo">1267</span><a id="line.1267"></a>
+<span class="sourceLineNo">1268</span><a id="line.1268">    /**</a>
+<span class="sourceLineNo">1269</span><a id="line.1269">     * This method is called when the player click on exit button in battle menu</a>
+<span class="sourceLineNo">1270</span><a id="line.1270">     */</a>
+<span class="sourceLineNo">1271</span><a id="line.1271">    public void exitBattleButton() {</a>
+<span class="sourceLineNo">1272</span><a id="line.1272">        JButton[] vButtons = { aAttackButton, aDefendButton, aBagButton, aRunButton };</a>
+<span class="sourceLineNo">1273</span><a id="line.1273"></a>
+<span class="sourceLineNo">1274</span><a id="line.1274">        for (JButton currentButton : vButtons) {</a>
+<span class="sourceLineNo">1275</span><a id="line.1275">            for (ActionListener al : currentButton.getActionListeners()) {</a>
+<span class="sourceLineNo">1276</span><a id="line.1276">                currentButton.removeActionListener(al);</a>
+<span class="sourceLineNo">1277</span><a id="line.1277">            }</a>
+<span class="sourceLineNo">1278</span><a id="line.1278">        }</a>
+<span class="sourceLineNo">1279</span><a id="line.1279">        aAttackButton.setText("Attack");</a>
+<span class="sourceLineNo">1280</span><a id="line.1280">        aAttackButton.addActionListener(e -&gt; attackButton());</a>
+<span class="sourceLineNo">1281</span><a id="line.1281">        aDefendButton.setText("Defend");</a>
+<span class="sourceLineNo">1282</span><a id="line.1282">        aDefendButton.addActionListener(e -&gt; this.aEngine.defendButton());</a>
+<span class="sourceLineNo">1283</span><a id="line.1283">        aBagButton.setText("Bag");</a>
+<span class="sourceLineNo">1284</span><a id="line.1284">        aBagButton.addActionListener(e -&gt; bagButtonMethod());</a>
+<span class="sourceLineNo">1285</span><a id="line.1285">        aRunButton.setText("Run");</a>
+<span class="sourceLineNo">1286</span><a id="line.1286">        aRunButton.addActionListener(e -&gt; runButtonMethod());</a>
+<span class="sourceLineNo">1287</span><a id="line.1287">    }</a>
+<span class="sourceLineNo">1288</span><a id="line.1288"></a>
+<span class="sourceLineNo">1289</span><a id="line.1289">    /**</a>
+<span class="sourceLineNo">1290</span><a id="line.1290">     * This method is update UI during the battle</a>
+<span class="sourceLineNo">1291</span><a id="line.1291">     */</a>
+<span class="sourceLineNo">1292</span><a id="line.1292">    public void updateBattleUI() {</a>
+<span class="sourceLineNo">1293</span><a id="line.1293">        aEnemyHP.setValue(aEngine.getEnemyHP());</a>
+<span class="sourceLineNo">1294</span><a id="line.1294">        aPlayerHP.setValue(aEngine.getPlayerHP());</a>
+<span class="sourceLineNo">1295</span><a id="line.1295">    }</a>
+<span class="sourceLineNo">1296</span><a id="line.1296"></a>
+<span class="sourceLineNo">1297</span><a id="line.1297">    /**</a>
+<span class="sourceLineNo">1298</span><a id="line.1298">     * This method set battle UI at the start of the battle</a>
+<span class="sourceLineNo">1299</span><a id="line.1299">     */</a>
+<span class="sourceLineNo">1300</span><a id="line.1300">    public void startBattleUI() {</a>
+<span class="sourceLineNo">1301</span><a id="line.1301">        aEnemyName.setText(aEngine.getEnemyName());</a>
+<span class="sourceLineNo">1302</span><a id="line.1302">    }</a>
+<span class="sourceLineNo">1303</span><a id="line.1303"></a>
+<span class="sourceLineNo">1304</span><a id="line.1304">    /**</a>
+<span class="sourceLineNo">1305</span><a id="line.1305">     * This method set battle UI at the start of the game</a>
+<span class="sourceLineNo">1306</span><a id="line.1306">     */</a>
+<span class="sourceLineNo">1307</span><a id="line.1307">    private void startDefaultBattleUI() {</a>
+<span class="sourceLineNo">1308</span><a id="line.1308">        aEnemyHP = new JProgressBar(0, 200);</a>
+<span class="sourceLineNo">1309</span><a id="line.1309">        aEnemyName.setText("default");</a>
+<span class="sourceLineNo">1310</span><a id="line.1310">        aEnemyHP.setValue(200);</a>
+<span class="sourceLineNo">1311</span><a id="line.1311">    }</a>
+<span class="sourceLineNo">1312</span><a id="line.1312"></a>
+<span class="sourceLineNo">1313</span><a id="line.1313">    /**</a>
+<span class="sourceLineNo">1314</span><a id="line.1314">     * This method is called when the player click on SoundOn button in main menu</a>
+<span class="sourceLineNo">1315</span><a id="line.1315">     */</a>
+<span class="sourceLineNo">1316</span><a id="line.1316">    private void soundOnButton() {</a>
+<span class="sourceLineNo">1317</span><a id="line.1317">        File vRepository = new File("gameSounds/");</a>
+<span class="sourceLineNo">1318</span><a id="line.1318">        String vList[] = vRepository.list();</a>
+<span class="sourceLineNo">1319</span><a id="line.1319"></a>
+<span class="sourceLineNo">1320</span><a id="line.1320">        if (vList != null) {</a>
+<span class="sourceLineNo">1321</span><a id="line.1321">            soundOn();</a>
+<span class="sourceLineNo">1322</span><a id="line.1322">            aSoundToggle = true;</a>
+<span class="sourceLineNo">1323</span><a id="line.1323">        } else {</a>
+<span class="sourceLineNo">1324</span><a id="line.1324">            JDialog vDialog = new JDialog();</a>
+<span class="sourceLineNo">1325</span><a id="line.1325">            JLabel vLabel = new JLabel("This version has no sound to satisfy the rendering requirements of Mr. Bureau");</a>
+<span class="sourceLineNo">1326</span><a id="line.1326">            vLabel.setFont(aTextFont);</a>
+<span class="sourceLineNo">1327</span><a id="line.1327">            vDialog.add(vLabel);</a>
+<span class="sourceLineNo">1328</span><a id="line.1328">            vDialog.setSize(800, 100);</a>
+<span class="sourceLineNo">1329</span><a id="line.1329">            vDialog.setLocation(100, 100);</a>
+<span class="sourceLineNo">1330</span><a id="line.1330">            vDialog.setVisible(true);</a>
+<span class="sourceLineNo">1331</span><a id="line.1331">        }</a>
+<span class="sourceLineNo">1332</span><a id="line.1332">    }</a>
+<span class="sourceLineNo">1333</span><a id="line.1333"></a>
+<span class="sourceLineNo">1334</span><a id="line.1334">    /**</a>
+<span class="sourceLineNo">1335</span><a id="line.1335">     * This method is called when the player click on SoundOff button in main menu</a>
+<span class="sourceLineNo">1336</span><a id="line.1336">     */</a>
+<span class="sourceLineNo">1337</span><a id="line.1337">    private void soundOffButton() {</a>
+<span class="sourceLineNo">1338</span><a id="line.1338">        soundOff();</a>
+<span class="sourceLineNo">1339</span><a id="line.1339">        aSoundToggle = false;</a>
+<span class="sourceLineNo">1340</span><a id="line.1340">    }</a>
+<span class="sourceLineNo">1341</span><a id="line.1341"></a>
+<span class="sourceLineNo">1342</span><a id="line.1342">    /**</a>
+<span class="sourceLineNo">1343</span><a id="line.1343">     * This method set the volume of the game, used in sound off and sound on</a>
+<span class="sourceLineNo">1344</span><a id="line.1344">     * </a>
+<span class="sourceLineNo">1345</span><a id="line.1345">     * @param pVolume the volume of the game</a>
+<span class="sourceLineNo">1346</span><a id="line.1346">     * @param pClip   the sound clip</a>
+<span class="sourceLineNo">1347</span><a id="line.1347">     */</a>
+<span class="sourceLineNo">1348</span><a id="line.1348">    // https://stackoverflow.com/questions/40514910/set-volume-of-java-clip</a>
+<span class="sourceLineNo">1349</span><a id="line.1349">    private void setVolume(float pVolume, Clip pClip) {</a>
+<span class="sourceLineNo">1350</span><a id="line.1350">        if (pVolume &lt; 0f || pVolume &gt; 1f)</a>
+<span class="sourceLineNo">1351</span><a id="line.1351">            throw new IllegalArgumentException("Volume not valid: " + pVolume);</a>
+<span class="sourceLineNo">1352</span><a id="line.1352">        FloatControl gainControl = (FloatControl) pClip.getControl(FloatControl.Type.MASTER_GAIN);</a>
+<span class="sourceLineNo">1353</span><a id="line.1353">        gainControl.setValue(20f * (float) Math.log10(pVolume));</a>
+<span class="sourceLineNo">1354</span><a id="line.1354">    }</a>
+<span class="sourceLineNo">1355</span><a id="line.1355"></a>
+<span class="sourceLineNo">1356</span><a id="line.1356">    /**</a>
+<span class="sourceLineNo">1357</span><a id="line.1357">     * This method is called when the player click on SoundOn button in sound menu</a>
+<span class="sourceLineNo">1358</span><a id="line.1358">     */</a>
+<span class="sourceLineNo">1359</span><a id="line.1359">    private void soundOn() {</a>
+<span class="sourceLineNo">1360</span><a id="line.1360">        Clip[] vClips = { aClip, aDialogClip };</a>
+<span class="sourceLineNo">1361</span><a id="line.1361">        for (int i = 0; i &lt; vClips.length; i++) {</a>
+<span class="sourceLineNo">1362</span><a id="line.1362">            if (vClips[i] != null) {</a>
+<span class="sourceLineNo">1363</span><a id="line.1363">                setVolume(1f, vClips[i]);</a>
+<span class="sourceLineNo">1364</span><a id="line.1364">            }</a>
+<span class="sourceLineNo">1365</span><a id="line.1365">        }</a>
+<span class="sourceLineNo">1366</span><a id="line.1366">    }</a>
+<span class="sourceLineNo">1367</span><a id="line.1367"></a>
+<span class="sourceLineNo">1368</span><a id="line.1368">    /**</a>
+<span class="sourceLineNo">1369</span><a id="line.1369">     * This method is called when the player click on SoundOff button in sound menu</a>
+<span class="sourceLineNo">1370</span><a id="line.1370">     */</a>
+<span class="sourceLineNo">1371</span><a id="line.1371">    public void soundOff() {</a>
+<span class="sourceLineNo">1372</span><a id="line.1372">        Clip[] vClips = { aClip, aDialogClip };</a>
+<span class="sourceLineNo">1373</span><a id="line.1373">        for (int i = 0; i &lt; vClips.length; i++) {</a>
+<span class="sourceLineNo">1374</span><a id="line.1374">            if (vClips[i] != null) {</a>
+<span class="sourceLineNo">1375</span><a id="line.1375">                setVolume(0.0001f, vClips[i]);</a>
+<span class="sourceLineNo">1376</span><a id="line.1376">            }</a>
+<span class="sourceLineNo">1377</span><a id="line.1377">        }</a>
+<span class="sourceLineNo">1378</span><a id="line.1378">    }</a>
+<span class="sourceLineNo">1379</span><a id="line.1379"></a>
+<span class="sourceLineNo">1380</span><a id="line.1380">    /**</a>
+<span class="sourceLineNo">1381</span><a id="line.1381">     * This function get the current sound toggle</a>
+<span class="sourceLineNo">1382</span><a id="line.1382">     * </a>
+<span class="sourceLineNo">1383</span><a id="line.1383">     * @return the current sound toggle state of the game</a>
+<span class="sourceLineNo">1384</span><a id="line.1384">     */</a>
+<span class="sourceLineNo">1385</span><a id="line.1385">    public boolean isSound() {</a>
+<span class="sourceLineNo">1386</span><a id="line.1386">        return aSoundToggle;</a>
+<span class="sourceLineNo">1387</span><a id="line.1387">    }</a>
+<span class="sourceLineNo">1388</span><a id="line.1388"></a>
+<span class="sourceLineNo">1389</span><a id="line.1389">    /**</a>
+<span class="sourceLineNo">1390</span><a id="line.1390">     * Actionlistener interface for entry textfield.</a>
+<span class="sourceLineNo">1391</span><a id="line.1391">     * </a>
+<span class="sourceLineNo">1392</span><a id="line.1392">     * @param pE event of actionListener</a>
+<span class="sourceLineNo">1393</span><a id="line.1393">     */</a>
+<span class="sourceLineNo">1394</span><a id="line.1394">    public void actionPerformed(final ActionEvent pE) {</a>
+<span class="sourceLineNo">1395</span><a id="line.1395">        // check the type of action</a>
+<span class="sourceLineNo">1396</span><a id="line.1396">        if (pE.getActionCommand() != null) {</a>
+<span class="sourceLineNo">1397</span><a id="line.1397">            this.aEngine.interpretCommand(aParser.getCommand(pE.getActionCommand()));</a>
+<span class="sourceLineNo">1398</span><a id="line.1398">            this.aEntryField.setText(""); // to reset entry field</a>
+<span class="sourceLineNo">1399</span><a id="line.1399">        } else {</a>
+<span class="sourceLineNo">1400</span><a id="line.1400">            this.processCommand(); // never suppress this line</a>
+<span class="sourceLineNo">1401</span><a id="line.1401">        }</a>
+<span class="sourceLineNo">1402</span><a id="line.1402">    } // actionPerformed(.)</a>
+<span class="sourceLineNo">1403</span><a id="line.1403"></a>
+<span class="sourceLineNo">1404</span><a id="line.1404">    /**</a>
+<span class="sourceLineNo">1405</span><a id="line.1405">     * A command has been entered. Read the command and do whatever is</a>
+<span class="sourceLineNo">1406</span><a id="line.1406">     * necessary to process it.</a>
+<span class="sourceLineNo">1407</span><a id="line.1407">     */</a>
+<span class="sourceLineNo">1408</span><a id="line.1408">    private void processCommand() {</a>
+<span class="sourceLineNo">1409</span><a id="line.1409">        String vInput = this.aEntryField.getText();</a>
+<span class="sourceLineNo">1410</span><a id="line.1410">        this.aEntryField.setText("");</a>
+<span class="sourceLineNo">1411</span><a id="line.1411"></a>
+<span class="sourceLineNo">1412</span><a id="line.1412">        this.aEngine.interpretCommand(aParser.getCommand(vInput));</a>
+<span class="sourceLineNo">1413</span><a id="line.1413">    } // processCommand()</a>
+<span class="sourceLineNo">1414</span><a id="line.1414"></a>
+<span class="sourceLineNo">1415</span><a id="line.1415">    // timer methods</a>
+<span class="sourceLineNo">1416</span><a id="line.1416"></a>
+<span class="sourceLineNo">1417</span><a id="line.1417">    /**</a>
+<span class="sourceLineNo">1418</span><a id="line.1418">     * This method start the timer</a>
+<span class="sourceLineNo">1419</span><a id="line.1419">     * </a>
+<span class="sourceLineNo">1420</span><a id="line.1420">     * @author https://www.developpez.net/forums/anocode.php?id=f5b514a1cac1a7a4fd52f16767094ab1</a>
+<span class="sourceLineNo">1421</span><a id="line.1421">     */</a>
+<span class="sourceLineNo">1422</span><a id="line.1422">    public void startTimer() {</a>
+<span class="sourceLineNo">1423</span><a id="line.1423">        aSecond = 0;</a>
+<span class="sourceLineNo">1424</span><a id="line.1424">        aMinute = 0;</a>
+<span class="sourceLineNo">1425</span><a id="line.1425">        aTaskTimer = new ActionListener() {</a>
+<span class="sourceLineNo">1426</span><a id="line.1426">            public void actionPerformed(ActionEvent pE) {</a>
+<span class="sourceLineNo">1427</span><a id="line.1427"></a>
+<span class="sourceLineNo">1428</span><a id="line.1428">                aSecond++;</a>
+<span class="sourceLineNo">1429</span><a id="line.1429">                if (aSecond == 60) {</a>
+<span class="sourceLineNo">1430</span><a id="line.1430">                    aSecond = 0;</a>
+<span class="sourceLineNo">1431</span><a id="line.1431">                    aMinute++;</a>
+<span class="sourceLineNo">1432</span><a id="line.1432">                }</a>
+<span class="sourceLineNo">1433</span><a id="line.1433">                aGameTimer.setText("elapsed time : " + aMinute + " : " + aSecond);</a>
+<span class="sourceLineNo">1434</span><a id="line.1434">            }</a>
+<span class="sourceLineNo">1435</span><a id="line.1435">        };</a>
+<span class="sourceLineNo">1436</span><a id="line.1436"></a>
+<span class="sourceLineNo">1437</span><a id="line.1437">        aTimer = new Timer(aDelay, aTaskTimer);</a>
+<span class="sourceLineNo">1438</span><a id="line.1438">        aTimer.start();</a>
+<span class="sourceLineNo">1439</span><a id="line.1439">    }</a>
+<span class="sourceLineNo">1440</span><a id="line.1440"></a>
+<span class="sourceLineNo">1441</span><a id="line.1441">    /**</a>
+<span class="sourceLineNo">1442</span><a id="line.1442">     * this method stop the timer</a>
+<span class="sourceLineNo">1443</span><a id="line.1443">     */</a>
+<span class="sourceLineNo">1444</span><a id="line.1444">    public void stopTimer() {</a>
+<span class="sourceLineNo">1445</span><a id="line.1445">        aTimer.stop();</a>
+<span class="sourceLineNo">1446</span><a id="line.1446">    }</a>
+<span class="sourceLineNo">1447</span><a id="line.1447"></a>
+<span class="sourceLineNo">1448</span><a id="line.1448">    /**</a>
+<span class="sourceLineNo">1449</span><a id="line.1449">     * this function get the minute of the timer</a>
+<span class="sourceLineNo">1450</span><a id="line.1450">     * </a>
+<span class="sourceLineNo">1451</span><a id="line.1451">     * @return a minute of the timer</a>
+<span class="sourceLineNo">1452</span><a id="line.1452">     */</a>
+<span class="sourceLineNo">1453</span><a id="line.1453">    public int getMinute() {</a>
+<span class="sourceLineNo">1454</span><a id="line.1454">        return aMinute;</a>
+<span class="sourceLineNo">1455</span><a id="line.1455">    }</a>
+<span class="sourceLineNo">1456</span><a id="line.1456"></a>
+<span class="sourceLineNo">1457</span><a id="line.1457">    /**</a>
+<span class="sourceLineNo">1458</span><a id="line.1458">     * this function get the second of the timer</a>
+<span class="sourceLineNo">1459</span><a id="line.1459">     * </a>
+<span class="sourceLineNo">1460</span><a id="line.1460">     * @return a second of the timer</a>
+<span class="sourceLineNo">1461</span><a id="line.1461">     */</a>
+<span class="sourceLineNo">1462</span><a id="line.1462">    public int getSecond() {</a>
+<span class="sourceLineNo">1463</span><a id="line.1463">        return aSecond;</a>
+<span class="sourceLineNo">1464</span><a id="line.1464">    }</a>
+<span class="sourceLineNo">1465</span><a id="line.1465"></a>
+<span class="sourceLineNo">1466</span><a id="line.1466">    /**</a>
+<span class="sourceLineNo">1467</span><a id="line.1467">     * this boolean check if timer is end</a>
+<span class="sourceLineNo">1468</span><a id="line.1468">     * </a>
+<span class="sourceLineNo">1469</span><a id="line.1469">     * @return true if timer is end</a>
+<span class="sourceLineNo">1470</span><a id="line.1470">     *         false if isnt</a>
+<span class="sourceLineNo">1471</span><a id="line.1471">     */</a>
+<span class="sourceLineNo">1472</span><a id="line.1472">    public boolean isTimerEnd() {</a>
+<span class="sourceLineNo">1473</span><a id="line.1473">        if (getMinute() &lt; aEndTime) {</a>
+<span class="sourceLineNo">1474</span><a id="line.1474">            return false;</a>
+<span class="sourceLineNo">1475</span><a id="line.1475">        } else {</a>
+<span class="sourceLineNo">1476</span><a id="line.1476">            return true;</a>
+<span class="sourceLineNo">1477</span><a id="line.1477">        }</a>
+<span class="sourceLineNo">1478</span><a id="line.1478">    }</a>
+<span class="sourceLineNo">1479</span><a id="line.1479"></a>
+<span class="sourceLineNo">1480</span><a id="line.1480">    /**</a>
+<span class="sourceLineNo">1481</span><a id="line.1481">     * This method show the character panel with a little delay to avoid bug</a>
+<span class="sourceLineNo">1482</span><a id="line.1482">     * </a>
+<span class="sourceLineNo">1483</span><a id="line.1483">     * @author https://riptutorial.com/swing/example/498/delay-a-ui-task-for-a-specific-period</a>
+<span class="sourceLineNo">1484</span><a id="line.1484">     */</a>
+<span class="sourceLineNo">1485</span><a id="line.1485">    public void showCharacterPanel() {</a>
+<span class="sourceLineNo">1486</span><a id="line.1486">        int vDelay = 100;// specify the delay for the timer</a>
+<span class="sourceLineNo">1487</span><a id="line.1487">        Timer vTimer = new Timer(vDelay, e -&gt; {</a>
+<span class="sourceLineNo">1488</span><a id="line.1488">            // The following code will be executed once the delay is reached</a>
+<span class="sourceLineNo">1489</span><a id="line.1489">            this.aEntityPanel.setVisible(true);</a>
+<span class="sourceLineNo">1490</span><a id="line.1490">        });</a>
+<span class="sourceLineNo">1491</span><a id="line.1491">        vTimer.setRepeats(false);// make sure the timer only runs once</a>
+<span class="sourceLineNo">1492</span><a id="line.1492">        vTimer.start();</a>
+<span class="sourceLineNo">1493</span><a id="line.1493">    }</a>
+<span class="sourceLineNo">1494</span><a id="line.1494"></a>
+<span class="sourceLineNo">1495</span><a id="line.1495">    /**</a>
+<span class="sourceLineNo">1496</span><a id="line.1496">     * This method hide the character panel</a>
+<span class="sourceLineNo">1497</span><a id="line.1497">     */</a>
+<span class="sourceLineNo">1498</span><a id="line.1498">    public void hideCharacterPanel() {</a>
+<span class="sourceLineNo">1499</span><a id="line.1499">        this.aEntityPanel.setVisible(false);</a>
+<span class="sourceLineNo">1500</span><a id="line.1500">    }</a>
+<span class="sourceLineNo">1501</span><a id="line.1501"></a>
+<span class="sourceLineNo">1502</span><a id="line.1502">    /**</a>
+<span class="sourceLineNo">1503</span><a id="line.1503">     * This method show the battle panel</a>
+<span class="sourceLineNo">1504</span><a id="line.1504">     */</a>
+<span class="sourceLineNo">1505</span><a id="line.1505">    public void showBattlePanel() {</a>
+<span class="sourceLineNo">1506</span><a id="line.1506">        this.aCardLayout.show(aSceneManager, "Battle");</a>
+<span class="sourceLineNo">1507</span><a id="line.1507">    }</a>
+<span class="sourceLineNo">1508</span><a id="line.1508"></a>
+<span class="sourceLineNo">1509</span><a id="line.1509">    /**</a>
+<span class="sourceLineNo">1510</span><a id="line.1510">     * This method hide the battle panel</a>
+<span class="sourceLineNo">1511</span><a id="line.1511">     */</a>
+<span class="sourceLineNo">1512</span><a id="line.1512">    public void hideBattlePanel() {</a>
+<span class="sourceLineNo">1513</span><a id="line.1513">        this.aCardLayout.show(aSceneManager, "Game");</a>
+<span class="sourceLineNo">1514</span><a id="line.1514">    }</a>
+<span class="sourceLineNo">1515</span><a id="line.1515"></a>
+<span class="sourceLineNo">1516</span><a id="line.1516">    /**</a>
+<span class="sourceLineNo">1517</span><a id="line.1517">     * This method show the game over panel</a>
+<span class="sourceLineNo">1518</span><a id="line.1518">     */</a>
+<span class="sourceLineNo">1519</span><a id="line.1519">    public void showGameOverPanel() {</a>
+<span class="sourceLineNo">1520</span><a id="line.1520">        this.aCardLayout.show(aSceneManager, "GameOver");</a>
+<span class="sourceLineNo">1521</span><a id="line.1521">    }</a>
+<span class="sourceLineNo">1522</span><a id="line.1522"></a>
+<span class="sourceLineNo">1523</span><a id="line.1523">    /**</a>
+<span class="sourceLineNo">1524</span><a id="line.1524">     * This method remove all action listener of the buttons</a>
+<span class="sourceLineNo">1525</span><a id="line.1525">     * </a>
+<span class="sourceLineNo">1526</span><a id="line.1526">     * @param pButtons all the buttons we want to remove the action listener</a>
+<span class="sourceLineNo">1527</span><a id="line.1527">     */</a>
+<span class="sourceLineNo">1528</span><a id="line.1528">    private void removeAL(JButton[] pButtons) {</a>
+<span class="sourceLineNo">1529</span><a id="line.1529">        for (JButton currentButton : pButtons) {</a>
+<span class="sourceLineNo">1530</span><a id="line.1530">            for (ActionListener al : currentButton.getActionListeners()) {</a>
+<span class="sourceLineNo">1531</span><a id="line.1531">                currentButton.removeActionListener(al);</a>
+<span class="sourceLineNo">1532</span><a id="line.1532">            }</a>
+<span class="sourceLineNo">1533</span><a id="line.1533">        }</a>
+<span class="sourceLineNo">1534</span><a id="line.1534">    }</a>
+<span class="sourceLineNo">1535</span><a id="line.1535"></a>
+<span class="sourceLineNo">1536</span><a id="line.1536">} // UserInterface</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

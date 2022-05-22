@@ -1,4 +1,5 @@
 package pkg_Room;
+
 import java.util.HashMap;
 import java.util.Set;
 
@@ -187,26 +188,54 @@ public class Room {
 
     // CHARACTER
 
+    /**
+     * This function get the character
+     * 
+     * @return the character
+     */
     public Entity getCharacter() {
         return this.aCharacter;
     }
 
-    public String getCharacterName(){
+    /**
+     * This function get the character's name
+     * 
+     * @return the character's name
+     */
+    public String getCharacterName() {
         return this.getCharacter().getName();
     }
 
+    /**
+     * This method set the character
+     * 
+     * @param pCharacter the character
+     */
     public void setCharacter(final Entity pCharacter) {
         this.aCharacter = pCharacter;
     }
 
+    /**
+     * This function get the dialog of the character
+     * 
+     * @return the dialog of the character
+     */
     public String getDialog() {
         return this.getCharacter().getName() + " : " + "\n" + getCharacter().getDialog();
     }
 
+    /**
+     * This method update the numbrer of entry in the room
+     */
     public void updateNbrRoom() {
         this.aNbrEntry += 1;
     }
 
+    /**
+     * This function get the number of entry in the room
+     * 
+     * @return the number of entry in the room
+     */
     public int getNbrRoom() {
         return aNbrEntry;
     }

@@ -1,4 +1,5 @@
 package pkg_Entity;
+
 /**
  * This class implements Hazelgash
  * 
@@ -6,6 +7,9 @@ package pkg_Entity;
  */
 public class Hazelgash extends Entity {
 
+    /**
+     * Create Hazelgash
+     */
     public Hazelgash() {
         super(200, 200, 100, 100, 100, 100, true);
         setName("Hazelgash");

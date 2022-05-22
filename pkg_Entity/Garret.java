@@ -1,4 +1,5 @@
 package pkg_Entity;
+
 /**
  * This class implements Garret
  * 
@@ -6,6 +7,9 @@ package pkg_Entity;
  */
 public class Garret extends Entity {
 
+    /**
+     * Create Garret
+     */
     public Garret() {
         super(100, 100, 100, 100, 100, 100, false);
         setName("Garret");

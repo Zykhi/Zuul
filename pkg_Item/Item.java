@@ -1,4 +1,5 @@
 package pkg_Item;
+
 /**
  * This class implement item for the game
  * 
@@ -19,8 +20,10 @@ public class Item {
      * @param pPrice       price of the item
      * @param pWeight      weight of the item
      * @param pDescription description of the item
+     * @param pFightableItem   true if the item is fightable
      */
-    public Item(final String pName, final double pPrice, final double pWeight, final String pDescription, boolean pFightableItem) {
+    public Item(final String pName, final double pPrice, final double pWeight, final String pDescription,
+            boolean pFightableItem) {
         this.aName = pName;
         this.aPrice = pPrice;
         this.aWeight = pWeight;
@@ -81,7 +84,12 @@ public class Item {
         return this.aWeight;
     }
 
-    public boolean isFightableItem(){
+    /**
+     * This function get if the item is a fightable item
+     * 
+     * @return true if the item is a fightable item, false otherwise
+     */
+    public boolean isFightableItem() {
         return this.aFightableItem;
     }
 

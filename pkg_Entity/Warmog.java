@@ -1,4 +1,5 @@
 package pkg_Entity;
+
 /**
  * This class implements Warmog
  * 
@@ -6,6 +7,9 @@ package pkg_Entity;
  */
 public class Warmog extends Entity {
 
+    /**
+     * Create Warmog
+     */
     public Warmog() {
         super(200, 200, 100, 100, 100, 100, true);
         setName("Warmog");

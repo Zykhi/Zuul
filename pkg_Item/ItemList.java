@@ -1,4 +1,5 @@
 package pkg_Item;
+
 import java.util.HashMap;
 import java.util.Set;
 
@@ -72,6 +73,11 @@ public class ItemList {
         }
     }
 
+    /**
+     * This function get all the fightable item in inventory in a string
+     * 
+     * @return a string describing the inventory's fightable items
+     */
     public String getInventoryFightableString() {
         if (this.aItems.isEmpty()) {
             return "Your inventory is empty";

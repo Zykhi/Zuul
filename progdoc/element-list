@@ -1,1 +1,7 @@
 unnamed package
+pkg_Command
+pkg_Core
+pkg_Entity
+pkg_Item
+pkg_Room
+pkg_UI

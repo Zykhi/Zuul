@@ -382,6 +382,11 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * This method is to use an item
+     * 
+     * @param pItemName name of the item to use
+     */
     public void use(Command pItemName) {
         Potion vPotion = (Potion) this.aInventory.getItemName("potion");
         Item vWeddingRing = this.aInventory.getItemName("wedding_ring");
@@ -575,7 +580,7 @@ public class Player extends Entity {
      */
     public void defend() {
         this.aGui.clearBattleArea();
-        this.improveDefence();
+        this.improveDefense();
         this.aGui.printlnBattle("Your defense has improved");
         this.aGui.printlnBattle(
                 "Your defense is now : " + this.getDef() + " and your special defense is now : " + this.getSpeDef());
@@ -735,6 +740,9 @@ public class Player extends Entity {
         return this.aInventory.getInventoryFightableString();
     }
 
+    /**
+     * This method show dialog of the entity in the room
+     */
     private void showDialog() {
         this.aGui.clearDialogArea();
         this.aGui.showCharacterPanel();

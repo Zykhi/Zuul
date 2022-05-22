@@ -214,6 +214,11 @@ public class UserInterface implements ActionListener {
         this.printEntity(pText + "\n");
     } // println(.)
 
+    /**
+     * Print out slowly some text into the entity text area.
+     * 
+     * @param pText like sysout but for gui, is the text in " "
+     */
     public void slowPrintEntity(final String pText) {
 
         enable(false);
@@ -253,10 +258,16 @@ public class UserInterface implements ActionListener {
         this.printBattle(pText + "\n");
     } // println(.)
 
+    /**
+     * This method clear the dialog text area
+     */
     public void clearDialogArea() {
         this.aEntityLog.setText("");
     }
 
+    /**
+     * This method clear the battle text area
+     */
     public void clearBattleArea() {
         this.aBattleLog.setText("");
     }
@@ -288,6 +299,9 @@ public class UserInterface implements ActionListener {
 
     /**
      * This method play the sound of the battle
+     * 
+     * @param pFile File you want to play
+     * @param pLoop Number of repetitions of the sound (-1 is infinite)
      */
     public void playBattleSound(final String pFile, final int pLoop) {
         try {
@@ -1219,6 +1233,9 @@ public class UserInterface implements ActionListener {
 
     }
 
+    /**
+     * This method is called when the player click on bag button in battle menu
+     */
     private void bagButtonMethod() {
         JButton[] vButtons = { aAttackButton, aDefendButton, aBagButton, aRunButton };
         if (aEngine.getCurrentInventoryFightableItemsString() != null) {
@@ -1241,6 +1258,9 @@ public class UserInterface implements ActionListener {
         }
     }
 
+    /**
+     * This method is called when the player click on run button in battle menu
+     */
     private void runButtonMethod() {
         hideBattlePanel();
     }
@@ -1274,10 +1294,16 @@ public class UserInterface implements ActionListener {
         aPlayerHP.setValue(aEngine.getPlayerHP());
     }
 
+    /**
+     * This method set battle UI at the start of the battle
+     */
     public void startBattleUI() {
         aEnemyName.setText(aEngine.getEnemyName());
     }
 
+    /**
+     * This method set battle UI at the start of the game
+     */
     private void startDefaultBattleUI() {
         aEnemyHP = new JProgressBar(0, 200);
         aEnemyName.setText("default");
@@ -1313,6 +1339,12 @@ public class UserInterface implements ActionListener {
         aSoundToggle = false;
     }
 
+    /**
+     * This method set the volume of the game, used in sound off and sound on
+     * 
+     * @param pVolume the volume of the game
+     * @param pClip   the sound clip
+     */
     // https://stackoverflow.com/questions/40514910/set-volume-of-java-clip
     private void setVolume(float pVolume, Clip pClip) {
         if (pVolume < 0f || pVolume > 1f)
@@ -1321,6 +1353,9 @@ public class UserInterface implements ActionListener {
         gainControl.setValue(20f * (float) Math.log10(pVolume));
     }
 
+    /**
+     * This method is called when the player click on SoundOn button in sound menu
+     */
     private void soundOn() {
         Clip[] vClips = { aClip, aDialogClip };
         for (int i = 0; i < vClips.length; i++) {
@@ -1330,6 +1365,9 @@ public class UserInterface implements ActionListener {
         }
     }
 
+    /**
+     * This method is called when the player click on SoundOff button in sound menu
+     */
     public void soundOff() {
         Clip[] vClips = { aClip, aDialogClip };
         for (int i = 0; i < vClips.length; i++) {
@@ -1339,6 +1377,11 @@ public class UserInterface implements ActionListener {
         }
     }
 
+    /**
+     * This function get the current sound toggle
+     * 
+     * @return the current sound toggle state of the game
+     */
     public boolean isSound() {
         return aSoundToggle;
     }
@@ -1435,6 +1478,8 @@ public class UserInterface implements ActionListener {
     }
 
     /**
+     * This method show the character panel with a little delay to avoid bug
+     * 
      * @author https://riptutorial.com/swing/example/498/delay-a-ui-task-for-a-specific-period
      */
     public void showCharacterPanel() {
@@ -1475,6 +1520,11 @@ public class UserInterface implements ActionListener {
         this.aCardLayout.show(aSceneManager, "GameOver");
     }
 
+    /**
+     * This method remove all action listener of the buttons
+     * 
+     * @param pButtons all the buttons we want to remove the action listener
+     */
     private void removeAL(JButton[] pButtons) {
         for (JButton currentButton : pButtons) {
             for (ActionListener al : currentButton.getActionListeners()) {

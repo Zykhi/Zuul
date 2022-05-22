@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html lang="fr">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">package pkg_Core;</a>
+<span class="sourceLineNo">002</span><a id="line.2">import pkg_UI.UserInterface;</a>
+<span class="sourceLineNo">003</span><a id="line.3"></a>
+<span class="sourceLineNo">004</span><a id="line.4"></a>
+<span class="sourceLineNo">005</span><a id="line.5">/**</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * This class is the main class of the "Zuul GOTY Edition" application.</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * * "Zuul GOTY Edition" is a very simple, text based adventure game.. Users</a>
+<span class="sourceLineNo">008</span><a id="line.8"> * can walk around some scenery. That's all. It should really be extended</a>
+<span class="sourceLineNo">009</span><a id="line.9"> * to make it more interesting!</a>
+<span class="sourceLineNo">010</span><a id="line.10"> * </a>
+<span class="sourceLineNo">011</span><a id="line.11"> * To play this game, create an instance of this class.</a>
+<span class="sourceLineNo">012</span><a id="line.12"> * </a>
+<span class="sourceLineNo">013</span><a id="line.13"> * This main class creates the necessary implementation objects and starts the</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * game off.</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * </a>
+<span class="sourceLineNo">016</span><a id="line.16"> * @author Michael Kolling and David J. Barnes</a>
+<span class="sourceLineNo">017</span><a id="line.17"> * @version 2.0 (Jan 2003) DB edited (2019) CD edited(2022)</a>
+<span class="sourceLineNo">018</span><a id="line.18"> */</a>
+<span class="sourceLineNo">019</span><a id="line.19"></a>
+<span class="sourceLineNo">020</span><a id="line.20">public class Game {</a>
+<span class="sourceLineNo">021</span><a id="line.21">    private UserInterface aGui;</a>
+<span class="sourceLineNo">022</span><a id="line.22">    private GameEngine aEngine;</a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">    /**</a>
+<span class="sourceLineNo">025</span><a id="line.25">     * Create the game and initialise its internal map. Create the inerface and link</a>
+<span class="sourceLineNo">026</span><a id="line.26">     * to it.</a>
+<span class="sourceLineNo">027</span><a id="line.27">     */</a>
+<span class="sourceLineNo">028</span><a id="line.28">    public Game() {</a>
+<span class="sourceLineNo">029</span><a id="line.29">        this.aEngine = new GameEngine();</a>
+<span class="sourceLineNo">030</span><a id="line.30">        this.aGui = new UserInterface(this.aEngine);</a>
+<span class="sourceLineNo">031</span><a id="line.31">        this.aEngine.setGUI(this.aGui);</a>
+<span class="sourceLineNo">032</span><a id="line.32">    }</a>
+<span class="sourceLineNo">033</span><a id="line.33">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

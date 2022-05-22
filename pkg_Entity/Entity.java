@@ -1,4 +1,10 @@
 package pkg_Entity;
+
+/**
+ * This class implements Entity
+ * 
+ * @author C.Diouy
+ */
 public class Entity {
     private String aName;
     private String aDialog;
@@ -15,6 +21,18 @@ public class Entity {
     private boolean aMissed;
     private boolean aDefeated;
 
+    /**
+     * This constructor create entity
+     * 
+     * @param pHP        health point
+     * @param pMaxHP     max health point
+     * @param pDef       defense
+     * @param pSpeDef    special defense
+     * @param pAtt       attack
+     * @param pSpeAtt    special attack
+     * @param pFightable true if entity is fightable
+     *                   false if it's isnt
+     */
     public Entity(int pHP, int pMaxHP, int pDef, int pSpeDef, int pAtt,
             int pSpeAtt, boolean pFightable) {
         this.aHP = pHP;
@@ -27,67 +45,111 @@ public class Entity {
         this.aMoves = new String[3][4];
     }
 
+    /**
+     * This getter return name
+     * 
+     * @return name of entity
+     */
     public String getName() {
         return this.aName;
     }
 
+    /**
+     * This setter set name
+     * 
+     * @param pName name of entity
+     */
     public void setName(String pName) {
         this.aName = pName;
     }
 
+    /**
+     * This getter return dialog
+     * 
+     * @return dialog of entity
+     */
     public String getDialog() {
         return this.aDialog;
     }
 
-    public int getDef() {
-        return this.aDef;
-    }
-
-    public int getSpeDef() {
-        return this.aSpeDef;
-    }
-
+    /**
+     * This setter set dialog
+     * 
+     * @param pDialog dialog of entity
+     */
     public void setDialog(String pDialog) {
         this.aDialog = pDialog;
     }
 
-    public String getImageName() {
-        return this.aImageName;
+    /**
+     * This getter get defense
+     * 
+     * @return defense of entity
+     */
+    public int getDef() {
+        return this.aDef;
     }
 
-    public void setImageName(String pImageName) {
-        this.aImageName = pImageName;
+    /**
+     * This getter get special defense
+     * 
+     * @return special defense of entity
+     */
+    public int getSpeDef() {
+        return this.aSpeDef;
     }
 
-    public String getFullImageName() {
-        return this.aFullImage;
-    }
-
-    public void setFullImageName(String pFullImage) {
-        this.aFullImage = pFullImage;
-    }
-
+    /**
+     * This getter get health point
+     * 
+     * @return hp of entity
+     */
     public int getHP() {
         return this.aHP;
     }
 
+    /**
+     * This getter get max health point
+     * 
+     * @return max hp of entity
+     */
     public int getMaxHP() {
         return this.aMaxHP;
     }
 
+    /**
+     * this getter get if entity is fightable
+     * 
+     * @return true if entity is fightable
+     *         false if it's isnt
+     */
     public boolean isFightable() {
         return this.aFightable;
     }
 
-    public void improveDefence() {
+    /**
+     * this method improve defense
+     */
+    public void improveDefense() {
         this.aDef += 20;
         this.aSpeDef += 20;
     }
 
+    /**
+     * this method heal entity
+     * 
+     * @param pHealingPoint healing point
+     */
     public void heal(int pHealingPoint) {
         this.aHP += pHealingPoint;
     }
 
+    /**
+     * this method is used to attack an entity
+     * 
+     * @param pEnemy entity to attack
+     * @param pMove   move to use
+     */
     public void attack(Entity pEnemy, int pMove) {
         aMissed = false;
         double vDamage = 0.0;
@@ -104,18 +166,38 @@ public class Entity {
         pEnemy.aHP -= (int) (vDamage);
     }
 
+    /**
+     * this function is used to check if entity is dead
+     * 
+     * @return true if entity is dead
+     */
     public boolean isDead() {
         return aHP <= 0;
     }
 
+    /**
+     * this function is used to check if entity's attack is missed
+     * 
+     * @return true if entity's attack is missed
+     */
     public boolean isMissed() {
         return aMissed;
     }
 
+    /**
+     * this method is used to set entity's attack is missed
+     * 
+     * @param pMissed true if entity's attack is missed
+     */
     public void setMissed(boolean pMissed) {
         aMissed = pMissed;
     }
 
+    /**
+     * this function is used to get entity's attack moves
+     * 
+     * @return entity's attack moves
+     */
     public String getMoves() {
         String vMoves = "";
         for (int i = 0; i < 3; i++)
@@ -135,11 +217,59 @@ public class Entity {
         return vAttackString;
     }
 
+    /**
+     * This function get if the entity is defeated
+     * 
+     * @return true if the entity is defeated
+     *         false if it's isnt
+     */
     public boolean isDefeated() {
         return aDefeated;
     }
 
+    /**
+     * This function set the defeated status of the entity
+     * 
+     * @param pDefeated true if the entity is defeated
+     *                  false if it's isnt
+     */
     public void setDefeated(boolean pDefeated) {
         aDefeated = pDefeated;
+    }
+
+    /**
+     * This function get the image of the entity
+     * 
+     * @return image of the entity
+     */
+    public String getImageName() {
+        return this.aImageName;
+    }
+
+    /**
+     * This function set the image of the entity
+     * 
+     * @param pImageName image of the entity
+     */
+    public void setImageName(String pImageName) {
+        this.aImageName = pImageName;
+    }
+
+    /**
+     * This function get the full image of the entity
+     * 
+     * @return the full image of the entity
+     */
+    public String getFullImageName() {
+        return this.aFullImage;
+    }
+
+    /**
+     * This function set the full image of the entity
+     * 
+     * @param pFullImage the full image of the entity
+     */
+    public void setFullImageName(String pFullImage) {
+        this.aFullImage = pFullImage;
     }
 }

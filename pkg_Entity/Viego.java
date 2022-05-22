@@ -1,4 +1,5 @@
 package pkg_Entity;
+
 /**
  * This class implements Viego
  * 
@@ -6,6 +7,9 @@ package pkg_Entity;
  */
 public class Viego extends Entity {
 
+    /**
+     * Create Viego
+     */
     public Viego() {
         super(200, 200, 100, 100, 100, 100, true);
         setName("Viego");

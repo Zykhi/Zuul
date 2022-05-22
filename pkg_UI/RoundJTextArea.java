@@ -1,15 +1,21 @@
 package pkg_UI;
+
 import javax.swing.JTextArea;
-import java.awt.Color;  
-import java.awt.Graphics; 
-import java.awt.Graphics2D; 
-import java.awt.Insets; 
-import java.awt.RenderingHints; 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Insets;
+import java.awt.RenderingHints;
 
+/**
+ * 
+ */
 public class RoundJTextArea extends JTextArea {
+    private int aRadius;
 
-    private int radius;
-
+    /**
+     * Create a round JTextArea
+     */
     public RoundJTextArea() {
         super(10, 20);
         setOpaque(false);
@@ -17,6 +23,9 @@ public class RoundJTextArea extends JTextArea {
         setRadius(20);
     }
 
+    /**
+     * 
+     */
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
@@ -26,6 +35,9 @@ public class RoundJTextArea extends JTextArea {
         super.paintComponent(g);
     }
 
+    /**
+     * 
+     */
     @Override
     protected void paintBorder(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
@@ -34,15 +46,30 @@ public class RoundJTextArea extends JTextArea {
         g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, getRadius(), getRadius());
     }
 
-    public void setRadius(int radius) {
-        this.radius = radius;
+    /**
+     * This method set the radius of the round JTextArea
+     * 
+     * @param pRadius radius of the round JTextArea
+     */
+    public void setRadius(int pRadius) {
+        this.aRadius = pRadius;
         repaint();
     }
 
+    /**
+     * This function get the radius of the round JTextArea
+     * 
+     * @return the radius of the round JTextArea
+     */
     public int getRadius() {
-        return radius;
+        return aRadius;
     }
 
+    /**
+     * This function get the insets of the round JTextArea
+     * 
+     * @return the insets of the round JTextArea
+     */
     @Override
     public Insets getInsets() {
         int value = getRadius() / 2;
