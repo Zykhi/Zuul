@@ -1,5 +1,10 @@
+package pkg_Room;
 import java.util.HashMap;
 import java.util.Set;
+
+import pkg_Entity.Entity;
+import pkg_Item.Item;
+import pkg_Item.ItemList;
 
 /**
  * Class Room - a room in an adventure game.

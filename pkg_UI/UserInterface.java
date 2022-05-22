@@ -1,3 +1,5 @@
+package pkg_UI;
+
 import java.net.URL;
 import java.io.File;
 import java.io.IOException;
@@ -27,6 +29,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.Timer;
+
+import pkg_Command.Parser;
+import pkg_Core.GameEngine;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
@@ -83,7 +89,7 @@ public class UserInterface implements ActionListener {
     private JButton aChargeButton;
     private JButton aFireButton;
     private JButton aInventoryButton;
-    private JButton aSkipButton;
+    private JButton aBattleButton;
     private JButton aPlay;
     private JButton aSetting;
     private JButton aQuit;
@@ -162,7 +168,7 @@ public class UserInterface implements ActionListener {
      * @author https://github.com/Vourem/SlowPrint-Method/blob/master/SlowPrint
      * @param pText Text you want to write slowly
      */
-    public void slowPrint(final String pText) {
+    private void slowPrint(final String pText) {
 
         aTextTimer = new Timer(aTime, new ActionListener() {
             @Override
@@ -194,7 +200,7 @@ public class UserInterface implements ActionListener {
      * 
      * @param pText like sysout but for gui, is the text in " "
      */
-    public void printEntity(final String pText) {
+    private void printEntity(final String pText) {
         this.aEntityLog.append(pText);
         this.aEntityLog.setCaretPosition(this.aEntityLog.getDocument().getLength());
     } // print(.)
@@ -233,7 +239,7 @@ public class UserInterface implements ActionListener {
      * 
      * @param pText like sysout but for gui, is the text in " "
      */
-    public void printBattle(final String pText) {
+    private void printBattle(final String pText) {
         this.aBattleLog.append(pText);
         this.aBattleLog.setCaretPosition(this.aBattleLog.getDocument().getLength());
     } // print(.)
@@ -253,18 +259,6 @@ public class UserInterface implements ActionListener {
 
     public void clearBattleArea() {
         this.aBattleLog.setText("");
-    }
-
-    /**
-     * This method is called when skip button is clicked
-     * It's write quikly the text of the slowPrint method
-     */
-    public void skipMethod() {
-        aTime = 1;
-        aTextTimer.stop();
-        aTextTimer.setDelay(aTime);
-        aTextTimer.start();
-        stopDialogSound();
     }
 
     // sound methods
@@ -539,7 +533,7 @@ public class UserInterface implements ActionListener {
 
             JButton[] vButtons = { aBackButton, aHelpButton, aQuitButton, aDropButton, aTakeButton, aFireButton,
                     aChargeButton, aInventoryButton, aNorthButton, aSouthButton, aEastButton, aWestButton, aUpButton,
-                    aDownButton, aSkipButton };
+                    aDownButton, aBattleButton };
 
             for (JButton currentButton : vButtons) {
                 for (ActionListener al : currentButton.getActionListeners()) {
@@ -562,7 +556,7 @@ public class UserInterface implements ActionListener {
             this.aFireButton.addActionListener(this);
             this.aChargeButton.addActionListener(this);
             this.aInventoryButton.addActionListener(this);
-            this.aSkipButton.addActionListener(e -> skipMethod());
+            this.aBattleButton.addActionListener(this);
         }
     } // enable(.)
 
@@ -617,7 +611,7 @@ public class UserInterface implements ActionListener {
     /**
      * This method creates all the button
      */
-    public void createButton() {
+    private void createButton() {
         this.aQuitButton = new JButton("quit");
         this.aNorthButton = new JButton("north ▲");
         this.aEastButton = new JButton("east ▶");
@@ -632,7 +626,7 @@ public class UserInterface implements ActionListener {
         this.aFireButton = new JButton("fire");
         this.aChargeButton = new JButton("charge");
         this.aInventoryButton = new JButton("inventory");
-        this.aSkipButton = new JButton("skip");
+        this.aBattleButton = new JButton("fight");
         this.aPlay = new JButton("Play");
         this.aSetting = new JButton("Settings");
         this.aQuit = new JButton("Quit");
@@ -662,7 +656,7 @@ public class UserInterface implements ActionListener {
         this.aFireButton.setFont(aButtonsFont);
         this.aChargeButton.setFont(aButtonsFont);
         this.aInventoryButton.setFont(aButtonsFont);
-        this.aSkipButton.setFont(aButtonsFont);
+        this.aBattleButton.setFont(aButtonsFont);
         this.aPlay.setFont(aMenuFont);
         this.aSetting.setFont(aMenuFont);
         this.aQuit.setFont(aMenuFont);
@@ -692,7 +686,7 @@ public class UserInterface implements ActionListener {
         this.aFireButton.addActionListener(this);
         this.aChargeButton.addActionListener(this);
         this.aInventoryButton.addActionListener(this);
-        this.aSkipButton.addActionListener(e -> skipMethod());
+        this.aBattleButton.addActionListener(this);
         this.aPlay.addActionListener(e -> playButton());
         this.aPlay.addActionListener(this);
         this.aSetting.addActionListener(e -> settingsButton());
@@ -724,7 +718,7 @@ public class UserInterface implements ActionListener {
         this.aFireButton.setActionCommand("fire");
         this.aChargeButton.setActionCommand("charge");
         this.aInventoryButton.setActionCommand("inventory");
-        this.aSkipButton.setActionCommand("skip");
+        this.aBattleButton.setActionCommand("fight");
         this.aPlay.setActionCommand("go play");
     }
 
@@ -821,7 +815,7 @@ public class UserInterface implements ActionListener {
         vActionButtonPanel.add(this.aFireButton);
         vActionButtonPanel.add(this.aChargeButton);
         vActionButtonPanel.add(this.aInventoryButton);
-        vActionButtonPanel.add(this.aSkipButton);
+        vActionButtonPanel.add(this.aBattleButton);
         vActionButtonPanel.setSize(vActionButtonPanel.getPreferredSize());
         vActionButtonPanel.setLocation(365, 650);
 
@@ -864,7 +858,7 @@ public class UserInterface implements ActionListener {
         aEnemyName.setSize(300, 50);
         aEnemyName.setLocation(enemyX + 10, enemyY);
 
-        startBattleUI();
+        startDefaultBattleUI();
         aEnemyHP.setBackground(Color.WHITE);
         aEnemyHP.setForeground(Color.GREEN);
 
@@ -891,7 +885,7 @@ public class UserInterface implements ActionListener {
         aPlayerHP.setBackground(Color.white);
         aPlayerHP.setForeground(Color.green);
         aPlayerHP.setPreferredSize(new Dimension(180, 10));
-        aPlayerHP.setSize(aEnemyHP.getPreferredSize());
+        aPlayerHP.setSize(aPlayerHP.getPreferredSize());
         aPlayerHP.setLocation(playerX + 10, playerY + 45);
         aPlayerHP.setValue(this.aEngine.getPlayerHP());
 
@@ -1080,7 +1074,7 @@ public class UserInterface implements ActionListener {
      * This method is called when you click on the drop button
      * It's to change UI to show items in inventory
      */
-    public void dropButtonMethod() {
+    private void dropButtonMethod() {
         JButton[] vButtons = { aBackButton, aHelpButton, aQuitButton, aDropButton, aTakeButton, aFireButton,
                 aChargeButton, aInventoryButton };
         if (aEngine.getCurrentInventoryItemsString() != null) {
@@ -1094,9 +1088,9 @@ public class UserInterface implements ActionListener {
                 vButtons[i].setActionCommand("");
                 vButtons[i].removeActionListener(this);
             }
-            aSkipButton.setText("exit");
-            aSkipButton.setActionCommand("exit");
-            aSkipButton.addActionListener(e -> exitButtonMethod());
+            aBattleButton.setText("exit");
+            aBattleButton.setActionCommand("exit");
+            aBattleButton.addActionListener(e -> exitButtonMethod());
             for (int i = vOutput.length; i < 8; i++) {
                 vButtons[i].addActionListener(this);
             }
@@ -1110,7 +1104,7 @@ public class UserInterface implements ActionListener {
      * This method is called when you click on the take button
      * It's to change UI to show items in the room
      */
-    public void takeButtonMethod() {
+    private void takeButtonMethod() {
         JButton[] vButtons = { aBackButton, aHelpButton, aQuitButton, aDropButton, aTakeButton, aFireButton,
                 aChargeButton, aInventoryButton };
 
@@ -1125,9 +1119,9 @@ public class UserInterface implements ActionListener {
                 vButtons[i].setActionCommand("");
                 vButtons[i].removeActionListener(this);
             }
-            aSkipButton.setText("exit");
-            aSkipButton.setActionCommand("exit");
-            aSkipButton.addActionListener(e -> exitButtonMethod());
+            aBattleButton.setText("exit");
+            aBattleButton.setActionCommand("exit");
+            aBattleButton.addActionListener(e -> exitButtonMethod());
             for (int i = vOutput.length; i < 8; i++) {
                 vButtons[i].addActionListener(this);
             }
@@ -1141,7 +1135,7 @@ public class UserInterface implements ActionListener {
      * This method is called when the exit button is clicked
      * It's back to "main" menu of the UI
      */
-    public void exitButtonMethod() {
+    private void exitButtonMethod() {
         aQuitButton.setText("quit");
         aBackButton.setText("back");
         aHelpButton.setText("help ?");
@@ -1150,7 +1144,7 @@ public class UserInterface implements ActionListener {
         aFireButton.setText("fire");
         aChargeButton.setText("charge");
         aInventoryButton.setText("bag");
-        aSkipButton.setText("skip");
+        aBattleButton.setText("fight");
 
         aQuitButton.setActionCommand("quit");
         aBackButton.setActionCommand("back");
@@ -1160,7 +1154,7 @@ public class UserInterface implements ActionListener {
         aFireButton.setActionCommand("fire");
         aChargeButton.setActionCommand("charge");
         aInventoryButton.setActionCommand("inventory");
-        aSkipButton.setActionCommand("skip");
+        aBattleButton.setActionCommand("fight");
     }
 
     /**
@@ -1209,7 +1203,7 @@ public class UserInterface implements ActionListener {
     /**
      * This method is called when the player click on attack button in battle menu
      */
-    public void attackButton() {
+    private void attackButton() {
         JButton[] vButtons = { aAttackButton, aDefendButton, aBagButton, aRunButton };
 
         String[] vOutput = aEngine.getMovesString().split(" ");
@@ -1225,7 +1219,7 @@ public class UserInterface implements ActionListener {
 
     }
 
-    public void bagButtonMethod() {
+    private void bagButtonMethod() {
         JButton[] vButtons = { aAttackButton, aDefendButton, aBagButton, aRunButton };
         if (aEngine.getCurrentInventoryFightableItemsString() != null) {
             String[] vOutput = aEngine.getCurrentInventoryFightableItemsString().split(" ");
@@ -1247,7 +1241,7 @@ public class UserInterface implements ActionListener {
         }
     }
 
-    public void runButtonMethod() {
+    private void runButtonMethod() {
         hideBattlePanel();
     }
 
@@ -1281,9 +1275,13 @@ public class UserInterface implements ActionListener {
     }
 
     public void startBattleUI() {
-        aEnemyHP = new JProgressBar(0, /* aEngine.getEnemyHP() */ 200);
-        aEnemyName.setText(/* aEngine.getEnemyName() */"test");
-        aEnemyHP.setValue(/* aEngine.getEnemyHP() */ 200);
+        aEnemyName.setText(aEngine.getEnemyName());
+    }
+
+    private void startDefaultBattleUI() {
+        aEnemyHP = new JProgressBar(0, 200);
+        aEnemyName.setText("default");
+        aEnemyHP.setValue(200);
     }
 
     /**

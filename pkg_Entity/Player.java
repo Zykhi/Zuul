@@ -1,5 +1,18 @@
+package pkg_Entity;
+
 import java.util.Stack;
 import javax.swing.Timer;
+
+import pkg_Command.Command;
+import pkg_Command.CommandWord;
+import pkg_Command.Parser;
+import pkg_Item.Beamer;
+import pkg_Item.Item;
+import pkg_Item.ItemList;
+import pkg_Item.Potion;
+import pkg_Room.Door;
+import pkg_Room.Room;
+import pkg_UI.UserInterface;
 
 /**
  * This class implements player
@@ -29,17 +42,17 @@ public class Player extends Entity {
         this.aInventory = new ItemList();
         this.aMaxWeight = 20;
         this.aMovement = 41;
-        aMoves[0][0] = "Flamethrower";
+        aMoves[0][0] = "SwordStroke";
         aMoves[0][1] = "90";
         aMoves[0][2] = "95";
         aMoves[0][3] = "physical";
-        aMoves[1][0] = "Earthquake";
+        aMoves[1][0] = "HeavyStrike";
         aMoves[1][1] = "100";
-        aMoves[1][2] = "100";
+        aMoves[1][2] = "90";
         aMoves[1][3] = "physical";
-        aMoves[2][0] = "AirSlash";
-        aMoves[2][1] = "85";
-        aMoves[2][2] = "0";
+        aMoves[2][0] = "SharpAttack";
+        aMoves[2][1] = "75";
+        aMoves[2][2] = "100";
         aMoves[2][3] = "physical";
     }
 
@@ -123,7 +136,7 @@ public class Player extends Entity {
      * Here we print some stupid, cryptic message and a list of the
      * command words.
      */
-    protected void printHelp() {
+    public void printHelp() {
         this.aGui.println("You are lost. You leave the fight.");
         this.aGui.println("You wander around the dungeon.");
         this.aGui.println("");
@@ -136,7 +149,7 @@ public class Player extends Entity {
      * 
      * @param pDirection use for check if there are second word
      */
-    protected void goRoom(final Command pDirection) {
+    public void goRoom(final Command pDirection) {
         if (!pDirection.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
             this.aGui.println("Go where?");
@@ -174,10 +187,7 @@ public class Player extends Entity {
         showImage();
         printLocationInfo();
         if (aCurrentRoom.getCharacter() != null) {
-            this.aGui.clearDialogArea();
-            this.aGui.showCharacterPanel();
-            showCharacter();
-            printCharacterDialog();
+            showDialog();
             // this.aGui.playDialogSound(this.aCurrentRoom.getCharacterName());
         } else {
             this.aGui.hideCharacterPanel();
@@ -220,7 +230,7 @@ public class Player extends Entity {
      * @param pCommand to check if there is second word to change between look and
      *                 look item
      */
-    protected void look(final Command pCommand) {
+    public void look(final Command pCommand) {
         if (pCommand.hasSecondWord()) {
             this.lookItem(pCommand);
         } else {
@@ -251,7 +261,7 @@ public class Player extends Entity {
      * 
      * @param pCommand to be sure there is a second word
      */
-    protected void eat(final Command pCommand) {
+    public void eat(final Command pCommand) {
         String vItemName = pCommand.getSecondWord();
         Item vItem = this.aInventory.getItemName(vItemName);
         if (!pCommand.hasSecondWord()) {
@@ -274,7 +284,7 @@ public class Player extends Entity {
      * 
      * @param pCommand to be sure there is no second word
      */
-    protected void back(final Command pCommand) {
+    public void back(final Command pCommand) {
         if (pCommand.hasSecondWord()) {
             this.aGui.println("it's impossible");
         } else if (this.getPreviousRooms().empty()) { // was aPreviousRooms.empty()
@@ -290,7 +300,7 @@ public class Player extends Entity {
      * 
      * @param pItemName name of the item to take
      */
-    protected void take(final Command pItemName) {
+    public void take(final Command pItemName) {
         String vItemName = pItemName.getSecondWord();
         Item vItem = this.aCurrentRoom.getItemName(vItemName);
         if (!pItemName.hasSecondWord()) {
@@ -314,7 +324,7 @@ public class Player extends Entity {
      * 
      * @param pItemName name of the item to drop
      */
-    protected void drop(final Command pItemName) {
+    public void drop(final Command pItemName) {
         String vItemName = pItemName.getSecondWord();
         Item vItem = this.aInventory.getItemName(vItemName);
         if (!pItemName.hasSecondWord()) {
@@ -334,7 +344,7 @@ public class Player extends Entity {
     /**
      * This method print all info about inventory of the player
      */
-    protected void showInventory() {
+    public void showInventory() {
         this.aGui.println(this.aInventory.getInventoryString());
         this.aGui.println(this.aInventory.getWeightString() + this.aMaxWeight + "kg");
     }
@@ -374,6 +384,7 @@ public class Player extends Entity {
 
     public void use(Command pItemName) {
         Potion vPotion = (Potion) this.aInventory.getItemName("potion");
+        Item vWeddingRing = this.aInventory.getItemName("wedding_ring");
         String vItemName = pItemName.getSecondWord();
         Item vItem = this.aInventory.getItemName(vItemName);
         if (!pItemName.hasSecondWord()) {
@@ -384,6 +395,29 @@ public class Player extends Entity {
             if (this.aInventory.contain(vPotion)) {
                 this.heal(vPotion.getHealingPoint());
                 this.aGui.updateBattleUI();
+            }
+            if (this.aInventory.contain(vWeddingRing)) {
+                this.aGui.hideCharacterPanel();
+
+                this.aGui.showCharacterPanel();
+                this.aGui.clearDialogArea();
+                this.aGui.showEntityImage("faceImages/garret.png");
+                this.aGui.slowPrintEntity("You found the wedding ring! Thank gods, here is a gift for you" + '\n' +
+                        "This is an eboo, a companion that can help you during your adventure");
+
+                this.aGui.hideCharacterPanel();
+
+                int vDelay = 10000;// specify the delay for the timer
+                Timer vTimer = new Timer(vDelay, e -> {
+                    // The following code will be executed once the delay is reached
+                    this.aGui.showCharacterPanel();
+                    this.aGui.clearDialogArea();
+                    this.aGui.showEntityImage("faceImages/eboo.png");
+                    this.aGui.slowPrintEntity("HOOT HOOT");
+                });
+                vTimer.setRepeats(false);// make sure the timer only runs once
+                vTimer.start();
+
             }
             this.aInventory.removeItem(vItemName, vItem);
             this.aInventory.removeWeight(vItem.getWeight());
@@ -407,7 +441,6 @@ public class Player extends Entity {
             this.aGui.playBattleRoomSound();
             this.aGui.showBattlePanel();
             showFullCharacter();
-            // showFullPlayerCharacter();
             this.aGui.printlnBattle("Let battle begin");
 
         } else {
@@ -569,31 +602,20 @@ public class Player extends Entity {
     }
 
     /**
-     * This function print the string of the attack
-     *
-     * @param pMove Number of the move in the table
-     * @return String of the attack
-     */
-    private String getAttackString(int pMove) {
-        String vAttackString = "";
-        vAttackString += aMoves[pMove][0];
-        return vAttackString;
-    }
-
-    /**
      * This method is called when enemy attack
      *
      * @param pMove Number of the move in the table
      */
     private void enemyAttackString(int pMove) {
         String vName = this.aCurrentRoom.getCharacter().getName();
+        Entity vEnemy = this.aCurrentRoom.getCharacter();
         if (isMissed()) {
             this.aGui.printlnBattle(vName + " missed");
             this.aGui.printlnBattle("");
             setMissed(false);
             return;
         } else {
-            this.aGui.printlnBattle(vName + " used " + getAttackString(pMove));
+            this.aGui.printlnBattle(vName + " used " + vEnemy.getAttackString(pMove));
             this.aGui.printlnBattle("");
         }
     }
@@ -658,21 +680,11 @@ public class Player extends Entity {
     }
 
     /**
-     * This method show the player for the battle
-     * 
-     * protected void showFullPlayerCharacter() {
-     * if (this.getCurrentRoom().getCharacter().getImageName() != null) {
-     * this.aGui.showFullPlayerImage();
-     * }
-     * }
-     */
-
-    /**
      * This function get the enemy name
      * 
      * @return String of the enemy name
      */
-    protected String getEnemyName() {
+    public String getEnemyName() {
         if (this.getCurrentRoom().getCharacter().getName() == null) {
             return null;
         } else {
@@ -721,5 +733,12 @@ public class Player extends Entity {
      */
     public String getCurrentInventoryFightableItemsString() {
         return this.aInventory.getInventoryFightableString();
+    }
+
+    private void showDialog() {
+        this.aGui.clearDialogArea();
+        this.aGui.showCharacterPanel();
+        showCharacter();
+        printCharacterDialog();
     }
 }

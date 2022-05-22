@@ -1,8 +1,26 @@
+package pkg_Core;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+
+import pkg_Command.Command;
+import pkg_Command.CommandWord;
+import pkg_Command.Parser;
+import pkg_Entity.Entity;
+import pkg_Entity.Garret;
+import pkg_Entity.Hazelgash;
+import pkg_Entity.Player;
+import pkg_Entity.Viego;
+import pkg_Entity.Warmog;
+import pkg_Item.Beamer;
+import pkg_Item.Item;
+import pkg_Item.Potion;
+import pkg_Room.Door;
+import pkg_Room.Room;
+import pkg_Room.TransporterRoom;
+import pkg_UI.UserInterface;
 
 /**
  * This class is part of the "Zuul GOTY Edition" application.
@@ -131,14 +149,15 @@ public class GameEngine {
         this.aRooms.get("outside").addItem("test", vTest);
         this.aRooms.get("outside").addItem("potion", vPotion);
 
-        Item vWarmogArmor = new Item("warmog's_armor", 0, 40, "This is the armor of Warmog the Giant",false);
+        Item vWarmogArmor = new Item("warmog's_armor", 0, 40, "This is the armor of Warmog the Giant", false);
         this.aRooms.get("boss1room").addItem("warmog's_armor", vWarmogArmor);
 
         Item vBOTRK = new Item("Blade_Of_The_Ruined King", 0, 20,
                 "This is the blade of Viego, it weighs nothing compared to its burden", false);
         this.aRooms.get("boss2room").addItem("blade_of_the_ruined_king", vBOTRK);
 
-        Item vFrostFireGauntlet = new Item("Frostfire_Gauntlet", 0, 10, "This is the last artefact of the dungeon", false);
+        Item vFrostFireGauntlet = new Item("Frostfire_Gauntlet", 0, 10, "This is the last artefact of the dungeon",
+                false);
         this.aRooms.get("boss3room").addItem("frostfire_gauntlet", vFrostFireGauntlet);
 
         Item vWeddingRing = new Item("wedding_ring", 0, 0, "This is a wedding ring, it's will be usefull", false);
@@ -251,10 +270,6 @@ public class GameEngine {
                         this.aPlayer.exit();
                         break;
 
-                    case SKIP:
-                        this.aGui.skipMethod();
-                        break;
-
                     case ALEA:
                         this.alea(pCommandLine);
                         break;
@@ -302,7 +317,7 @@ public class GameEngine {
      * 
      * @return the HP of the player
      */
-    protected int getPlayerHP() {
+    public int getPlayerHP() {
         return this.aPlayer.getHP();
     }
 
@@ -311,7 +326,7 @@ public class GameEngine {
      * 
      * @return the max HP of the player
      */
-    protected int getMaxPlayerHP() {
+    public int getMaxPlayerHP() {
         return this.aPlayer.getMaxHP();
     }
 
@@ -320,7 +335,7 @@ public class GameEngine {
      * 
      * @return the name of the player
      */
-    protected String getPlayerName() {
+    public String getPlayerName() {
         return this.aPlayer.getName();
     }
 
@@ -329,8 +344,10 @@ public class GameEngine {
      * 
      * @return the HP of the enemy
      */
-    protected int getEnemyHP() {
-        return this.aPlayer.getCurrentRoom().getCharacter().getHP();
+    public int getEnemyHP() {
+        Entity vEnemy = this.aPlayer.getCurrentRoom().getCharacter();
+        int vEnemyHP = vEnemy.getHP();
+        return vEnemyHP;
     }
 
     /**
@@ -338,35 +355,35 @@ public class GameEngine {
      * 
      * @return the name of the enemy
      */
-    protected String getEnemyName() {
+    public String getEnemyName() {
         return this.aPlayer.getEnemyName();
     }
 
     /**
      * This method is called when the player click on attack 1 button
      */
-    protected void attack1Button() {
+    public void attack1Button() {
         this.aPlayer.attack1();
     }
 
     /**
      * This method is called when the player click on attack 2 button
      */
-    protected void attack2Button() {
+    public void attack2Button() {
         this.aPlayer.attack2();
     }
 
     /**
      * This method is called when the player click on attack 3 button
      */
-    protected void attack3Button() {
+    public void attack3Button() {
         this.aPlayer.attack3();
     }
 
     /**
      * This method is called when the player click on defend button
      */
-    protected void defendButton() {
+    public void defendButton() {
         this.aPlayer.defend();
     }
 
@@ -375,7 +392,7 @@ public class GameEngine {
      * 
      * @return the String of player's moves
      */
-    protected String getMovesString() {
+    public String getMovesString() {
         return this.aPlayer.getMovesString();
     }
 
@@ -385,7 +402,7 @@ public class GameEngine {
      * 
      * @return String with all items in the room
      */
-    protected String getCurrentRoomItemsString() {
+    public String getCurrentRoomItemsString() {
         String[] vCRIS = aPlayer.getCurrentRoomItemsString().split(" : ");
         if (vCRIS.length > 1) {
             return vCRIS[1];
@@ -400,7 +417,7 @@ public class GameEngine {
      * 
      * @return String with all items in inventory
      */
-    protected String getCurrentInventoryItemsString() {
+    public String getCurrentInventoryItemsString() {
         String[] vCIIS = aPlayer.getCurrentInventoryItemsString().split(" : ");
         if (vCIIS.length > 1) {
             return vCIIS[1];
@@ -410,12 +427,13 @@ public class GameEngine {
     }
 
     /**
-     * This function get the fightable item in the inventory. This function is used for the
+     * This function get the fightable item in the inventory. This function is used
+     * for the
      * UserInterface
      * 
      * @return String with all fightable items in inventory
      */
-    protected String getCurrentInventoryFightableItemsString() {
+    public String getCurrentInventoryFightableItemsString() {
         String[] vCIIS = aPlayer.getCurrentInventoryFightableItemsString().split(" : ");
         if (vCIIS.length > 1) {
             return vCIIS[1];
@@ -455,15 +473,15 @@ public class GameEngine {
     /**
      * This method play the sound of the battle
      */
-    public void playBattleRoomSound(){
+    public void playBattleRoomSound() {
         HashMap<String, Room> vRooms = aRooms;
         Room vRoom = aPlayer.getCurrentRoom();
         String vCurrentRoomString = getKey(vRooms, vRoom);
         this.aGui.stopSound();
-        if(this.aGui.isSound()==false){
+        if (this.aGui.isSound() == false) {
             this.aGui.soundOff();
-        }else{
-        this.aGui.playBattleSound(vCurrentRoomString, -1);
+        } else {
+            this.aGui.playBattleSound(vCurrentRoomString, -1);
         }
     }
 

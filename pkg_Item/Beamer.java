@@ -1,3 +1,6 @@
+package pkg_Item;
+import pkg_Room.Room;
+
 /**
  * This class implements beamer
  *

@@ -1,3 +1,7 @@
+package pkg_Core;
+import pkg_UI.UserInterface;
+
+
 /**
  * This class is the main class of the "Zuul GOTY Edition" application.
  * * "Zuul GOTY Edition" is a very simple, text based adventure game.. Users

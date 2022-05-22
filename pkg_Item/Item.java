@@ -1,3 +1,4 @@
+package pkg_Item;
 /**
  * This class implement item for the game
  * 

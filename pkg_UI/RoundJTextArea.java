@@ -1,3 +1,4 @@
+package pkg_UI;
 import javax.swing.JTextArea;
 import java.awt.Color;  
 import java.awt.Graphics; 

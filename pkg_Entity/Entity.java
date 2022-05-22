@@ -1,3 +1,4 @@
+package pkg_Entity;
 public class Entity {
     private String aName;
     private String aDialog;
@@ -12,6 +13,7 @@ public class Entity {
     private int aSpeAtt;
     private boolean aFightable;
     private boolean aMissed;
+    private boolean aDefeated;
 
     public Entity(int pHP, int pMaxHP, int pDef, int pSpeDef, int pAtt,
             int pSpeAtt, boolean pFightable) {
@@ -91,7 +93,6 @@ public class Entity {
         double vDamage = 0.0;
         double vRandom = Math.random() * 100;
         if (vRandom > Double.parseDouble(aMoves[pMove][2])) {
-            System.out.println("attack missed");
             aMissed = true;
             return;
         }
@@ -120,5 +121,25 @@ public class Entity {
         for (int i = 0; i < 3; i++)
             vMoves += aMoves[i][0] + " ";
         return vMoves;
+    }
+
+    /**
+     * This function print the string of the attack
+     *
+     * @param pMove Number of the move in the table
+     * @return String of the attack
+     */
+    public String getAttackString(int pMove) {
+        String vAttackString = "";
+        vAttackString += aMoves[pMove][0];
+        return vAttackString;
+    }
+
+    public boolean isDefeated() {
+        return aDefeated;
+    }
+
+    public void setDefeated(boolean pDefeated) {
+        aDefeated = pDefeated;
     }
 }

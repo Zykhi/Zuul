@@ -1,3 +1,4 @@
+package pkg_Command;
 /**
  * This class is part of the "Zuul GOTY Edition" application.
  * "Zuul GOTY Edition" is a very simple, text based adventure game.

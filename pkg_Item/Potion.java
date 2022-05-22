@@ -1,3 +1,4 @@
+package pkg_Item;
 public class Potion extends Item{
     private int aHealing;
 
