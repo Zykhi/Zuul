@@ -1,4 +1,5 @@
 package pkg_Core;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -483,6 +484,22 @@ public class GameEngine {
         } else {
             this.aGui.playBattleSound(vCurrentRoomString, -1);
         }
+    }
+
+    /**
+     * This setter is used to set dev mode
+     * 
+     * @param pToggle on or off
+     */
+    public void setDevMode(boolean pToggle) {
+        aPlayer.setDevMode(pToggle);
+    }
+
+    /**
+     * This getter get if we are in dev mode
+     */
+    public boolean isDevMode() {
+        return aPlayer.isDevMode();
     }
 
     /**

@@ -92,6 +92,7 @@ public class UserInterface implements ActionListener {
     private JButton aBattleButton;
     private JButton aPlay;
     private JButton aSetting;
+    private JButton aDevMode;
     private JButton aQuit;
     private JButton aQuit2;
     private JButton aBack;
@@ -642,6 +643,7 @@ public class UserInterface implements ActionListener {
         this.aInventoryButton = new JButton("inventory");
         this.aBattleButton = new JButton("fight");
         this.aPlay = new JButton("Play");
+        this.aDevMode = new JButton("DevMode : OFF");
         this.aSetting = new JButton("Settings");
         this.aQuit = new JButton("Quit");
         this.aQuit2 = new JButton("Quit");
@@ -672,6 +674,7 @@ public class UserInterface implements ActionListener {
         this.aInventoryButton.setFont(aButtonsFont);
         this.aBattleButton.setFont(aButtonsFont);
         this.aPlay.setFont(aMenuFont);
+        this.aDevMode.setFont(aMenuFont);
         this.aSetting.setFont(aMenuFont);
         this.aQuit.setFont(aMenuFont);
         this.aQuit2.setFont(aMenuFont);
@@ -703,6 +706,7 @@ public class UserInterface implements ActionListener {
         this.aBattleButton.addActionListener(this);
         this.aPlay.addActionListener(e -> playButton());
         this.aPlay.addActionListener(this);
+        this.aDevMode.addActionListener(e -> devModeToggle());
         this.aSetting.addActionListener(e -> settingsButton());
         this.aQuit.addActionListener(e -> quitButton());
         this.aQuit2.addActionListener(e -> quitButton());
@@ -999,6 +1003,7 @@ public class UserInterface implements ActionListener {
         vButtonsPanel.setSize(vButtonsPanel.getPreferredSize());
         vButtonsPanel.setLayout(new GridLayout(3, 1));
         vButtonsPanel.add(aSound);
+        vButtonsPanel.add(aDevMode);
         vButtonsPanel.add(aBack);
         vButtonsPanel.setLocation(438, 400);
 
@@ -1177,6 +1182,19 @@ public class UserInterface implements ActionListener {
     private void playButton() {
         this.aCardLayout.show(aSceneManager, "Game");
         this.aLog.setText("");
+    }
+
+    /**
+     * This method is called when the player click on devMode button
+     */
+    private void devModeToggle() {
+        if (aEngine.isDevMode()) {
+            this.aEngine.setDevMode(false);
+            this.aDevMode.setText("DevMode : OFF");
+        } else {
+            this.aEngine.setDevMode(true);
+            this.aDevMode.setText("DevMode : ON");
+        }
     }
 
     /**

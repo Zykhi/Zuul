@@ -27,6 +27,7 @@ public class Player extends Entity {
     private ItemList aInventory;
     private int aMaxWeight;
     private int aMovement;
+    private boolean aDevMode;
 
     /**
      * this constructor init the player
@@ -54,6 +55,7 @@ public class Player extends Entity {
         aMoves[2][1] = "75";
         aMoves[2][2] = "100";
         aMoves[2][3] = "physical";
+        this.aDevMode = false;
     }
 
     /**
@@ -116,19 +118,33 @@ public class Player extends Entity {
     /**
      * Print out the opening message for the player.
      */
-    protected void printWelcome() {
-        if (this.aGui.isSound() == false) {
-            this.aGui.soundOff();
+    private void printWelcome() {
+        if (isDevMode()) {
+            this.aGui.println("Welcome to the world of Zuul." + '\n' + "You are Edward, the hero of this story." + '\n'
+                    +
+                    "You are a knight, the war has been raging for decades and you cannot sleep. You decide to go out to clear your mind by walking away from the castle. You come across a waterfall that hides a cave, mist emanating from it."
+                    + '\n' +
+                    "It is at this moment that your adventure takes all its meaning." + '\n' +
+                    "Good luck knight. If you need help, let me know." + '\n');
+            this.aGui.println("Type '" + CommandWord.HELP.toString() + "' if you need help." + '\n'
+                    + "You have 20 minutes to escape from the dungeon before being trapped forever" + '\n');
+            this.printLocationInfo();
+            this.aGui.enable(true);
+            this.aGui.startTimer();
         } else {
-            this.aGui.playDialogSound("welcome");
+            if (this.aGui.isSound() == false) {
+                this.aGui.soundOff();
+            } else {
+                this.aGui.playDialogSound("welcome");
+            }
+            this.aGui.slowPrintln("Welcome to the world of Zuul." + '\n' + "You are Edward, the hero of this story."
+                    + '\n'
+                    +
+                    "You are a knight, the war has been raging for decades and you cannot sleep. You decide to go out to clear your mind by walking away from the castle. You come across a waterfall that hides a cave, mist emanating from it."
+                    + '\n' +
+                    "It is at this moment that your adventure takes all its meaning." + '\n' +
+                    "Good luck knight. If you need help, let me know." + '\n');
         }
-        this.aGui.slowPrintln("Welcome to the world of Zuul." + '\n' + "You are Edward, the hero of this story." + '\n'
-                +
-                "You are a knight, the war has been raging for decades and you cannot sleep. You decide to go out to clear your mind by walking away from the castle. You come across a waterfall that hides a cave, mist emanating from it."
-                + '\n' +
-                "It is at this moment that your adventure takes all its meaning." + '\n' +
-                "Good luck knight. If you need help, let me know." + '\n');
-
     }
 
     /**
@@ -209,17 +225,19 @@ public class Player extends Entity {
             vTimer.setRepeats(false);// make sure the timer only runs once
             vTimer.start();
 
-            int vDelay2 = 26000;// specify the delay for the timer
-            Timer vTimer2 = new Timer(vDelay2, e -> {
-                // The following code will be executed once the delay is reached
-                this.aGui.println("Type '" + CommandWord.HELP.toString() + "' if you need help." + '\n'
-                        + "You have 20 minutes to escape from the dungeon before being trapped forever" + '\n');
-                this.printLocationInfo();
-                this.aGui.enable(true);
-                this.aGui.startTimer();
-            });
-            vTimer2.setRepeats(false);// make sure the timer only runs once
-            vTimer2.start();
+            if (!isDevMode()) {
+                int vDelay2 = 26000;// specify the delay for the timer
+                Timer vTimer2 = new Timer(vDelay2, e -> {
+                    // The following code will be executed once the delay is reached
+                    this.aGui.println("Type '" + CommandWord.HELP.toString() + "' if you need help." + '\n'
+                            + "You have 20 minutes to escape from the dungeon before being trapped forever" + '\n');
+                    this.printLocationInfo();
+                    this.aGui.enable(true);
+                    this.aGui.startTimer();
+                });
+                vTimer2.setRepeats(false);// make sure the timer only runs once
+                vTimer2.start();
+            }
         }
     }
 
@@ -407,22 +425,39 @@ public class Player extends Entity {
                 this.aGui.showCharacterPanel();
                 this.aGui.clearDialogArea();
                 this.aGui.showEntityImage("faceImages/garret.png");
-                this.aGui.slowPrintEntity("You found the wedding ring! Thank gods, here is a gift for you" + '\n' +
-                        "This is an eboo, a companion that can help you during your adventure");
-
+                if (isDevMode()) {
+                    this.aGui.printlnEntity("You found the wedding ring! Thank gods, here is a gift for you" + '\n' +
+                            "This is an eboo, a companion that can help you during your adventure");
+                } else {
+                    this.aGui.slowPrintEntity("You found the wedding ring! Thank gods, here is a gift for you" + '\n' +
+                            "This is an eboo, a companion that can help you during your adventure");
+                }
                 this.aGui.hideCharacterPanel();
 
-                int vDelay = 10000;// specify the delay for the timer
-                Timer vTimer = new Timer(vDelay, e -> {
-                    // The following code will be executed once the delay is reached
-                    this.aGui.showCharacterPanel();
-                    this.aGui.clearDialogArea();
-                    this.aGui.showEntityImage("faceImages/eboo.png");
-                    this.aGui.slowPrintEntity("HOOT HOOT");
-                });
-                vTimer.setRepeats(false);// make sure the timer only runs once
-                vTimer.start();
+                if (isDevMode()) {
+                    int vDelay = 3000;// specify the delay for the timer
+                    Timer vTimer = new Timer(vDelay, e -> {
+                        // The following code will be executed once the delay is reached
+                        this.aGui.showCharacterPanel();
+                        this.aGui.clearDialogArea();
+                        this.aGui.showEntityImage("faceImages/eboo.png");
+                        this.aGui.printlnEntity("HOOT HOOT");
+                    });
+                    vTimer.setRepeats(false);// make sure the timer only runs once
+                    vTimer.start();
+                } else {
+                    int vDelay = 10000;// specify the delay for the timer
+                    Timer vTimer = new Timer(vDelay, e -> {
+                        // The following code will be executed once the delay is reached
+                        this.aGui.showCharacterPanel();
+                        this.aGui.clearDialogArea();
+                        this.aGui.showEntityImage("faceImages/eboo.png");
+                        this.aGui.slowPrintEntity("HOOT HOOT");
+                    });
+                    vTimer.setRepeats(false);// make sure the timer only runs once
+                    vTimer.start();
 
+                }
             }
             this.aInventory.removeItem(vItemName, vItem);
             this.aInventory.removeWeight(vItem.getWeight());
@@ -653,7 +688,11 @@ public class Player extends Entity {
      * This method print the dialog of the character in the room
      */
     private void printCharacterDialog() {
-        this.aGui.slowPrintEntity(this.getCurrentRoom().getDialog());
+        if (isDevMode()) {
+            this.aGui.printlnEntity(this.getCurrentRoom().getDialog());
+        } else {
+            this.aGui.slowPrintEntity(this.getCurrentRoom().getDialog());
+        }
     }
 
     /**
@@ -748,5 +787,21 @@ public class Player extends Entity {
         this.aGui.showCharacterPanel();
         showCharacter();
         printCharacterDialog();
+    }
+
+    /**
+     * This setter is used to set dev mode
+     * 
+     * @param pToggle on or off
+     */
+    public void setDevMode(boolean pToggle) {
+        aDevMode = pToggle;
+    }
+
+    /**
+     * This getter get if we are in dev mode
+     */
+    public boolean isDevMode() {
+        return aDevMode;
     }
 }
