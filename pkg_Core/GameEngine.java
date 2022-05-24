@@ -80,6 +80,7 @@ public class GameEngine {
 
         Room vMainMenu = new Room("", "");
         Room vGameOver = new Room("", "");
+        Room vVictory = new Room("", "");
 
         Room vOutside = new Room("outside, the entrance to a cave catches your eye", "gameImages/outside.gif");
         Room vCatacombs = new Room("in the catacombs", "gameImages/catacombs.gif");
@@ -97,6 +98,7 @@ public class GameEngine {
 
         aRooms.put("mainmenu", vMainMenu);
         aRooms.put("gameover", vGameOver);
+        aRooms.put("victory", vVictory);
 
         aRooms.put("outside", vOutside);
         aRooms.put("catacombs", vCatacombs);
@@ -209,6 +211,8 @@ public class GameEngine {
             this.aGui.stopTimer();
         } else if (this.getPlayerHP() <= 0) {
             this.gameOver();
+        } else if (this.aPlayer.getArtefactCounter() == 0) {
+            this.victory();
         } else {
 
             try {
@@ -315,6 +319,17 @@ public class GameEngine {
         this.aPlayer.setRoom(this.aRooms.get("gameover"));
         this.aGui.playRoomSound();
         this.aGui.showGameOverPanel();
+    }
+
+    /**
+     * Victory
+     */
+    private void victory() {
+        this.aGui.println("Victory");
+        this.aGui.enable(false);
+        this.aPlayer.setRoom(this.aRooms.get("victory"));
+        this.aGui.playRoomSound();
+        this.aGui.showVictoryPanel();
     }
 
     /**

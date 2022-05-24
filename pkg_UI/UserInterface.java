@@ -62,6 +62,7 @@ public class UserInterface implements ActionListener {
     private JLabel aSettingBackground;
     private JLabel aSoundBackground;
     private JLabel aGameOverBackGroundImage;
+    private JLabel aVictoryBackGroundImage;
     private JLabel aGameTimer;
     private JProgressBar aEnemyHP;
     private JProgressBar aPlayerHP;
@@ -74,6 +75,7 @@ public class UserInterface implements ActionListener {
     private JLayeredPane aSoundPanel;
     private JLayeredPane aSettingPanel;
     private JLayeredPane aGameOverPanel;
+    private JLayeredPane aVictoryPanel;
     private Container aSceneManager;
     private JButton aQuitButton;
     private JButton aNorthButton;
@@ -532,6 +534,21 @@ public class UserInterface implements ActionListener {
         }
     }
 
+    /**
+     * Show the background of the victory menu
+     */
+    public void showVictoryImage(){
+        String vImagePath = "gameImages/victory.jpg"; // to change the directory
+        URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
+        if (vImageURL == null)
+            System.out.println("Image not found : " + vImagePath);
+        else {
+            ImageIcon vIcon = new ImageIcon(vImageURL);
+            this.aGameOverBackGroundImage.setIcon(vIcon);
+            this.aGameWindow.pack();
+        }
+    }
+
     // enable method
 
     /**
@@ -751,6 +768,7 @@ public class UserInterface implements ActionListener {
         createSettingPanel();
         createSoundPanel();
         createGameOverPanel();
+        createVictoryPanel();
 
         aSceneManager = aGameWindow.getContentPane();
         aCardLayout = new CardLayout();
@@ -761,6 +779,7 @@ public class UserInterface implements ActionListener {
         aSceneManager.add(aSettingPanel, "Settings");
         aSceneManager.add(aSoundPanel, "Sound");
         aSceneManager.add(aGameOverPanel, "GameOver");
+        aSceneManager.add(aVictoryPanel, "Victory");
     }
 
     /**
@@ -1085,6 +1104,21 @@ public class UserInterface implements ActionListener {
 
         this.aGameOverPanel.add(aGameOverBackGroundImage, JLayeredPane.DEFAULT_LAYER);
         this.aGameOverPanel.add(vButtonsPanel, JLayeredPane.PALETTE_LAYER);
+    }
+
+    /**
+     * This method create the panel of victory
+     */
+    private void createVictoryPanel() {
+        this.aVictoryPanel = new JLayeredPane();
+        this.aVictoryBackGroundImage = new JLabel();
+        this.aVictoryPanel.setPreferredSize(new Dimension(1077, 765));
+        this.aVictoryPanel.setSize(aVictoryPanel.getPreferredSize());
+        this.aVictoryBackGroundImage.setSize(aVictoryPanel.getPreferredSize());
+        this.aVictoryBackGroundImage.setLocation(0, 0);
+        showVictoryImage();
+
+        this.aVictoryPanel.add(aVictoryBackGroundImage, JLayeredPane.DEFAULT_LAYER);
     }
 
     // action listeners methods
@@ -1536,6 +1570,13 @@ public class UserInterface implements ActionListener {
      */
     public void showGameOverPanel() {
         this.aCardLayout.show(aSceneManager, "GameOver");
+    }
+
+    /**
+     * This method show the victory panel
+     */
+    public void showVictoryPanel() {
+        this.aCardLayout.show(aSceneManager, "Victory");
     }
 
     /**
