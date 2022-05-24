@@ -283,6 +283,10 @@ public class GameEngine {
                         this.aPlayer.use(pCommandLine);
                         break;
 
+                    case GIVE:
+                        this.aPlayer.give(pCommandLine);
+                        break;
+
                     default:
                         this.aGui.println("I don't know what you mean...");
                         break;

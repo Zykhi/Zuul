@@ -27,6 +27,7 @@ public class Player extends Entity {
     private ItemList aInventory;
     private int aMaxWeight;
     private int aMovement;
+    private int aArtefactCounter;
     private boolean aDevMode;
 
     /**
@@ -43,6 +44,7 @@ public class Player extends Entity {
         this.aInventory = new ItemList();
         this.aMaxWeight = 20;
         this.aMovement = 41;
+        this.aArtefactCounter = 3;
         aMoves[0][0] = "SwordStroke";
         aMoves[0][1] = "90";
         aMoves[0][2] = "95";
@@ -119,13 +121,14 @@ public class Player extends Entity {
      * Print out the opening message for the player.
      */
     private void printWelcome() {
+        String vWelcomeText = "Welcome to the world of Zuul." + '\n' + "You are Edward, the hero of this story." + '\n'
+                +
+                "You are a knight, the war has been raging for decades and you cannot sleep. You decide to go out to clear your mind by walking away from the castle. You come across a waterfall that hides a cave, mist emanating from it."
+                + '\n' +
+                "It is at this moment that your adventure takes all its meaning." + '\n' +
+                "Good luck knight. If you need help, let me know." + '\n';
         if (isDevMode()) {
-            this.aGui.println("Welcome to the world of Zuul." + '\n' + "You are Edward, the hero of this story." + '\n'
-                    +
-                    "You are a knight, the war has been raging for decades and you cannot sleep. You decide to go out to clear your mind by walking away from the castle. You come across a waterfall that hides a cave, mist emanating from it."
-                    + '\n' +
-                    "It is at this moment that your adventure takes all its meaning." + '\n' +
-                    "Good luck knight. If you need help, let me know." + '\n');
+            this.aGui.println(vWelcomeText);
             this.aGui.println("Type '" + CommandWord.HELP.toString() + "' if you need help." + '\n'
                     + "You have 20 minutes to escape from the dungeon before being trapped forever" + '\n');
             this.printLocationInfo();
@@ -137,13 +140,7 @@ public class Player extends Entity {
             } else {
                 this.aGui.playDialogSound("welcome");
             }
-            this.aGui.slowPrintln("Welcome to the world of Zuul." + '\n' + "You are Edward, the hero of this story."
-                    + '\n'
-                    +
-                    "You are a knight, the war has been raging for decades and you cannot sleep. You decide to go out to clear your mind by walking away from the castle. You come across a waterfall that hides a cave, mist emanating from it."
-                    + '\n' +
-                    "It is at this moment that your adventure takes all its meaning." + '\n' +
-                    "Good luck knight. If you need help, let me know." + '\n');
+            this.aGui.slowPrintln(vWelcomeText);
         }
     }
 
@@ -285,7 +282,7 @@ public class Player extends Entity {
         if (!pCommand.hasSecondWord()) {
             this.aGui.println("what do you want to eat");
         } else {
-            if (vItemName.equals("Cookie") && this.aInventory.getItemList().containsValue(vItem)) {
+            if (vItemName.equals("cookie") && this.aInventory.getItemList().containsValue(vItem)) {
                 this.aMaxWeight *= 2;
                 this.aInventory.removeItem(vItemName, vItem);
                 this.aInventory.removeWeight(vItem.getWeight());
@@ -407,61 +404,42 @@ public class Player extends Entity {
      */
     public void use(Command pItemName) {
         Potion vPotion = (Potion) this.aInventory.getItemName("potion");
-        Item vWeddingRing = this.aInventory.getItemName("wedding_ring");
         String vItemName = pItemName.getSecondWord();
         Item vItem = this.aInventory.getItemName(vItemName);
         if (!pItemName.hasSecondWord()) {
-
+            this.aGui.println("This action need a second word");
         } else if (vItem == null) {
-
+            this.aGui.println("You dont have this item");
         } else {
             if (this.aInventory.contain(vPotion)) {
                 this.heal(vPotion.getHealingPoint());
                 this.aGui.updateBattleUI();
             }
-            if (this.aInventory.contain(vWeddingRing)) {
-                this.aGui.hideCharacterPanel();
-
-                this.aGui.showCharacterPanel();
-                this.aGui.clearDialogArea();
-                this.aGui.showEntityImage("faceImages/garret.png");
-                if (isDevMode()) {
-                    this.aGui.printlnEntity("You found the wedding ring! Thank gods, here is a gift for you" + '\n' +
-                            "This is an eboo, a companion that can help you during your adventure");
-                } else {
-                    this.aGui.slowPrintEntity("You found the wedding ring! Thank gods, here is a gift for you" + '\n' +
-                            "This is an eboo, a companion that can help you during your adventure");
-                }
-                this.aGui.hideCharacterPanel();
-
-                if (isDevMode()) {
-                    int vDelay = 3000;// specify the delay for the timer
-                    Timer vTimer = new Timer(vDelay, e -> {
-                        // The following code will be executed once the delay is reached
-                        this.aGui.showCharacterPanel();
-                        this.aGui.clearDialogArea();
-                        this.aGui.showEntityImage("faceImages/eboo.png");
-                        this.aGui.printlnEntity("HOOT HOOT");
-                    });
-                    vTimer.setRepeats(false);// make sure the timer only runs once
-                    vTimer.start();
-                } else {
-                    int vDelay = 10000;// specify the delay for the timer
-                    Timer vTimer = new Timer(vDelay, e -> {
-                        // The following code will be executed once the delay is reached
-                        this.aGui.showCharacterPanel();
-                        this.aGui.clearDialogArea();
-                        this.aGui.showEntityImage("faceImages/eboo.png");
-                        this.aGui.slowPrintEntity("HOOT HOOT");
-                    });
-                    vTimer.setRepeats(false);// make sure the timer only runs once
-                    vTimer.start();
-
-                }
-            }
             this.aInventory.removeItem(vItemName, vItem);
             this.aInventory.removeWeight(vItem.getWeight());
+        }
+    }
 
+    /**
+     * This method is called when the player used give command
+     * 
+     * @param pItemName name of the item to give
+     */
+    public void give(Command pItemName) {
+        Item vWeddingRing = this.aInventory.getItemName("wedding_ring");
+        String vItemName = pItemName.getSecondWord();
+        Item vItem = this.aInventory.getItemName(vItemName);
+        if (!pItemName.hasSecondWord()) {
+            this.aGui.println("This action need a second word");
+        } else if (vItem == null) {
+            this.aGui.println("You dont have this item");
+        } else {
+            if (this.aInventory.contain(vWeddingRing)) {
+                this.giveWeddingRingToGarret();
+            }
+            giveArtefactToGarret(vItemName);
+            this.aInventory.removeItem(vItemName, vItem);
+            this.aInventory.removeWeight(vItem.getWeight());
         }
     }
 
@@ -787,6 +765,113 @@ public class Player extends Entity {
         this.aGui.showCharacterPanel();
         showCharacter();
         printCharacterDialog();
+    }
+
+    /**
+     * This is used to give the wedding ring to garret
+     */
+    private void giveWeddingRingToGarret() {
+        if (this.aCurrentRoom.getCharacter().getName() == "Garret") {
+            this.aGui.hideCharacterPanel();
+            this.aGui.showCharacterPanel();
+            this.aGui.clearDialogArea();
+            this.aGui.showEntityImage("faceImages/garret.png");
+            if (isDevMode()) {
+                this.aGui.printlnEntity("You found the wedding ring! Thank gods, here is a gift for you" + '\n' +
+                        "This is an eboo, a companion that can help you during your adventure");
+            } else {
+                this.aGui.slowPrintEntity("You found the wedding ring! Thank gods, here is a gift for you" + '\n' +
+                        "This is an eboo, a companion that can help you during your adventure");
+            }
+            this.aGui.hideCharacterPanel();
+
+            if (isDevMode()) {
+                int vDelay = 3000;// specify the delay for the timer
+                Timer vTimer = new Timer(vDelay, e -> {
+                    // The following code will be executed once the delay is reached
+                    this.aGui.showCharacterPanel();
+                    this.aGui.clearDialogArea();
+                    this.aGui.showEntityImage("faceImages/eboo.png");
+                    this.aGui.printlnEntity("HOOT HOOT");
+                });
+                vTimer.setRepeats(false);// make sure the timer only runs once
+                vTimer.start();
+            } else {
+                int vDelay = 10000;// specify the delay for the timer
+                Timer vTimer = new Timer(vDelay, e -> {
+                    // The following code will be executed once the delay is reached
+                    this.aGui.showCharacterPanel();
+                    this.aGui.clearDialogArea();
+                    this.aGui.showEntityImage("faceImages/eboo.png");
+                    this.aGui.slowPrintEntity("HOOT HOOT");
+                });
+                vTimer.setRepeats(false);// make sure the timer only runs once
+                vTimer.start();
+
+            }
+        } else {
+            this.aGui.println("You cant give this to him");
+        }
+    }
+
+    /**
+     * This method is used to give an artefact to garret
+     * 
+     * @param pItemName Name of the item to give at garret
+     */
+    private void giveArtefactToGarret(String pItemName) {
+        Item vItem = this.aInventory.getItemName(pItemName);
+        if (this.aCurrentRoom.getCharacter().getName() == "Garret") {
+            if (pItemName.equals("warmog's_armor") && this.aInventory.getItemList().containsValue(vItem)) {
+                giveArtefact();
+            }
+            if (pItemName.equals("blade_of_the_ruined_king") && this.aInventory.getItemList().containsValue(vItem)) {
+                giveArtefact();
+            }
+            if (pItemName.equals("frostfire_gauntlet") && this.aInventory.getItemList().containsValue(vItem)) {
+                giveArtefact();
+            }
+            if (aArtefactCounter == 0) {
+                allArtefactText();
+            }
+        } else {
+            this.aGui.println("You cant give this to him");
+        }
+    }
+
+    /**
+     * This method is used to give an artefact
+     */
+    private void giveArtefact() {
+        aArtefactCounter--;
+        this.aGui.hideCharacterPanel();
+        this.aGui.showCharacterPanel();
+        this.aGui.clearDialogArea();
+        this.aGui.showEntityImage("faceImages/garret.png");
+        if (isDevMode()) {
+            this.aGui.printlnEntity("You found an artefact!" + '\n' +
+                    "There are still some left " + aArtefactCounter);
+        } else {
+            this.aGui.slowPrintEntity("You found an artefact!" + '\n' +
+                    "There are still some left " + aArtefactCounter);
+        }
+    }
+
+    /**
+     * This method is used to write a text when you get all the artefact
+     */
+    private void allArtefactText() {
+        this.aGui.hideCharacterPanel();
+        this.aGui.showCharacterPanel();
+        this.aGui.clearDialogArea();
+        this.aGui.showEntityImage("faceImages/garret.png");
+        if (isDevMode()) {
+            this.aGui.printlnEntity("You found all the artefact!" + '\n' +
+                    "You are now able to leave the dungeon. You stopped the curse");
+        } else {
+            this.aGui.slowPrintEntity("You found all the artefact!" + '\n' +
+                    "You are now able to leave the dungeon. You stopped the curse");
+        }
     }
 
     /**
