@@ -179,13 +179,17 @@ public class Player extends Entity {
             this.aGui.println("There is no door!");
         } else if (vDoor != null) {
             if (vDoor.isTrap()) {
-                this.aGui.println("its a trap");
-                clearStack();
-                return;
+                isTrapDoor();
             }
         } else {
             changeRoom(vNextRoom);
         }
+    }
+
+    private void isTrapDoor() {
+        this.aGui.println("its a trap");
+        clearStack();
+        return;
     }
 
     /**
@@ -302,10 +306,10 @@ public class Player extends Entity {
     public void back(final Command pCommand) {
         if (pCommand.hasSecondWord()) {
             this.aGui.println("it's impossible");
-        } else if (this.getPreviousRooms().empty()) { // was aPreviousRooms.empty()
+        } else if (this.getPreviousRooms().empty()) {
             this.aGui.println("you cant back");
         } else {
-            Room vPreviousRoom = this.getPreviousRooms().pop(); // was aPreviousRooms.pop()
+            Room vPreviousRoom = this.getPreviousRooms().pop();
             changeRoom(vPreviousRoom);
         }
     }
@@ -885,8 +889,19 @@ public class Player extends Entity {
 
     /**
      * This getter get if we are in dev mode
+     * 
+     * @return devmode true or false
      */
     public boolean isDevMode() {
         return aDevMode;
+    }
+
+    /**
+     * this getter get the nbr of artefact left
+     * 
+     * @return artefact left
+     */
+    public int getArtefactCounter() {
+        return aArtefactCounter;
     }
 }
