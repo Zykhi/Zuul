@@ -24,7 +24,7 @@
   - [Commentaires](#commentaires)
 - [Réponses aux exercices](#réponses-aux-exercices)
 - [Mode d'emploi](#)
-- [Déclaration anti-plagiat](#)
+- [Déclaration anti-plagiat](#déclaration-obligatoire-anti-plagiat)
 
 <div style="page-break-after: always;"></div>
 
@@ -2948,3 +2948,205 @@ Mise à jour de la javadoc
 #### Exercice 7.46.4
 
 Mise à jour de la javadoc sur le site
+
+#### Exercice 7.47
+
+Exercice non réalisé.
+
+#### Exercice 7.47.1
+
+Des packages sont réalisés pour répondre aux exigences de cet exercice
+
+#### Exercice 7.47.2
+
+Les deux javadocs sont générés avec les packages
+
+#### Exercice 7.48
+
+Une classe `Entity` est créé et les "Characters" heriteront de celle-ci
+
+```java
+public class Entity {
+    private String aName;
+    private String aDialog;
+    private String aImageName;
+    private String aFullImage;
+    protected String aMoves[][];
+    private int aHP;
+    private int aMaxHP;
+    private int aDef;
+    private int aSpeDef;
+    private int aAtt;
+    private int aSpeAtt;
+    private boolean aFightable;
+    private boolean aMissed;
+    private boolean aDefeated;
+
+    public Entity(int pHP, int pMaxHP, int pDef, int pSpeDef, int pAtt,
+            int pSpeAtt, boolean pFightable) {
+        this.aHP = pHP;
+        this.aMaxHP = pMaxHP;
+        this.aDef = pDef;
+        this.aSpeDef = pSpeDef;
+        this.aAtt = pAtt;
+        this.aSpeAtt = pSpeAtt;
+        this.aFightable = pFightable;
+        this.aMoves = new String[3][4];
+    }
+
+    public String getName() {
+        return this.aName;
+    }
+
+    public void setName(String pName) {
+        this.aName = pName;
+    }
+
+    public String getDialog() {
+        return this.aDialog;
+    }
+
+    public void setDialog(String pDialog) {
+        this.aDialog = pDialog;
+    }
+
+    public int getDef() {
+        return this.aDef;
+    }
+
+    public int getSpeDef() {
+        return this.aSpeDef;
+    }
+
+    public int getHP() {
+        return this.aHP;
+    }
+
+    public int getMaxHP() {
+        return this.aMaxHP;
+    }
+
+    public boolean isFightable() {
+        return this.aFightable;
+    }
+
+    public void improveDefense() {
+        this.aDef += 20;
+        this.aSpeDef += 20;
+    }
+
+    public void heal(int pHealingPoint) {
+        this.aHP += pHealingPoint;
+    }
+
+    public void attack(Entity pEnemy, int pMove) {
+        aMissed = false;
+        double vDamage = 0.0;
+        double vRandom = Math.random() * 100;
+        if (vRandom > Double.parseDouble(aMoves[pMove][2])) {
+            aMissed = true;
+            return;
+        }
+        if (aMoves[pMove][3].equals("special")) {
+            vDamage = aSpeAtt * Double.parseDouble(aMoves[pMove][1]) / pEnemy.aSpeDef;
+        } else {
+            vDamage = aAtt * Double.parseDouble(aMoves[pMove][1]) / pEnemy.aDef;
+        }
+        pEnemy.aHP -= (int) (vDamage);
+    }
+
+    public boolean isDead() {
+        return aHP <= 0;
+    }
+
+    public boolean isMissed() {
+        return aMissed;
+    }
+
+    public void setMissed(boolean pMissed) {
+        aMissed = pMissed;
+    }
+
+    public String getMoves() {
+        String vMoves = "";
+        for (int i = 0; i < 3; i++)
+            vMoves += aMoves[i][0] + " ";
+        return vMoves;
+    }
+
+    public String getAttackString(int pMove) {
+        String vAttackString = "";
+        vAttackString += aMoves[pMove][0];
+        return vAttackString;
+    }
+
+    public boolean isDefeated() {
+        return aDefeated;
+    }
+
+    public void setDefeated(boolean pDefeated) {
+        aDefeated = pDefeated;
+    }
+
+    public String getImageName() {
+        return this.aImageName;
+    }
+
+    public void setImageName(String pImageName) {
+        this.aImageName = pImageName;
+    }
+
+    public String getFullImageName() {
+        return this.aFullImage;
+    }
+
+    public void setFullImageName(String pFullImage) {
+        this.aFullImage = pFullImage;
+    }
+}
+```
+
+Et voici une classe qui en herite
+
+```java
+public class Garret extends Entity {
+
+    public Garret() {
+        super(100, 100, 100, 100, 100, 100, false);
+        setName("Garret");
+        setDialog("Welcome to the dungeon! How are you?");
+        setImageName("faceImages/garret.png");
+    }
+}
+```
+
+Cela permet de creer les personnages et d'avoir des fonctions utiles beaucoup plus rapidement, ils sont ajoutés dans `GameEngine` avec les lignes suivantes
+
+```java
+private void createCharacter() {
+
+    Garret vGarret = new Garret();
+    this.aRooms.get("lobby").setCharacter(vGarret);
+
+    Warmog vWarmog = new Warmog();
+    this.aRooms.get("boss1room").setCharacter(vWarmog);
+
+    Viego vViego = new Viego();
+    this.aRooms.get("boss2room").setCharacter(vViego);
+
+    Hazelgash vHazelgash = new Hazelgash();
+    this.aRooms.get("boss3room").setCharacter(vHazelgash);
+}
+```
+
+#### Exercice 7.49
+
+Non réalisé
+
+#### Exercice 7.49.3
+
+Les javadoc sont regénérées
+
+## Déclaration obligatoire anti-plagiat
+
+Tout les bouts de code qui ont été recopié proviennent soit du livre donné par Monsieur Denis BUREAU soit d'internet et les sources ont été précisé dans les commentaires du code. Les lignes de code prise sur internet n'aide en aucun cas pour les exercices obligatoires ou optionnels. Ceux ci m'ont aidé pour finaliser mon interface Homme-Machine.
