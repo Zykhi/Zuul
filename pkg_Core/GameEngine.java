@@ -204,15 +204,16 @@ public class GameEngine {
     public void interpretCommand(final Command pCommandLine) {
 
         CommandWord vCommandWord = pCommandLine.getCommandWord();
-        if (aPlayer.getMovement() <= 0) {
-            this.gameOver();
+        if (this.aPlayer.getArtefactCounter() == 0) {
+            this.victory();
+
         } else if (this.aGui.isTimerEnd()) {
             this.gameOver();
             this.aGui.stopTimer();
         } else if (this.getPlayerHP() <= 0) {
             this.gameOver();
-        } else if (this.aPlayer.getArtefactCounter() == 0) {
-            this.victory();
+        } else if (aPlayer.getMovement() <= 0) {
+            this.gameOver();
         } else {
 
             try {

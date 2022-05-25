@@ -64,6 +64,8 @@ public class UserInterface implements ActionListener {
     private JLabel aGameOverBackGroundImage;
     private JLabel aVictoryBackGroundImage;
     private JLabel aGameTimer;
+    private JLabel aItemImage;
+    private JLabel aItemBackGroundImage;
     private JProgressBar aEnemyHP;
     private JProgressBar aPlayerHP;
     private JPanel aEntityPanel;
@@ -432,6 +434,40 @@ public class UserInterface implements ActionListener {
      * 
      * @param pImageName name of the image for the room
      */
+    public void showItemImage(final String pImageName) {
+        String vImagePath = "gameImages/item_" + pImageName + ".png"; // to change the directory
+        URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
+        if (vImageURL == null)
+            System.out.println("Image not found : " + vImagePath);
+        else {
+            ImageIcon vIcon = new ImageIcon(vImageURL);
+            this.aItemImage.setIcon(vIcon);
+            this.aGameWindow.pack();
+        }
+    }
+
+    /**
+     * Show an image file in the interface.
+     * 
+     * @param pImageName name of the image for the room
+     */
+    public void showItemBackGroundImage() {
+        String vImagePath = "gameImages/itemBackground.gif"; // to change the directory
+        URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
+        if (vImageURL == null)
+            System.out.println("Image not found : " + vImagePath);
+        else {
+            ImageIcon vIcon = new ImageIcon(vImageURL);
+            this.aItemBackGroundImage.setIcon(vIcon);
+            this.aGameWindow.pack();
+        }
+    }
+
+    /**
+     * Show an image file in the interface.
+     * 
+     * @param pImageName name of the image for the room
+     */
     public void showFullEntityImage(final String pImageName) {
         String vImagePath = "" + pImageName; // to change the directory
         URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
@@ -523,7 +559,7 @@ public class UserInterface implements ActionListener {
      * Show the background of the game over menu
      */
     public void showGameOverImage() {
-        String vImagePath = "gameImages/GameOver.jpg"; // to change the directory
+        String vImagePath = "gameImages/gameover.jpg"; // to change the directory
         URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
         if (vImageURL == null)
             System.out.println("Image not found : " + vImagePath);
@@ -537,14 +573,14 @@ public class UserInterface implements ActionListener {
     /**
      * Show the background of the victory menu
      */
-    public void showVictoryImage(){
+    public void showVictoryImage() {
         String vImagePath = "gameImages/victory.jpg"; // to change the directory
         URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
         if (vImageURL == null)
             System.out.println("Image not found : " + vImagePath);
         else {
             ImageIcon vIcon = new ImageIcon(vImageURL);
-            this.aGameOverBackGroundImage.setIcon(vIcon);
+            this.aVictoryBackGroundImage.setIcon(vIcon);
             this.aGameWindow.pack();
         }
     }
@@ -762,6 +798,7 @@ public class UserInterface implements ActionListener {
      */
     private void createPanel() {
         createNPCPanel();
+        createItemPanel();
         createGamePanel();
         createBattlePanel();
         createMainMenuPanel();
@@ -778,8 +815,9 @@ public class UserInterface implements ActionListener {
         aSceneManager.add(aBattlerPanel, "Battle");
         aSceneManager.add(aSettingPanel, "Settings");
         aSceneManager.add(aSoundPanel, "Sound");
-        aSceneManager.add(aGameOverPanel, "GameOver");
         aSceneManager.add(aVictoryPanel, "Victory");
+        aSceneManager.add(aGameOverPanel, "GameOver");
+
     }
 
     /**
@@ -863,6 +901,8 @@ public class UserInterface implements ActionListener {
         this.aGamePanel.add(vActionButtonPanel, JLayeredPane.DEFAULT_LAYER);
         this.aGamePanel.add(aGameTimer, JLayeredPane.PALETTE_LAYER);
         this.aGamePanel.add(this.aEntityPanel, JLayeredPane.PALETTE_LAYER);
+        this.aGamePanel.add(aItemBackGroundImage, JLayeredPane.PALETTE_LAYER);
+        this.aGamePanel.add(aItemImage, JLayeredPane.MODAL_LAYER);
     }
 
     /**
@@ -1080,6 +1120,24 @@ public class UserInterface implements ActionListener {
         this.aEntityPanel.setSize(this.aEntityPanel.getPreferredSize());
         this.aEntityPanel.setLocation(10, 540);
         this.aEntityPanel.setVisible(false);
+    }
+
+    /**
+     * This method create item animation panel
+     */
+    private void createItemPanel() {
+        this.aItemImage = new JLabel();
+        this.aItemImage.setPreferredSize(new Dimension(100, 100));
+        this.aItemImage.setSize(this.aItemImage.getPreferredSize());
+        this.aItemImage.setLocation(275, 275);
+        this.aItemImage.setVisible(false);
+
+        this.aItemBackGroundImage = new JLabel();
+        this.aItemBackGroundImage.setPreferredSize(new Dimension(200, 200));
+        this.aItemBackGroundImage.setSize(this.aItemBackGroundImage.getPreferredSize());
+        this.aItemBackGroundImage.setLocation(225, 225);
+        this.aItemBackGroundImage.setVisible(false);
+
     }
 
     /**
@@ -1590,6 +1648,21 @@ public class UserInterface implements ActionListener {
                 currentButton.removeActionListener(al);
             }
         }
+    }
+
+    public void takeItemAnimation(String pItemName, int pDelay) {
+        aItemImage.setVisible(true);
+        aItemBackGroundImage.setVisible(true);
+        showItemBackGroundImage();
+        showItemImage(pItemName);
+        int vDelay = pDelay;// specify the delay for the timer
+        Timer vTimer = new Timer(vDelay, e -> {
+            // The following code will be executed once the delay is reached
+            aItemImage.setVisible(false);
+            aItemBackGroundImage.setVisible(false);
+        });
+        vTimer.setRepeats(false);// make sure the timer only runs once
+        vTimer.start();
     }
 
 } // UserInterface

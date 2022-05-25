@@ -335,6 +335,13 @@ public class Player extends Entity {
             this.aCurrentRoom.removeItem(vItemName, vItem);
             showInventory();
             this.aGui.println(this.aCurrentRoom.getItemString());
+            
+            if(isDevMode()){
+                this.aGui.takeItemAnimation(vItemName, 100);
+            }else {
+                this.aGui.takeItemAnimation(vItemName, 2000);
+            }
+            
         }
     }
 
