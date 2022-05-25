@@ -218,6 +218,7 @@ public class Player extends Entity {
         aMovement -= 1;
 
         if (this.getMovement() == 40) {
+            clearStack();
             int vDelay = 100;// specify the delay for the timer
             Timer vTimer = new Timer(vDelay, e -> {
                 // The following code will be executed once the delay is reached
@@ -437,7 +438,6 @@ public class Player extends Entity {
      * @param pItemName name of the item to give
      */
     public void give(Command pItemName) {
-        Item vWeddingRing = this.aInventory.getItemName("wedding_ring");
         String vItemName = pItemName.getSecondWord();
         Item vItem = this.aInventory.getItemName(vItemName);
         if (!pItemName.hasSecondWord()) {
@@ -445,7 +445,7 @@ public class Player extends Entity {
         } else if (vItem == null) {
             this.aGui.println("You dont have this item");
         } else {
-            if (this.aInventory.contain(vWeddingRing)) {
+            if (pItemName.equals("wedding_ring") && this.aInventory.getItemList().containsValue(vItem)) {
                 this.giveWeddingRingToGarret();
             }
             giveArtefactToGarret(vItemName);
@@ -797,7 +797,7 @@ public class Player extends Entity {
             this.aGui.hideCharacterPanel();
 
             if (isDevMode()) {
-                int vDelay = 3000;// specify the delay for the timer
+                int vDelay = 100;// specify the delay for the timer
                 Timer vTimer = new Timer(vDelay, e -> {
                     // The following code will be executed once the delay is reached
                     this.aGui.showCharacterPanel();

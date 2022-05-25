@@ -469,8 +469,6 @@ public class UserInterface implements ActionListener {
 
     /**
      * Show an image file in the interface.
-     * 
-     * @param pImageName name of the image for the room
      */
     public void showItemBackGroundImage() {
         String vImagePath = "gameImages/itemBackground.gif"; // to change the directory

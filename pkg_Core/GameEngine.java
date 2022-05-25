@@ -147,9 +147,7 @@ public class GameEngine {
      * This method init item in the room
      */
     private void createItems() {
-        Item vTest = new Item("TestItem", 10, 5, "This is a test item", false); // Name, price, weight, desc
         Item vPotion = new Potion(50); // Name, price, weight, desc
-        this.aRooms.get("outside").addItem("test", vTest);
         this.aRooms.get("outside").addItem("potion", vPotion);
 
         Item vWarmogArmor = new Item("warmog's_armor", 0, 40, "This is the armor of Warmog the Giant", false);
@@ -170,7 +168,7 @@ public class GameEngine {
         this.aRooms.get("treasure").addItem("cookie", vMagicCookie);
 
         Beamer vBeamer = new Beamer();
-        this.aRooms.get("outside").addItem("teleporter", vBeamer);
+        this.aRooms.get("testroom").addItem("teleporter", vBeamer);
     }
 
     /**
@@ -518,6 +516,8 @@ public class GameEngine {
 
     /**
      * This getter get if we are in dev mode
+     * 
+     * @return true or false if devmode is on or off
      */
     public boolean isDevMode() {
         return aPlayer.isDevMode();
