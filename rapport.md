@@ -20,10 +20,10 @@
   - [Scénario détaillé](#scénario-détaillé)
   - [Détail des lieux, items, personnages](#details-des-lieux)
   - [Situations gagnantes et perdantes](#situations-gagnantes-et-perdantes)
-  - [Énigmes, mini-jeux, combats](#énigmes,-mini-jeux,-combats)
+  - [Combats](#combats)
   - [Commentaires](#commentaires)
 - [Réponses aux exercices](#réponses-aux-exercices)
-- [Mode d'emploi](#)
+- [Mode d'emploi](#mode-d'emploi)
 - [Déclaration anti-plagiat](#déclaration-obligatoire-anti-plagiat)
 
 <div style="page-break-after: always;"></div>
@@ -87,31 +87,18 @@ Edward est un chevalier, durant une bataille il decide de s'aventurer dans les T
 - #### Situations gagnantes
 
   - Rassembler les 3 artefacts
-  - Rendre le marchant heureux
 
 - #### Situations perdantes
   - Mourir contre un boss
-  - Faire quelque chose d'immoral
 
-### Énigmes, mini-jeux, combats
-
-- #### Enigmes
-
-  - Pourquoi le marchant est méchant au debut
-  -
-
-- #### Mini-jeux
-
-  - pas encore d'idée
-  -
+### Combats
 
 - #### Combats
   - Combat contre les boss
-  - Combat contre le marchant ?? (pas sur)
 
 ### Commentaires
 
-Il y a encore beaucoup de travail pour tout finaliser
+Beaucoups de fonctionnalité ont été ajoutées en dehors des exercices obligatoire ou optionnel pour répondre aux scénario
 
 <div style="page-break-after: always;"></div>
 
@@ -3146,6 +3133,10 @@ Non réalisé
 #### Exercice 7.49.3
 
 Les javadoc sont regénérées
+
+## Mode d'emploi
+
+Pour jouer au jeu "normalement" il n'y a rien de spécial a faire, si vous souhaitez utiliser les commandes de test, il faudra passer en `devMode` pour se faire, rendez vous dans les `Settings` puis cliquez sur `devMode` pour qu'il passe en `ON`
 
 ## Déclaration obligatoire anti-plagiat
 
