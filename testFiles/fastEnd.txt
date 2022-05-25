@@ -1,14 +1,19 @@
 go down
+go east
+take blade of the ruined king
+go west
+give blade of the ruined king
+go west
+take frostfire gauntlet
+go west
+take cookie
+eat cookie
+go east
+go east
+give frostfire gauntlet
 go north
-take Warmog's_Armor
+take warmog's armor
 go south
-go east
-take Blade_Of_The_Ruined_King
-go east
-take Wedding_ring
+give warmog's armor
 go west
-go west
-go west
-take Frostfire_Gauntlet
-go east
 LastLine

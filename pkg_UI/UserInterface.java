@@ -66,6 +66,13 @@ public class UserInterface implements ActionListener {
     private JLabel aGameTimer;
     private JLabel aItemImage;
     private JLabel aItemBackGroundImage;
+    private JLabel aCredit1;
+    private JLabel aCredit2;
+    private JLabel aCredit3;
+    private JLabel aCredit4;
+    private JLabel aCredit5;
+    private JLabel aCredit6;
+    private JLabel aCredit7;
     private JProgressBar aEnemyHP;
     private JProgressBar aPlayerHP;
     private JPanel aEntityPanel;
@@ -91,7 +98,7 @@ public class UserInterface implements ActionListener {
     private JButton aDropButton;
     private JButton aTakeButton;
     private JButton aChargeButton;
-    private JButton aFireButton;
+    private JButton aGiveButton;
     private JButton aInventoryButton;
     private JButton aBattleButton;
     private JButton aPlay;
@@ -114,6 +121,13 @@ public class UserInterface implements ActionListener {
     private Clip aSoundEffectClip;
     private Timer aTimer;
     private Timer aTextTimer;
+    private Timer aCredit1Timer;
+    private Timer aCredit2Timer;
+    private Timer aCredit3Timer;
+    private Timer aCredit4Timer;
+    private Timer aCredit5Timer;
+    private Timer aCredit6Timer;
+    private Timer aCredit7Timer;
     private ActionListener aTaskTimer;
     private Font aFont;
     private Font aButtonsFont;
@@ -126,6 +140,13 @@ public class UserInterface implements ActionListener {
     private int aDelay = 1000;
     private int aEndTime = 20;
     private int aIndex;
+    private int aIntTimerCredit1;
+    private int aIntTimerCredit2;
+    private int aIntTimerCredit3;
+    private int aIntTimerCredit4;
+    private int aIntTimerCredit5;
+    private int aIntTimerCredit6;
+    private int aIntTimerCredit7;
     private boolean aSoundToggle;
 
     /**
@@ -599,7 +620,7 @@ public class UserInterface implements ActionListener {
             this.aEntryField.getCaret().setBlinkRate(0); // cursor won't blink
             this.aEntryField.removeActionListener(this); // won't react to entry
 
-            JButton[] vButtons = { aBackButton, aHelpButton, aQuitButton, aDropButton, aTakeButton, aFireButton,
+            JButton[] vButtons = { aBackButton, aHelpButton, aQuitButton, aDropButton, aTakeButton, aGiveButton,
                     aChargeButton, aInventoryButton, aNorthButton, aSouthButton, aEastButton, aWestButton, aUpButton,
                     aDownButton, aBattleButton };
 
@@ -621,7 +642,7 @@ public class UserInterface implements ActionListener {
             this.aHelpButton.addActionListener(this);
             this.aDropButton.addActionListener(e -> dropButtonMethod());
             this.aTakeButton.addActionListener(e -> takeButtonMethod());
-            this.aFireButton.addActionListener(this);
+            this.aGiveButton.addActionListener(e -> giveButtonMethod());
             this.aChargeButton.addActionListener(this);
             this.aInventoryButton.addActionListener(this);
             this.aBattleButton.addActionListener(this);
@@ -691,7 +712,7 @@ public class UserInterface implements ActionListener {
         this.aHelpButton = new JButton("help ?");
         this.aDropButton = new JButton("drop");
         this.aTakeButton = new JButton("take");
-        this.aFireButton = new JButton("fire");
+        this.aGiveButton = new JButton("give");
         this.aChargeButton = new JButton("charge");
         this.aInventoryButton = new JButton("inventory");
         this.aBattleButton = new JButton("fight");
@@ -722,7 +743,7 @@ public class UserInterface implements ActionListener {
         this.aHelpButton.setFont(aButtonsFont);
         this.aDropButton.setFont(aButtonsFont);
         this.aTakeButton.setFont(aButtonsFont);
-        this.aFireButton.setFont(aButtonsFont);
+        this.aGiveButton.setFont(aButtonsFont);
         this.aChargeButton.setFont(aButtonsFont);
         this.aInventoryButton.setFont(aButtonsFont);
         this.aBattleButton.setFont(aButtonsFont);
@@ -753,7 +774,7 @@ public class UserInterface implements ActionListener {
         this.aHelpButton.addActionListener(this);
         this.aDropButton.addActionListener(e -> dropButtonMethod());
         this.aTakeButton.addActionListener(e -> takeButtonMethod());
-        this.aFireButton.addActionListener(this);
+        this.aGiveButton.addActionListener(e -> giveButtonMethod());
         this.aChargeButton.addActionListener(this);
         this.aInventoryButton.addActionListener(this);
         this.aBattleButton.addActionListener(this);
@@ -786,7 +807,7 @@ public class UserInterface implements ActionListener {
         this.aHelpButton.setActionCommand("help");
         this.aDropButton.setActionCommand("drop");
         this.aTakeButton.setActionCommand("take");
-        this.aFireButton.setActionCommand("fire");
+        this.aGiveButton.setActionCommand("give");
         this.aChargeButton.setActionCommand("charge");
         this.aInventoryButton.setActionCommand("inventory");
         this.aBattleButton.setActionCommand("fight");
@@ -798,6 +819,7 @@ public class UserInterface implements ActionListener {
      */
     private void createPanel() {
         createNPCPanel();
+        createCreditPanel();
         createItemPanel();
         createGamePanel();
         createBattlePanel();
@@ -887,7 +909,7 @@ public class UserInterface implements ActionListener {
         vActionButtonPanel.add(this.aQuitButton);
         vActionButtonPanel.add(this.aDropButton);
         vActionButtonPanel.add(this.aTakeButton);
-        vActionButtonPanel.add(this.aFireButton);
+        vActionButtonPanel.add(this.aGiveButton);
         vActionButtonPanel.add(this.aChargeButton);
         vActionButtonPanel.add(this.aInventoryButton);
         vActionButtonPanel.add(this.aBattleButton);
@@ -1177,6 +1199,59 @@ public class UserInterface implements ActionListener {
         showVictoryImage();
 
         this.aVictoryPanel.add(aVictoryBackGroundImage, JLayeredPane.DEFAULT_LAYER);
+        this.aVictoryPanel.add(aCredit1, JLayeredPane.PALETTE_LAYER);
+        this.aVictoryPanel.add(aCredit2, JLayeredPane.PALETTE_LAYER);
+        this.aVictoryPanel.add(aCredit3, JLayeredPane.PALETTE_LAYER);
+        this.aVictoryPanel.add(aCredit4, JLayeredPane.PALETTE_LAYER);
+        this.aVictoryPanel.add(aCredit5, JLayeredPane.PALETTE_LAYER);
+        this.aVictoryPanel.add(aCredit6, JLayeredPane.PALETTE_LAYER);
+        this.aVictoryPanel.add(aCredit7, JLayeredPane.PALETTE_LAYER);
+    }
+
+    /**
+     * This method create the panel for credits
+     */
+    private void createCreditPanel() {
+        aCredit1 = new JLabel("Story by : Charly D.");
+        aCredit2 = new JLabel("Programming by : Charly D.");
+        aCredit3 = new JLabel("Art by : Google");
+        aCredit4 = new JLabel("Music by : xDeviruchi");
+        aCredit5 = new JLabel("Sound effects by : EpidemicSound");
+        aCredit6 = new JLabel("Narrator voice by : Austin HOPKINS");
+        aCredit7 = new JLabel("Special thanks to : Denis Bureau for this IGI-1202");
+
+        aCredit1.setSize(300, 50);
+        aCredit1.setLocation(150, 200);
+        aCredit2.setSize(500, 50);
+        aCredit2.setLocation(550, 250);
+        aCredit3.setSize(500, 50);
+        aCredit3.setLocation(200, 300);
+        aCredit4.setSize(500, 50);
+        aCredit4.setLocation(600, 350);
+        aCredit5.setSize(500, 50);
+        aCredit5.setLocation(150, 400);
+        aCredit6.setSize(500, 50);
+        aCredit6.setLocation(550, 450);
+        aCredit7.setSize(800, 50);
+        aCredit7.setLocation(225, 500);
+
+        // Set foreground
+        aCredit1.setForeground(new Color(255, 255, 255, 0));
+        aCredit2.setForeground(new Color(255, 255, 255, 0));
+        aCredit3.setForeground(new Color(255, 255, 255, 0));
+        aCredit4.setForeground(new Color(255, 255, 255, 0));
+        aCredit5.setForeground(new Color(255, 255, 255, 0));
+        aCredit6.setForeground(new Color(255, 255, 255, 0));
+        aCredit7.setForeground(new Color(255, 255, 255, 0));
+
+        // Set some font
+        aCredit1.setFont(aMenuFont);
+        aCredit2.setFont(aMenuFont);
+        aCredit3.setFont(aMenuFont);
+        aCredit4.setFont(aMenuFont);
+        aCredit5.setFont(aMenuFont);
+        aCredit6.setFont(aMenuFont);
+        aCredit7.setFont(aMenuFont);
     }
 
     // action listeners methods
@@ -1186,7 +1261,7 @@ public class UserInterface implements ActionListener {
      * It's to change UI to show items in inventory
      */
     private void dropButtonMethod() {
-        JButton[] vButtons = { aBackButton, aHelpButton, aQuitButton, aDropButton, aTakeButton, aFireButton,
+        JButton[] vButtons = { aBackButton, aHelpButton, aQuitButton, aDropButton, aTakeButton, aGiveButton,
                 aChargeButton, aInventoryButton };
         if (aEngine.getCurrentInventoryItemsString() != null) {
             String[] vOutput = aEngine.getCurrentInventoryItemsString().split(" ");
@@ -1212,11 +1287,41 @@ public class UserInterface implements ActionListener {
     }
 
     /**
+     * This method is called when you click on the drop button
+     * It's to change UI to show items in inventory
+     */
+    private void giveButtonMethod() {
+        JButton[] vButtons = { aBackButton, aHelpButton, aQuitButton, aDropButton, aTakeButton, aGiveButton,
+                aChargeButton, aInventoryButton };
+        if (aEngine.getCurrentInventoryItemsString() != null) {
+            String[] vOutput = aEngine.getCurrentInventoryItemsString().split(" ");
+            for (int i = 0; i < vOutput.length; i++) {
+                vButtons[i].setText(vOutput[i]);
+                vButtons[i].setActionCommand("give " + vOutput[i]);
+            }
+            for (int i = vOutput.length; i < 8; i++) {
+                vButtons[i].setText("");
+                vButtons[i].setActionCommand("");
+                vButtons[i].removeActionListener(this);
+            }
+            aBattleButton.setText("exit");
+            aBattleButton.setActionCommand("exit");
+            aBattleButton.addActionListener(e -> exitButtonMethod());
+            for (int i = vOutput.length; i < 8; i++) {
+                vButtons[i].addActionListener(this);
+            }
+            this.println("What do you want to give ?");
+        } else {
+            this.println("Your inventory is empty");
+        }
+    }
+
+    /**
      * This method is called when you click on the take button
      * It's to change UI to show items in the room
      */
     private void takeButtonMethod() {
-        JButton[] vButtons = { aBackButton, aHelpButton, aQuitButton, aDropButton, aTakeButton, aFireButton,
+        JButton[] vButtons = { aBackButton, aHelpButton, aQuitButton, aDropButton, aTakeButton, aGiveButton,
                 aChargeButton, aInventoryButton };
 
         if (aEngine.getCurrentRoomItemsString() != null) {
@@ -1252,7 +1357,7 @@ public class UserInterface implements ActionListener {
         aHelpButton.setText("help ?");
         aDropButton.setText("drop");
         aTakeButton.setText("take");
-        aFireButton.setText("fire");
+        aGiveButton.setText("give");
         aChargeButton.setText("charge");
         aInventoryButton.setText("bag");
         aBattleButton.setText("fight");
@@ -1262,7 +1367,7 @@ public class UserInterface implements ActionListener {
         aHelpButton.setActionCommand("help");
         aDropButton.setActionCommand("drop");
         aTakeButton.setActionCommand("take");
-        aFireButton.setActionCommand("fire");
+        aGiveButton.setActionCommand("give");
         aChargeButton.setActionCommand("charge");
         aInventoryButton.setActionCommand("inventory");
         aBattleButton.setActionCommand("fight");
@@ -1650,6 +1755,12 @@ public class UserInterface implements ActionListener {
         }
     }
 
+    /**
+     * This method show item take animation
+     * 
+     * @param pItemName Name of the item
+     * @param pDelay    delay of the animation
+     */
     public void takeItemAnimation(String pItemName, int pDelay) {
         aItemImage.setVisible(true);
         aItemBackGroundImage.setVisible(true);
@@ -1663,6 +1774,119 @@ public class UserInterface implements ActionListener {
         });
         vTimer.setRepeats(false);// make sure the timer only runs once
         vTimer.start();
+    }
+
+    /**
+     * This method start the credit timer
+     */
+    public void startCredit() {
+        // Create a Timer with that executes
+        // each 1.5ms
+        aCredit1Timer = new Timer(15, new ActionListener() {
+
+            public void actionPerformed(ActionEvent ae) {
+                // Increase the alpha value by time
+                // so that transparency decreases for each
+                // actionPerformed() call
+                aCredit1.setForeground(new Color(255, 255, 255, aIntTimerCredit1++));
+                if (aIntTimerCredit1 == 255) {
+                    aCredit1Timer.stop();
+                }
+            }
+        });
+        aCredit1Timer.setInitialDelay(500);
+        aCredit1Timer.start();
+
+        aCredit2Timer = new Timer(15, new ActionListener() {
+
+            public void actionPerformed(ActionEvent ae) {
+                // Increase the alpha value by time
+                // so that transparency decreases for each
+                // actionPerformed() call
+                aCredit2.setForeground(new Color(255, 255, 255, aIntTimerCredit2++));
+                if (aIntTimerCredit2 == 255) {
+                    aCredit2Timer.stop();
+                }
+            }
+        });
+        aCredit2Timer.setInitialDelay(4000);
+        aCredit2Timer.start();
+
+        aCredit3Timer = new Timer(15, new ActionListener() {
+
+            public void actionPerformed(ActionEvent ae) {
+                // Increase the alpha value by time
+                // so that transparency decreases for each
+                // actionPerformed() call
+                aCredit3.setForeground(new Color(255, 255, 255, aIntTimerCredit3++));
+                if (aIntTimerCredit3 == 255) {
+                    aCredit3Timer.stop();
+                }
+            }
+        });
+        aCredit3Timer.setInitialDelay(7500);
+        aCredit3Timer.start();
+
+        aCredit4Timer = new Timer(15, new ActionListener() {
+
+            public void actionPerformed(ActionEvent ae) {
+                // Increase the alpha value by time
+                // so that transparency decreases for each
+                // actionPerformed() call
+                aCredit4.setForeground(new Color(255, 255, 255, aIntTimerCredit4++));
+                if (aIntTimerCredit4 == 255) {
+                    aCredit4Timer.stop();
+                }
+            }
+        });
+        aCredit4Timer.setInitialDelay(11000);
+        aCredit4Timer.start();
+
+        aCredit5Timer = new Timer(15, new ActionListener() {
+
+            public void actionPerformed(ActionEvent ae) {
+                // Increase the alpha value by time
+                // so that transparency decreases for each
+                // actionPerformed() call
+                aCredit5.setForeground(new Color(255, 255, 255, aIntTimerCredit5++));
+                if (aIntTimerCredit5 == 255) {
+                    aCredit5Timer.stop();
+                }
+            }
+        });
+        aCredit5Timer.setInitialDelay(14500);
+        aCredit5Timer.start();
+
+        aCredit6Timer = new Timer(15, new ActionListener() {
+
+            public void actionPerformed(ActionEvent ae) {
+                // Increase the alpha value by time
+                // so that transparency decreases for each
+                // actionPerformed() call
+                aCredit6.setForeground(new Color(255, 255, 255, aIntTimerCredit6++));
+                if (aIntTimerCredit6 == 255) {
+                    aCredit6Timer.stop();
+                }
+            }
+        });
+        aCredit6Timer.setInitialDelay(18000);
+        aCredit6Timer.start();
+
+        aCredit7Timer = new Timer(15, new ActionListener() {
+
+            public void actionPerformed(ActionEvent ae) {
+                // Increase the alpha value by time
+                // so that transparency decreases for each
+                // actionPerformed() call
+                aCredit7.setForeground(new Color(255, 255, 255, aIntTimerCredit7++));
+                if (aIntTimerCredit7 == 255) {
+                    aCredit7Timer.stop();
+                }
+            }
+        });
+        aCredit7Timer.setInitialDelay(21500);
+        aCredit7Timer.start();
+
     }
 
 } // UserInterface

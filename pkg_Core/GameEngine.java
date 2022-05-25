@@ -331,6 +331,7 @@ public class GameEngine {
         this.aPlayer.setRoom(this.aRooms.get("victory"));
         this.aGui.playRoomSound();
         this.aGui.showVictoryPanel();
+        this.aGui.startCredit();
     }
 
     /**
