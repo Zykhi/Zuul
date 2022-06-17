@@ -1476,7 +1476,8 @@ public class UserInterface implements ActionListener {
      */
     private void runButtonMethod() {
         this.stopSound();
-        hideBattlePanel();   
+        hideBattlePanel();
+        this.aEngine.playRoomSound();
     }
 
     /**
