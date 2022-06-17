@@ -1475,7 +1475,8 @@ public class UserInterface implements ActionListener {
      * This method is called when the player click on run button in battle menu
      */
     private void runButtonMethod() {
-        hideBattlePanel();
+        this.stopSound();
+        hideBattlePanel();   
     }
 
     /**
