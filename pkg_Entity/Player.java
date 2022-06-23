@@ -209,6 +209,7 @@ public class Player extends Entity {
         } else {
             this.aGui.hideCharacterPanel();
         }
+        this.aGui.exitButtonMethod();
         this.aCurrentRoom.updateNbrRoom();
         if (this.aGui.isSound() == false) {
             this.aGui.soundOff();
@@ -336,13 +337,13 @@ public class Player extends Entity {
             this.aCurrentRoom.removeItem(vItemName, vItem);
             showInventory();
             this.aGui.println(this.aCurrentRoom.getItemString());
-            
-            if(isDevMode()){
+
+            if (isDevMode()) {
                 this.aGui.takeItemAnimation(vItemName, 100);
-            }else {
+            } else {
                 this.aGui.takeItemAnimation(vItemName, 2000);
             }
-            
+
         }
     }
 
@@ -445,9 +446,6 @@ public class Player extends Entity {
         } else if (vItem == null) {
             this.aGui.println("You dont have this item");
         } else {
-            if (pItemName.equals("wedding_ring") && this.aInventory.getItemList().containsValue(vItem)) {
-                this.giveWeddingRingToGarret();
-            }
             giveArtefactToGarret(vItemName);
             this.aInventory.removeItem(vItemName, vItem);
             this.aInventory.removeWeight(vItem.getWeight());
@@ -458,7 +456,7 @@ public class Player extends Entity {
      * This method write in UI when you left the menu
      */
     public void exit() {
-        this.aGui.println("you have left menu");
+
     }
 
     /**
@@ -842,6 +840,10 @@ public class Player extends Entity {
             if (pItemName.equals("frostfire_gauntlet") && this.aInventory.getItemList().containsValue(vItem)) {
                 giveArtefact();
             }
+            if (pItemName.equals("wedding_ring") && this.aInventory.getItemList().containsValue(vItem)) {
+                this.giveWeddingRingToGarret();
+            }
+
             if (aArtefactCounter == 0) {
                 allArtefactText();
             }

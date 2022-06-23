@@ -1349,7 +1349,7 @@ public class UserInterface implements ActionListener {
      * This method is called when the exit button is clicked
      * It's back to "main" menu of the UI
      */
-    private void exitButtonMethod() {
+    public void exitButtonMethod() {
         aQuitButton.setText("quit");
         aBackButton.setText("back");
         aHelpButton.setText("help ?");
