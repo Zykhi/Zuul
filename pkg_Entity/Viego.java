@@ -11,9 +11,9 @@ public class Viego extends Entity {
      * Create Viego
      */
     public Viego() {
-        super(200, 200, 100, 100, 100, 100, true);
+        super(70, 70, 100, 100, 100, 100, true);
         setName("Viego");
-        setDialog("you will die");
+        setDialog("You will die");
         setImageName("faceImages/viego.jpg");
         setFullImageName("faceImages/fullViego.gif");
         aMoves[0][0] = "Flamethrower";

@@ -11,7 +11,7 @@ public class Hazelgash extends Entity {
      * Create Hazelgash
      */
     public Hazelgash() {
-        super(200, 200, 100, 100, 100, 100, true);
+        super(100, 100, 100, 100, 100, 100, true);
         setName("Hazelgash");
         setDialog("Be careful of lava");
         setImageName("faceImages/hazelgash.png");

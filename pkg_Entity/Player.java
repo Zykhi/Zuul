@@ -36,7 +36,7 @@ public class Player extends Entity {
      * @param pCurrentRoom Start room
      */
     public Player(final Room pCurrentRoom) {
-        super(200, 200, 100, 100, 100, 100, true);
+        super(300, 300, 100, 100, 100, 100, true);
         this.aCurrentRoom = pCurrentRoom;
         this.setName("Edward");
         this.aPreviousRooms = new Stack<Room>();

@@ -15,7 +15,6 @@ import pkg_Entity.Hazelgash;
 import pkg_Entity.Player;
 import pkg_Entity.Viego;
 import pkg_Entity.Warmog;
-import pkg_Item.Beamer;
 import pkg_Item.Item;
 import pkg_Item.Potion;
 import pkg_Room.Door;
@@ -92,9 +91,6 @@ public class GameEngine {
         Room vBoss3Room = new Room(
                 "entering in the magic room of Hazelgash, be careful with the lava and the lightning that could hit you",
                 "gameImages/boss3.gif");
-        TransporterRoom vTestRoom = new TransporterRoom("this is a test room", "gameImages/test.gif", this.aRooms);
-
-        this.aTransporterRoom.add(vTestRoom);
 
         aRooms.put("mainmenu", vMainMenu);
         aRooms.put("gameover", vGameOver);
@@ -107,8 +103,6 @@ public class GameEngine {
         aRooms.put("boss1room", vBoss1Room);
         aRooms.put("boss2room", vBoss2Room);
         aRooms.put("boss3room", vBoss3Room);
-        aRooms.put("testroom", vTestRoom);
-
         // exit
         vMainMenu.setExit("play", vOutside);
 
@@ -124,15 +118,12 @@ public class GameEngine {
         vTreasure.setExit("east", vBoss3Room);
 
         vBoss1Room.setExit("south", vLobby);
-        vBoss1Room.setExit("north", vTestRoom);
 
         vBoss2Room.setExit("east", vCatacombs);
         vBoss2Room.setExit("west", vLobby);
 
         vBoss3Room.setExit("west", vTreasure);
         vBoss3Room.setExit("east", vLobby);
-
-        vTestRoom.setExit("south", vBoss1Room);
 
     }
 
@@ -167,8 +158,6 @@ public class GameEngine {
         Item vMagicCookie = new Item("cookie", 0, 0, "This is a magic cookie", false);
         this.aRooms.get("treasure").addItem("cookie", vMagicCookie);
 
-        Beamer vBeamer = new Beamer();
-        this.aRooms.get("testroom").addItem("teleporter", vBeamer);
     }
 
     /**

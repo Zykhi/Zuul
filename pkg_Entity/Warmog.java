@@ -11,7 +11,7 @@ public class Warmog extends Entity {
      * Create Warmog
      */
     public Warmog() {
-        super(200, 200, 100, 100, 100, 100, true);
+        super(120, 120, 100, 100, 100, 100, true);
         setName("Warmog");
         setDialog("You are in my forest");
         setImageName("faceImages/warmog.png");
