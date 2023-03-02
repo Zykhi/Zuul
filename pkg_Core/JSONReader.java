@@ -181,6 +181,10 @@ public class JSONReader {
     //Item information
     setPotionInformation();
     setItem1Information();
+    setItem2Information();
+    setItem3Information();
+    setItem4Information();
+    setItem5Information();
 
     //Text information
     setAllWelcomeText();
@@ -274,7 +278,6 @@ public class JSONReader {
     return aPlayerFightable;
   }
 
-  // TODO : remettre la mise en forme du texte
   private void setAllWelcomeText() {
     Map vText = ((Map) aJsonObject.get("printWelcome"));
     aWelcomeText = (String) vText.get("welcomeText");

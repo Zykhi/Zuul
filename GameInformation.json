@@ -6,7 +6,7 @@
   },
 
   "printWelcome": {
-    "welcomeText": "Welcome to the world of Zuul. You are Edward, the hero of this story. You are a knight, the war has been raging for decades and you cannot sleep. You decide to go out to clear your mind by walking away from the castle. You come across a waterfall that hides a cave, mist emanating from it. It is at this moment that your adventure takes all its meaning. Good luck knight. If you need help, let me know.",
+    "welcomeText": "Welcome to the world of Zuul. \nYou are Edward, the hero of this story. You are a knight, the war has been raging for decades and you cannot sleep. \nYou decide to go out to clear your mind by walking away from the castle. You come across a waterfall that hides a cave, mist emanating from it. \nIt is at this moment that your adventure takes all its meaning. \nGood luck knight. If you need help, let me know.\n",
     "endWelcomeText": "Type if you need help. You have 20 minutes to escape from the dungeon before being trapped forever"
   },
 
