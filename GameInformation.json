@@ -1,15 +1,8 @@
 {
-  "player": {
-    "playerName": "Edward",
-    "maxWeight": 25,
-    "maxMovement": 41,
-    "playerHP": 300,
-    "playerMaxHP": 300,
-    "playerDef": 100,
-    "playerSpeDef": 100,
-    "playerAtt": 100,
-    "playerSpeAtt": 100,
-    "playerFightable": true
+  "gameSettings": {
+    "name" : "Zuul GOTY Edition",
+    "width" : 1077,
+    "height" :765
   },
 
   "printWelcome": {
@@ -99,5 +92,75 @@
     "roomWestExit": "treasure",
     "roomDownExit": "",
     "roomUpExit": ""
+  },
+
+  "player": {
+    "playerName": "Edward",
+    "maxWeight": 25,
+    "maxMovement": 41,
+    "playerHP": 300,
+    "playerMaxHP": 300,
+    "playerDef": 100,
+    "playerSpeDef": 100,
+    "playerAtt": 100,
+    "playerSpeAtt": 100,
+    "playerFightable": true
+  },
+
+  "potion":{
+    "name" : "potion",
+    "healing" : 50,
+    "location" : "lobby"
+  },
+
+  "item1": {
+    "name": "warmog's_armor",
+    "description": "This is the armor of Warmog the Giant",
+    "weight": 40,
+    "location": "boss1room",
+    "image": "gameImages/item_warmog's_armor.png",
+    "price": 0,
+    "fightable" : false
+  },
+
+  "item2": {
+    "name": "blade_of_the_ruined_king",
+    "description": "This is the blade of Viego, it weighs nothing compared to its burden",
+    "weight": 20,
+    "location": "boss2room",
+    "image": "gameImages/item_blade_of_the_ruined_king.png",
+    "price": 0,
+    "fightable" : false
+  },
+
+  "item3": {
+    "name": "Frostfire_Gauntlet",
+    "description": "This is the last artefact of the dungeon",
+    "weight": 10,
+    "location": "boss3room",
+    "image": "gameImages/item_frostfire_gauntlet.png",
+    "price": 0,
+    "fightable" : false
+  },
+
+  "item4": {
+    "name": "wedding_ring",
+    "description": "This is a wedding ring, it's will be usefull",
+    "weight": 0,
+    "location": "catacombs",
+    "image": "gameImages/item_wedding_ring.png",
+    "price": 0,
+    "fightable" : false
+  },
+
+  "item5": {
+    "name": "cookie",
+    "description": "This is a magic cookie",
+    "weight": 0,
+    "location": "treasure",
+    "image": "gameImages/item_cookie.png",
+    "price": 0,
+    "fightable" : false
   }
+
 }

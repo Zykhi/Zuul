@@ -202,54 +202,55 @@ public class GameEngine {
    * This method init item in the room
    */
   private void createItems() {
-    Item vPotion = new Potion(50); // Name, price, weight, desc
-    this.aRooms.get("outside").addItem("potion", vPotion);
+    Item vPotion = new Potion(aJsonReader.getPotionHealing());
+    this.aRooms.get(aJsonReader.getPotionLocation())
+      .addItem(aJsonReader.getPotionName(), vPotion);
 
-    Item vWarmogArmor = new Item(
-      "warmog's_armor",
-      0,
-      40,
-      "This is the armor of Warmog the Giant",
-      false
+    Item vItem1 = new Item(
+      aJsonReader.getItem1Name(),
+      aJsonReader.getItem1Price(),
+      aJsonReader.getItem1Weight(),
+      aJsonReader.getItem1Description(),
+      aJsonReader.getItem1Fightable()
     );
-    this.aRooms.get("boss1room").addItem("warmog's_armor", vWarmogArmor);
+    this.aRooms.get(aJsonReader.getItem1Location())
+      .addItem(aJsonReader.getItem1Name(), vItem1);
 
-    Item vBOTRK = new Item(
-      "Blade_Of_The_Ruined King",
-      0,
-      20,
-      "This is the blade of Viego, it weighs nothing compared to its burden",
-      false
+    Item vItem2 = new Item(
+      aJsonReader.getItem2Name(),
+      aJsonReader.getItem2Price(),
+      aJsonReader.getItem2Weight(),
+      aJsonReader.getItem2Description(),
+      aJsonReader.getItem2Fightable()
     );
-    this.aRooms.get("boss2room").addItem("blade_of_the_ruined_king", vBOTRK);
+    this.aRooms.get(aJsonReader.getItem2Location()).addItem(aJsonReader.getItem2Name(), vItem2);
 
-    Item vFrostFireGauntlet = new Item(
-      "Frostfire_Gauntlet",
-      0,
-      10,
-      "This is the last artefact of the dungeon",
-      false
+    Item vItem3 = new Item(
+      aJsonReader.getItem3Name(),
+      aJsonReader.getItem3Price(),
+      aJsonReader.getItem3Weight(),
+      aJsonReader.getItem3Description(),
+      aJsonReader.getItem3Fightable()
     );
-    this.aRooms.get("boss3room")
-      .addItem("frostfire_gauntlet", vFrostFireGauntlet);
+    this.aRooms.get(aJsonReader.getItem3Location()).addItem(aJsonReader.getItem3Name(), vItem3);
 
-    Item vWeddingRing = new Item(
-      "wedding_ring",
-      0,
-      0,
-      "This is a wedding ring, it's will be usefull",
-      false
+    Item vItem4 = new Item(
+      aJsonReader.getItem4Name(),
+      aJsonReader.getItem4Price(),
+      aJsonReader.getItem4Weight(),
+      aJsonReader.getItem4Description(),
+      aJsonReader.getItem4Fightable()
     );
-    this.aRooms.get("catacombs").addItem("wedding_ring", vWeddingRing);
+    this.aRooms.get(aJsonReader.getItem4Location()).addItem(aJsonReader.getItem4Name(), vItem4);
 
-    Item vMagicCookie = new Item(
-      "cookie",
-      0,
-      0,
-      "This is a magic cookie",
-      false
+    Item vItem5 = new Item(
+      aJsonReader.getItem5Name(),
+      aJsonReader.getItem5Price(),
+      aJsonReader.getItem5Weight(),
+      aJsonReader.getItem5Description(),
+      aJsonReader.getItem5Fightable()
     );
-    this.aRooms.get("treasure").addItem("cookie", vMagicCookie);
+    this.aRooms.get(aJsonReader.getItem5Location()).addItem(aJsonReader.getItem5Name(), vItem5);
   }
 
   /**

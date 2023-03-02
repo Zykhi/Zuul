@@ -4,9 +4,7 @@ package pkg_Core;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.Map;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 
@@ -14,7 +12,11 @@ public class JSONReader {
 
   private Object aJsonReader;
   private JSONObject aJsonObject;
-  private GameEngine aGameEngine;
+
+  //Game Settings
+  private String aGameName;
+  private long aGameWidth;
+  private long aGameHeight;
 
   //Player
   private String aPlayerName;
@@ -109,6 +111,56 @@ public class JSONReader {
   private String aRoom7UpExit;
   private String aRoom7DownExit;
 
+  //Potion
+  private String aPotionName;
+  private long aPotionHealing;
+  private String aPotionLocation;
+
+  //Item 1
+  private String aItem1Name;
+  private String aItem1Description;
+  private long aItem1Weight;
+  private String aItem1Location;
+  private String aItem1Image;
+  private long aItem1Price;
+  private boolean aItem1Fightable;
+
+  //Item 2
+  private String aItem2Name;
+  private String aItem2Description;
+  private long aItem2Weight;
+  private String aItem2Location;
+  private String aItem2Image;
+  private long aItem2Price;
+  private boolean aItem2Fightable;
+
+  //Item 3
+  private String aItem3Name;
+  private String aItem3Description;
+  private long aItem3Weight;
+  private String aItem3Location;
+  private String aItem3Image;
+  private long aItem3Price;
+  private boolean aItem3Fightable;
+
+  //Item 4
+  private String aItem4Name;
+  private String aItem4Description;
+  private long aItem4Weight;
+  private String aItem4Location;
+  private String aItem4Image;
+  private long aItem4Price;
+  private boolean aItem4Fightable;
+
+  //Item 5
+  private String aItem5Name;
+  private String aItem5Description;
+  private long aItem5Weight;
+  private String aItem5Location;
+  private String aItem5Image;
+  private long aItem5Price;
+  private boolean aItem5Fightable;
+
   public JSONReader() {
     // parsing file "GameInformation.json"
     try {
@@ -121,34 +173,64 @@ public class JSONReader {
     // typecasting obj to JSONObject
     this.aJsonObject = (JSONObject) aJsonReader;
 
-    getPlayerInformation();
+    setGameSettings();
 
-    getAllWelcomeText();
+    //Player information
+    setPlayerInformation();
+
+    //Item information
+    setPotionInformation();
+    setItem1Information();
+
+    //Text information
+    setAllWelcomeText();
 
     //get room information
-    getRoom1Information();
-    getRoom2Information();
-    getRoom3Information();
-    getRoom4Information();
-    getRoom5Information();
-    getRoom6Information();
-    getRoom7Information();
+    setRoom1Information();
+    setRoom2Information();
+    setRoom3Information();
+    setRoom4Information();
+    setRoom5Information();
+    setRoom6Information();
+    setRoom7Information();
   }
 
-  private void getPlayerInformation() {
-    // getting Player Information
-    Map vPlayer = ((Map) aJsonObject.get("player"));
+  private void setGameSettings() {
+    Map vGameSettings = ((Map) aJsonObject.get("gameSettings"));
 
-    aPlayerName = (String) vPlayer.get("playerName");
-    aMaxMovement = (long) vPlayer.get("maxMovement");
-    aMaxWeight = (long) vPlayer.get("maxWeight");
-    aPlayerHP = (long) vPlayer.get("playerHP");
-    aPlayerMaxHP = (long) vPlayer.get("playerMaxHP");
-    aPlayerDef = (long) vPlayer.get("playerDef");
-    aPlayerSpeDef = (long) vPlayer.get("playerSpeDef");
-    aPlayerAtt = (long) vPlayer.get("playerAtt");
-    aPlayerSpeAtt = (long) vPlayer.get("playerSpeAtt");
-    aPlayerFightable = (boolean) vPlayer.get("playerFightable");
+    aGameName = (String) vGameSettings.get("name");
+    aGameWidth = (long) vGameSettings.get("width");
+    aGameHeight = (long) vGameSettings.get("height");
+  }
+
+  public String getGameName() {
+    return aGameName;
+  }
+
+  public int getGameWidth() {
+    return (int) aGameWidth;
+  }
+
+  public int getGameHeight() {
+    return (int) aGameHeight;
+  }
+
+  private void setPlayerInformation() {
+    Map vPlayer = ((Map) aJsonObject.get("player"));
+    getPlayerAttributes(vPlayer);
+  }
+
+  private void getPlayerAttributes(Map pPlayer) {
+    aPlayerName = (String) pPlayer.get("playerName");
+    aMaxMovement = (long) pPlayer.get("maxMovement");
+    aMaxWeight = (long) pPlayer.get("maxWeight");
+    aPlayerHP = (long) pPlayer.get("playerHP");
+    aPlayerMaxHP = (long) pPlayer.get("playerMaxHP");
+    aPlayerDef = (long) pPlayer.get("playerDef");
+    aPlayerSpeDef = (long) pPlayer.get("playerSpeDef");
+    aPlayerAtt = (long) pPlayer.get("playerAtt");
+    aPlayerSpeAtt = (long) pPlayer.get("playerSpeAtt");
+    aPlayerFightable = (boolean) pPlayer.get("playerFightable");
   }
 
   // Get the name of the player
@@ -193,7 +275,7 @@ public class JSONReader {
   }
 
   // TODO : remettre la mise en forme du texte
-  private void getAllWelcomeText() {
+  private void setAllWelcomeText() {
     Map vText = ((Map) aJsonObject.get("printWelcome"));
     aWelcomeText = (String) vText.get("welcomeText");
     aEndWelcomeText = (String) vText.get("endWelcomeText");
@@ -207,7 +289,7 @@ public class JSONReader {
     return aEndWelcomeText;
   }
 
-  private void getRoom1Information() {
+  private void setRoom1Information() {
     Map vRoom1 = ((Map) aJsonObject.get("room1"));
 
     aRoom1Name = (String) vRoom1.get("roomName");
@@ -252,7 +334,7 @@ public class JSONReader {
     return aRoom1DownExit;
   }
 
-  private void getRoom2Information() {
+  private void setRoom2Information() {
     Map vRoom2 = ((Map) aJsonObject.get("room2"));
 
     aRoom2Name = (String) vRoom2.get("roomName");
@@ -297,7 +379,7 @@ public class JSONReader {
     return aRoom2DownExit;
   }
 
-  private void getRoom3Information() {
+  private void setRoom3Information() {
     Map vRoom3 = ((Map) aJsonObject.get("room3"));
 
     aRoom3Name = (String) vRoom3.get("roomName");
@@ -342,7 +424,7 @@ public class JSONReader {
     return aRoom3DownExit;
   }
 
-  private void getRoom4Information() {
+  private void setRoom4Information() {
     Map vRoom4 = ((Map) aJsonObject.get("room4"));
 
     aRoom4Name = (String) vRoom4.get("roomName");
@@ -387,7 +469,7 @@ public class JSONReader {
     return aRoom4DownExit;
   }
 
-  private void getRoom5Information() {
+  private void setRoom5Information() {
     Map vRoom5 = ((Map) aJsonObject.get("room5"));
 
     aRoom5Name = (String) vRoom5.get("roomName");
@@ -432,7 +514,7 @@ public class JSONReader {
     return aRoom5DownExit;
   }
 
-  private void getRoom6Information() {
+  private void setRoom6Information() {
     Map vRoom6 = ((Map) aJsonObject.get("room6"));
 
     aRoom6Name = (String) vRoom6.get("roomName");
@@ -477,7 +559,7 @@ public class JSONReader {
     return aRoom6DownExit;
   }
 
-  private void getRoom7Information() {
+  private void setRoom7Information() {
     Map vRoom7 = ((Map) aJsonObject.get("room7"));
 
     aRoom7Name = (String) vRoom7.get("roomName");
@@ -583,5 +665,225 @@ public class JSONReader {
         aRoom7DownExit = (String) vExitRoom.get("roomDownExit");
         break;
     }
+  }
+
+  private void setPotionInformation() {
+    Map vPotion = ((Map) aJsonObject.get("potion"));
+
+    aPotionName = (String) vPotion.get("name");
+    aPotionHealing = (long) vPotion.get("healing");
+    aPotionLocation = (String) vPotion.get("location");
+  }
+
+  public String getPotionName() {
+    return aPotionName;
+  }
+
+  public int getPotionHealing() {
+    return (int) aPotionHealing;
+  }
+
+  public String getPotionLocation() {
+    return aPotionLocation;
+  }
+
+  private void setItem1Information() {
+    Map vItem1 = ((Map) aJsonObject.get("item1"));
+
+    aItem1Name = (String) vItem1.get("name");
+    aItem1Description = (String) vItem1.get("description");
+    aItem1Location = (String) vItem1.get("location");
+    aItem1Weight = (long) vItem1.get("weight");
+    aItem1Image = (String) vItem1.get("image");
+    aItem1Price = (long) vItem1.get("price");
+    aItem1Fightable = (boolean) vItem1.get("fightable");
+  }
+
+  public String getItem1Name() {
+    return aItem1Name;
+  }
+
+  public String getItem1Description() {
+    return aItem1Description;
+  }
+
+  public String getItem1Location() {
+    return aItem1Location;
+  }
+
+  public int getItem1Weight() {
+    return (int) aItem1Weight;
+  }
+
+  public String getItem1Image() {
+    return aItem1Image;
+  }
+
+  public int getItem1Price() {
+    return (int) aItem1Price;
+  }
+
+  public boolean getItem1Fightable() {
+    return aItem1Fightable;
+  }
+
+  private void setItem2Information() {
+    Map vItem2 = ((Map) aJsonObject.get("item2"));
+
+    aItem2Name = (String) vItem2.get("name");
+    aItem2Description = (String) vItem2.get("description");
+    aItem2Location = (String) vItem2.get("location");
+    aItem2Weight = (long) vItem2.get("weight");
+    aItem2Image = (String) vItem2.get("image");
+    aItem2Price = (long) vItem2.get("price");
+    aItem2Fightable = (boolean) vItem2.get("fightable");
+  }
+
+  public String getItem2Name() {
+    return aItem2Name;
+  }
+
+  public String getItem2Description() {
+    return aItem2Description;
+  }
+
+  public String getItem2Location() {
+    return aItem2Location;
+  }
+
+  public int getItem2Weight() {
+    return (int) aItem2Weight;
+  }
+
+  public String getItem2Image() {
+    return aItem2Image;
+  }
+
+  public int getItem2Price() {
+    return (int) aItem2Price;
+  }
+
+  public boolean getItem2Fightable() {
+    return aItem2Fightable;
+  }
+
+  private void setItem3Information() {
+    Map vItem3 = ((Map) aJsonObject.get("item3"));
+
+    aItem3Name = (String) vItem3.get("name");
+    aItem3Description = (String) vItem3.get("description");
+    aItem3Location = (String) vItem3.get("location");
+    aItem3Weight = (long) vItem3.get("weight");
+    aItem3Image = (String) vItem3.get("image");
+    aItem3Price = (long) vItem3.get("price");
+    aItem3Fightable = (boolean) vItem3.get("fightable");
+  }
+
+  public String getItem3Name() {
+    return aItem3Name;
+  }
+
+  public String getItem3Description() {
+    return aItem3Description;
+  }
+
+  public String getItem3Location() {
+    return aItem3Location;
+  }
+
+  public int getItem3Weight() {
+    return (int) aItem3Weight;
+  }
+
+  public String getItem3Image() {
+    return aItem3Image;
+  }
+
+  public int getItem3Price() {
+    return (int) aItem3Price;
+  }
+
+  public boolean getItem3Fightable() {
+    return aItem3Fightable;
+  }
+
+  private void setItem4Information() {
+    Map vItem4 = ((Map) aJsonObject.get("item4"));
+
+    aItem4Name = (String) vItem4.get("name");
+    aItem4Description = (String) vItem4.get("description");
+    aItem4Location = (String) vItem4.get("location");
+    aItem4Weight = (long) vItem4.get("weight");
+    aItem4Image = (String) vItem4.get("image");
+    aItem4Price = (long) vItem4.get("price");
+    aItem4Fightable = (boolean) vItem4.get("fightable");
+  }
+
+  public String getItem4Name() {
+    return aItem4Name;
+  }
+
+  public String getItem4Description() {
+    return aItem4Description;
+  }
+
+  public String getItem4Location() {
+    return aItem4Location;
+  }
+
+  public int getItem4Weight() {
+    return (int) aItem4Weight;
+  }
+
+  public String getItem4Image() {
+    return aItem4Image;
+  }
+
+  public int getItem4Price() {
+    return (int) aItem4Price;
+  }
+
+  public boolean getItem4Fightable() {
+    return aItem4Fightable;
+  }
+
+  private void setItem5Information() {
+    Map vItem5 = ((Map) aJsonObject.get("item5"));
+
+    aItem5Name = (String) vItem5.get("name");
+    aItem5Description = (String) vItem5.get("description");
+    aItem5Location = (String) vItem5.get("location");
+    aItem5Weight = (long) vItem5.get("weight");
+    aItem5Image = (String) vItem5.get("image");
+    aItem5Price = (long) vItem5.get("price");
+    aItem5Fightable = (boolean) vItem5.get("fightable");
+  }
+
+  public String getItem5Name() {
+    return aItem5Name;
+  }
+
+  public String getItem5Description() {
+    return aItem5Description;
+  }
+
+  public String getItem5Location() {
+    return aItem5Location;
+  }
+
+  public int getItem5Weight() {
+    return (int) aItem5Weight;
+  }
+
+  public String getItem5Image() {
+    return aItem5Image;
+  }
+
+  public int getItem5Price() {
+    return (int) aItem5Price;
+  }
+
+  public boolean getItem5Fightable() {
+    return aItem5Fightable;
   }
 }
