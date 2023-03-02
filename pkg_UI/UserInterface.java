@@ -30,6 +30,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import pkg_Command.Parser;
 import pkg_Core.GameEngine;
@@ -528,7 +529,6 @@ public class UserInterface implements ActionListener {
 
   /**
    * Show background image of the main menu.
-   * //TODO : MAKE ONLY ONE MAIN MENU BACKGROUND
    */
   public void showBackGroundImage() {
     String vImagePath = "gameImages/MainMenu.jpg"; // to change the directory
@@ -561,7 +561,7 @@ public class UserInterface implements ActionListener {
    * Show the background of setting menu
    */
   private void showSettingBackground() {
-    String vImagePath = "gameImages/setting.jpg"; // to change the directory
+    String vImagePath = "gameImages/MainMenu.jpg"; // to change the directory
     URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
     if (vImageURL == null) System.out.println(
       "Image not found : " + vImagePath
@@ -576,7 +576,7 @@ public class UserInterface implements ActionListener {
    * Show the background of the sound menu
    */
   private void showSoundBackground() {
-    String vImagePath = "gameImages/sound.jpg"; // to change the directory
+    String vImagePath = "gameImages/MainMenu.jpg"; // to change the directory
     URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
     if (vImageURL == null) System.out.println(
       "Image not found : " + vImagePath
@@ -698,17 +698,16 @@ public class UserInterface implements ActionListener {
 
   /**
    * This method create custom font
-   * TODO : ADD FONT FOR TITLE
    */
   private void createMainMenuFont() {
     // to import custom font
     try {
       aMainMenuFont =
-        Font.createFont(Font.TRUETYPE_FONT, new File("font/8bit.ttf"));
+        Font.createFont(Font.TRUETYPE_FONT, new File("font/pixel.ttf"));
       GraphicsEnvironment vGraphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
       vGraphicsEnvironment.registerFont(aMainMenuFont);
 
-      aTitleFont = aMainMenuFont.deriveFont(25f);
+      aTitleFont = aMainMenuFont.deriveFont(48f);
     } catch (IOException | FontFormatException e) {
       e.printStackTrace();
     }
@@ -1103,11 +1102,20 @@ public class UserInterface implements ActionListener {
     vButtonsPanel.add(aQuit);
     vButtonsPanel.setLocation(438, 400);
 
+    JLabel vTitle = new JLabel(aJsonReader.getGameName());
+    vTitle.setFont(aTitleFont);
+    vTitle.setForeground(Color.black);
+    vTitle.setSize(aJsonReader.getGameWidth(), aJsonReader.getGameHeight());
+    vTitle.setHorizontalAlignment(SwingConstants.CENTER);
+    vTitle.setVerticalAlignment(SwingConstants.TOP);
+    vTitle.setLocation(0, 75);
+
     this.aMainMenuPanel.add(
         aMainMenuBackGroundImage,
         JLayeredPane.DEFAULT_LAYER
       );
     this.aMainMenuPanel.add(vButtonsPanel, JLayeredPane.PALETTE_LAYER);
+    this.aMainMenuPanel.add(vTitle, JLayeredPane.PALETTE_LAYER);
   }
 
   /**
@@ -1132,8 +1140,17 @@ public class UserInterface implements ActionListener {
     vButtonsPanel.add(aBack);
     vButtonsPanel.setLocation(438, 400);
 
+    JLabel vTitle = new JLabel("Setting");
+    vTitle.setFont(aTitleFont);
+    vTitle.setForeground(Color.black);
+    vTitle.setSize(aJsonReader.getGameWidth(), aJsonReader.getGameHeight());
+    vTitle.setHorizontalAlignment(SwingConstants.CENTER);
+    vTitle.setVerticalAlignment(SwingConstants.TOP);
+    vTitle.setLocation(0, 75);
+
     this.aSettingPanel.add(aSettingBackground, JLayeredPane.DEFAULT_LAYER);
     this.aSettingPanel.add(vButtonsPanel, JLayeredPane.PALETTE_LAYER);
+    this.aSettingPanel.add(vTitle, JLayeredPane.PALETTE_LAYER);
   }
 
   /**
@@ -1158,8 +1175,17 @@ public class UserInterface implements ActionListener {
     vButtonsPanel.add(aBack2);
     vButtonsPanel.setLocation(438, 400);
 
+    JLabel vTitle = new JLabel(aJsonReader.getGameName());
+    vTitle.setFont(aTitleFont);
+    vTitle.setForeground(Color.black);
+    vTitle.setSize(aJsonReader.getGameWidth(), aJsonReader.getGameHeight());
+    vTitle.setHorizontalAlignment(SwingConstants.CENTER);
+    vTitle.setVerticalAlignment(SwingConstants.TOP);
+    vTitle.setLocation(0, 75);
+
     this.aSoundPanel.add(aSoundBackground, JLayeredPane.DEFAULT_LAYER);
     this.aSoundPanel.add(vButtonsPanel, JLayeredPane.PALETTE_LAYER);
+    this.aSoundPanel.add(vTitle, JLayeredPane.PALETTE_LAYER);
   }
 
   /**
