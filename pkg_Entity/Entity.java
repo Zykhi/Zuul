@@ -45,6 +45,9 @@ public class Entity {
         this.aMoves = new String[3][4];
     }
 
+    public Entity() {
+    }
+
     /**
      * This getter return name
      * 
@@ -90,6 +93,10 @@ public class Entity {
         return this.aDef;
     }
 
+    public void setDef(int pDef) {
+        this.aDef = pDef;
+    }
+
     /**
      * This getter get special defense
      * 
@@ -97,6 +104,36 @@ public class Entity {
      */
     public int getSpeDef() {
         return this.aSpeDef;
+    }
+
+    public void setSpeDef(int pSpeDef) {
+        this.aSpeDef = pSpeDef;
+    }
+
+    /**
+     * This getter get attack
+     * 
+     * @return attack of entity
+     */
+    public int getAtt() {
+        return this.aAtt;
+    }
+
+    public void setAtt(int pAtt) {
+        this.aAtt = pAtt;
+    }
+
+    /**
+     * This getter get special attack
+     * 
+     * @return special attack of entity
+     */
+    public int getSpeAtt() {
+        return this.aSpeAtt;
+    }
+
+    public void setSpeAtt(int pSpeAtt) {
+        this.aSpeAtt = pSpeAtt;
     }
 
     /**
@@ -108,6 +145,10 @@ public class Entity {
         return this.aHP;
     }
 
+    public void setHP(int pHP) {
+        this.aHP = pHP;
+    }
+
     /**
      * This getter get max health point
      * 
@@ -115,6 +156,10 @@ public class Entity {
      */
     public int getMaxHP() {
         return this.aMaxHP;
+    }
+
+    public void setMaxHP(int pMaxHP) {
+        this.aMaxHP = pMaxHP;
     }
 
     /**
@@ -125,6 +170,10 @@ public class Entity {
      */
     public boolean isFightable() {
         return this.aFightable;
+    }
+
+    public void setFightable(boolean pFightable) {
+        this.aFightable = pFightable;
     }
 
     /**
