@@ -1,0 +1,103 @@
+{
+  "player": {
+    "playerName": "Edward",
+    "maxWeight": 25,
+    "maxMovement": 41,
+    "playerHP": 300,
+    "playerMaxHP": 300,
+    "playerDef": 100,
+    "playerSpeDef": 100,
+    "playerAtt": 100,
+    "playerSpeAtt": 100,
+    "playerFightable": true
+  },
+
+  "printWelcome": {
+    "welcomeText": "Welcome to the world of Zuul. You are Edward, the hero of this story. You are a knight, the war has been raging for decades and you cannot sleep. You decide to go out to clear your mind by walking away from the castle. You come across a waterfall that hides a cave, mist emanating from it. It is at this moment that your adventure takes all its meaning. Good luck knight. If you need help, let me know.",
+    "endWelcomeText": "Type if you need help. You have 20 minutes to escape from the dungeon before being trapped forever"
+  },
+
+  "room1": {
+    "roomName": "outside",
+    "roomDescription": "outside, the entrance to a cave catches your eye",
+    "roomImage": "gameImages/outside.gif",
+    "roomNorthExit": "",
+    "roomEastExit": "",
+    "roomSouthExit": "",
+    "roomWestExit": "",
+    "roomDownExit": "lobby",
+    "roomUpExit": ""
+  },
+
+  "room2": {
+    "roomName": "lobby",
+    "roomDescription": "the main room of the dungeon",
+    "roomImage": "gameImages/lobby.gif",
+    "roomNorthExit": "boss1room",
+    "roomEastExit": "boss2room",
+    "roomSouthExit": "",
+    "roomWestExit": "boss3room",
+    "roomDownExit": "",
+    "roomUpExit": ""
+  },
+
+  "room3": {
+    "roomName": "catacombs",
+    "roomDescription": "in the catacombs",
+    "roomImage": "gameImages/catacombs.gif",
+    "roomNorthExit": "",
+    "roomEastExit": "",
+    "roomSouthExit": "",
+    "roomWestExit": "",
+    "roomDownExit": "",
+    "roomUpExit": ""
+  },
+
+  "room4": {
+    "roomName": "treasure",
+    "roomDescription": "an empty room",
+    "roomImage": "gameImages/treasure.gif",
+    "roomNorthExit": "",
+    "roomEastExit": "boss3room",
+    "roomSouthExit": "",
+    "roomWestExit": "",
+    "roomDownExit": "",
+    "roomUpExit": ""
+  },
+
+  "room5": {
+    "roomName": "boss1room",
+    "roomDescription": "entering in the forest of Warmog the giant",
+    "roomImage": "gameImages/boss1.gif",
+    "roomNorthExit": "",
+    "roomEastExit": "",
+    "roomSouthExit": "lobby",
+    "roomWestExit": "",
+    "roomDownExit": "",
+    "roomUpExit": ""
+  },
+
+  "room6": {
+    "roomName": "boss2room",
+    "roomDescription": "entering in Viego's castle, he turns his back to you and looks away",
+    "roomImage": "gameImages/boss2.gif",
+    "roomNorthExit": "",
+    "roomEastExit": "catacombs",
+    "roomSouthExit": "",
+    "roomWestExit": "lobby",
+    "roomDownExit": "",
+    "roomUpExit": ""
+  },
+
+  "room7": {
+    "roomName": "boss3room",
+    "roomDescription": "entering in the magic room of Hazelgash, be careful with the lava and the lightning that could hit you",
+    "roomImage": "gameImages/boss3.gif",
+    "roomNorthExit": "",
+    "roomEastExit": "lobby",
+    "roomSouthExit": "",
+    "roomWestExit": "treasure",
+    "roomDownExit": "",
+    "roomUpExit": ""
+  }
+}

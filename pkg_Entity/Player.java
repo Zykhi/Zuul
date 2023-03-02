@@ -6,6 +6,7 @@ import javax.swing.Timer;
 import pkg_Command.Command;
 import pkg_Command.CommandWord;
 import pkg_Command.Parser;
+import pkg_Core.JSONReader;
 import pkg_Item.Beamer;
 import pkg_Item.Item;
 import pkg_Item.ItemList;
@@ -24,6 +25,7 @@ public class Player extends Entity {
     private Stack<Room> aPreviousRooms;
     private UserInterface aGui;
     private Parser aParser;
+    private JSONReader aJsonReader;
     private ItemList aInventory;
     private int aMaxWeight;
     private int aMovement;
@@ -37,13 +39,14 @@ public class Player extends Entity {
      */
     public Player(final Room pCurrentRoom) {
         super(300, 300, 100, 100, 100, 100, true);
+        this.aJsonReader = new JSONReader();
         this.aCurrentRoom = pCurrentRoom;
-        this.setName("Edward");
         this.aPreviousRooms = new Stack<Room>();
         this.aParser = new Parser();
         this.aInventory = new ItemList();
-        this.aMaxWeight = 20;
-        this.aMovement = 41;
+        this.setName(aJsonReader.getPlayerName());
+        this.aMaxWeight = aJsonReader.getMaxWeight();
+        this.aMovement = aJsonReader.getMaxMovement();
         this.aArtefactCounter = 3;
         aMoves[0][0] = "SwordStroke";
         aMoves[0][1] = "90";
@@ -121,16 +124,10 @@ public class Player extends Entity {
      * Print out the opening message for the player.
      */
     private void printWelcome() {
-        String vWelcomeText = "Welcome to the world of Zuul." + '\n' + "You are Edward, the hero of this story." + '\n'
-                +
-                "You are a knight, the war has been raging for decades and you cannot sleep. You decide to go out to clear your mind by walking away from the castle. You come across a waterfall that hides a cave, mist emanating from it."
-                + '\n' +
-                "It is at this moment that your adventure takes all its meaning." + '\n' +
-                "Good luck knight. If you need help, let me know." + '\n';
+        String vWelcomeText = aJsonReader.getWelcomeText();
         if (isDevMode()) {
             this.aGui.println(vWelcomeText);
-            this.aGui.println("Type '" + CommandWord.HELP.toString() + "' if you need help." + '\n'
-                    + "You have 20 minutes to escape from the dungeon before being trapped forever" + '\n');
+            this.aGui.println(aJsonReader.getEndWelcomeText());
             this.printLocationInfo();
             this.aGui.enable(true);
             this.aGui.startTimer();

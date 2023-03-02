@@ -1,4 +1,9 @@
 package pkg_Core;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import org.json.simple.parser.ParseException;
+
 import pkg_UI.UserInterface;
 
 
@@ -24,8 +29,11 @@ public class Game {
     /**
      * Create the game and initialise its internal map. Create the inerface and link
      * to it.
+     * @throws ParseException
+     * @throws IOException
+     * @throws FileNotFoundException
      */
-    public Game() {
+    public Game(){
         this.aEngine = new GameEngine();
         this.aGui = new UserInterface(this.aEngine);
         this.aEngine.setGUI(this.aGui);
