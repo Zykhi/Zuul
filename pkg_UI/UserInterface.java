@@ -1175,7 +1175,7 @@ public class UserInterface implements ActionListener {
     vButtonsPanel.add(aBack2);
     vButtonsPanel.setLocation(438, 400);
 
-    JLabel vTitle = new JLabel(aJsonReader.getGameName());
+    JLabel vTitle = new JLabel("Sound");
     vTitle.setFont(aTitleFont);
     vTitle.setForeground(Color.black);
     vTitle.setSize(aJsonReader.getGameWidth(), aJsonReader.getGameHeight());
