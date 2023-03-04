@@ -1284,16 +1284,15 @@ public class UserInterface implements ActionListener {
 
   /**
    * This method create the panel for credits
-   * //TODO : write in json
    */
   private void createCreditPanel() {
-    aCredit1 = new JLabel("Story by : Charly D.");
-    aCredit2 = new JLabel("Programming by : Charly D.");
-    aCredit3 = new JLabel("Art by : Google");
-    aCredit4 = new JLabel("Music by : xDeviruchi");
-    aCredit5 = new JLabel("Sound effects by : EpidemicSound");
-    aCredit6 = new JLabel("Narrator voice by : Austin HOPKINS");
-    aCredit7 = new JLabel("Special thanks to : Denis Bureau for this IGI-1202");
+    aCredit1 = new JLabel(aJsonReader.getLine1());
+    aCredit2 = new JLabel(aJsonReader.getLine2());
+    aCredit3 = new JLabel(aJsonReader.getLine3());
+    aCredit4 = new JLabel(aJsonReader.getLine4());
+    aCredit5 = new JLabel(aJsonReader.getLine5());
+    aCredit6 = new JLabel(aJsonReader.getLine6());
+    aCredit7 = new JLabel(aJsonReader.getLine7());
 
     aCredit1.setSize(300, 50);
     aCredit1.setLocation(150, 200);

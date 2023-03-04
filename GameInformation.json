@@ -1,13 +1,24 @@
 {
   "gameSettings": {
-    "name" : "Zuul GOTY Edition",
-    "width" : 1077,
-    "height" :765
+    "name": "Zuul GOTY Edition",
+    "width": 1077,
+    "height": 765,
+    "artefactNb": 3
   },
 
   "printWelcome": {
     "welcomeText": "Welcome to the world of Zuul. \nYou are Edward, the hero of this story. You are a knight, the war has been raging for decades and you cannot sleep. \nYou decide to go out to clear your mind by walking away from the castle. You come across a waterfall that hides a cave, mist emanating from it. \nIt is at this moment that your adventure takes all its meaning. \nGood luck knight. If you need help, let me know.\n",
     "endWelcomeText": "Type if you need help. You have 20 minutes to escape from the dungeon before being trapped forever"
+  },
+
+  "credit": {
+    "line1": "Story by : Charly D.",
+    "line2": "Programming by : Charly D.",
+    "line3": "Art by : Google",
+    "line4": "Music by : xDeviruchi",
+    "line5": "Sound effects by : EpidemicSound",
+    "line6": "Narrator voice by : Austin HOPKINS",
+    "line7": "Special thanks to : Denis Bureau for this IGI-1202"
   },
 
   "room1": {
@@ -104,13 +115,25 @@
     "playerSpeDef": 100,
     "playerAtt": 100,
     "playerSpeAtt": 100,
-    "playerFightable": true
+    "playerFightable": true,
+    "playerMove1": "SwordStroke",
+    "playerMove2": "HeavyStrike",
+    "playerMove3": "SharpAttack",
+    "playerAttackDamage1": "90",
+    "playerAttackDamage2": "100",
+    "playerAttackDamage3": "75",
+    "playerAttackAccuracy1": "95",
+    "playerAttackAccuracy2": "90",
+    "playerAttackAccuracy3": "100",
+    "playerAttackType1": "physical",
+    "playerAttackType2": "physical",
+    "playerAttackType3": "physical"
   },
 
-  "potion":{
-    "name" : "potion",
-    "healing" : 50,
-    "location" : "lobby"
+  "potion": {
+    "name": "potion",
+    "healing": 50,
+    "location": "lobby"
   },
 
   "item1": {
@@ -120,7 +143,7 @@
     "location": "boss1room",
     "image": "gameImages/item_warmog's_armor.png",
     "price": 0,
-    "fightable" : false
+    "fightable": false
   },
 
   "item2": {
@@ -130,17 +153,17 @@
     "location": "boss2room",
     "image": "gameImages/item_blade_of_the_ruined_king.png",
     "price": 0,
-    "fightable" : false
+    "fightable": false
   },
 
   "item3": {
-    "name": "Frostfire_Gauntlet",
+    "name": "frostfire_gauntlet",
     "description": "This is the last artefact of the dungeon",
     "weight": 10,
     "location": "boss3room",
     "image": "gameImages/item_frostfire_gauntlet.png",
     "price": 0,
-    "fightable" : false
+    "fightable": false
   },
 
   "item4": {
@@ -150,7 +173,7 @@
     "location": "catacombs",
     "image": "gameImages/item_wedding_ring.png",
     "price": 0,
-    "fightable" : false
+    "fightable": false
   },
 
   "item5": {
@@ -160,7 +183,66 @@
     "location": "treasure",
     "image": "gameImages/item_cookie.png",
     "price": 0,
-    "fightable" : false
-  }
+    "fightable": false
+  },
 
+  "npc1": {
+    "name": "warmog",
+    "description": "Warmog the giant",
+    "image": "gameImages/npc_warmog.png",
+    "location": "boss1room",
+    "fightable": true,
+    "hp": 100,
+    "maxHP": 100,
+    "def": 100,
+    "speDef": 100,
+    "att": 100,
+    "speAtt": 100,
+    "drop": "warmog's_armor"
+  },
+
+  "npc2": {
+    "name": "viego",
+    "description": "Viego the king",
+    "image": "gameImages/npc_viego.png",
+    "location": "boss2room",
+    "fightable": true,
+    "hp": 100,
+    "maxHP": 100,
+    "def": 100,
+    "speDef": 100,
+    "att": 100,
+    "speAtt": 100,
+    "drop": "blade_of_the_ruined_king"
+  },
+
+  "npc3": {
+    "name": "hazelgash",
+    "description": "Hazelgash the wizard",
+    "image": "gameImages/npc_hazelgash.png",
+    "location": "boss3room",
+    "fightable": true,
+    "hp": 100,
+    "maxHP": 100,
+    "def": 100,
+    "speDef": 100,
+    "att": 100,
+    "speAtt": 100,
+    "drop": "frostfire_gauntlet"
+  },
+
+  "npc4": {
+    "name": "ghost",
+    "description": "A ghost",
+    "image": "gameImages/npc_ghost.png",
+    "location": "catacombs",
+    "fightable": true,
+    "hp": 100,
+    "maxHP": 100,
+    "def": 100,
+    "speDef": 100,
+    "att": 100,
+    "speAtt": 100,
+    "drop": "wedding_ring"
+  }
 }

@@ -55,19 +55,11 @@ public class Player extends Entity {
     this.setName(aJsonReader.getPlayerName());
     this.aMaxWeight = aJsonReader.getMaxWeight();
     this.aMovement = aJsonReader.getMaxMovement();
-    this.aArtefactCounter = 3;
-    aMoves[0][0] = "SwordStroke";
-    aMoves[0][1] = "90";
-    aMoves[0][2] = "95";
-    aMoves[0][3] = "physical";
-    aMoves[1][0] = "HeavyStrike";
-    aMoves[1][1] = "100";
-    aMoves[1][2] = "90";
-    aMoves[1][3] = "physical";
-    aMoves[2][0] = "SharpAttack";
-    aMoves[2][1] = "75";
-    aMoves[2][2] = "100";
-    aMoves[2][3] = "physical";
+    this.aArtefactCounter = aJsonReader.getArtefactNb();
+    setMoves(aJsonReader.getPlayerMoves());
+    setAttackDamage(aJsonReader.getPlayerAttackDamage());
+    setAttackAccuracy(aJsonReader.getPlayerAttackAccuracy());
+    setAttackType(aJsonReader.getPlayerAttackType());
     this.aDevMode = false;
   }
 
