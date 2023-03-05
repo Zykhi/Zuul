@@ -11,11 +11,11 @@ import pkg_Command.Command;
 import pkg_Command.CommandWord;
 import pkg_Command.Parser;
 import pkg_Entity.Entity;
-import pkg_Entity.Garret;
-import pkg_Entity.Hazelgash;
+import pkg_Entity.NPC1;
+import pkg_Entity.NPC2;
+import pkg_Entity.NPC3;
+import pkg_Entity.NPC4;
 import pkg_Entity.Player;
-import pkg_Entity.Viego;
-import pkg_Entity.Warmog;
 import pkg_Item.Item;
 import pkg_Item.Potion;
 import pkg_Room.Door;
@@ -223,7 +223,8 @@ public class GameEngine {
       aJsonReader.getItem2Description(),
       aJsonReader.getItem2Fightable()
     );
-    this.aRooms.get(aJsonReader.getItem2Location()).addItem(aJsonReader.getItem2Name(), vItem2);
+    this.aRooms.get(aJsonReader.getItem2Location())
+      .addItem(aJsonReader.getItem2Name(), vItem2);
 
     Item vItem3 = new Item(
       aJsonReader.getItem3Name(),
@@ -232,7 +233,8 @@ public class GameEngine {
       aJsonReader.getItem3Description(),
       aJsonReader.getItem3Fightable()
     );
-    this.aRooms.get(aJsonReader.getItem3Location()).addItem(aJsonReader.getItem3Name(), vItem3);
+    this.aRooms.get(aJsonReader.getItem3Location())
+      .addItem(aJsonReader.getItem3Name(), vItem3);
 
     Item vItem4 = new Item(
       aJsonReader.getItem4Name(),
@@ -241,7 +243,8 @@ public class GameEngine {
       aJsonReader.getItem4Description(),
       aJsonReader.getItem4Fightable()
     );
-    this.aRooms.get(aJsonReader.getItem4Location()).addItem(aJsonReader.getItem4Name(), vItem4);
+    this.aRooms.get(aJsonReader.getItem4Location())
+      .addItem(aJsonReader.getItem4Name(), vItem4);
 
     Item vItem5 = new Item(
       aJsonReader.getItem5Name(),
@@ -250,7 +253,8 @@ public class GameEngine {
       aJsonReader.getItem5Description(),
       aJsonReader.getItem5Fightable()
     );
-    this.aRooms.get(aJsonReader.getItem5Location()).addItem(aJsonReader.getItem5Name(), vItem5);
+    this.aRooms.get(aJsonReader.getItem5Location())
+      .addItem(aJsonReader.getItem5Name(), vItem5);
   }
 
   /**
@@ -265,19 +269,19 @@ public class GameEngine {
    * This method init the character
    */
   private void createCharacter() {
-    Garret vGarret = new Garret();
-    this.aRooms.get("lobby").setCharacter(vGarret);
+    NPC1 vNPC1 = new NPC1();
+    this.aRooms.get(aJsonReader.getNPC1Location()).setCharacter(vNPC1);
 
-    Warmog vWarmog = new Warmog();
-    this.aRooms.get("boss1room").setCharacter(vWarmog);
+    NPC2 vNPC2 = new NPC2();
+    this.aRooms.get(aJsonReader.getNPC2Location()).setCharacter(vNPC2);
 
-    Viego vViego = new Viego();
-    this.aRooms.get("boss2room").setCharacter(vViego);
+    NPC3 vNPC3 = new NPC3();
+    this.aRooms.get(aJsonReader.getNPC3Location()).setCharacter(vNPC3);
 
-    Hazelgash vHazelgash = new Hazelgash();
-    this.aRooms.get("boss3room").setCharacter(vHazelgash);
+    NPC4 vNPC4 = new NPC4();
+    this.aRooms.get(aJsonReader.getNPC4Location()).setCharacter(vNPC4);
   }
-
+  
   /**
    * Given a command, process (that is: execute) the command.
    *

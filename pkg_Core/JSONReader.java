@@ -51,6 +51,7 @@ public class JSONReader {
   private String aNPC1Name;
   private String aNPC1Description;
   private String aNPC1Image;
+  private String aNPC1FullImage;
   private String aNPC1Location;
   private Boolean aNPC1Fightable;
   private long aNPC1HP;
@@ -59,12 +60,29 @@ public class JSONReader {
   private long aNPC1SpeDefense;
   private long aNPC1Attack;
   private long aNPC1SpeAttack;
-  private String aNPC1Dialog;
+  private String aNPC1Dialogue;
+  private String aNPC1Moves;
+  private String aNPC1Move1;
+  private String aNPC1Move2;
+  private String aNPC1Move3;
+  private String aNPC1AttackDamage;
+  private String aNPC1AttackDamage1;
+  private String aNPC1AttackDamage2;
+  private String aNPC1AttackDamage3;
+  private String aNPC1AttackAccuracy;
+  private String aNPC1AttackAccuracy1;
+  private String aNPC1AttackAccuracy2;
+  private String aNPC1AttackAccuracy3;
+  private String aNPC1AttackType;
+  private String aNPC1AttackType1;
+  private String aNPC1AttackType2;
+  private String aNPC1AttackType3;
 
   //NPC2
   private String aNPC2Name;
   private String aNPC2Description;
   private String aNPC2Image;
+  private String aNPC2FullImage;
   private String aNPC2Location;
   private Boolean aNPC2Fightable;
   private long aNPC2HP;
@@ -73,11 +91,29 @@ public class JSONReader {
   private long aNPC2SpeDefense;
   private long aNPC2Attack;
   private long aNPC2SpeAttack;
+  private String aNPC2Dialogue;
+  private String aNPC2Moves;
+  private String aNPC2Move1;
+  private String aNPC2Move2;
+  private String aNPC2Move3;
+  private String aNPC2AttackDamage;
+  private String aNPC2AttackDamage1;
+  private String aNPC2AttackDamage2;
+  private String aNPC2AttackDamage3;
+  private String aNPC2AttackAccuracy;
+  private String aNPC2AttackAccuracy1;
+  private String aNPC2AttackAccuracy2;
+  private String aNPC2AttackAccuracy3;
+  private String aNPC2AttackType;
+  private String aNPC2AttackType1;
+  private String aNPC2AttackType2;
+  private String aNPC2AttackType3;
 
   //NPC3
   private String aNPC3Name;
   private String aNPC3Description;
   private String aNPC3Image;
+  private String aNPC3FullImage;
   private String aNPC3Location;
   private Boolean aNPC3Fightable;
   private long aNPC3HP;
@@ -86,11 +122,29 @@ public class JSONReader {
   private long aNPC3SpeDefense;
   private long aNPC3Attack;
   private long aNPC3SpeAttack;
+  private String aNPC3Dialogue;
+  private String aNPC3Moves;
+  private String aNPC3Move1;
+  private String aNPC3Move2;
+  private String aNPC3Move3;
+  private String aNPC3AttackDamage;
+  private String aNPC3AttackDamage1;
+  private String aNPC3AttackDamage2;
+  private String aNPC3AttackDamage3;
+  private String aNPC3AttackAccuracy;
+  private String aNPC3AttackAccuracy1;
+  private String aNPC3AttackAccuracy2;
+  private String aNPC3AttackAccuracy3;
+  private String aNPC3AttackType;
+  private String aNPC3AttackType1;
+  private String aNPC3AttackType2;
+  private String aNPC3AttackType3;
 
   //NPC4
   private String aNPC4Name;
   private String aNPC4Description;
   private String aNPC4Image;
+  private String aNPC4FullImage;
   private String aNPC4Location;
   private Boolean aNPC4Fightable;
   private long aNPC4HP;
@@ -99,7 +153,23 @@ public class JSONReader {
   private long aNPC4SpeDefense;
   private long aNPC4Attack;
   private long aNPC4SpeAttack;
-
+  private String aNPC4Dialogue;
+  private String aNPC4Moves;
+  private String aNPC4Move1;
+  private String aNPC4Move2;
+  private String aNPC4Move3;
+  private String aNPC4AttackDamage;
+  private String aNPC4AttackDamage1;
+  private String aNPC4AttackDamage2;
+  private String aNPC4AttackDamage3;
+  private String aNPC4AttackAccuracy;
+  private String aNPC4AttackAccuracy1;
+  private String aNPC4AttackAccuracy2;
+  private String aNPC4AttackAccuracy3;
+  private String aNPC4AttackType;
+  private String aNPC4AttackType1;
+  private String aNPC4AttackType2;
+  private String aNPC4AttackType3;
 
   //Text
   private String aWelcomeText;
@@ -380,23 +450,34 @@ public class JSONReader {
     return aPlayerFightable;
   }
 
-  public String getPlayerMoves(){
+  public String getPlayerMoves() {
     aPlayerMoves = aPlayerMove1 + " " + aPlayerMove2 + " " + aPlayerMove3;
     return aPlayerMoves;
   }
 
-  public String getPlayerAttackDamage(){
-    aPlayerAttackDamage = aPlayerAttackDamage1 + " " + aPlayerAttackDamage2 + " " + aPlayerAttackDamage3;
+  public String getPlayerAttackDamage() {
+    aPlayerAttackDamage =
+      aPlayerAttackDamage1 +
+      " " +
+      aPlayerAttackDamage2 +
+      " " +
+      aPlayerAttackDamage3;
     return aPlayerAttackDamage;
   }
 
-  public String getPlayerAttackAccuracy(){
-    aPlayerAttackAccuracy = aPlayerAttackAccuracy1 + " " + aPlayerAttackAccuracy2 + " " + aPlayerAttackAccuracy3;
+  public String getPlayerAttackAccuracy() {
+    aPlayerAttackAccuracy =
+      aPlayerAttackAccuracy1 +
+      " " +
+      aPlayerAttackAccuracy2 +
+      " " +
+      aPlayerAttackAccuracy3;
     return aPlayerAttackAccuracy;
   }
 
-  public String getPlayerAttackType(){
-    aPlayerAttackType = aPlayerAttackType1 + " " + aPlayerAttackType2 + " " + aPlayerAttackType3;
+  public String getPlayerAttackType() {
+    aPlayerAttackType =
+      aPlayerAttackType1 + " " + aPlayerAttackType2 + " " + aPlayerAttackType3;
     return aPlayerAttackType;
   }
 
@@ -414,7 +495,7 @@ public class JSONReader {
     return aEndWelcomeText;
   }
 
-  private void setCredit(){
+  private void setCredit() {
     Map vCredit = ((Map) aJsonObject.get("credit"));
     aLine1 = (String) vCredit.get("line1");
     aLine2 = (String) vCredit.get("line2");
@@ -1051,13 +1132,14 @@ public class JSONReader {
     return aItem5Fightable;
   }
 
-  private void setNPC1Information(){
+  private void setNPC1Information() {
     Map vNPC1 = ((Map) aJsonObject.get("npc1"));
 
     aNPC1Name = (String) vNPC1.get("name");
     aNPC1Description = (String) vNPC1.get("description");
     aNPC1Location = (String) vNPC1.get("location");
     aNPC1Image = (String) vNPC1.get("image");
+    aNPC1FullImage = (String) vNPC1.get("fullImage");
     aNPC1Fightable = (boolean) vNPC1.get("fightable");
     aNPC1HP = (long) vNPC1.get("hp");
     aNPC1MaxHP = (long) vNPC1.get("maxHP");
@@ -1065,59 +1147,108 @@ public class JSONReader {
     aNPC1SpeDefense = (long) vNPC1.get("speDef");
     aNPC1Attack = (long) vNPC1.get("att");
     aNPC1SpeAttack = (long) vNPC1.get("speAtt");
+    aNPC1Dialogue = (String) vNPC1.get("dialogue");
+    aNPC1Move1 = (String) vNPC1.get("move1");
+    aNPC1Move2 = (String) vNPC1.get("move2");
+    aNPC1Move3 = (String) vNPC1.get("move3");
+    aNPC1AttackDamage1 = (String) vNPC1.get("attackDamage1");
+    aNPC1AttackDamage2 = (String) vNPC1.get("attackDamage2");
+    aNPC1AttackDamage3 = (String) vNPC1.get("attackDamage3");
+    aNPC1AttackAccuracy1 = (String) vNPC1.get("attackAccuracy1");
+    aNPC1AttackAccuracy2 = (String) vNPC1.get("attackAccuracy2");
+    aNPC1AttackAccuracy3 = (String) vNPC1.get("attackAccuracy3");
+    aNPC1AttackType1 = (String) vNPC1.get("attackType1");
+    aNPC1AttackType2 = (String) vNPC1.get("attackType2");
+    aNPC1AttackType3 = (String) vNPC1.get("attackType3");
   }
 
-  public String getNPC1Name(){
+  public String getNPC1Name() {
     return aNPC1Name;
   }
 
-  public String getNPC1Description(){
+  public String getNPC1Description() {
     return aNPC1Description;
   }
 
-  public String getNPC1Location(){
+  public String getNPC1Location() {
     return aNPC1Location;
   }
 
-  public String getNPC1Image(){
+  public String getNPC1Image() {
     return aNPC1Image;
   }
 
-  public boolean getNPC1Fightable(){
+  public String getNPC1FullImage() {
+    return aNPC1FullImage;
+  }
+
+  public boolean getNPC1Fightable() {
     return aNPC1Fightable;
   }
 
-  public int getNPC1HP(){
+  public int getNPC1HP() {
     return (int) aNPC1HP;
   }
 
-  public int getNPC1MaxHP(){
+  public int getNPC1MaxHP() {
     return (int) aNPC1MaxHP;
   }
 
-  public int getNPC1Defense(){
+  public int getNPC1Defense() {
     return (int) aNPC1Defense;
   }
 
-  public int getNPC1SpeDefense(){
+  public int getNPC1SpeDefense() {
     return (int) aNPC1SpeDefense;
   }
 
-  public int getNPC1Attack(){
+  public int getNPC1Attack() {
     return (int) aNPC1Attack;
   }
 
-  public int getNPC1SpeAttack(){
+  public int getNPC1SpeAttack() {
     return (int) aNPC1SpeAttack;
   }
 
-  private void setNPC2Information(){
+  public String getNPC1Dialogue() {
+    return aNPC1Dialogue;
+  }
+
+  public String getNPC1Moves() {
+    aNPC1Moves = aNPC1Move1 + " " + aNPC1Move2 + " " + aNPC1Move3;
+    return aNPC1Moves;
+  }
+
+  public String getNPC1AttackDamage() {
+    aNPC1AttackDamage =
+      aNPC1AttackDamage1 + " " + aNPC1AttackDamage2 + " " + aNPC1AttackDamage3;
+    return aNPC1AttackDamage;
+  }
+
+  public String getNPC1AttackAccuracy() {
+    aNPC1AttackAccuracy =
+      aNPC1AttackAccuracy1 +
+      " " +
+      aNPC1AttackAccuracy2 +
+      " " +
+      aNPC1AttackAccuracy3;
+    return aNPC1AttackAccuracy;
+  }
+
+  public String getNPC1AttackType() {
+    aNPC1AttackType =
+      aNPC1AttackType1 + " " + aNPC1AttackType2 + " " + aNPC1AttackType3;
+    return aNPC1AttackType;
+  }
+
+  private void setNPC2Information() {
     Map vNPC2 = ((Map) aJsonObject.get("npc2"));
 
     aNPC2Name = (String) vNPC2.get("name");
     aNPC2Description = (String) vNPC2.get("description");
     aNPC2Location = (String) vNPC2.get("location");
     aNPC2Image = (String) vNPC2.get("image");
+    aNPC2FullImage = (String) vNPC2.get("fullImage");
     aNPC2Fightable = (boolean) vNPC2.get("fightable");
     aNPC2HP = (long) vNPC2.get("hp");
     aNPC2MaxHP = (long) vNPC2.get("maxHP");
@@ -1125,59 +1256,108 @@ public class JSONReader {
     aNPC2SpeDefense = (long) vNPC2.get("speDef");
     aNPC2Attack = (long) vNPC2.get("att");
     aNPC2SpeAttack = (long) vNPC2.get("speAtt");
+    aNPC2Dialogue = (String) vNPC2.get("dialogue");
+    aNPC2Move1 = (String) vNPC2.get("move1");
+    aNPC2Move2 = (String) vNPC2.get("move2");
+    aNPC2Move3 = (String) vNPC2.get("move3");
+    aNPC2AttackDamage1 = (String) vNPC2.get("attackDamage1");
+    aNPC2AttackDamage2 = (String) vNPC2.get("attackDamage2");
+    aNPC2AttackDamage3 = (String) vNPC2.get("attackDamage3");
+    aNPC2AttackAccuracy1 = (String) vNPC2.get("attackAccuracy1");
+    aNPC2AttackAccuracy2 = (String) vNPC2.get("attackAccuracy2");
+    aNPC2AttackAccuracy3 = (String) vNPC2.get("attackAccuracy3");
+    aNPC2AttackType1 = (String) vNPC2.get("attackType1");
+    aNPC2AttackType2 = (String) vNPC2.get("attackType2");
+    aNPC2AttackType3 = (String) vNPC2.get("attackType3");
   }
 
-  public String getNPC2Name(){
+  public String getNPC2Name() {
     return aNPC2Name;
   }
 
-  public String getNPC2Description(){
+  public String getNPC2Description() {
     return aNPC2Description;
   }
 
-  public String getNPC2Location(){
+  public String getNPC2Location() {
     return aNPC2Location;
   }
 
-  public String getNPC2Image(){
+  public String getNPC2Image() {
     return aNPC2Image;
   }
 
-  public Boolean getNPC2Fightable(){
+  public String getNPC2FullImage() {
+    return aNPC2FullImage;
+  }
+
+  public Boolean getNPC2Fightable() {
     return aNPC2Fightable;
   }
 
-  public int getNPC2HP(){
+  public int getNPC2HP() {
     return (int) aNPC2HP;
   }
 
-  public int getNPC2MaxHP(){
+  public int getNPC2MaxHP() {
     return (int) aNPC2MaxHP;
   }
 
-  public int getNPC2Defense(){
+  public int getNPC2Defense() {
     return (int) aNPC2Defense;
   }
 
-  public int getNPC2SpeDefense(){
+  public int getNPC2SpeDefense() {
     return (int) aNPC2SpeDefense;
   }
 
-  public int getNPC2Attack(){
+  public int getNPC2Attack() {
     return (int) aNPC2Attack;
   }
 
-  public int getNPC2SpeAttack(){
+  public int getNPC2SpeAttack() {
     return (int) aNPC2SpeAttack;
   }
 
-  private void setNPC3Information(){
+  public String getNPC2Dialogue() {
+    return aNPC2Dialogue;
+  }
+
+  public String getNPC2Moves() {
+    aNPC2Moves = aNPC2Move1 + " " + aNPC2Move2 + " " + aNPC2Move3;
+    return aNPC2Moves;
+  }
+
+  public String getNPC2AttackDamage() {
+    aNPC2AttackDamage =
+      aNPC2AttackDamage1 + " " + aNPC2AttackDamage2 + " " + aNPC2AttackDamage3;
+    return aNPC2AttackDamage;
+  }
+
+  public String getNPC2AttackAccuracy() {
+    aNPC2AttackAccuracy =
+      aNPC2AttackAccuracy1 +
+      " " +
+      aNPC2AttackAccuracy2 +
+      " " +
+      aNPC2AttackAccuracy3;
+    return aNPC2AttackAccuracy;
+  }
+
+  public String getNPC2AttackType() {
+    aNPC2AttackType =
+      aNPC2AttackType1 + " " + aNPC2AttackType2 + " " + aNPC2AttackType3;
+    return aNPC2AttackType;
+  }
+
+  private void setNPC3Information() {
     Map vNPC3 = ((Map) aJsonObject.get("npc3"));
 
     aNPC3Name = (String) vNPC3.get("name");
     aNPC3Description = (String) vNPC3.get("description");
     aNPC3Location = (String) vNPC3.get("location");
     aNPC3Image = (String) vNPC3.get("image");
+    aNPC3FullImage = (String) vNPC3.get("fullImage");
     aNPC3Fightable = (boolean) vNPC3.get("fightable");
     aNPC3HP = (long) vNPC3.get("hp");
     aNPC3MaxHP = (long) vNPC3.get("maxHP");
@@ -1185,59 +1365,108 @@ public class JSONReader {
     aNPC3SpeDefense = (long) vNPC3.get("speDef");
     aNPC3Attack = (long) vNPC3.get("att");
     aNPC3SpeAttack = (long) vNPC3.get("speAtt");
+    aNPC3Dialogue = (String) vNPC3.get("dialogue");
+    aNPC3Move1 = (String) vNPC3.get("move1");
+    aNPC3Move2 = (String) vNPC3.get("move2");
+    aNPC3Move3 = (String) vNPC3.get("move3");
+    aNPC3AttackDamage1 = (String) vNPC3.get("attackDamage1");
+    aNPC3AttackDamage2 = (String) vNPC3.get("attackDamage2");
+    aNPC3AttackDamage3 = (String) vNPC3.get("attackDamage3");
+    aNPC3AttackAccuracy1 = (String) vNPC3.get("attackAccuracy1");
+    aNPC3AttackAccuracy2 = (String) vNPC3.get("attackAccuracy2");
+    aNPC3AttackAccuracy3 = (String) vNPC3.get("attackAccuracy3");
+    aNPC3AttackType1 = (String) vNPC3.get("attackType1");
+    aNPC3AttackType2 = (String) vNPC3.get("attackType2");
+    aNPC3AttackType3 = (String) vNPC3.get("attackType3");
   }
 
-  public String getNPC3Name(){
+  public String getNPC3Name() {
     return aNPC3Name;
   }
 
-  public String getNPC3Description(){
+  public String getNPC3Description() {
     return aNPC3Description;
   }
 
-  public String getNPC3Location(){
+  public String getNPC3Location() {
     return aNPC3Location;
   }
 
-  public String getNPC3Image(){
+  public String getNPC3Image() {
     return aNPC3Image;
   }
 
-  public Boolean getNPC3Fightable(){
+  public String getNPC3FullImage() {
+    return aNPC3FullImage;
+  }
+
+  public Boolean getNPC3Fightable() {
     return aNPC3Fightable;
   }
 
-  public int getNPC3HP(){
+  public int getNPC3HP() {
     return (int) aNPC3HP;
   }
 
-  public int getNPC3MaxHP(){
+  public int getNPC3MaxHP() {
     return (int) aNPC3MaxHP;
   }
 
-  public int getNPC3Defense(){
+  public int getNPC3Defense() {
     return (int) aNPC3Defense;
   }
 
-  public int getNPC3SpeDefense(){
+  public int getNPC3SpeDefense() {
     return (int) aNPC3SpeDefense;
   }
 
-  public int getNPC3Attack(){
+  public int getNPC3Attack() {
     return (int) aNPC3Attack;
   }
 
-  public int getNPC3SpeAttack(){
+  public int getNPC3SpeAttack() {
     return (int) aNPC3SpeAttack;
   }
 
-  private void setNPC4Information(){
+  public String getNPC3Dialogue() {
+    return aNPC3Dialogue;
+  }
+
+  public String getNPC3Moves() {
+    aNPC3Moves = aNPC3Move1 + " " + aNPC3Move2 + " " + aNPC3Move3;
+    return aNPC3Moves;
+  }
+
+  public String getNPC3AttackDamage() {
+    aNPC3AttackDamage =
+      aNPC3AttackDamage1 + " " + aNPC3AttackDamage2 + " " + aNPC3AttackDamage3;
+    return aNPC3AttackDamage;
+  }
+
+  public String getNPC3AttackAccuracy() {
+    aNPC3AttackAccuracy =
+      aNPC3AttackAccuracy1 +
+      " " +
+      aNPC3AttackAccuracy2 +
+      " " +
+      aNPC3AttackAccuracy3;
+    return aNPC3AttackAccuracy;
+  }
+
+  public String getNPC3AttackType() {
+    aNPC3AttackType =
+      aNPC3AttackType1 + " " + aNPC3AttackType2 + " " + aNPC3AttackType3;
+    return aNPC3AttackType;
+  }
+
+  private void setNPC4Information() {
     Map vNPC4 = ((Map) aJsonObject.get("npc4"));
 
     aNPC4Name = (String) vNPC4.get("name");
     aNPC4Description = (String) vNPC4.get("description");
     aNPC4Location = (String) vNPC4.get("location");
     aNPC4Image = (String) vNPC4.get("image");
+    aNPC4FullImage = (String) vNPC4.get("fullImage");
     aNPC4Fightable = (boolean) vNPC4.get("fightable");
     aNPC4HP = (long) vNPC4.get("hp");
     aNPC4MaxHP = (long) vNPC4.get("maxHP");
@@ -1245,50 +1474,97 @@ public class JSONReader {
     aNPC4SpeDefense = (long) vNPC4.get("speDef");
     aNPC4Attack = (long) vNPC4.get("att");
     aNPC4SpeAttack = (long) vNPC4.get("speAtt");
+    aNPC4Dialogue = (String) vNPC4.get("dialogue");
+    aNPC4Move1 = (String) vNPC4.get("move1");
+    aNPC4Move2 = (String) vNPC4.get("move2");
+    aNPC4Move3 = (String) vNPC4.get("move3");
+    aNPC4AttackDamage1 = (String) vNPC4.get("attackDamage1");
+    aNPC4AttackDamage2 = (String) vNPC4.get("attackDamage2");
+    aNPC4AttackDamage3 = (String) vNPC4.get("attackDamage3");
+    aNPC4AttackAccuracy1 = (String) vNPC4.get("attackAccuracy1");
+    aNPC4AttackAccuracy2 = (String) vNPC4.get("attackAccuracy2");
+    aNPC4AttackAccuracy3 = (String) vNPC4.get("attackAccuracy3");
+    aNPC4AttackType1 = (String) vNPC4.get("attackType1");
+    aNPC4AttackType2 = (String) vNPC4.get("attackType2");
+    aNPC4AttackType3 = (String) vNPC4.get("attackType3");
   }
 
-  public String getNPC4Name(){
+  public String getNPC4Name() {
     return aNPC4Name;
   }
 
-  public String getNPC4Description(){
+  public String getNPC4Description() {
     return aNPC4Description;
   }
 
-  public String getNPC4Location(){
+  public String getNPC4Location() {
     return aNPC4Location;
   }
 
-  public String getNPC4Image(){
+  public String getNPC4Image() {
     return aNPC4Image;
   }
 
-  public Boolean getNPC4Fightable(){
+  public String getNPC4FullImage() {
+    return aNPC4FullImage;
+  }
+
+  public Boolean getNPC4Fightable() {
     return aNPC4Fightable;
   }
 
-  public int getNPC4HP(){
+  public int getNPC4HP() {
     return (int) aNPC4HP;
   }
 
-  public int getNPC4MaxHP(){
+  public int getNPC4MaxHP() {
     return (int) aNPC4MaxHP;
   }
 
-  public int getNPC4Defense(){
+  public int getNPC4Defense() {
     return (int) aNPC4Defense;
   }
 
-  public int getNPC4SpeDefense(){
+  public int getNPC4SpeDefense() {
     return (int) aNPC4SpeDefense;
   }
 
-  public int getNPC4Attack(){
+  public int getNPC4Attack() {
     return (int) aNPC4Attack;
   }
 
-  public int getNPC4SpeAttack(){
+  public int getNPC4SpeAttack() {
     return (int) aNPC4SpeAttack;
   }
 
+  public String getNPC4Dialogue() {
+    return aNPC4Dialogue;
+  }
+
+  public String getNPC4Moves() {
+    aNPC4Moves = aNPC4Move1 + " " + aNPC4Move2 + " " + aNPC4Move3;
+    return aNPC4Moves;
+  }
+
+  public String getNPC4AttackDamage() {
+    aNPC4AttackDamage =
+      aNPC4AttackDamage1 + " " + aNPC4AttackDamage2 + " " + aNPC4AttackDamage3;
+    return aNPC4AttackDamage;
+  }
+
+  public String getNPC4AttackAccuracy() {
+    aNPC4AttackAccuracy =
+      aNPC4AttackAccuracy1 +
+      " " +
+      aNPC4AttackAccuracy2 +
+      " " +
+      aNPC4AttackAccuracy3;
+    return aNPC4AttackAccuracy;
+  }
+
+  public String getNPC4AttackType() {
+    aNPC4AttackType =
+      aNPC4AttackType1 + " " + aNPC4AttackType2 + " " + aNPC4AttackType3;
+    return aNPC4AttackType;
+  }
 }

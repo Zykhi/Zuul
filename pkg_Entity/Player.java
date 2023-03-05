@@ -47,19 +47,18 @@ public class Player extends Entity {
     setSpeDef(aJsonReader.getPlayerSpeDef());
     setAtt(aJsonReader.getPlayerAtt());
     setSpeAtt(aJsonReader.getPlayerSpeAtt());
-    setFightable(true);
-    this.aCurrentRoom = pCurrentRoom;
-    this.aPreviousRooms = new Stack<Room>();
-    this.aParser = new Parser();
-    this.aInventory = new ItemList();
-    this.setName(aJsonReader.getPlayerName());
-    this.aMaxWeight = aJsonReader.getMaxWeight();
-    this.aMovement = aJsonReader.getMaxMovement();
-    this.aArtefactCounter = aJsonReader.getArtefactNb();
+    setFightable(aJsonReader.getPlayerFightable());
     setMoves(aJsonReader.getPlayerMoves());
     setAttackDamage(aJsonReader.getPlayerAttackDamage());
     setAttackAccuracy(aJsonReader.getPlayerAttackAccuracy());
     setAttackType(aJsonReader.getPlayerAttackType());
+    this.aCurrentRoom = pCurrentRoom;
+    this.aPreviousRooms = new Stack<Room>();
+    this.aParser = new Parser();
+    this.aInventory = new ItemList();
+    this.aMaxWeight = aJsonReader.getMaxWeight();
+    this.aMovement = aJsonReader.getMaxMovement();
+    this.aArtefactCounter = aJsonReader.getArtefactNb();
     this.aDevMode = false;
   }
 
