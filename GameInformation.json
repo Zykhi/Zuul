@@ -1,17 +1,80 @@
 {
-  "gameSettings": {
+  "gameSettingsEN": {
+    "language": "EN",
     "name": "Zuul GOTY Edition",
     "width": 1077,
     "height": 765,
-    "artefactNb": 3
+    "artefactNb": 3,
+    "quitButton": "quit",
+    "northButton": "north ▲",
+    "eastButton": "east ▶",
+    "southButton": "south ▼",
+    "westButton": "◀ west",
+    "upButton": "up △",
+    "downButton": "down ▽",
+    "backButton": "back",
+    "helpButton": "help ?",
+    "dropButton": "drop",
+    "takeButton": "take",
+    "giveButton": "give",
+    "chargeButton": "charge",
+    "inventoryButton": "inventory",
+    "fightButton": "fight",
+    "playButton": "Play",
+    "devModeButton": "DevMode",
+    "settingButton": "Settings",
+    "majQuitButton": "Quit",
+    "majBackButton": "Back",
+    "soundButton": "Sound",
+    "soundOnButton": "Sound ON",
+    "soundOffButton": "Sound OFF",
+    "runButton": "Run",
+    "bagButton": "Bag",
+    "attackButton": "Attack",
+    "defendButton": "Defend"
   },
 
-  "printWelcome": {
+  "gameSettingsFR": {
+    "language": "FR",
+    "name": "Zuul Edition JDLA",
+    "width": 1077,
+    "height": 765,
+    "artefactNb": 3,
+    "quitButton": "quitter",
+    "northButton": "nord ▲",
+    "eastButton": "est ▶",
+    "southButton": "sud ▼",
+    "westButton": "◀ ouest",
+    "upButton": "haut △",
+    "downButton": "bas ▽",
+    "backButton": "retour",
+    "helpButton": "aide ?",
+    "dropButton": "lacher",
+    "takeButton": "prendre",
+    "giveButton": "donner",
+    "chargeButton": "charger",
+    "inventoryButton": "inventaire",
+    "fightButton": "combat",
+    "playButton": "Jouer",
+    "devModeButton": "Mode Dev",
+    "settingButton": "Paramètres",
+    "majQuitButton": "Quitter",
+    "majBackButton": "Retour",
+    "soundButton": "Son",
+    "soundOnButton": "Son ON",
+    "soundOffButton": "Son OFF",
+    "runButton": "Fuir",
+    "bagButton": "Sac",
+    "attackButton": "Attaquer",
+    "defendButton": "Défendre"
+  },
+
+  "printWelcomeEN": {
     "welcomeText": "Welcome to the world of Zuul. \nYou are Edward, the hero of this story. You are a knight, the war has been raging for decades and you cannot sleep. \nYou decide to go out to clear your mind by walking away from the castle. You come across a waterfall that hides a cave, mist emanating from it. \nIt is at this moment that your adventure takes all its meaning. \nGood luck knight. If you need help, let me know.\n",
     "endWelcomeText": "Type if you need help. You have 20 minutes to escape from the dungeon before being trapped forever"
   },
 
-  "credit": {
+  "creditEN": {
     "line1": "Story by : Charly D.",
     "line2": "Programming by : Charly D.",
     "line3": "Art by : Google",
@@ -105,13 +168,13 @@
     "roomUpExit": ""
   },
 
-  "potion": {
+  "potionEN": {
     "name": "potion",
     "healing": 50,
     "location": "lobby"
   },
 
-  "item1": {
+  "item1EN": {
     "name": "warmog's_armor",
     "description": "This is the armor of Warmog the Giant",
     "weight": 40,
@@ -121,7 +184,7 @@
     "fightable": false
   },
 
-  "item2": {
+  "item2EN": {
     "name": "blade_of_the_ruined_king",
     "description": "This is the blade of Viego, it weighs nothing compared to its burden",
     "weight": 20,
@@ -131,7 +194,7 @@
     "fightable": false
   },
 
-  "item3": {
+  "item3EN": {
     "name": "frostfire_gauntlet",
     "description": "This is the last artefact of the dungeon",
     "weight": 10,
@@ -141,7 +204,7 @@
     "fightable": false
   },
 
-  "item4": {
+  "item4EN": {
     "name": "wedding_ring",
     "description": "This is a wedding ring, it's will be usefull",
     "weight": 0,
@@ -151,7 +214,7 @@
     "fightable": false
   },
 
-  "item5": {
+  "item5EN": {
     "name": "cookie",
     "description": "This is a magic cookie",
     "weight": 0,
@@ -161,7 +224,7 @@
     "fightable": false
   },
 
-  "player": {
+  "playerEN": {
     "playerName": "Edward",
     "maxWeight": 25,
     "maxMovement": 41,
@@ -186,7 +249,7 @@
     "playerAttackType3": "physical"
   },
 
-  "npc1": {
+  "npc1EN": {
     "name": "warmog",
     "description": "Warmog the giant",
     "image": "faceImages/warmog.png",
@@ -215,7 +278,7 @@
     "attackType3" : "special"
   },
 
-  "npc2": {
+  "npc2EN": {
     "name": "viego",
     "description": "Viego the king",
     "image": "faceImages/npc_viego.png",
@@ -244,7 +307,7 @@
     "attackType3" : "special"
   },
 
-  "npc3": {
+  "npc3EN": {
     "name": "hazelgash",
     "description": "Hazelgash the wizard",
     "image": "faceImages/hazelgash.png",
@@ -273,7 +336,7 @@
     "attackType3" : "special"
   },
 
-  "npc4": {
+  "npc4EN": {
     "name": "garret",
     "description": "garret",
     "image": "faceImages/garret.png",

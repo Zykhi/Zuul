@@ -14,10 +14,38 @@ public class JSONReader {
   private JSONObject aJsonObject;
 
   //Game Settings
+  private String aLanguage;
   private String aGameName;
   private long aGameWidth;
   private long aGameHeight;
   private long aArtefactNb;
+  private String aQuitButton;
+  private String aNorthButton;
+  private String aSouthButton;
+  private String aEastButton;
+  private String aWestButton;
+  private String aUpButton;
+  private String aDownButton;
+  private String aBackButton;
+  private String aHelpButton;
+  private String aDropButton;
+  private String aTakeButton;
+  private String aGiveButton;
+  private String aChargeButton;
+  private String aInventoryButton;
+  private String aFightButton;
+  private String aPlayButton;
+  private String aDevModeButton;
+  private String aSettingButton;
+  private String aMajQuitButton;
+  private String aMajBackButton;
+  private String aSoundButton;
+  private String aSoundOnButton;
+  private String aSoundOffButton;
+  private String aRunButton;
+  private String aBagButton;
+  private String aAttackButton;
+  private String aDefendButton;
 
   //Player
   private String aPlayerName;
@@ -321,6 +349,8 @@ public class JSONReader {
     // typecasting obj to JSONObject
     this.aJsonObject = (JSONObject) aJsonReader;
 
+    aLanguage = "EN";
+
     setGameSettings();
 
     //Player information
@@ -354,13 +384,48 @@ public class JSONReader {
     setRoom7Information();
   }
 
+  private void setLanguage() {}
+
+  private String getLanguage() {
+    return aLanguage;
+  }
+
   private void setGameSettings() {
-    Map vGameSettings = ((Map) aJsonObject.get("gameSettings"));
+    String vPath = "gameSettings" + getLanguage();
+
+    Map vGameSettings = ((Map) aJsonObject.get(vPath));
 
     aGameName = (String) vGameSettings.get("name");
     aGameWidth = (long) vGameSettings.get("width");
     aGameHeight = (long) vGameSettings.get("height");
     aArtefactNb = (long) vGameSettings.get("artefactNb");
+    aQuitButton = (String) vGameSettings.get("quitButton");
+    aNorthButton = (String) vGameSettings.get("northButton");
+    aEastButton = (String) vGameSettings.get("eastButton");
+    aSouthButton = (String) vGameSettings.get("southButton");
+    aWestButton = (String) vGameSettings.get("westButton");
+    aUpButton = (String) vGameSettings.get("upButton");
+    aDownButton = (String) vGameSettings.get("downButton");
+    aBackButton = (String) vGameSettings.get("backButton");
+    aHelpButton = (String) vGameSettings.get("helpButton");
+    aDropButton = (String) vGameSettings.get("dropButton");
+    aTakeButton = (String) vGameSettings.get("takeButton");
+    aGiveButton = (String) vGameSettings.get("giveButton");
+    aChargeButton = (String) vGameSettings.get("chargeButton");
+    aInventoryButton = (String) vGameSettings.get("inventoryButton");
+    aFightButton = (String) vGameSettings.get("fightButton");
+    aPlayButton = (String) vGameSettings.get("playButton");
+    aDevModeButton = (String) vGameSettings.get("devModeButton");
+    aSettingButton = (String) vGameSettings.get("settingButton");
+    aMajQuitButton = (String) vGameSettings.get("majQuitButton");
+    aMajBackButton = (String) vGameSettings.get("majBackButton");
+    aSoundButton = (String) vGameSettings.get("soundButton");
+    aSoundOnButton = (String) vGameSettings.get("soundOnButton");
+    aSoundOffButton = (String) vGameSettings.get("soundOffButton");
+    aRunButton = (String) vGameSettings.get("runButton");
+    aBagButton = (String) vGameSettings.get("bagButton");
+    aAttackButton = (String) vGameSettings.get("attackButton");
+    aDefendButton = (String) vGameSettings.get("defendButton");
   }
 
   public String getGameName() {
@@ -379,8 +444,117 @@ public class JSONReader {
     return (int) aArtefactNb;
   }
 
+  public String getQuitButton() {
+    return aQuitButton;
+  }
+
+  public String getNorthButton() {
+    return aNorthButton;
+  }
+
+  public String getEastButton() {
+    return aEastButton;
+  }
+
+  public String getSouthButton() {
+    return aSouthButton;
+  }
+
+  public String getWestButton() {
+    return aWestButton;
+  }
+
+  public String getUpButton() {
+    return aUpButton;
+  }
+
+  public String getDownButton() {
+    return aDownButton;
+  }
+
+  public String getBackButton() {
+    return aBackButton;
+  }
+
+  public String getHelpButton() {
+    return aHelpButton;
+  }
+
+  public String getDropButton() {
+    return aDropButton;
+  }
+
+  public String getTakeButton() {
+    return aTakeButton;
+  }
+
+  public String getGiveButton() {
+    return aGiveButton;
+  }
+
+  public String getChargeButton() {
+    return aChargeButton;
+  }
+
+  public String getInventoryButton() {
+    return aInventoryButton;
+  }
+
+  public String getFightButton() {
+    return aFightButton;
+  }
+
+  public String getPlayButton() {
+    return aPlayButton;
+  }
+
+  public String getDevModeButton() {
+    return aDevModeButton;
+  }
+
+  public String getSettingButton() {
+    return aSettingButton;
+  }
+
+  public String getMajQuitButton() {
+    return aMajQuitButton;
+  }
+
+  public String getMajBackButton() {
+    return aMajBackButton;
+  }
+
+  public String getSoundButton() {
+    return aSoundButton;
+  }
+
+  public String getSoundOnButton() {
+    return aSoundOnButton;
+  }
+
+  public String getSoundOffButton() {
+    return aSoundOffButton;
+  }
+
+  public String getRunButton() {
+    return aRunButton;
+  }
+
+  public String getBagButton() {
+    return aBagButton;
+  }
+
+  public String getAttackButton() {
+    return aAttackButton;
+  }
+
+  public String getDefendButton() {
+    return aDefendButton;
+  }
+
   private void setPlayerInformation() {
-    Map vPlayer = ((Map) aJsonObject.get("player"));
+    String vPath = "player" + getLanguage();
+    Map vPlayer = ((Map) aJsonObject.get(vPath));
     getPlayerAttributes(vPlayer);
   }
 
@@ -482,7 +656,8 @@ public class JSONReader {
   }
 
   private void setAllWelcomeText() {
-    Map vText = ((Map) aJsonObject.get("printWelcome"));
+    String vPath = "printWelcome" + getLanguage();
+    Map vText = ((Map) aJsonObject.get(vPath));
     aWelcomeText = (String) vText.get("welcomeText");
     aEndWelcomeText = (String) vText.get("endWelcomeText");
   }
@@ -496,7 +671,8 @@ public class JSONReader {
   }
 
   private void setCredit() {
-    Map vCredit = ((Map) aJsonObject.get("credit"));
+    String vPath = "credit" + getLanguage();
+    Map vCredit = ((Map) aJsonObject.get(vPath));
     aLine1 = (String) vCredit.get("line1");
     aLine2 = (String) vCredit.get("line2");
     aLine3 = (String) vCredit.get("line3");
@@ -535,7 +711,8 @@ public class JSONReader {
   }
 
   private void setRoom1Information() {
-    Map vRoom1 = ((Map) aJsonObject.get("room1"));
+    String vPath = "room1";
+    Map vRoom1 = ((Map) aJsonObject.get(vPath));
 
     aRoom1Name = (String) vRoom1.get("roomName");
     aRoom1Description = (String) vRoom1.get("roomDescription");
@@ -580,6 +757,7 @@ public class JSONReader {
   }
 
   private void setRoom2Information() {
+    String vPath = "room2" + getLanguage();
     Map vRoom2 = ((Map) aJsonObject.get("room2"));
 
     aRoom2Name = (String) vRoom2.get("roomName");
@@ -913,7 +1091,8 @@ public class JSONReader {
   }
 
   private void setPotionInformation() {
-    Map vPotion = ((Map) aJsonObject.get("potion"));
+    String vPath = "potion" + getLanguage();
+    Map vPotion = ((Map) aJsonObject.get(vPath));
 
     aPotionName = (String) vPotion.get("name");
     aPotionHealing = (long) vPotion.get("healing");
@@ -933,7 +1112,8 @@ public class JSONReader {
   }
 
   private void setItem1Information() {
-    Map vItem1 = ((Map) aJsonObject.get("item1"));
+    String vPath = "item1" + getLanguage();
+    Map vItem1 = ((Map) aJsonObject.get(vPath));
 
     aItem1Name = (String) vItem1.get("name");
     aItem1Description = (String) vItem1.get("description");
@@ -973,7 +1153,8 @@ public class JSONReader {
   }
 
   private void setItem2Information() {
-    Map vItem2 = ((Map) aJsonObject.get("item2"));
+    String vPath = "item2" + getLanguage();
+    Map vItem2 = ((Map) aJsonObject.get(vPath));
 
     aItem2Name = (String) vItem2.get("name");
     aItem2Description = (String) vItem2.get("description");
@@ -1013,7 +1194,8 @@ public class JSONReader {
   }
 
   private void setItem3Information() {
-    Map vItem3 = ((Map) aJsonObject.get("item3"));
+    String vPath = "item3" + getLanguage();
+    Map vItem3 = ((Map) aJsonObject.get(vPath));
 
     aItem3Name = (String) vItem3.get("name");
     aItem3Description = (String) vItem3.get("description");
@@ -1053,7 +1235,8 @@ public class JSONReader {
   }
 
   private void setItem4Information() {
-    Map vItem4 = ((Map) aJsonObject.get("item4"));
+    String vPath = "item4" + getLanguage();
+    Map vItem4 = ((Map) aJsonObject.get(vPath));
 
     aItem4Name = (String) vItem4.get("name");
     aItem4Description = (String) vItem4.get("description");
@@ -1093,7 +1276,8 @@ public class JSONReader {
   }
 
   private void setItem5Information() {
-    Map vItem5 = ((Map) aJsonObject.get("item5"));
+    String vPath = "item5" + getLanguage();
+    Map vItem5 = ((Map) aJsonObject.get(vPath));
 
     aItem5Name = (String) vItem5.get("name");
     aItem5Description = (String) vItem5.get("description");
@@ -1133,7 +1317,8 @@ public class JSONReader {
   }
 
   private void setNPC1Information() {
-    Map vNPC1 = ((Map) aJsonObject.get("npc1"));
+    String vPath = "npc1" + getLanguage();
+    Map vNPC1 = ((Map) aJsonObject.get(vPath));
 
     aNPC1Name = (String) vNPC1.get("name");
     aNPC1Description = (String) vNPC1.get("description");
@@ -1242,7 +1427,8 @@ public class JSONReader {
   }
 
   private void setNPC2Information() {
-    Map vNPC2 = ((Map) aJsonObject.get("npc2"));
+    String vPath = "npc2" + getLanguage();
+    Map vNPC2 = ((Map) aJsonObject.get(vPath));
 
     aNPC2Name = (String) vNPC2.get("name");
     aNPC2Description = (String) vNPC2.get("description");
@@ -1351,7 +1537,8 @@ public class JSONReader {
   }
 
   private void setNPC3Information() {
-    Map vNPC3 = ((Map) aJsonObject.get("npc3"));
+    String vPath = "npc3" + getLanguage();
+    Map vNPC3 = ((Map) aJsonObject.get(vPath));
 
     aNPC3Name = (String) vNPC3.get("name");
     aNPC3Description = (String) vNPC3.get("description");
@@ -1460,7 +1647,8 @@ public class JSONReader {
   }
 
   private void setNPC4Information() {
-    Map vNPC4 = ((Map) aJsonObject.get("npc4"));
+    String vPath = "npc4" + getLanguage(); 
+    Map vNPC4 = ((Map) aJsonObject.get(vPath));
 
     aNPC4Name = (String) vNPC4.get("name");
     aNPC4Description = (String) vNPC4.get("description");

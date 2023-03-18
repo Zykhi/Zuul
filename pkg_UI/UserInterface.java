@@ -744,35 +744,35 @@ public class UserInterface implements ActionListener {
    * This method creates all the button
    */
   private void createButton() {
-    this.aQuitButton = new JButton("quit");
-    this.aNorthButton = new JButton("north ▲");
-    this.aEastButton = new JButton("east ▶");
-    this.aSouthButton = new JButton("south ▼");
-    this.aWestButton = new JButton("◀ west");
-    this.aUpButton = new JButton("up △");
-    this.aDownButton = new JButton("down ▽");
-    this.aBackButton = new JButton("back ");
-    this.aHelpButton = new JButton("help ?");
-    this.aDropButton = new JButton("drop");
-    this.aTakeButton = new JButton("take");
-    this.aGiveButton = new JButton("give");
-    this.aChargeButton = new JButton("charge");
-    this.aInventoryButton = new JButton("inventory");
-    this.aBattleButton = new JButton("fight");
-    this.aPlay = new JButton("Play");
-    this.aDevMode = new JButton("DevMode : OFF");
-    this.aSetting = new JButton("Settings");
-    this.aQuit = new JButton("Quit");
-    this.aQuit2 = new JButton("Quit");
-    this.aBack = new JButton("Back");
-    this.aBack2 = new JButton("Back");
-    this.aSound = new JButton("Sound");
-    this.aSoundOn = new JButton("Sound On");
-    this.aSoundOff = new JButton("Sound Off");
-    this.aRunButton = new JButton("Run");
-    this.aBagButton = new JButton("Bag");
-    this.aAttackButton = new JButton("Attack");
-    this.aDefendButton = new JButton("Defend");
+    this.aQuitButton = new JButton(aJsonReader.getQuitButton());
+    this.aNorthButton = new JButton(aJsonReader.getNorthButton());
+    this.aEastButton = new JButton(aJsonReader.getEastButton());
+    this.aSouthButton = new JButton(aJsonReader.getSouthButton());
+    this.aWestButton = new JButton(aJsonReader.getWestButton());
+    this.aUpButton = new JButton(aJsonReader.getUpButton());
+    this.aDownButton = new JButton(aJsonReader.getDownButton());
+    this.aBackButton = new JButton(aJsonReader.getBackButton());
+    this.aHelpButton = new JButton(aJsonReader.getHelpButton());
+    this.aDropButton = new JButton(aJsonReader.getDropButton());
+    this.aTakeButton = new JButton(aJsonReader.getTakeButton());
+    this.aGiveButton = new JButton(aJsonReader.getGiveButton());
+    this.aChargeButton = new JButton(aJsonReader.getChargeButton());
+    this.aInventoryButton = new JButton(aJsonReader.getInventoryButton());
+    this.aBattleButton = new JButton(aJsonReader.getFightButton());
+    this.aPlay = new JButton(aJsonReader.getPlayButton());
+    this.aDevMode = new JButton(aJsonReader.getDevModeButton());
+    this.aSetting = new JButton(aJsonReader.getSettingButton());
+    this.aQuit = new JButton(aJsonReader.getMajQuitButton());
+    this.aQuit2 = new JButton(aJsonReader.getMajQuitButton());
+    this.aBack = new JButton(aJsonReader.getMajBackButton());
+    this.aBack2 = new JButton(aJsonReader.getMajBackButton());
+    this.aSound = new JButton(aJsonReader.getSoundButton());
+    this.aSoundOn = new JButton(aJsonReader.getSoundOnButton());
+    this.aSoundOff = new JButton(aJsonReader.getSoundOffButton());
+    this.aRunButton = new JButton(aJsonReader.getRunButton());
+    this.aBagButton = new JButton(aJsonReader.getBagButton());
+    this.aAttackButton = new JButton(aJsonReader.getAttackButton());
+    this.aDefendButton = new JButton(aJsonReader.getDefendButton());
 
     // add custom font on buttons
     this.aQuitButton.setFont(aButtonsFont);
@@ -1485,10 +1485,10 @@ public class UserInterface implements ActionListener {
   private void devModeToggle() {
     if (aEngine.isDevMode()) {
       this.aEngine.setDevMode(false);
-      this.aDevMode.setText("DevMode : OFF");
+      this.aDevMode.setText(aJsonReader.getDevModeButton()+ " : OFF");
     } else {
       this.aEngine.setDevMode(true);
-      this.aDevMode.setText("DevMode : ON");
+      this.aDevMode.setText(aJsonReader.getDevModeButton() + " : ON");
     }
   }
 
