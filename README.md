@@ -4,10 +4,10 @@
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Zuul GOTY Edition README</h3>
+  <h3 align="center">Zuul Game Maker README</h3>
 
   <p align="center">
-    An awesome, incredibly and fantastic adventure game
+    An awesome, incredibly and fantastic adventure game maker
   </p>
 </div>
 
@@ -29,7 +29,6 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
 
@@ -39,11 +38,11 @@
 
 [![zuul][zuul-screenshot]](https://perso.esiee.fr/~diouyc/ZuulGOTYEdition/)
 
-It's an adventure game developed in java from the IGI-1202 unit of Denis BUREAU, IT professor at ESIEE PARIS. The whole game is in English, the report is in French for the moment, a translation will be available soon to be able to play the game again without understanding French.
+It's an adventure game developed in java from the IGI-1202 unit of Denis BUREAU, IT professor at ESIEE PARIS. This game has been modified to become a game maker.
 
 ### Built With
 
-This game is built in Java, this section will be filled as the project progresses
+This game is built in Java
 
 - [Java](https://www.java.com/en/)
 
@@ -51,35 +50,19 @@ This game is built in Java, this section will be filled as the project progresse
 
 ## Getting Started
 
-It is a text adventure game
+This is a game maker
 
-section filled with progress
 
-### Prerequisites
+### Use the game maker
 
-how to install the game
+To modify the game you just have to modify the JSON file "GameInformation".
 
-```sh
-filled with progress
-```
-
-### Installation
-
-_how to install the game_
-
-<!-- ROADMAP -->
-
-## Roadmap
-
-- [x] Add report
-
-will be update soon
 
 <!-- CONTACT -->
 
 ## Contact
 
-email : charly.diouy@edu.esiee.fr
+email : cdiouy@gmail.com
 
 Project Link : [https://github.com/Zykhi/Zuul](https://github.com/Zykhi/Zuul)
 
