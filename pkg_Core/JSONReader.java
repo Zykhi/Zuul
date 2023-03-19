@@ -2,14 +2,12 @@ package pkg_Core;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-
 // Java program to read JSON from a file
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 
@@ -369,8 +367,7 @@ public class JSONReader {
     setGameInformation();
   }
 
-  public void setGameInformation(){
-
+  public void setGameInformation() {
     setGameSettings();
 
     //Player information
@@ -412,7 +409,6 @@ public class JSONReader {
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
-    
   }
 
   public String getLanguage() {
@@ -453,7 +449,8 @@ public class JSONReader {
     aSoundOnButton = (String) vGameSettings.get("soundOnButton");
     aSoundOffButton = (String) vGameSettings.get("soundOffButton");
     aLanguageButton = (String) vGameSettings.get("languageButton");
-    aEnglishLanguageButton = (String) vGameSettings.get("englishLanguageButton");
+    aEnglishLanguageButton =
+      (String) vGameSettings.get("englishLanguageButton");
     aFrenchLanguageButton = (String) vGameSettings.get("frenchLanguageButton");
     aRunButton = (String) vGameSettings.get("runButton");
     aBagButton = (String) vGameSettings.get("bagButton");

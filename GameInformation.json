@@ -40,8 +40,8 @@
     "buttonsSizeFont": 14,
     "battleSizeFont": 24,
     "menuSizeFont": 25,
-    "mainMenuFont": "font/pixel.ttf",
-    "titleSizeFont": 48
+    "mainMenuFont": "font/dpcomic.ttf",
+    "titleSizeFont": 85
   },
 
   "gameSettingsFR": {
@@ -67,7 +67,7 @@
     "fightButton": "combat",
     "playButton": "Jouer",
     "devModeButton": "Mode Dev",
-    "settingButton": "Paramètres",
+    "settingButton": "Parametres",
     "majQuitButton": "Quitter",
     "majBackButton": "Retour",
     "soundButton": "Son",
@@ -85,8 +85,8 @@
     "buttonsSizeFont": 14,
     "battleSizeFont": 24,
     "menuSizeFont": 25,
-    "mainMenuFont": "font/pixel.ttf",
-    "titleSizeFont": 48
+    "mainMenuFont": "font/dpcomic.ttf",
+    "titleSizeFont": 85
   },
 
   "printWelcomeEN": {

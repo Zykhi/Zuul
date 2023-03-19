@@ -607,8 +607,6 @@ public class UserInterface implements ActionListener {
     }
   }
 
-
-
   /**
    * Show the background of the game over menu
    */
@@ -705,7 +703,11 @@ public class UserInterface implements ActionListener {
     // to import custom font
     // https://www.ryisnow.online/2021/04/java-for-beginner-how-to-use-custom-font.html
     try {
-      aFont = Font.createFont(Font.TRUETYPE_FONT, new File(aJsonReader.getGameFont()));
+      aFont =
+        Font.createFont(
+          Font.TRUETYPE_FONT,
+          new File(aJsonReader.getGameFont())
+        );
       GraphicsEnvironment vGraphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
       vGraphicsEnvironment.registerFont(aFont);
 
@@ -725,7 +727,10 @@ public class UserInterface implements ActionListener {
     // to import custom font
     try {
       aMainMenuFont =
-        Font.createFont(Font.TRUETYPE_FONT, new File(aJsonReader.getMainMenuFont()));
+        Font.createFont(
+          Font.TRUETYPE_FONT,
+          new File(aJsonReader.getMainMenuFont())
+        );
       GraphicsEnvironment vGraphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
       vGraphicsEnvironment.registerFont(aMainMenuFont);
 
@@ -1007,6 +1012,7 @@ public class UserInterface implements ActionListener {
 
   /**
    * This method create the panel of the battle
+   * //TODO: Update Battle panel
    */
   private void createBattlePanel() {
     this.aBattlerPanel = new JLayeredPane();
@@ -1225,7 +1231,7 @@ public class UserInterface implements ActionListener {
     this.aSoundPanel.add(vTitle, JLayeredPane.PALETTE_LAYER);
   }
 
-  private void createLanguagePanel(){
+  private void createLanguagePanel() {
     this.aLanguagePanel = new JLayeredPane();
     this.aLanguageBackground = new JLabel();
     this.aLanguagePanel.setPreferredSize(new Dimension(1077, 765));
@@ -1554,7 +1560,7 @@ public class UserInterface implements ActionListener {
   private void devModeToggle() {
     if (aEngine.isDevMode()) {
       this.aEngine.setDevMode(false);
-      this.aDevMode.setText(aJsonReader.getDevModeButton()+ " : OFF");
+      this.aDevMode.setText(aJsonReader.getDevModeButton() + " : OFF");
     } else {
       this.aEngine.setDevMode(true);
       this.aDevMode.setText(aJsonReader.getDevModeButton() + " : ON");
@@ -1614,18 +1620,17 @@ public class UserInterface implements ActionListener {
       writer.print("EN");
       writer.close();
     } catch (FileNotFoundException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     JDialog vDialog = new JDialog();
-      JLabel vLabel = new JLabel(
-        "You must restart the game for the changes to take effect"
-      );
-      vLabel.setFont(aTextFont);
-      vDialog.add(vLabel);
-      vDialog.setSize(800, 100);
-      vDialog.setLocation(100, 100);
-      vDialog.setVisible(true);
+    JLabel vLabel = new JLabel(
+      "You must restart the game for the changes to take effect"
+    );
+    vLabel.setFont(aTextFont);
+    vDialog.add(vLabel);
+    vDialog.setSize(800, 100);
+    vDialog.setLocation(100, 100);
+    vDialog.setVisible(true);
   }
 
   private void frenchButton() {
@@ -1635,18 +1640,17 @@ public class UserInterface implements ActionListener {
       writer.print("FR");
       writer.close();
     } catch (FileNotFoundException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     JDialog vDialog = new JDialog();
-      JLabel vLabel = new JLabel(
-        "Vous devez redémarrer le jeu pour que les changements prennent effet"
-      );
-      vLabel.setFont(aTextFont);
-      vDialog.add(vLabel);
-      vDialog.setSize(800, 100);
-      vDialog.setLocation(100, 100);
-      vDialog.setVisible(true);
+    JLabel vLabel = new JLabel(
+      "Vous devez redémarrer le jeu pour que les changements prennent effet"
+    );
+    vLabel.setFont(aTextFont);
+    vDialog.add(vLabel);
+    vDialog.setSize(800, 100);
+    vDialog.setLocation(100, 100);
+    vDialog.setVisible(true);
   }
 
   /**
