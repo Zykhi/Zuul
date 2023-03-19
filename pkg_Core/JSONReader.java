@@ -1,10 +1,15 @@
 package pkg_Core;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 // Java program to read JSON from a file
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Scanner;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 
@@ -42,6 +47,9 @@ public class JSONReader {
   private String aSoundButton;
   private String aSoundOnButton;
   private String aSoundOffButton;
+  private String aLanguageButton;
+  private String aEnglishLanguageButton;
+  private String aFrenchLanguageButton;
   private String aRunButton;
   private String aBagButton;
   private String aAttackButton;
@@ -349,7 +357,11 @@ public class JSONReader {
     // typecasting obj to JSONObject
     this.aJsonObject = (JSONObject) aJsonReader;
 
-    aLanguage = "EN";
+    setLanguage();
+    setGameInformation();
+  }
+
+  public void setGameInformation(){
 
     setGameSettings();
 
@@ -384,9 +396,19 @@ public class JSONReader {
     setRoom7Information();
   }
 
-  private void setLanguage() {}
+  public void setLanguage() {
+    Scanner vScanner;
+    try {
+      vScanner = new Scanner(new File("language.txt"));
+      aLanguage = vScanner.nextLine();
+    } catch (FileNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    
+  }
 
-  private String getLanguage() {
+  public String getLanguage() {
     return aLanguage;
   }
 
@@ -422,6 +444,9 @@ public class JSONReader {
     aSoundButton = (String) vGameSettings.get("soundButton");
     aSoundOnButton = (String) vGameSettings.get("soundOnButton");
     aSoundOffButton = (String) vGameSettings.get("soundOffButton");
+    aLanguageButton = (String) vGameSettings.get("languageButton");
+    aEnglishLanguageButton = (String) vGameSettings.get("englishLanguageButton");
+    aFrenchLanguageButton = (String) vGameSettings.get("frenchLanguageButton");
     aRunButton = (String) vGameSettings.get("runButton");
     aBagButton = (String) vGameSettings.get("bagButton");
     aAttackButton = (String) vGameSettings.get("attackButton");
@@ -534,6 +559,18 @@ public class JSONReader {
 
   public String getSoundOffButton() {
     return aSoundOffButton;
+  }
+
+  public String getLanguageButton() {
+    return aLanguageButton;
+  }
+
+  public String getEnglishLanguageButton() {
+    return aEnglishLanguageButton;
+  }
+
+  public String getFrenchLanguageButton() {
+    return aFrenchLanguageButton;
   }
 
   public String getRunButton() {
@@ -1647,7 +1684,7 @@ public class JSONReader {
   }
 
   private void setNPC4Information() {
-    String vPath = "npc4" + getLanguage(); 
+    String vPath = "npc4" + getLanguage();
     Map vNPC4 = ((Map) aJsonObject.get(vPath));
 
     aNPC4Name = (String) vNPC4.get("name");

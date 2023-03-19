@@ -13,7 +13,9 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -62,6 +64,7 @@ public class UserInterface implements ActionListener {
   private JLabel aPlayerName;
   private JLabel aSettingBackground;
   private JLabel aSoundBackground;
+  private JLabel aLanguageBackground;
   private JLabel aGameOverBackGroundImage;
   private JLabel aVictoryBackGroundImage;
   private JLabel aGameTimer;
@@ -84,6 +87,7 @@ public class UserInterface implements ActionListener {
   private JLayeredPane aMainMenuPanel;
   private JLayeredPane aSoundPanel;
   private JLayeredPane aSettingPanel;
+  private JLayeredPane aLanguagePanel;
   private JLayeredPane aGameOverPanel;
   private JLayeredPane aVictoryPanel;
   private Container aSceneManager;
@@ -109,9 +113,13 @@ public class UserInterface implements ActionListener {
   private JButton aQuit2;
   private JButton aBack;
   private JButton aBack2;
+  private JButton aBack3;
   private JButton aSound;
   private JButton aSoundOn;
   private JButton aSoundOff;
+  private JButton aLanguage;
+  private JButton aEnglish;
+  private JButton aFrench;
   private JButton aRunButton;
   private JButton aBagButton;
   private JButton aAttackButton;
@@ -587,6 +595,20 @@ public class UserInterface implements ActionListener {
     }
   }
 
+  private void showLanguageBackground() {
+    String vImagePath = "gameImages/MainMenu.jpg"; // to change the directory
+    URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
+    if (vImageURL == null) System.out.println(
+      "Image not found : " + vImagePath
+    ); else {
+      ImageIcon vIcon = new ImageIcon(vImageURL);
+      this.aLanguageBackground.setIcon(vIcon);
+      this.aGameWindow.pack();
+    }
+  }
+
+
+
   /**
    * Show the background of the game over menu
    */
@@ -766,9 +788,13 @@ public class UserInterface implements ActionListener {
     this.aQuit2 = new JButton(aJsonReader.getMajQuitButton());
     this.aBack = new JButton(aJsonReader.getMajBackButton());
     this.aBack2 = new JButton(aJsonReader.getMajBackButton());
+    this.aBack3 = new JButton(aJsonReader.getMajBackButton());
     this.aSound = new JButton(aJsonReader.getSoundButton());
     this.aSoundOn = new JButton(aJsonReader.getSoundOnButton());
     this.aSoundOff = new JButton(aJsonReader.getSoundOffButton());
+    this.aLanguage = new JButton(aJsonReader.getLanguageButton());
+    this.aEnglish = new JButton(aJsonReader.getEnglishLanguageButton());
+    this.aFrench = new JButton(aJsonReader.getFrenchLanguageButton());
     this.aRunButton = new JButton(aJsonReader.getRunButton());
     this.aBagButton = new JButton(aJsonReader.getBagButton());
     this.aAttackButton = new JButton(aJsonReader.getAttackButton());
@@ -797,9 +823,13 @@ public class UserInterface implements ActionListener {
     this.aQuit2.setFont(aMenuFont);
     this.aBack.setFont(aMenuFont);
     this.aBack2.setFont(aMenuFont);
+    this.aBack3.setFont(aMenuFont);
     this.aSound.setFont(aMenuFont);
     this.aSoundOn.setFont(aMenuFont);
     this.aSoundOff.setFont(aMenuFont);
+    this.aLanguage.setFont(aMenuFont);
+    this.aEnglish.setFont(aMenuFont);
+    this.aFrench.setFont(aMenuFont);
     this.aRunButton.setFont(aMenuFont);
     this.aBagButton.setFont(aMenuFont);
     this.aAttackButton.setFont(aMenuFont);
@@ -829,9 +859,13 @@ public class UserInterface implements ActionListener {
     this.aQuit2.addActionListener(e -> quitButton());
     this.aBack.addActionListener(e -> backButton());
     this.aBack2.addActionListener(e -> backButton2());
+    this.aBack3.addActionListener(e -> backButton3());
     this.aSound.addActionListener(e -> soundButton());
     this.aSoundOn.addActionListener(e -> soundOnButton());
     this.aSoundOff.addActionListener(e -> soundOffButton());
+    this.aLanguage.addActionListener(e -> languageButton());
+    this.aEnglish.addActionListener(e -> englishButton());
+    this.aFrench.addActionListener(e -> frenchButton());
     this.aBagButton.addActionListener(this);
     this.aAttackButton.addActionListener(e -> attackButton());
     this.aDefendButton.addActionListener(e -> this.aEngine.defendButton());
@@ -869,6 +903,7 @@ public class UserInterface implements ActionListener {
     createMainMenuPanel();
     createSettingPanel();
     createSoundPanel();
+    createLanguagePanel();
     createGameOverPanel();
     createVictoryPanel();
 
@@ -880,6 +915,7 @@ public class UserInterface implements ActionListener {
     aSceneManager.add(aBattlerPanel, "Battle");
     aSceneManager.add(aSettingPanel, "Settings");
     aSceneManager.add(aSoundPanel, "Sound");
+    aSceneManager.add(aLanguagePanel, "Language");
     aSceneManager.add(aVictoryPanel, "Victory");
     aSceneManager.add(aGameOverPanel, "GameOver");
   }
@@ -1132,11 +1168,12 @@ public class UserInterface implements ActionListener {
 
     JPanel vButtonsPanel = new JPanel();
     vButtonsPanel.setOpaque(false);
-    vButtonsPanel.setPreferredSize(new Dimension(201, 150));
+    vButtonsPanel.setPreferredSize(new Dimension(201, 200));
     vButtonsPanel.setSize(vButtonsPanel.getPreferredSize());
-    vButtonsPanel.setLayout(new GridLayout(3, 1));
+    vButtonsPanel.setLayout(new GridLayout(4, 1));
     vButtonsPanel.add(aSound);
     vButtonsPanel.add(aDevMode);
+    vButtonsPanel.add(aLanguage);
     vButtonsPanel.add(aBack);
     vButtonsPanel.setLocation(438, 400);
 
@@ -1186,6 +1223,38 @@ public class UserInterface implements ActionListener {
     this.aSoundPanel.add(aSoundBackground, JLayeredPane.DEFAULT_LAYER);
     this.aSoundPanel.add(vButtonsPanel, JLayeredPane.PALETTE_LAYER);
     this.aSoundPanel.add(vTitle, JLayeredPane.PALETTE_LAYER);
+  }
+
+  private void createLanguagePanel(){
+    this.aLanguagePanel = new JLayeredPane();
+    this.aLanguageBackground = new JLabel();
+    this.aLanguagePanel.setPreferredSize(new Dimension(1077, 765));
+    this.aLanguagePanel.setSize(aLanguagePanel.getPreferredSize());
+    this.aLanguageBackground.setSize(aLanguagePanel.getPreferredSize());
+    this.aLanguageBackground.setLocation(0, 0);
+    showLanguageBackground();
+
+    JPanel vButtonsPanel = new JPanel();
+    vButtonsPanel.setOpaque(false);
+    vButtonsPanel.setPreferredSize(new Dimension(201, 150));
+    vButtonsPanel.setSize(vButtonsPanel.getPreferredSize());
+    vButtonsPanel.setLayout(new GridLayout(3, 1));
+    vButtonsPanel.add(aEnglish);
+    vButtonsPanel.add(aFrench);
+    vButtonsPanel.add(aBack3);
+    vButtonsPanel.setLocation(438, 400);
+
+    JLabel vTitle = new JLabel(aJsonReader.getLanguage());
+    vTitle.setFont(aTitleFont);
+    vTitle.setForeground(Color.black);
+    vTitle.setSize(aJsonReader.getGameWidth(), aJsonReader.getGameHeight());
+    vTitle.setHorizontalAlignment(SwingConstants.CENTER);
+    vTitle.setVerticalAlignment(SwingConstants.TOP);
+    vTitle.setLocation(0, 75);
+
+    this.aLanguagePanel.add(aLanguageBackground, JLayeredPane.DEFAULT_LAYER);
+    this.aLanguagePanel.add(vButtonsPanel, JLayeredPane.PALETTE_LAYER);
+    this.aLanguagePanel.add(vTitle, JLayeredPane.PALETTE_LAYER);
   }
 
   /**
@@ -1450,15 +1519,15 @@ public class UserInterface implements ActionListener {
    * It's back to "main" menu of the UI
    */
   public void exitButtonMethod() {
-    aQuitButton.setText("quit");
-    aBackButton.setText("back");
-    aHelpButton.setText("help ?");
-    aDropButton.setText("drop");
-    aTakeButton.setText("take");
-    aGiveButton.setText("give");
-    aChargeButton.setText("charge");
-    aInventoryButton.setText("bag");
-    aBattleButton.setText("fight");
+    aQuitButton.setText(aJsonReader.getQuitButton());
+    aBackButton.setText(aJsonReader.getBackButton());
+    aHelpButton.setText(aJsonReader.getHelpButton());
+    aDropButton.setText(aJsonReader.getDropButton());
+    aTakeButton.setText(aJsonReader.getTakeButton());
+    aGiveButton.setText(aJsonReader.getGiveButton());
+    aChargeButton.setText(aJsonReader.getChargeButton());
+    aInventoryButton.setText(aJsonReader.getInventoryButton());
+    aBattleButton.setText(aJsonReader.getFightButton());
 
     aQuitButton.setActionCommand("quit");
     aBackButton.setActionCommand("back");
@@ -1521,10 +1590,63 @@ public class UserInterface implements ActionListener {
   }
 
   /**
+   * This method is called when the player click on back button in language menu
+   */
+  private void backButton3() {
+    this.aCardLayout.show(aSceneManager, "Settings");
+  }
+
+  /**
    * This method is called when the player click on sound button in settings menu
    */
   private void soundButton() {
     this.aCardLayout.show(aSceneManager, "Sound");
+  }
+
+  private void languageButton() {
+    this.aCardLayout.show(aSceneManager, "Language");
+  }
+
+  private void englishButton() {
+    PrintWriter writer;
+    try {
+      writer = new PrintWriter("language.txt");
+      writer.print("EN");
+      writer.close();
+    } catch (FileNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    JDialog vDialog = new JDialog();
+      JLabel vLabel = new JLabel(
+        "You must restart the game for the changes to take effect"
+      );
+      vLabel.setFont(aTextFont);
+      vDialog.add(vLabel);
+      vDialog.setSize(800, 100);
+      vDialog.setLocation(100, 100);
+      vDialog.setVisible(true);
+  }
+
+  private void frenchButton() {
+    PrintWriter writer;
+    try {
+      writer = new PrintWriter("language.txt");
+      writer.print("FR");
+      writer.close();
+    } catch (FileNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    JDialog vDialog = new JDialog();
+      JLabel vLabel = new JLabel(
+        "Vous devez redémarrer le jeu pour que les changements prennent effet"
+      );
+      vLabel.setFont(aTextFont);
+      vDialog.add(vLabel);
+      vDialog.setSize(800, 100);
+      vDialog.setLocation(100, 100);
+      vDialog.setVisible(true);
   }
 
   /**
