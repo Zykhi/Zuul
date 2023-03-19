@@ -1,6 +1,7 @@
 {
   "gameSettingsEN": {
     "name": "Zuul GOTY Edition",
+    "gameIcon": "gameImages/game.png",
     "width": 1077,
     "height": 765,
     "artefactNb": 3,
@@ -33,11 +34,19 @@
     "runButton": "Run",
     "bagButton": "Bag",
     "attackButton": "Attack",
-    "defendButton": "Defend"
+    "defendButton": "Defend",
+    "gameFont": "font/8bit.ttf",
+    "textSizeFont": 18,
+    "buttonsSizeFont": 14,
+    "battleSizeFont": 24,
+    "menuSizeFont": 25,
+    "mainMenuFont": "font/pixel.ttf",
+    "titleSizeFont": 48
   },
 
   "gameSettingsFR": {
     "name": "Zuul Edition JDLA",
+    "gameIcon": "gameImages/game.png",
     "width": 1077,
     "height": 765,
     "artefactNb": 3,
@@ -70,7 +79,14 @@
     "runButton": "Fuir",
     "bagButton": "Sac",
     "attackButton": "Attaquer",
-    "defendButton": "Défendre"
+    "defendButton": "Défendre",
+    "gameFont": "font/8bit.ttf",
+    "textSizeFont": 18,
+    "buttonsSizeFont": 14,
+    "battleSizeFont": 24,
+    "menuSizeFont": 25,
+    "mainMenuFont": "font/pixel.ttf",
+    "titleSizeFont": 48
   },
 
   "printWelcomeEN": {

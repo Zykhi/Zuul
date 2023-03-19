@@ -21,6 +21,7 @@ public class JSONReader {
   //Game Settings
   private String aLanguage;
   private String aGameName;
+  private String aGameIcon;
   private long aGameWidth;
   private long aGameHeight;
   private long aArtefactNb;
@@ -54,6 +55,13 @@ public class JSONReader {
   private String aBagButton;
   private String aAttackButton;
   private String aDefendButton;
+  private String aGameFont;
+  private long aTextSizeFont;
+  private long aButtonsSizeFont;
+  private long aBattleSizeFont;
+  private long aMenuSizeFont;
+  private String aMainMenuFont;
+  private long aTitleSizeFont;
 
   //Player
   private String aPlayerName;
@@ -402,7 +410,6 @@ public class JSONReader {
       vScanner = new Scanner(new File("language.txt"));
       aLanguage = vScanner.nextLine();
     } catch (FileNotFoundException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     
@@ -418,6 +425,7 @@ public class JSONReader {
     Map vGameSettings = ((Map) aJsonObject.get(vPath));
 
     aGameName = (String) vGameSettings.get("name");
+    aGameIcon = (String) vGameSettings.get("gameIcon");
     aGameWidth = (long) vGameSettings.get("width");
     aGameHeight = (long) vGameSettings.get("height");
     aArtefactNb = (long) vGameSettings.get("artefactNb");
@@ -451,10 +459,21 @@ public class JSONReader {
     aBagButton = (String) vGameSettings.get("bagButton");
     aAttackButton = (String) vGameSettings.get("attackButton");
     aDefendButton = (String) vGameSettings.get("defendButton");
+    aGameFont = (String) vGameSettings.get("gameFont");
+    aTextSizeFont = (long) vGameSettings.get("textSizeFont");
+    aButtonsSizeFont = (long) vGameSettings.get("buttonsSizeFont");
+    aBattleSizeFont = (long) vGameSettings.get("battleSizeFont");
+    aMenuSizeFont = (long) vGameSettings.get("menuSizeFont");
+    aMainMenuFont = (String) vGameSettings.get("mainMenuFont");
+    aTitleSizeFont = (long) vGameSettings.get("titleSizeFont");
   }
 
   public String getGameName() {
     return aGameName;
+  }
+
+  public String getGameIcon() {
+    return aGameIcon;
   }
 
   public int getGameWidth() {
@@ -587,6 +606,34 @@ public class JSONReader {
 
   public String getDefendButton() {
     return aDefendButton;
+  }
+
+  public String getGameFont() {
+    return aGameFont;
+  }
+
+  public float getTextSizeFont() {
+    return (float) aTextSizeFont;
+  }
+
+  public float getButtonsSizeFont() {
+    return (float) aButtonsSizeFont;
+  }
+
+  public float getBattleSizeFont() {
+    return (float) aBattleSizeFont;
+  }
+
+  public float getMenuSizeFont() {
+    return (float) aMenuSizeFont;
+  }
+
+  public String getMainMenuFont() {
+    return aMainMenuFont;
+  }
+
+  public float getTitleSizeFont() {
+    return (float) aTitleSizeFont;
   }
 
   private void setPlayerInformation() {

@@ -705,14 +705,14 @@ public class UserInterface implements ActionListener {
     // to import custom font
     // https://www.ryisnow.online/2021/04/java-for-beginner-how-to-use-custom-font.html
     try {
-      aFont = Font.createFont(Font.TRUETYPE_FONT, new File("font/8bit.ttf"));
+      aFont = Font.createFont(Font.TRUETYPE_FONT, new File(aJsonReader.getGameFont()));
       GraphicsEnvironment vGraphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
       vGraphicsEnvironment.registerFont(aFont);
 
-      aTextFont = aFont.deriveFont(18f);
-      aButtonsFont = aFont.deriveFont(14f);
-      aBattleFont = aFont.deriveFont(24f);
-      aMenuFont = aFont.deriveFont(25f);
+      aTextFont = aFont.deriveFont(aJsonReader.getTextSizeFont());
+      aButtonsFont = aFont.deriveFont(aJsonReader.getButtonsSizeFont());
+      aBattleFont = aFont.deriveFont(aJsonReader.getBattleSizeFont());
+      aMenuFont = aFont.deriveFont(aJsonReader.getMenuSizeFont());
     } catch (IOException | FontFormatException e) {
       e.printStackTrace();
     }
@@ -725,11 +725,11 @@ public class UserInterface implements ActionListener {
     // to import custom font
     try {
       aMainMenuFont =
-        Font.createFont(Font.TRUETYPE_FONT, new File("font/pixel.ttf"));
+        Font.createFont(Font.TRUETYPE_FONT, new File(aJsonReader.getMainMenuFont()));
       GraphicsEnvironment vGraphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
       vGraphicsEnvironment.registerFont(aMainMenuFont);
 
-      aTitleFont = aMainMenuFont.deriveFont(48f);
+      aTitleFont = aMainMenuFont.deriveFont(aJsonReader.getTitleSizeFont());
     } catch (IOException | FontFormatException e) {
       e.printStackTrace();
     }
@@ -748,7 +748,7 @@ public class UserInterface implements ActionListener {
         new Dimension(aJsonReader.getGameWidth(), aJsonReader.getGameHeight())
       );
 
-    ImageIcon aGameIcon = new ImageIcon("gameImages/game.png");
+    ImageIcon aGameIcon = new ImageIcon(aJsonReader.getGameIcon());
 
     this.aGameWindow.setIconImage(aGameIcon.getImage());
 
@@ -1177,7 +1177,7 @@ public class UserInterface implements ActionListener {
     vButtonsPanel.add(aBack);
     vButtonsPanel.setLocation(438, 400);
 
-    JLabel vTitle = new JLabel("Setting");
+    JLabel vTitle = new JLabel(aJsonReader.getSettingButton());
     vTitle.setFont(aTitleFont);
     vTitle.setForeground(Color.black);
     vTitle.setSize(aJsonReader.getGameWidth(), aJsonReader.getGameHeight());
@@ -1212,7 +1212,7 @@ public class UserInterface implements ActionListener {
     vButtonsPanel.add(aBack2);
     vButtonsPanel.setLocation(438, 400);
 
-    JLabel vTitle = new JLabel("Sound");
+    JLabel vTitle = new JLabel(aJsonReader.getSoundButton());
     vTitle.setFont(aTitleFont);
     vTitle.setForeground(Color.black);
     vTitle.setSize(aJsonReader.getGameWidth(), aJsonReader.getGameHeight());
@@ -1244,7 +1244,7 @@ public class UserInterface implements ActionListener {
     vButtonsPanel.add(aBack3);
     vButtonsPanel.setLocation(438, 400);
 
-    JLabel vTitle = new JLabel(aJsonReader.getLanguage());
+    JLabel vTitle = new JLabel(aJsonReader.getLanguageButton());
     vTitle.setFont(aTitleFont);
     vTitle.setForeground(Color.black);
     vTitle.setSize(aJsonReader.getGameWidth(), aJsonReader.getGameHeight());
@@ -1668,7 +1668,7 @@ public class UserInterface implements ActionListener {
     aAttackButton.addActionListener(e -> this.aEngine.attack1Button());
     aDefendButton.addActionListener(e -> this.aEngine.attack2Button());
     aBagButton.addActionListener(e -> this.aEngine.attack3Button());
-    aRunButton.setText("Back");
+    aRunButton.setText(aJsonReader.getMajBackButton());
     aRunButton.addActionListener(e -> exitBattleButton());
   }
 
@@ -1729,13 +1729,13 @@ public class UserInterface implements ActionListener {
         currentButton.removeActionListener(al);
       }
     }
-    aAttackButton.setText("Attack");
+    aAttackButton.setText(aJsonReader.getAttackButton());
     aAttackButton.addActionListener(e -> attackButton());
-    aDefendButton.setText("Defend");
+    aDefendButton.setText(aJsonReader.getDefendButton());
     aDefendButton.addActionListener(e -> this.aEngine.defendButton());
-    aBagButton.setText("Bag");
+    aBagButton.setText(aJsonReader.getBagButton());
     aBagButton.addActionListener(e -> bagButtonMethod());
-    aRunButton.setText("Run");
+    aRunButton.setText(aJsonReader.getRunButton());
     aRunButton.addActionListener(e -> runButtonMethod());
   }
 
