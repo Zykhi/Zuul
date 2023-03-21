@@ -21,6 +21,7 @@ public class NPC1 extends Entity {
     setFightable(aJsonReader.getNPC1Fightable());
     setName(aJsonReader.getNPC1Name());
     setDialog(aJsonReader.getNPC1Dialogue());
+    setMidHPDialogue(/*aJsonReader.getNPC1MidHPDialogue()*/"this is a test");
     setImageName(aJsonReader.getNPC1Image());
     setFullImageName(aJsonReader.getNPC1FullImage());
     setMoves(aJsonReader.getNPC1Moves());

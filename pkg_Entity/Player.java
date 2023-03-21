@@ -518,8 +518,8 @@ public class Player extends Entity {
 
     vPlayer1.attack(vPlayer2, vMove1);
     playerAttackString(vMove1);
-    this.aGui.updateBattleUI();
     if (vPlayer2.isDead()) {
+      this.aGui.updateBattleUI();
       victory();
       return;
     }
@@ -528,6 +528,7 @@ public class Player extends Entity {
     enemyAttackString(vMove2);
     this.aGui.updateBattleUI();
     if (vPlayer1.isDead()) {
+      this.aGui.updateBattleUI();
       defeat();
       return;
     }
@@ -553,8 +554,9 @@ public class Player extends Entity {
 
     vPlayer1.attack(vPlayer2, vMove1);
     playerAttackString(vMove1);
-    this.aGui.updateBattleUI();
+    //this.aGui.updateBattleUI();
     if (vPlayer2.isDead()) {
+      this.aGui.updateBattleUI();
       victory();
       return;
     }
@@ -563,6 +565,7 @@ public class Player extends Entity {
     enemyAttackString(vMove2);
     this.aGui.updateBattleUI();
     if (vPlayer1.isDead()) {
+      this.aGui.updateBattleUI();
       defeat();
       return;
     }
@@ -588,8 +591,8 @@ public class Player extends Entity {
 
     vPlayer1.attack(vPlayer2, vMove1);
     playerAttackString(vMove1);
-    this.aGui.updateBattleUI();
     if (vPlayer2.isDead()) {
+      this.aGui.updateBattleUI();
       victory();
       return;
     }
@@ -598,6 +601,7 @@ public class Player extends Entity {
     enemyAttackString(vMove2);
     this.aGui.updateBattleUI();
     if (vPlayer1.isDead()) {
+      this.aGui.updateBattleUI();
       defeat();
       return;
     }
@@ -633,6 +637,7 @@ public class Player extends Entity {
     enemyAttackString(vMove2);
     this.aGui.updateBattleUI();
     if (vPlayer1.isDead()) {
+      this.aGui.updateBattleUI();
       defeat();
       return;
     }

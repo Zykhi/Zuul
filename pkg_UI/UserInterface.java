@@ -1,7 +1,6 @@
 package pkg_UI;
 
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -34,6 +33,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
+import org.javadev.effects.DashboardAnimation;
+import org.javadev.effects.FadeAnimation;
+import org.javadev.effects.IrisAnimation;
+import org.javadev.layout.AnimatingCardLayout;
 import pkg_Command.Parser;
 import pkg_Core.GameEngine;
 import pkg_Core.JSONReader;
@@ -49,7 +52,7 @@ public class UserInterface implements ActionListener {
 
   private GameEngine aEngine;
   private JFrame aGameWindow;
-  private CardLayout aCardLayout;
+  private AnimatingCardLayout aCardLayout;
   private JTextField aEntryField;
   private JTextArea aLog;
   private JTextArea aEntityLog;
@@ -160,6 +163,11 @@ public class UserInterface implements ActionListener {
   private int aIntTimerCredit7;
   private boolean aSoundToggle;
   private JSONReader aJsonReader;
+  private SmoothProgressBarManager aEniManager;
+  private SmoothProgressBarManager aPlaManager;
+  private IrisAnimation aIrisanimation;
+  private FadeAnimation aFadeanimation;
+  private DashboardAnimation aDashboardanimation;
 
   /**
    * Construct a UserInterface. As a parameter, a Game Engine
@@ -171,6 +179,7 @@ public class UserInterface implements ActionListener {
   public UserInterface(final GameEngine pGameEngine) {
     this.aEngine = pGameEngine;
     this.aJsonReader = new JSONReader();
+    aIrisanimation = new IrisAnimation();
     this.createFont();
     this.createMainMenuFont();
     this.createGUI();
@@ -913,7 +922,7 @@ public class UserInterface implements ActionListener {
     createVictoryPanel();
 
     aSceneManager = aGameWindow.getContentPane();
-    aCardLayout = new CardLayout();
+    aCardLayout = new AnimatingCardLayout();
     aSceneManager.setLayout(aCardLayout);
     aSceneManager.add(aMainMenuPanel, "MainMenu");
     aSceneManager.add(aGamePanel, "Game");
@@ -929,6 +938,14 @@ public class UserInterface implements ActionListener {
    * This method create the panel of the game
    */
   private void createGamePanel() {
+    JPanel vImagePanel = new JPanel();
+    this.aImage = new JLabel();
+    vImagePanel.setPreferredSize(new Dimension(650, 650));
+    vImagePanel.setSize(vImagePanel.getPreferredSize());
+    vImagePanel.setLocation(0, 0);
+    vImagePanel.setLayout(new BorderLayout());
+    vImagePanel.add(this.aImage, BorderLayout.CENTER);
+
     this.aEntryField = new JTextField(34);
     this.aEntryField.addActionListener(this);
 
@@ -942,21 +959,6 @@ public class UserInterface implements ActionListener {
     this.aLog.setBackground(Color.darkGray);
     JScrollPane vListScroller = new JScrollPane(this.aLog);
     vListScroller.setPreferredSize(new Dimension(414, 707));
-
-    JPanel vImagePanel = new JPanel();
-    this.aImage = new JLabel();
-    vImagePanel.setPreferredSize(new Dimension(650, 650));
-    vImagePanel.setSize(vImagePanel.getPreferredSize());
-    vImagePanel.setLocation(0, 0);
-    vImagePanel.setLayout(new BorderLayout());
-    vImagePanel.add(this.aImage, BorderLayout.CENTER);
-
-    // this is timer label
-    aGameTimer = new JLabel();
-    aGameTimer.setForeground(Color.white);
-    aGameTimer.setFont(aTextFont);
-    aGameTimer.setSize(300, 50);
-    aGameTimer.setLocation(15, 0);
 
     JPanel vTextPanel = new JPanel();
     vTextPanel.setLayout(new BorderLayout());
@@ -998,6 +1000,13 @@ public class UserInterface implements ActionListener {
     vActionButtonPanel.add(this.aBattleButton);
     vActionButtonPanel.setSize(vActionButtonPanel.getPreferredSize());
     vActionButtonPanel.setLocation(365, 650);
+
+    // this is timer label
+    aGameTimer = new JLabel();
+    aGameTimer.setForeground(Color.white);
+    aGameTimer.setFont(aTextFont);
+    aGameTimer.setSize(300, 50);
+    aGameTimer.setLocation(15, 0);
 
     this.aGamePanel = new JLayeredPane();
     this.aGamePanel.add(vImagePanel, JLayeredPane.DEFAULT_LAYER);
@@ -1745,26 +1754,66 @@ public class UserInterface implements ActionListener {
 
   /**
    * This method is update UI during the battle
+   * FIXME: Animation is not smooth
    */
   public void updateBattleUI() {
-    aEnemyHP.setValue(aEngine.getEnemyHP());
-    aPlayerHP.setValue(aEngine.getPlayerHP());
+  updateJProgressBar(
+    aEngine.getEnemyHP(),
+    aEngine.getMaxEnemyHP(),
+    aEniManager
+  );
+  updateJProgressBar(
+    aEngine.getPlayerHP(),
+    aEngine.getMaxPlayerHP(),
+    aPlaManager
+  );
+  if (aEngine.getEnemyHP() < aEngine.getMaxEnemyHP() / 2) {
+    printlnBattle(aEngine.getMidHPDialogue());
+  }
+}
+
+  private void updateJProgressBar(
+    int pCurrentHP,
+    int pMaxHP,
+    SmoothProgressBarManager pManager
+  ) {
+    int vCurrentHP = pCurrentHP;
+    int vHP = pMaxHP;
+    while (vCurrentHP < vHP) {
+      vHP--;
+      if (!pManager.isDisposed()) {
+        pManager.setValue(vHP);
+      }
+    }
   }
 
   /**
    * This method set battle UI at the start of the battle
    */
   public void startBattleUI() {
+    this.aEniManager =
+      new SmoothProgressBarManager(
+        aEnemyHP,
+        aEngine.getEnemyHP(),
+        aEngine.getMaxEnemyHP()
+      );
+    this.aPlaManager =
+      new SmoothProgressBarManager(
+        aPlayerHP,
+        aEngine.getPlayerHP(),
+        aEngine.getMaxPlayerHP()
+      );
     aEnemyName.setText(aEngine.getEnemyName());
+    aEnemyHP.setMaximum(aEngine.getMaxEnemyHP());
+    aEnemyHP.setValue(aEngine.getEnemyHP());
   }
 
   /**
    * This method set battle UI at the start of the game
    */
   private void startDefaultBattleUI() {
-    aEnemyHP = new JProgressBar(0, 200);
     aEnemyName.setText("default");
-    aEnemyHP.setValue(200);
+    aEnemyHP = new JProgressBar(0, 200);
   }
 
   /**
@@ -1966,15 +2015,19 @@ public class UserInterface implements ActionListener {
 
   /**
    * This method show the battle panel
+   * FIXME: the animation is not working properly
    */
   public void showBattlePanel() {
+    this.aCardLayout.setAnimation(aIrisanimation);
     this.aCardLayout.show(aSceneManager, "Battle");
   }
 
   /**
    * This method hide the battle panel
+   * FIXME: the animation is not working properly
    */
   public void hideBattlePanel() {
+    this.aCardLayout.setAnimation(aIrisanimation);
     this.aCardLayout.show(aSceneManager, "Game");
   }
 

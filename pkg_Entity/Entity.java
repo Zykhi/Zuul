@@ -12,6 +12,7 @@ public class Entity {
   JSONReader aJsonReader;
   private String aName;
   private String aDialog;
+  private String aMidHPDialogue;
   private String aImageName;
   private String aFullImage;
   protected String aMoves[][];
@@ -97,6 +98,14 @@ public class Entity {
    */
   public void setDialog(String pDialog) {
     this.aDialog = pDialog;
+  }
+
+  public String getMidHPDialogue() {
+    return this.aMidHPDialogue;
+  }
+
+  public void setMidHPDialogue(String pMidHPDialogue) {
+    this.aMidHPDialogue = pMidHPDialogue;
   }
 
   /**

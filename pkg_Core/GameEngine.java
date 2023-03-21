@@ -407,6 +407,10 @@ public class GameEngine {
     return this.aPlayer.getHP();
   }
 
+  public Player getPlayer() {
+    return this.aPlayer;
+  }
+
   /**
    * This method get the max HP of the player
    *
@@ -434,6 +438,18 @@ public class GameEngine {
     Entity vEnemy = this.aPlayer.getCurrentRoom().getCharacter();
     int vEnemyHP = vEnemy.getHP();
     return vEnemyHP;
+  }
+
+  public int getMaxEnemyHP() {
+    Entity vEnemy = this.aPlayer.getCurrentRoom().getCharacter();
+    int vEnemyMaxHP = vEnemy.getMaxHP();
+    return vEnemyMaxHP;
+  }
+
+  public String getMidHPDialogue(){
+    Entity vEnemy = this.aPlayer.getCurrentRoom().getCharacter();
+    String vMidHPDialogue = vEnemy.getMidHPDialogue();
+    return vMidHPDialogue;
   }
 
   /**
