@@ -211,6 +211,7 @@ public class UserInterface implements ActionListener {
   } // println(.)
 
   private void slowPrinter(String pText, int pTime, JTextArea pLog){
+    enable(false);
     aTextTimer =
     new Timer(
       pTime,
@@ -221,6 +222,7 @@ public class UserInterface implements ActionListener {
           aIndex++;
           if (aIndex > pText.length()) {
             ((Timer) pEvent.getSource()).stop();
+            enable(true);
           }
         }
       }
@@ -276,9 +278,7 @@ public class UserInterface implements ActionListener {
    * @param pText like sysout but for gui, is the text in " "
    */
   public void slowPrintEntity(final String pText) {
-    enable(false);
     this.slowPrinter(pText, 60, this.aEntityLog);
-    enable(true);
   }
 
   /**
