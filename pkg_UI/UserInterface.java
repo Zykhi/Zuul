@@ -180,6 +180,7 @@ public class UserInterface implements ActionListener {
     this.aEngine = pGameEngine;
     this.aJsonReader = new JSONReader();
     aIrisanimation = new IrisAnimation();
+    aFadeanimation = new FadeAnimation();
     this.createFont();
     this.createMainMenuFont();
     this.createGUI();
@@ -1623,38 +1624,24 @@ public class UserInterface implements ActionListener {
   }
 
   private void englishButton() {
-    PrintWriter writer;
-    try {
-      writer = new PrintWriter("language.txt");
-      writer.print("EN");
-      writer.close();
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
-    JDialog vDialog = new JDialog();
-    JLabel vLabel = new JLabel(
-      "You must restart the game for the changes to take effect"
-    );
-    vLabel.setFont(aTextFont);
-    vDialog.add(vLabel);
-    vDialog.setSize(800, 100);
-    vDialog.setLocation(100, 100);
-    vDialog.setVisible(true);
+    changeLanguage("EN", "You must restart the game for the changes to take effect");
   }
 
   private void frenchButton() {
+    changeLanguage("FR", "Vous devez redémarrer le jeu pour que les changements prennent effet");
+  }
+
+  private void changeLanguage(String pLanguage, String pMessage) {
     PrintWriter writer;
     try {
       writer = new PrintWriter("language.txt");
-      writer.print("FR");
+      writer.print(pLanguage);
       writer.close();
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
     JDialog vDialog = new JDialog();
-    JLabel vLabel = new JLabel(
-      "Vous devez redémarrer le jeu pour que les changements prennent effet"
-    );
+    JLabel vLabel = new JLabel(pMessage);
     vLabel.setFont(aTextFont);
     vDialog.add(vLabel);
     vDialog.setSize(800, 100);
@@ -1757,20 +1744,20 @@ public class UserInterface implements ActionListener {
    * FIXME: Animation is not smooth
    */
   public void updateBattleUI() {
-  updateJProgressBar(
-    aEngine.getEnemyHP(),
-    aEngine.getMaxEnemyHP(),
-    aEniManager
-  );
-  updateJProgressBar(
-    aEngine.getPlayerHP(),
-    aEngine.getMaxPlayerHP(),
-    aPlaManager
-  );
-  if (aEngine.getEnemyHP() < aEngine.getMaxEnemyHP() / 2) {
-    printlnBattle(aEngine.getMidHPDialogue());
+    updateJProgressBar(
+      aEngine.getEnemyHP(),
+      aEngine.getMaxEnemyHP(),
+      aEniManager
+    );
+    updateJProgressBar(
+      aEngine.getPlayerHP(),
+      aEngine.getMaxPlayerHP(),
+      aPlaManager
+    );
+    if (aEngine.getEnemyHP() < aEngine.getMaxEnemyHP() / 2) {
+      printlnBattle(aEngine.getMidHPDialogue());
+    }
   }
-}
 
   private void updateJProgressBar(
     int pCurrentHP,
@@ -2027,7 +2014,7 @@ public class UserInterface implements ActionListener {
    * FIXME: the animation is not working properly
    */
   public void hideBattlePanel() {
-    this.aCardLayout.setAnimation(aIrisanimation);
+    this.aCardLayout.setAnimation(aFadeanimation);
     this.aCardLayout.show(aSceneManager, "Game");
   }
 
