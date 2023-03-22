@@ -327,21 +327,6 @@ public class UserInterface implements ActionListener {
 
   // sound methods
 
-  private void playSounds(String pFile, int pLoop, Clip pClip) {
-    try {
-      AudioInputStream vAudioInputStream = AudioSystem.getAudioInputStream(
-        new File("gameSounds/" + pFile + ".wav").getAbsoluteFile()
-      );
-      pClip = AudioSystem.getClip();
-      pClip.open(vAudioInputStream);
-      pClip.start();
-      pClip.loop(pLoop);
-    } catch (Exception ex) {
-      System.out.println("Error with playing sound.");
-      ex.printStackTrace();
-    }
-  }
-
   /**
    * This method play sound.
    *
@@ -352,7 +337,18 @@ public class UserInterface implements ActionListener {
    * @param pLoop Number of repetitions of the sound (-1 is infinite)
    */
   public void playSound(final String pFile, final int pLoop) {
-    playSounds(pFile, pLoop, aClip);
+    try {
+      AudioInputStream vAudioInputStream = AudioSystem.getAudioInputStream(
+        new File("gameSounds/" + pFile + ".wav").getAbsoluteFile()
+      );
+      aClip = AudioSystem.getClip();
+      aClip.open(vAudioInputStream);
+      aClip.start();
+      aClip.loop(pLoop);
+    } catch (Exception ex) {
+      System.out.println("Error with playing sound.");
+      ex.printStackTrace();
+    }
   }
 
   /**
@@ -362,7 +358,18 @@ public class UserInterface implements ActionListener {
    * @param pLoop Number of repetitions of the sound (-1 is infinite)
    */
   public void playBattleSound(final String pFile, final int pLoop) {
-    playSounds("battle" + pFile, pLoop, aClip);
+    try {
+      AudioInputStream vAudioInputStream = AudioSystem.getAudioInputStream(
+        new File("gameSounds/battle" + pFile + ".wav").getAbsoluteFile()
+      );
+      aClip = AudioSystem.getClip();
+      aClip.open(vAudioInputStream);
+      aClip.start();
+      aClip.loop(pLoop);
+    } catch (Exception ex) {
+      System.out.println("Error with playing sound.");
+      ex.printStackTrace();
+    }
   }
 
   /**
@@ -371,7 +378,17 @@ public class UserInterface implements ActionListener {
    * @param pFile Audio file of the dialog
    */
   public void playDialogSound(final String pFile) {
-    playSounds(pFile, 0, aDialogClip);
+    try {
+      AudioInputStream vAudioInputStream = AudioSystem.getAudioInputStream(
+        new File("gameSounds/" + pFile + ".wav").getAbsoluteFile()
+      );
+      aDialogClip = AudioSystem.getClip();
+      aDialogClip.open(vAudioInputStream);
+      aDialogClip.start();
+    } catch (Exception ex) {
+      System.out.println("Error with playing sound.");
+      ex.printStackTrace();
+    }
   }
 
   /**
@@ -380,7 +397,17 @@ public class UserInterface implements ActionListener {
    * @param pFile Audio file of the sound effect
    */
   public void playSoundEffect(final String pFile) {
-    playSounds(pFile, 0, aSoundEffectClip);
+    try {
+      AudioInputStream vAudioInputStream = AudioSystem.getAudioInputStream(
+        new File("gameSounds/" + pFile + ".wav").getAbsoluteFile()
+      );
+      aSoundEffectClip = AudioSystem.getClip();
+      aSoundEffectClip.open(vAudioInputStream);
+      aSoundEffectClip.start();
+    } catch (Exception ex) {
+      System.out.println("Error with playing sound.");
+      ex.printStackTrace();
+    }
   }
 
   /**
