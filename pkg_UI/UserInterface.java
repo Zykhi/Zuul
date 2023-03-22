@@ -447,21 +447,25 @@ public class UserInterface implements ActionListener {
 
   // image method
 
-  /**
-   * Show an image file in the interface.
-   *
-   * @param pImageName name of the image for the room
-   */
-  public void showImage(final String pImageName) {
+  private void showImages(String pImageName, JLabel pImage) {
     String vImagePath = "" + pImageName; // to change the directory
     URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
     if (vImageURL == null) System.out.println(
       "Image not found : " + vImagePath
     ); else {
       ImageIcon vIcon = new ImageIcon(vImageURL);
-      this.aImage.setIcon(vIcon);
+      pImage.setIcon(vIcon);
       this.aGameWindow.pack();
     }
+  }
+
+  /**
+   * Show an image file in the interface.
+   *
+   * @param pImageName name of the image for the room
+   */
+  public void showImage(final String pImageName) {
+    showImages(pImageName, aImage);
   } // showImage(.)
 
   /**
@@ -470,15 +474,7 @@ public class UserInterface implements ActionListener {
    * @param pImageName name of the image for the room
    */
   public void showEntityImage(final String pImageName) {
-    String vImagePath = "" + pImageName; // to change the directory
-    URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
-    if (vImageURL == null) System.out.println(
-      "Image not found : " + vImagePath
-    ); else {
-      ImageIcon vIcon = new ImageIcon(vImageURL);
-      this.aEntityImage.setIcon(vIcon);
-      this.aGameWindow.pack();
-    }
+    showImages(pImageName, aEntityImage);
   }
 
   /**
@@ -487,30 +483,14 @@ public class UserInterface implements ActionListener {
    * @param pImageName name of the image for the room
    */
   public void showItemImage(final String pImageName) {
-    String vImagePath = "gameImages/item_" + pImageName + ".png"; // to change the directory
-    URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
-    if (vImageURL == null) System.out.println(
-      "Image not found : " + vImagePath
-    ); else {
-      ImageIcon vIcon = new ImageIcon(vImageURL);
-      this.aItemImage.setIcon(vIcon);
-      this.aGameWindow.pack();
-    }
+    showImages("gameImages/item_" + pImageName + ".png", aItemImage);
   }
 
   /**
    * Show an image file in the interface.
    */
   public void showItemBackGroundImage() {
-    String vImagePath = "gameImages/itemBackground.gif"; // to change the directory
-    URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
-    if (vImageURL == null) System.out.println(
-      "Image not found : " + vImagePath
-    ); else {
-      ImageIcon vIcon = new ImageIcon(vImageURL);
-      this.aItemBackGroundImage.setIcon(vIcon);
-      this.aGameWindow.pack();
-    }
+    showImages("gameImages/itemBackground.gif", aItemBackGroundImage);
   }
 
   /**
@@ -519,132 +499,64 @@ public class UserInterface implements ActionListener {
    * @param pImageName name of the image for the room
    */
   public void showFullEntityImage(final String pImageName) {
-    String vImagePath = "" + pImageName; // to change the directory
-    URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
-    if (vImageURL == null) System.out.println(
-      "Image not found : " + vImagePath
-    ); else {
-      ImageIcon vIcon = new ImageIcon(vImageURL);
-      this.aEntityFullImage.setIcon(vIcon);
-      this.aGameWindow.pack();
-    }
+    showImages(pImageName, aEntityFullImage);
   }
 
   /**
    * Show an image file in the interface.
    */
   public void showFullPlayerImage() {
-    String vImagePath = "faceImages/player.gif"; // to change the directory
-    URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
-    if (vImageURL == null) System.out.println(
-      "Image not found : " + vImagePath
-    ); else {
-      ImageIcon vIcon = new ImageIcon(vImageURL);
-      this.aPlayerFullImage.setIcon(vIcon);
-      this.aGameWindow.pack();
-    }
-  }
-
-  /**
-   * Show background image of the main menu.
-   */
-  public void showBackGroundImage() {
-    String vImagePath = "gameImages/MainMenu.jpg"; // to change the directory
-    URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
-    if (vImageURL == null) System.out.println(
-      "Image not found : " + vImagePath
-    ); else {
-      ImageIcon vIcon = new ImageIcon(vImageURL);
-      this.aMainMenuBackGroundImage.setIcon(vIcon);
-      this.aGameWindow.pack();
-    }
+    showImages("faceImages/player.gif", aPlayerFullImage);
   }
 
   /**
    * Show background image of the battle
    */
   public void showBattleBackground() {
-    String vImagePath = "gameImages/battleground.gif"; // to change the directory
-    URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
-    if (vImageURL == null) System.out.println(
-      "Image not found : " + vImagePath
-    ); else {
-      ImageIcon vIcon = new ImageIcon(vImageURL);
-      this.aBattleBackground.setIcon(vIcon);
-      this.aGameWindow.pack();
-    }
+    showImages("gameImages/battleground.gif", aBattleBackground);
+  }
+
+  private void backgroundImage(JLabel pMenu) {
+    showImages("gameImages/MainMenu.jpg", pMenu);
+  }
+
+  /**
+   * Show background image of the main menu.
+   */
+  public void showBackGroundImage() {
+    backgroundImage(aMainMenuBackGroundImage);
   }
 
   /**
    * Show the background of setting menu
    */
   private void showSettingBackground() {
-    String vImagePath = "gameImages/MainMenu.jpg"; // to change the directory
-    URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
-    if (vImageURL == null) System.out.println(
-      "Image not found : " + vImagePath
-    ); else {
-      ImageIcon vIcon = new ImageIcon(vImageURL);
-      this.aSettingBackground.setIcon(vIcon);
-      this.aGameWindow.pack();
-    }
+    backgroundImage(aSettingBackground);
   }
 
   /**
    * Show the background of the sound menu
    */
   private void showSoundBackground() {
-    String vImagePath = "gameImages/MainMenu.jpg"; // to change the directory
-    URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
-    if (vImageURL == null) System.out.println(
-      "Image not found : " + vImagePath
-    ); else {
-      ImageIcon vIcon = new ImageIcon(vImageURL);
-      this.aSoundBackground.setIcon(vIcon);
-      this.aGameWindow.pack();
-    }
+    backgroundImage(aSoundBackground);
   }
 
   private void showLanguageBackground() {
-    String vImagePath = "gameImages/MainMenu.jpg"; // to change the directory
-    URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
-    if (vImageURL == null) System.out.println(
-      "Image not found : " + vImagePath
-    ); else {
-      ImageIcon vIcon = new ImageIcon(vImageURL);
-      this.aLanguageBackground.setIcon(vIcon);
-      this.aGameWindow.pack();
-    }
+    backgroundImage(aLanguageBackground);
   }
 
   /**
    * Show the background of the game over menu
    */
   public void showGameOverImage() {
-    String vImagePath = "gameImages/gameover.jpg"; // to change the directory
-    URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
-    if (vImageURL == null) System.out.println(
-      "Image not found : " + vImagePath
-    ); else {
-      ImageIcon vIcon = new ImageIcon(vImageURL);
-      this.aGameOverBackGroundImage.setIcon(vIcon);
-      this.aGameWindow.pack();
-    }
+    showImages("gameImages/gameover.jpg", aGameOverBackGroundImage);
   }
 
   /**
    * Show the background of the victory menu
    */
   public void showVictoryImage() {
-    String vImagePath = "gameImages/victory.jpg"; // to change the directory
-    URL vImageURL = this.getClass().getClassLoader().getResource(vImagePath);
-    if (vImageURL == null) System.out.println(
-      "Image not found : " + vImagePath
-    ); else {
-      ImageIcon vIcon = new ImageIcon(vImageURL);
-      this.aVictoryBackGroundImage.setIcon(vIcon);
-      this.aGameWindow.pack();
-    }
+    showImages("gameImages/victory.jpg", aVictoryBackGroundImage);
   }
 
   // enable method
@@ -1624,11 +1536,17 @@ public class UserInterface implements ActionListener {
   }
 
   private void englishButton() {
-    changeLanguage("EN", "You must restart the game for the changes to take effect");
+    changeLanguage(
+      "EN",
+      "You must restart the game for the changes to take effect"
+    );
   }
 
   private void frenchButton() {
-    changeLanguage("FR", "Vous devez redémarrer le jeu pour que les changements prennent effet");
+    changeLanguage(
+      "FR",
+      "Vous devez redémarrer le jeu pour que les changements prennent effet"
+    );
   }
 
   private void changeLanguage(String pLanguage, String pMessage) {
