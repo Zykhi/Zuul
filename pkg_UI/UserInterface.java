@@ -210,6 +210,26 @@ public class UserInterface implements ActionListener {
     this.print(pText + "\n");
   } // println(.)
 
+  private void slowPrinter(String pText, int pTime, JTextArea pLog){
+    aTextTimer =
+    new Timer(
+      pTime,
+      new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent pEvent) {
+          pLog.setText(pText.substring(0, aIndex));
+          aIndex++;
+          if (aIndex > pText.length()) {
+            ((Timer) pEvent.getSource()).stop();
+          }
+        }
+      }
+    );
+
+  aTextTimer.start();
+  aIndex = 0;
+  }
+
   /**
    * This method prints slowly the text in param
    *
@@ -219,23 +239,7 @@ public class UserInterface implements ActionListener {
    * @param pText Text you want to write slowly
    */
   private void slowPrint(final String pText) {
-    aTextTimer =
-      new Timer(
-        aTime,
-        new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent pEvent) {
-            aLog.setText(pText.substring(0, aIndex));
-            aIndex++;
-            if (aIndex > pText.length()) {
-              ((Timer) pEvent.getSource()).stop();
-            }
-          }
-        }
-      );
-
-    aTextTimer.start();
-    aIndex = 0;
+    this.slowPrinter(pText, aTime, this.aLog);
   }
 
   /**
@@ -273,23 +277,8 @@ public class UserInterface implements ActionListener {
    */
   public void slowPrintEntity(final String pText) {
     enable(false);
-    Timer timer = new Timer(
-      60,
-      new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent pEvent) {
-          aEntityLog.setText(pText.substring(0, aIndex));
-          aIndex++;
-          if (aIndex > pText.length()) {
-            ((Timer) pEvent.getSource()).stop();
-            enable(true);
-          }
-        }
-      }
-    );
-
-    timer.start();
-    aIndex = 0;
+    this.slowPrinter(pText, 60, this.aEntityLog);
+    enable(true);
   }
 
   /**
