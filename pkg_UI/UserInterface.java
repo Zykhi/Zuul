@@ -16,6 +16,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -154,6 +156,7 @@ public class UserInterface implements ActionListener {
   private int aDelay = 1000;
   private int aEndTime = 20;
   private int aIndex;
+  private int aCounter = 0;
   private int aIntTimerCredit1;
   private int aIntTimerCredit2;
   private int aIntTimerCredit3;
@@ -167,7 +170,6 @@ public class UserInterface implements ActionListener {
   private SmoothProgressBarManager aPlaManager;
   private IrisAnimation aIrisanimation;
   private FadeAnimation aFadeanimation;
-  private DashboardAnimation aDashboardanimation;
 
   /**
    * Construct a UserInterface. As a parameter, a Game Engine
@@ -210,26 +212,26 @@ public class UserInterface implements ActionListener {
     this.print(pText + "\n");
   } // println(.)
 
-  private void slowPrinter(String pText, int pTime, JTextArea pLog){
+  private void slowPrinter(String pText, int pTime, JTextArea pLog) {
     enable(false);
     aTextTimer =
-    new Timer(
-      pTime,
-      new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent pEvent) {
-          pLog.setText(pText.substring(0, aIndex));
-          aIndex++;
-          if (aIndex > pText.length()) {
-            ((Timer) pEvent.getSource()).stop();
-            enable(true);
+      new Timer(
+        pTime,
+        new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent pEvent) {
+            pLog.setText(pText.substring(0, aIndex));
+            aIndex++;
+            if (aIndex > pText.length()) {
+              ((Timer) pEvent.getSource()).stop();
+              enable(true);
+            }
           }
         }
-      }
-    );
+      );
 
-  aTextTimer.start();
-  aIndex = 0;
+    aTextTimer.start();
+    aIndex = 0;
   }
 
   /**
@@ -278,7 +280,7 @@ public class UserInterface implements ActionListener {
    * @param pText like sysout but for gui, is the text in " "
    */
   public void slowPrintEntity(final String pText) {
-    this.slowPrinter(pText, 60, this.aEntityLog);
+    this.slowPrinter(pText, aTime, this.aEntityLog);
   }
 
   /**
@@ -444,7 +446,7 @@ public class UserInterface implements ActionListener {
     ); else {
       ImageIcon vIcon = new ImageIcon(vImageURL);
       pImage.setIcon(vIcon);
-      this.aGameWindow.pack();
+      //this.aGameWindow.pack();
     }
   }
 
@@ -1649,8 +1651,11 @@ public class UserInterface implements ActionListener {
   /**
    * This method is update UI during the battle
    * FIXME: Animation is not smooth
+   * TODO: add delay between each update
    */
   public void updateBattleUI() {
+    hit(aEntityFullImage);
+
     updateJProgressBar(
       aEngine.getEnemyHP(),
       aEngine.getMaxEnemyHP(),
@@ -1680,6 +1685,38 @@ public class UserInterface implements ActionListener {
       }
     }
   }
+
+  private void hit(JLabel pSprite) {
+    int vDelay = 250; // specify the delay for the timer
+    Timer vTimer = new Timer(
+      vDelay,
+      e -> {
+        // The following code will be executed once the delay is reached
+        if (aCounter == 0) {
+          aCounter++;
+          pSprite.setVisible(false);
+        } else if (aCounter == 1) {
+          aCounter++;
+          pSprite.setVisible(true);
+        } else if (aCounter == 2) {
+          aCounter++;
+          pSprite.setVisible(false);
+        } else if (aCounter == 3) {
+          aCounter++;
+          pSprite.setVisible(true);
+        } else if (aCounter == 4) {
+          aCounter++;
+          pSprite.setVisible(false);
+        } else if (aCounter == 5) {
+          pSprite.setVisible(true);
+          aCounter = 0;
+          ((Timer) e.getSource()).stop();
+        }
+      }
+    );
+    vTimer.start();
+  }
+
 
   /**
    * This method set battle UI at the start of the battle
