@@ -49,6 +49,45 @@
     "endWelcomeText": "Tapez 'aide' si vous avez besoin d'aide. Vous avez 20 minutes pour vous échapper du donjon avant d'être piégé pour toujours."
   },
 
+  "printHelp": {
+    "helpText": "Vous êtes perdu. Vous êtes seul. Vous marchez dans le donjon de Zuul. \nVotre objectif est de trouver la sortie du donjon. \nVous pouvez taper les mots suivants : ",
+    "endHelpText": "Vous pouvez aussi utiliser les boutons de la fenêtre pour vous déplacer."
+  },
+
+  "gameText": {
+    "goWhere": "Où voulez-vous aller ?",
+    "noDoor": "Il n'y a pas de porte !",
+    "trap": "Vous êtes tombé dans un piège !",
+    "dontKnow": "Je ne comprends pas ce que vous voulez dire...",
+    "eatWhat": "Qu'est-ce que vous voulez manger ?",
+    "eatCookie": "Vous mangez un cookie. Miam !",
+    "cantEat": "Vous ne pouvez pas manger ça !",
+    "impossible": "C'est impossible !",
+    "cantBack": "Vous ne pouvez pas revenir en arrière !",
+    "inventoryFull": "Votre inventaire est plein ! Vous ne pouvez pas prendre cet objet.",
+    "dontHave": "Vous n'avez pas cela !",
+    "teleporterCharged": "Le teleporteur est maintenant chargé, vous pouvez l'utiliser pour revenir ici.",
+    "dontHaveTeleporter": "Vous n'avez pas le teleporteur !",
+    "teleporterUsed": "Vous avez utilisé le teleporteur pour revenir ici. Il est maintenant cassé",
+    "teleporterNotCharged": "Le teleporteur n'est pas encore chargé !",
+    "secondWordNeeded": "Vous devez entrer un deuxième mot !",
+    "startBattle": "C'est l'heure du duel !",
+    "cantBattle": "Vous ne pouvez pas combattre !",
+    "battleVictory": "Vous avez vaincu l'ennemi !",
+    "battleDefeat": "Vous avez été vaincu ! ",
+    "defenseImproved": "Votre défense a augmenté !",
+    "defenseIs": "Votre défense est maintenant de : ",
+    "speDefIs": "et votre défense spéciale est maintenant de : ",
+    "eniMissed": " à raté son attaque !",
+    "eniUsed": " a utilisé ",
+    "missed": "Vous avez raté votre attaque !",
+    "used": "Vous avez utilisé ",
+    "giveWeddingRing": "Vous avez retrouvé ma bague ! Merci !",
+    "cantGive" : "Vous ne pouvez pas donner ça !",
+    "foundArtefact" : "Vous avez trouvé un artefact ! Il en reste ",
+    "allArtefact": "Vous avez trouvé tous les artefacts ! Vous pouvez maintenant sortir du donjon !"
+  },
+
   "credit": {
     "line1": "Histoire par : Charly D.",
     "line2": "Programmation par : Charly D.",

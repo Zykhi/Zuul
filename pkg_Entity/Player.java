@@ -3,7 +3,6 @@ package pkg_Entity;
 import java.util.Stack;
 import javax.swing.Timer;
 import pkg_Command.Command;
-import pkg_Command.CommandWord;
 import pkg_Command.Parser;
 import pkg_Core.JSONReader;
 import pkg_Item.Beamer;
@@ -148,10 +147,11 @@ public class Player extends Entity {
    * command words.
    */
   public void printHelp() {
-    this.aGui.println("You are lost. You leave the fight.");
-    this.aGui.println("You wander around the dungeon.");
+    this.aGui.println(aJsonReader.getHelpText());
     this.aGui.println("");
     this.aGui.println(aParser.getCommandString());
+    this.aGui.println("");
+    this.aGui.println(aJsonReader.getEndHelpText());
   }
 
   /**
@@ -163,7 +163,7 @@ public class Player extends Entity {
   public void goRoom(final Command pDirection) {
     if (!pDirection.hasSecondWord()) {
       // if there is no second word, we don't know where to go...
-      this.aGui.println("Go where?");
+      this.aGui.println(aJsonReader.getGoWhere());
       return;
     }
     this.getPreviousRooms().push(this.getCurrentRoom());
@@ -174,7 +174,7 @@ public class Player extends Entity {
     // Try to leave current room.
     Room vNextRoom = this.getCurrentRoom().getExit(vDirection);
     if (vNextRoom == null) {
-      this.aGui.println("There is no door!");
+      this.aGui.println(aJsonReader.getNoDoor());
     } else if (vDoor != null) {
       if (vDoor.isTrap()) {
         isTrapDoor();
@@ -185,7 +185,7 @@ public class Player extends Entity {
   }
 
   private void isTrapDoor() {
-    this.aGui.println("its a trap");
+    this.aGui.println(aJsonReader.getTrap());
     clearStack();
     return;
   }
@@ -234,14 +234,7 @@ public class Player extends Entity {
           vDelay2,
           e -> {
             // The following code will be executed once the delay is reached
-            this.aGui.println(
-                "Type '" +
-                CommandWord.HELP.toString() +
-                "' if you need help." +
-                '\n' +
-                "You have 20 minutes to escape from the dungeon before being trapped forever" +
-                '\n'
-              );
+            this.aGui.println(aJsonReader.getEndWelcomeText());
             this.printLocationInfo();
             this.aGui.enable(true);
             this.aGui.startTimer();
@@ -280,7 +273,7 @@ public class Player extends Entity {
     Item vItem = this.getCurrentRoom().getItemName(vItemName);
 
     if (vItem == null) {
-      this.aGui.println("I dont know what do you mean");
+      this.aGui.println(aJsonReader.getDontKnow());
     } else {
       this.aGui.println(vItem.toString());
     }
@@ -295,7 +288,7 @@ public class Player extends Entity {
     String vItemName = pCommand.getSecondWord();
     Item vItem = this.aInventory.getItemName(vItemName);
     if (!pCommand.hasSecondWord()) {
-      this.aGui.println("what do you want to eat");
+      this.aGui.println(aJsonReader.getEatWhat());
     } else {
       if (
         vItemName.equals("cookie") &&
@@ -304,10 +297,10 @@ public class Player extends Entity {
         this.aMaxWeight *= 2;
         this.aInventory.removeItem(vItemName, vItem);
         this.aInventory.removeWeight(vItem.getWeight());
-        this.aGui.println("You eat a cookie");
+        this.aGui.println(aJsonReader.getEatCookie());
         showInventory();
       } else {
-        this.aGui.println("You cant eat that");
+        this.aGui.println(aJsonReader.getCantEat());
       }
     }
   }
@@ -319,9 +312,9 @@ public class Player extends Entity {
    */
   public void back(final Command pCommand) {
     if (pCommand.hasSecondWord()) {
-      this.aGui.println("it's impossible");
+      this.aGui.println(aJsonReader.getImpossible());
     } else if (this.getPreviousRooms().empty()) {
-      this.aGui.println("you cant back");
+      this.aGui.println(aJsonReader.getCantBack());
     } else {
       Room vPreviousRoom = this.getPreviousRooms().pop();
       changeRoom(vPreviousRoom);
@@ -337,11 +330,11 @@ public class Player extends Entity {
     String vItemName = pItemName.getSecondWord();
     Item vItem = this.aCurrentRoom.getItemName(vItemName);
     if (!pItemName.hasSecondWord()) {} else if (vItem == null) {
-      this.aGui.println("This is not here");
+      this.aGui.println(aJsonReader.getDontKnow());
     } else if (
       this.aInventory.getWeight() + vItem.getWeight() > this.aMaxWeight
     ) {
-      this.aGui.println("Your inventory is full. Drop some items");
+      this.aGui.println(aJsonReader.getInventoryFull());
     } else {
       this.aInventory.addItem(vItemName, vItem);
       this.aInventory.addWeight(vItem.getWeight());
@@ -366,7 +359,7 @@ public class Player extends Entity {
     String vItemName = pItemName.getSecondWord();
     Item vItem = this.aInventory.getItemName(vItemName);
     if (!pItemName.hasSecondWord()) {} else if (vItem == null) {
-      this.aGui.println("You dont have this");
+      this.aGui.println(aJsonReader.getDontHave());
     } else {
       this.aInventory.removeItem(vItemName, vItem);
       this.aInventory.removeWeight(vItem.getWeight());
@@ -393,9 +386,9 @@ public class Player extends Entity {
     Beamer vBeamer = (Beamer) this.aInventory.getItemName("teleporter");
     if (this.aInventory.contain(vBeamer)) {
       vBeamer.charge(this.aCurrentRoom);
-      this.aGui.println("Teleporter is charged");
+      this.aGui.println(aJsonReader.getTeleporterCharged());
     } else {
-      this.aGui.println("You dont have teleporter");
+      this.aGui.println(aJsonReader.getDontHaveTeleporter());
     }
   }
 
@@ -408,14 +401,14 @@ public class Player extends Entity {
       if (vBeamer.isCharged()) {
         this.setRoom(vBeamer.fire());
         this.aInventory.removeItem("teleporter", vBeamer);
-        this.aGui.println("You have been teleported. Teleporter is destroyed");
+        this.aGui.println(aJsonReader.getTeleporterUsed());
         printLocationInfo();
         showInventory();
       } else {
-        this.aGui.println("teleporter isnt loaded.");
+        this.aGui.println(aJsonReader.getTeleporterNotCharged());
       }
     } else {
-      this.aGui.println("You dont have teleporter.");
+      this.aGui.println(aJsonReader.getDontHaveTeleporter());
     }
   }
 
@@ -429,9 +422,9 @@ public class Player extends Entity {
     String vItemName = pItemName.getSecondWord();
     Item vItem = this.aInventory.getItemName(vItemName);
     if (!pItemName.hasSecondWord()) {
-      this.aGui.println("This action need a second word");
+      this.aGui.println(aJsonReader.getSecondWordNeeded());
     } else if (vItem == null) {
-      this.aGui.println("You dont have this item");
+      this.aGui.println(aJsonReader.getDontHave());
     } else {
       if (this.aInventory.contain(vPotion)) {
         this.heal(vPotion.getHealingPoint());
@@ -451,9 +444,9 @@ public class Player extends Entity {
     String vItemName = pItemName.getSecondWord();
     Item vItem = this.aInventory.getItemName(vItemName);
     if (!pItemName.hasSecondWord()) {
-      this.aGui.println("This action need a second word");
+      this.aGui.println(aJsonReader.getSecondWordNeeded());
     } else if (vItem == null) {
-      this.aGui.println("You dont have this item");
+      this.aGui.println(aJsonReader.getDontHave());
     } else {
       giveArtefactToGarret(vItemName);
       this.aInventory.removeItem(vItemName, vItem);
@@ -478,9 +471,9 @@ public class Player extends Entity {
       this.aGui.playBattleRoomSound();
       this.aGui.showBattlePanel();
       showFullCharacter();
-      this.aGui.printlnBattle("Let battle begin");
+      this.aGui.printlnBattle(aJsonReader.getStartBattle());
     } else {
-      this.aGui.println("You cant start a battle here");
+      this.aGui.println(aJsonReader.getCantBattle());
     }
   }
 
@@ -488,32 +481,29 @@ public class Player extends Entity {
    * This method is called when the player win the fight
    */
   private void victory() {
-    this.aGui.printlnBattle("Opponent is dead!");
-    this.aGui.printlnBattle("You are the ultimate warrior.");
+    this.aGui.slowPrintBattle(aJsonReader.getBattleVictory());
   }
 
   /**
    * This method is called when the player loose the fight
    */
   private void defeat() {
-    this.aGui.printlnBattle("You are dead!");
-    this.aGui.printlnBattle("You have been slain.");
-    // this.aGui.hideBattlePanel();
+    this.aGui.slowPrintBattle(aJsonReader.getBattleDefeat());
   }
 
-  private void setPlayerMove(int pMove){
+  private void setPlayerMove(int pMove) {
     aPlayerMove = pMove;
   }
 
-  private void setEniMove(int pMove){
+  private void setEniMove(int pMove) {
     aEniMove = pMove;
   }
 
-  public int getPlayerMove(){
+  public int getPlayerMove() {
     return aPlayerMove;
   }
 
-  public int getEniMove(){
+  public int getEniMove() {
     return aEniMove;
   }
 
@@ -557,10 +547,9 @@ public class Player extends Entity {
     this.aGui.exitBattleButton();
   }
 
-  public void attack1(){
-    attack(0,1);
+  public void attack1() {
+    attack(0, 1);
   }
-
 
   /**
    * This method is called when the player click on attack 2 button
@@ -582,11 +571,11 @@ public class Player extends Entity {
   public void defend() {
     this.aGui.clearBattleArea();
     this.improveDefense();
-    this.aGui.printlnBattle("Your defense has improved");
+    this.aGui.printlnBattle(aJsonReader.getDefenseImproved());
     this.aGui.printlnBattle(
-        "Your defense is now : " +
+        aJsonReader.getDefenseIs() +
         this.getDef() +
-        " and your special defense is now : " +
+        aJsonReader.getSpeDefIs() +
         this.getSpeDef()
       );
     this.aGui.printlnBattle("");
@@ -621,11 +610,13 @@ public class Player extends Entity {
     String vName = this.aCurrentRoom.getCharacter().getName();
     Entity vEnemy = this.aCurrentRoom.getCharacter();
     if (isMissed()) {
-      this.aGui.slowPrintBattle(vName + " missed");
+      this.aGui.slowPrintBattle(vName + aJsonReader.getEniMissed());
       setMissed(false);
       return;
     } else {
-      this.aGui.slowPrintBattle(vName + " used " + vEnemy.getAttackString(pMove));
+      this.aGui.slowPrintBattle(
+          vName + aJsonReader.getEniUsed() + vEnemy.getAttackString(pMove)
+        );
     }
   }
 
@@ -637,11 +628,11 @@ public class Player extends Entity {
   public void playerAttackString(int pMove) {
     this.aGui.clearBattleArea();
     if (isMissed()) {
-      this.aGui.slowPrintBattle("You missed");
+      this.aGui.slowPrintBattle(aJsonReader.getMissed());
       setMissed(false);
       return;
     } else {
-      this.aGui.slowPrintBattle("You used " + getAttackString(pMove));
+      this.aGui.slowPrintBattle(aJsonReader.getUsed() + getAttackString(pMove));
     }
   }
 
@@ -771,17 +762,9 @@ public class Player extends Entity {
       this.aGui.clearDialogArea();
       this.aGui.showEntityImage("faceImages/garret.png");
       if (isDevMode()) {
-        this.aGui.printlnEntity(
-            "You found the wedding ring! Thank gods, here is a gift for you" +
-            '\n' +
-            "This is an eboo, a companion that can help you during your adventure"
-          );
+        this.aGui.printlnEntity(aJsonReader.getGiveWeddingRing());
       } else {
-        this.aGui.slowPrintEntity(
-            "You found the wedding ring! Thank gods, here is a gift for you" +
-            '\n' +
-            "This is an eboo, a companion that can help you during your adventure"
-          );
+        this.aGui.slowPrintEntity(aJsonReader.getGiveWeddingRing());
       }
       this.aGui.hideCharacterPanel();
 
@@ -815,7 +798,7 @@ public class Player extends Entity {
         vTimer.start();
       }
     } else {
-      this.aGui.println("You cant give this to him");
+      this.aGui.println(aJsonReader.getCantGive());
     }
   }
 
@@ -828,19 +811,19 @@ public class Player extends Entity {
     Item vItem = this.aInventory.getItemName(pItemName);
     if (this.aCurrentRoom.getCharacter().getName() == "Garret") {
       if (
-        pItemName.equals("warmog's_armor") &&
+        pItemName.equals(aJsonReader.getItem1Name()) &&
         this.aInventory.getItemList().containsValue(vItem)
       ) {
         giveArtefact();
       }
       if (
-        pItemName.equals("blade_of_the_ruined_king") &&
+        pItemName.equals(aJsonReader.getItem2Name()) &&
         this.aInventory.getItemList().containsValue(vItem)
       ) {
         giveArtefact();
       }
       if (
-        pItemName.equals("frostfire_gauntlet") &&
+        pItemName.equals(aJsonReader.getItem3Name()) &&
         this.aInventory.getItemList().containsValue(vItem)
       ) {
         giveArtefact();
@@ -856,7 +839,7 @@ public class Player extends Entity {
         allArtefactText();
       }
     } else {
-      this.aGui.println("You cant give this to him");
+      this.aGui.println(aJsonReader.getCantGive());
     }
   }
 
@@ -871,17 +854,11 @@ public class Player extends Entity {
     this.aGui.showEntityImage("faceImages/garret.png");
     if (isDevMode()) {
       this.aGui.printlnEntity(
-          "You found an artefact!" +
-          '\n' +
-          "There are still some left " +
-          aArtefactCounter
+          aJsonReader.getFoundArtefact() + aArtefactCounter
         );
     } else {
       this.aGui.slowPrintEntity(
-          "You found an artefact!" +
-          '\n' +
-          "There are still some left " +
-          aArtefactCounter
+          aJsonReader.getFoundArtefact() + aArtefactCounter
         );
     }
   }
@@ -895,17 +872,9 @@ public class Player extends Entity {
     this.aGui.clearDialogArea();
     this.aGui.showEntityImage("faceImages/garret.png");
     if (isDevMode()) {
-      this.aGui.printlnEntity(
-          "You found all the artefact!" +
-          '\n' +
-          "You are now able to leave the dungeon. You stopped the curse"
-        );
+      this.aGui.printlnEntity(aJsonReader.getAllArtefact());
     } else {
-      this.aGui.slowPrintEntity(
-          "You found all the artefact!" +
-          '\n' +
-          "You are now able to leave the dungeon. You stopped the curse"
-        );
+      this.aGui.slowPrintEntity(aJsonReader.getAllArtefact());
     }
   }
 

@@ -216,6 +216,39 @@ public class JSONReader {
   //Text
   private String aWelcomeText;
   private String aEndWelcomeText;
+  private String aHelpText;
+  private String aEndHelpText;
+  private String aGoWhere;
+  private String aNoDoor;
+  private String aTrap;
+  private String aDontKnow;
+  private String aEatWhat;
+  private String aEatCookie;
+  private String aCantEat;
+  private String aImpossible;
+  private String aCantBack;
+  private String aInventoryFull;
+  private String aDontHave;
+  private String aTeleporterCharged;
+  private String aDontHaveTeleporter;
+  private String aTeleporterUsed;
+  private String aTeleporterNotCharged;
+  private String aSecondWordNeeded;
+  private String aStartBattle;
+  private String aCantBattle;
+  private String aBattleVictory;
+  private String aBattleDefeat;
+  private String aDefenseImproved;
+  private String aDefenseIs;
+  private String aSpeDefIs;
+  private String aEniMissed;
+  private String aEniUsed;
+  private String aMissed;
+  private String aUsed;
+  private String aGiveWeddingRing;
+  private String aCantGive;
+  private String aFoundArtefact;
+  private String aAllArtefact;
   private String aLine1;
   private String aLine2;
   private String aLine3;
@@ -389,6 +422,8 @@ public class JSONReader {
 
     //Text information
     setAllWelcomeText();
+    setAllHelpText();
+    setGameText();
     setCredit();
 
     //get room information
@@ -749,6 +784,182 @@ public class JSONReader {
 
   public String getEndWelcomeText() {
     return aEndWelcomeText;
+  }
+
+  private void setAllHelpText(){
+    String vPath = "printHelp";
+    Map vText = ((Map) aJsonObject.get(vPath));
+    aHelpText = (String) vText.get("helpText");
+    aEndHelpText = (String) vText.get("endHelpText");
+  }
+
+  public String getHelpText() {
+    return aHelpText;
+  }
+
+  public String getEndHelpText() {
+    return aEndHelpText;
+  }
+
+  private void setGameText(){
+    String vPath = "gameText";
+    Map vText = ((Map) aJsonObject.get(vPath));
+
+    aGoWhere = (String) vText.get("goWhere");
+    aNoDoor = (String) vText.get("noDoor");
+    aTrap = (String) vText.get("trap");
+    aDontKnow = (String) vText.get("dontKnow");
+    aEatWhat = (String) vText.get("eatWhat");
+    aEatCookie = (String) vText.get("eatCookie");
+    aCantEat = (String) vText.get("cantEat");
+    aImpossible = (String) vText.get("impossible");
+    aCantBack = (String) vText.get("cantBack");
+    aInventoryFull = (String) vText.get("inventoryFull");
+    aDontHave = (String) vText.get("dontHave");
+    aTeleporterCharged = (String) vText.get("teleporterCharged");
+    aDontHaveTeleporter = (String) vText.get("dontHaveTeleporter");
+    aTeleporterUsed = (String) vText.get("teleporterUsed");
+    aTeleporterNotCharged = (String) vText.get("teleporterNotCharged");
+    aSecondWordNeeded = (String) vText.get("secondWordNeeded");
+    aStartBattle = (String) vText.get("startBattle");
+    aCantBattle = (String) vText.get("cantBattle");
+    aBattleVictory = (String) vText.get("battleVictory");
+    aBattleDefeat = (String) vText.get("battleDefeat");
+    aDefenseImproved = (String) vText.get("defenseImproved");
+    aDefenseIs = (String) vText.get("defenseIs");
+    aSpeDefIs = (String) vText.get("speDefIs");
+    aEniMissed = (String) vText.get("eniMissed");
+    aEniUsed = (String) vText.get("eniUsed");
+    aMissed = (String) vText.get("missed");
+    aUsed = (String) vText.get("used");
+    aGiveWeddingRing = (String) vText.get("giveWeddingRing");
+    aCantGive = (String) vText.get("cantGive");
+    aFoundArtefact = (String) vText.get("foundArtefact");
+    aAllArtefact = (String) vText.get("allArtefact");
+  }
+
+  public String getGoWhere() {
+    return aGoWhere;
+  }
+
+  public String getNoDoor() {
+    return aNoDoor;
+  }
+
+  public String getTrap() {
+    return aTrap;
+  }
+
+  public String getDontKnow() {
+    return aDontKnow;
+  }
+
+  public String getEatWhat() {
+    return aEatWhat;
+  }
+
+  public String getEatCookie() {
+    return aEatCookie;
+  }
+
+  public String getCantEat() {
+    return aCantEat;
+  }
+
+  public String getImpossible() {
+    return aImpossible;
+  }
+
+  public String getCantBack() {
+    return aCantBack;
+  }
+
+  public String getInventoryFull() {
+    return aInventoryFull;
+  }
+
+  public String getDontHave() {
+    return aDontHave;
+  }
+
+  public String getTeleporterCharged() {
+    return aTeleporterCharged;
+  }
+
+  public String getDontHaveTeleporter() {
+    return aDontHaveTeleporter;
+  }
+
+  public String getTeleporterUsed() {
+    return aTeleporterUsed;
+  }
+
+  public String getTeleporterNotCharged() {
+    return aTeleporterNotCharged;
+  }
+
+  public String getSecondWordNeeded() {
+    return aSecondWordNeeded;
+  }
+
+  public String getStartBattle() {
+    return aStartBattle;
+  }
+
+  public String getCantBattle() {
+    return aCantBattle;
+  }
+
+  public String getBattleVictory() {
+    return aBattleVictory;
+  }
+
+  public String getBattleDefeat() {
+    return aBattleDefeat;
+  }
+
+  public String getDefenseImproved() {
+    return aDefenseImproved;
+  }
+
+  public String getDefenseIs() {
+    return aDefenseIs;
+  }
+
+  public String getSpeDefIs() {
+    return aSpeDefIs;
+  }
+
+  public String getEniMissed() {
+    return aEniMissed;
+  }
+
+  public String getEniUsed() {
+    return aEniUsed;
+  }
+
+  public String getMissed() {
+    return aMissed;
+  }
+
+  public String getUsed() {
+    return aUsed;
+  }
+
+  public String getGiveWeddingRing() {
+    return aGiveWeddingRing;
+  }
+
+  public String getCantGive() {
+    return aCantGive;
+  }
+
+  public String getFoundArtefact() {
+    return aFoundArtefact;
+  }
+
+  public String getAllArtefact() {
+    return aAllArtefact;
   }
 
   private void setCredit() {

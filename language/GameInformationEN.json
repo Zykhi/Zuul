@@ -49,6 +49,45 @@
     "endWelcomeText": "Type 'help' if you need help. You have 20 minutes to escape from the dungeon before being trapped forever."
   },
 
+  "printHelp": {
+    "helpText": "You are lost. You are alone. You wander around the dungeon. \nYour command words are: \n",
+    "endHelpText": "You can also use the buttons on the screen to move."
+  },
+
+  "gameText": {
+    "goWhere": "Go where ?",
+    "noDoor": "There is no door!",
+    "trap": "It's a trap!",
+    "dontKnow": "I don't know what you mean...",
+    "eatWhat": "What do you want to eat ?",
+    "eatCookie": "You eat the cookie. It was delicious!",
+    "cantEat": "You can't eat that!",
+    "impossible": "It's impossible",
+    "cantBack": "You can't go back",
+    "inventoryFull": "Your inventory is full. Drop something first.",
+    "dontHave": "You don't have that!",
+    "teleporterCharged": "The teleporter is now charged. You can use it to go back here.",
+    "dontHaveTeleporter": "You don't have the teleporter!",
+    "teleporterUsed": "You have been teleported. Teleporter is now destroyed",
+    "teleporterNotCharged": "The teleporter is not charged yet. You need to charge it first.",
+    "secondWordNeeded": "This action need a second word",
+    "startBattle": "Let's battle begin!",
+    "cantBattle": "You can't battle here",
+    "battleVictory": "Opponent is dead! \nYou are the ultimate warrior.",
+    "battleDefeat": "You have been slain. \nGame Over.",
+    "defenseImproved": "Your defense has been improved",
+    "defenseIs": "Your defense is now : ",
+    "speDefIs": "and your special defense is now : ",
+    "eniMissed": " missed!",
+    "eniUsed": " used ",
+    "missed": "You missed!",
+    "used": "You used ",
+    "giveWeddingRing": "You found the wedding ring! Thank gods, here is a gift for you. \nThis is an eboo, a companion that can help you during your adventure",
+    "cantGive" : "You can't give that!",
+    "foundArtefact" : "You found an artefact! \nThere are still some left ",
+    "allArtefact": "You found all the artefact! \n You are now able to leave the dungeon. You stopped the curse"
+  },
+
   "credit": {
     "line1": "Story by : Charly D.",
     "line2": "Programming by : Charly D.",
@@ -168,7 +207,6 @@
     "price": 0,
     "fightable": false
   },
-
 
   "item3": {
     "name": "frostfire_gauntlet",
