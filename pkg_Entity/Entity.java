@@ -25,6 +25,8 @@ public class Entity {
   private boolean aFightable;
   private boolean aMissed;
   private boolean aDefeated;
+  private boolean aAttack;
+  private boolean aAlreadyMidHPTalk;
 
   /**
    * This constructor create entity
@@ -102,6 +104,14 @@ public class Entity {
 
   public String getMidHPDialogue() {
     return this.aMidHPDialogue;
+  }
+
+  public boolean isAlreadyMidHPTalk(){
+    return aAlreadyMidHPTalk;
+  }
+
+  public void setAlreadyMidHPTalk(boolean pTalk){
+    aAlreadyMidHPTalk = pTalk;
   }
 
   public void setMidHPDialogue(String pMidHPDialogue) {
@@ -196,6 +206,10 @@ public class Entity {
     return this.aFightable;
   }
 
+  public boolean isAttacking(){
+    return this.aAttack;
+  }
+
   public void setFightable(boolean pFightable) {
     this.aFightable = pFightable;
   }
@@ -225,6 +239,7 @@ public class Entity {
    */
   public void attack(Entity pEnemy, int pMove) {
     aMissed = false;
+    aAttack = true;
     double vDamage = 0.0;
     double vRandom = Math.random() * 100;
     if (vRandom > Double.parseDouble(aMoves[pMove][2])) {

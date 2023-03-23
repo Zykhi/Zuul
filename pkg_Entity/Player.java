@@ -30,6 +30,8 @@ public class Player extends Entity {
   private int aMaxWeight;
   private int aMovement;
   private int aArtefactCounter;
+  private int aPlayerMove;
+  private int aEniMove;
   private boolean aDevMode;
 
   /**
@@ -499,10 +501,26 @@ public class Player extends Entity {
     // this.aGui.hideBattlePanel();
   }
 
+  private void setPlayerMove(int pMove){
+    aPlayerMove = pMove;
+  }
+
+  private void setEniMove(int pMove){
+    aEniMove = pMove;
+  }
+
+  public int getPlayerMove(){
+    return aPlayerMove;
+  }
+
+  public int getEniMove(){
+    return aEniMove;
+  }
+
   /**
    * This method is called when the player click on attack 1 button
    */
-  public void attack1() {
+  private void attack(int pPlayerMove, int pEniMove) {
     this.aGui.clearBattleArea();
     Entity vPlayer = this;
     Entity vEnemy = aCurrentRoom.getCharacter();
@@ -513,11 +531,13 @@ public class Player extends Entity {
     vPlayer1 = vPlayer;
     vPlayer2 = vEnemy;
 
-    int vMove1 = 0;
-    int vMove2 = 1;
+    int vMove1 = pPlayerMove;
+    int vMove2 = pEniMove;
 
     vPlayer1.attack(vPlayer2, vMove1);
-    playerAttackString(vMove1);
+    if (!vPlayer1.isDead() && vPlayer1.isAttacking()) {
+      setPlayerMove(vMove1);
+    }
     if (vPlayer2.isDead()) {
       this.aGui.updateBattleUI();
       victory();
@@ -525,7 +545,9 @@ public class Player extends Entity {
     }
 
     vPlayer2.attack(vPlayer1, vMove2);
-    enemyAttackString(vMove2);
+    if (!vPlayer2.isDead() && vPlayer2.isAttacking()) {
+      setEniMove(vMove2);
+    }
     this.aGui.updateBattleUI();
     if (vPlayer1.isDead()) {
       this.aGui.updateBattleUI();
@@ -535,77 +557,23 @@ public class Player extends Entity {
     this.aGui.exitBattleButton();
   }
 
+  public void attack1(){
+    attack(0,1);
+  }
+
+
   /**
    * This method is called when the player click on attack 2 button
    */
   public void attack2() {
-    this.aGui.clearBattleArea();
-    Entity vPlayer = this;
-    Entity vEnemy = aCurrentRoom.getCharacter();
-
-    Entity vPlayer1;
-    Entity vPlayer2;
-
-    vPlayer1 = vPlayer;
-    vPlayer2 = vEnemy;
-
-    int vMove1 = 1;
-    int vMove2 = 1;
-
-    vPlayer1.attack(vPlayer2, vMove1);
-    playerAttackString(vMove1);
-    //this.aGui.updateBattleUI();
-    if (vPlayer2.isDead()) {
-      this.aGui.updateBattleUI();
-      victory();
-      return;
-    }
-
-    vPlayer2.attack(vPlayer1, vMove2);
-    enemyAttackString(vMove2);
-    this.aGui.updateBattleUI();
-    if (vPlayer1.isDead()) {
-      this.aGui.updateBattleUI();
-      defeat();
-      return;
-    }
-    this.aGui.exitBattleButton();
+    attack(1, 1);
   }
 
   /**
    * This method is called when the player click on attack 3 button
    */
   public void attack3() {
-    this.aGui.clearBattleArea();
-    Entity vPlayer = this;
-    Entity vEnemy = aCurrentRoom.getCharacter();
-
-    Entity vPlayer1;
-    Entity vPlayer2;
-
-    vPlayer1 = vPlayer;
-    vPlayer2 = vEnemy;
-
-    int vMove1 = 2;
-    int vMove2 = 1;
-
-    vPlayer1.attack(vPlayer2, vMove1);
-    playerAttackString(vMove1);
-    if (vPlayer2.isDead()) {
-      this.aGui.updateBattleUI();
-      victory();
-      return;
-    }
-
-    vPlayer2.attack(vPlayer1, vMove2);
-    enemyAttackString(vMove2);
-    this.aGui.updateBattleUI();
-    if (vPlayer1.isDead()) {
-      this.aGui.updateBattleUI();
-      defeat();
-      return;
-    }
-    this.aGui.exitBattleButton();
+    attack(2, 1);
   }
 
   /**
@@ -634,7 +602,7 @@ public class Player extends Entity {
     int vMove2 = 1;
 
     vPlayer2.attack(vPlayer1, vMove2);
-    enemyAttackString(vMove2);
+    setEniMove(vMove2);
     this.aGui.updateBattleUI();
     if (vPlayer1.isDead()) {
       this.aGui.updateBattleUI();
@@ -648,17 +616,16 @@ public class Player extends Entity {
    *
    * @param pMove Number of the move in the table
    */
-  private void enemyAttackString(int pMove) {
+  public void enemyAttackString(int pMove) {
+    this.aGui.clearBattleArea();
     String vName = this.aCurrentRoom.getCharacter().getName();
     Entity vEnemy = this.aCurrentRoom.getCharacter();
     if (isMissed()) {
-      this.aGui.printlnBattle(vName + " missed");
-      this.aGui.printlnBattle("");
+      this.aGui.slowPrintBattle(vName + " missed");
       setMissed(false);
       return;
     } else {
-      this.aGui.printlnBattle(vName + " used " + vEnemy.getAttackString(pMove));
-      this.aGui.printlnBattle("");
+      this.aGui.slowPrintBattle(vName + " used " + vEnemy.getAttackString(pMove));
     }
   }
 
@@ -667,15 +634,14 @@ public class Player extends Entity {
    *
    * @param pMove Number of the move in the table
    */
-  private void playerAttackString(int pMove) {
+  public void playerAttackString(int pMove) {
+    this.aGui.clearBattleArea();
     if (isMissed()) {
-      this.aGui.printlnBattle("You missed");
-      this.aGui.printlnBattle("");
+      this.aGui.slowPrintBattle("You missed");
       setMissed(false);
       return;
     } else {
-      this.aGui.printlnBattle("You used " + getAttackString(pMove));
-      this.aGui.printlnBattle("");
+      this.aGui.slowPrintBattle("You used " + getAttackString(pMove));
     }
   }
 

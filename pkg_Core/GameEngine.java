@@ -281,7 +281,7 @@ public class GameEngine {
     NPC4 vNPC4 = new NPC4();
     this.aRooms.get(aJsonReader.getNPC4Location()).setCharacter(vNPC4);
   }
-  
+
   /**
    * Given a command, process (that is: execute) the command.
    *
@@ -440,13 +440,19 @@ public class GameEngine {
     return vEnemyHP;
   }
 
+  public Entity getEnemy() {
+    Entity vEnemy = this.aPlayer.getCurrentRoom().getCharacter();
+    return vEnemy;
+  }
+
   public int getMaxEnemyHP() {
     Entity vEnemy = this.aPlayer.getCurrentRoom().getCharacter();
     int vEnemyMaxHP = vEnemy.getMaxHP();
     return vEnemyMaxHP;
   }
 
-  public String getMidHPDialogue(){
+  public String getMidHPDialogue() {
+    this.aGui.clearBattleArea();
     Entity vEnemy = this.aPlayer.getCurrentRoom().getCharacter();
     String vMidHPDialogue = vEnemy.getMidHPDialogue();
     return vMidHPDialogue;

@@ -299,6 +299,10 @@ public class UserInterface implements ActionListener {
     this.printBattle(pText + "\n");
   } // println(.)
 
+  public void slowPrintBattle(final String pText){
+    slowPrinter(pText, 30, aBattleLog);
+  }
+
   /**
    * This method clear the dialog text area
    */
@@ -922,7 +926,6 @@ public class UserInterface implements ActionListener {
 
   /**
    * This method create the panel of the battle
-   * //TODO: Update Battle panel
    */
   private void createBattlePanel() {
     this.aBattlerPanel = new JLayeredPane();
@@ -1647,11 +1650,11 @@ public class UserInterface implements ActionListener {
 
   /**
    * This method is update UI during the battle
-   * TODO: add delay between each update
    */
   public void updateBattleUI() {
-    //TODO: add boolean to check if player attack
-    hit(aEntityFullImage);
+    if (!aEngine.getPlayer().isMissed() && !aEngine.getPlayer().isDead()) {
+      hit(aEntityFullImage);
+      aEngine.getPlayer().playerAttackString(aEngine.getPlayer().getPlayerMove());
 
     Timer vBattle1Timer = new Timer(
       2000,
@@ -1661,12 +1664,13 @@ public class UserInterface implements ActionListener {
       }
     );
     vBattle1Timer.start();
-
+    }
+    if(!aEngine.getEnemy().isMissed() && !aEngine.getEnemy().isDead()){
     Timer vBattle2Timer = new Timer(
       4000,
       e -> {
-        //TODO: add boolean to check attack
         hit(aPlayerFullImage);
+        aEngine.getPlayer().enemyAttackString(aEngine.getPlayer().getEniMove());
         ((Timer) e.getSource()).stop();
       }
     );
@@ -1680,18 +1684,21 @@ public class UserInterface implements ActionListener {
       }
     );
     vBattle3Timer.start();
+    }
 
-    //TODO : check if enemy is dead and if he already said his dialogue
+    if(!aEngine.getEnemy().isDead() && !aEngine.getEnemy().isAlreadyMidHPTalk()){
     Timer vBattle4Timer = new Timer(
       8000,
       e -> {
         if (aEngine.getEnemyHP() < aEngine.getMaxEnemyHP() / 2) {
           printlnBattle(aEngine.getMidHPDialogue());
+          aEngine.getEnemy().setAlreadyMidHPTalk(true);
         }
         ((Timer) e.getSource()).stop();
       }
     );
     vBattle4Timer.start();
+    }
   }
 
   private void updatePlayerHealthBar(int pCurrentHP, JProgressBar pManager) {
