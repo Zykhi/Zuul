@@ -227,7 +227,7 @@ public class Player extends Entity {
       vTimer.start();
 
       if (!isDevMode()) {
-        int vDelay2 = 26000; // specify the delay for the timer
+        int vDelay2 = 26500; // specify the delay for the timer
         Timer vTimer2 = new Timer(
           vDelay2,
           e -> {

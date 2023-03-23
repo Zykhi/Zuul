@@ -16,8 +16,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
-import java.util.concurrent.TimeUnit;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -35,7 +33,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
-import org.javadev.effects.DashboardAnimation;
 import org.javadev.effects.FadeAnimation;
 import org.javadev.effects.IrisAnimation;
 import org.javadev.layout.AnimatingCardLayout;
@@ -157,6 +154,8 @@ public class UserInterface implements ActionListener {
   private int aEndTime = 20;
   private int aIndex;
   private int aCounter = 0;
+  private int aPlayHP;
+  private int aEniHP;
   private int aIntTimerCredit1;
   private int aIntTimerCredit2;
   private int aIntTimerCredit3;
@@ -166,8 +165,6 @@ public class UserInterface implements ActionListener {
   private int aIntTimerCredit7;
   private boolean aSoundToggle;
   private JSONReader aJsonReader;
-  private SmoothProgressBarManager aEniManager;
-  private SmoothProgressBarManager aPlaManager;
   private IrisAnimation aIrisanimation;
   private FadeAnimation aFadeanimation;
 
@@ -1650,40 +1647,89 @@ public class UserInterface implements ActionListener {
 
   /**
    * This method is update UI during the battle
-   * FIXME: Animation is not smooth
    * TODO: add delay between each update
    */
   public void updateBattleUI() {
+    //TODO: add boolean to check if player attack
     hit(aEntityFullImage);
 
-    updateJProgressBar(
-      aEngine.getEnemyHP(),
-      aEngine.getMaxEnemyHP(),
-      aEniManager
+    Timer vBattle1Timer = new Timer(
+      2000,
+      e -> {
+        updateEniHealthBar(aEngine.getEnemyHP(), aEnemyHP);
+        ((Timer) e.getSource()).stop();
+      }
     );
-    updateJProgressBar(
-      aEngine.getPlayerHP(),
-      aEngine.getMaxPlayerHP(),
-      aPlaManager
+    vBattle1Timer.start();
+
+    Timer vBattle2Timer = new Timer(
+      4000,
+      e -> {
+        //TODO: add boolean to check attack
+        hit(aPlayerFullImage);
+        ((Timer) e.getSource()).stop();
+      }
     );
-    if (aEngine.getEnemyHP() < aEngine.getMaxEnemyHP() / 2) {
-      printlnBattle(aEngine.getMidHPDialogue());
-    }
+    vBattle2Timer.start();
+
+    Timer vBattle3Timer = new Timer(
+      6000,
+      e -> {
+        updatePlayerHealthBar(aEngine.getPlayerHP(), aPlayerHP);
+        ((Timer) e.getSource()).stop();
+      }
+    );
+    vBattle3Timer.start();
+
+    //TODO : check if enemy is dead and if he already said his dialogue
+    Timer vBattle4Timer = new Timer(
+      8000,
+      e -> {
+        if (aEngine.getEnemyHP() < aEngine.getMaxEnemyHP() / 2) {
+          printlnBattle(aEngine.getMidHPDialogue());
+        }
+        ((Timer) e.getSource()).stop();
+      }
+    );
+    vBattle4Timer.start();
   }
 
-  private void updateJProgressBar(
-    int pCurrentHP,
-    int pMaxHP,
-    SmoothProgressBarManager pManager
-  ) {
+  private void updatePlayerHealthBar(int pCurrentHP, JProgressBar pManager) {
     int vCurrentHP = pCurrentHP;
-    int vHP = pMaxHP;
-    while (vCurrentHP < vHP) {
-      vHP--;
-      if (!pManager.isDisposed()) {
-        pManager.setValue(vHP);
+    int vDelay = 10;
+    Timer vTimer = new Timer(
+      vDelay,
+      e -> {
+        if (vCurrentHP < aPlayHP) {
+          aPlayHP--;
+          pManager.setValue(aPlayHP);
+        } else if (vCurrentHP <= 0) {
+          aPlayHP = 0;
+        } else {
+          ((Timer) e.getSource()).stop();
+        }
       }
-    }
+    );
+    vTimer.start();
+  }
+
+  private void updateEniHealthBar(int pCurrentHP, JProgressBar pManager) {
+    int vCurrentHP = pCurrentHP;
+    int vDelay = 10;
+    Timer vTimer = new Timer(
+      vDelay,
+      e -> {
+        if (vCurrentHP < aEniHP) {
+          aEniHP--;
+          pManager.setValue(aEniHP);
+        } else if (vCurrentHP <= 0) {
+          aEniHP = 0;
+        } else {
+          ((Timer) e.getSource()).stop();
+        }
+      }
+    );
+    vTimer.start();
   }
 
   private void hit(JLabel pSprite) {
@@ -1717,23 +1763,12 @@ public class UserInterface implements ActionListener {
     vTimer.start();
   }
 
-
   /**
    * This method set battle UI at the start of the battle
    */
   public void startBattleUI() {
-    this.aEniManager =
-      new SmoothProgressBarManager(
-        aEnemyHP,
-        aEngine.getEnemyHP(),
-        aEngine.getMaxEnemyHP()
-      );
-    this.aPlaManager =
-      new SmoothProgressBarManager(
-        aPlayerHP,
-        aEngine.getPlayerHP(),
-        aEngine.getMaxPlayerHP()
-      );
+    aPlayHP = aEngine.getPlayerHP();
+    aEniHP = aEngine.getEnemyHP();
     aEnemyName.setText(aEngine.getEnemyName());
     aEnemyHP.setMaximum(aEngine.getMaxEnemyHP());
     aEnemyHP.setValue(aEngine.getEnemyHP());
