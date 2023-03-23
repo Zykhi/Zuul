@@ -357,7 +357,7 @@ public class JSONReader {
     try {
       this.aJsonReader =
         new JSONParser()
-          .parse(new FileReader("GameInformation" + getLanguage() + ".json"));
+          .parse(new FileReader("language/GameInformation" + getLanguage() + ".json"));
     } catch (IOException | ParseException e) {
       e.printStackTrace();
     }
