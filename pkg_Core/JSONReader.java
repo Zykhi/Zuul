@@ -353,17 +353,17 @@ public class JSONReader {
 
   public JSONReader() {
     // parsing file "GameInformation.json"
+    setLanguage();
     try {
       this.aJsonReader =
-        new JSONParser().parse(new FileReader("GameInformation.json"));
+        new JSONParser()
+          .parse(new FileReader("GameInformation" + getLanguage() + ".json"));
     } catch (IOException | ParseException e) {
       e.printStackTrace();
     }
 
     // typecasting obj to JSONObject
     this.aJsonObject = (JSONObject) aJsonReader;
-
-    setLanguage();
     setGameInformation();
   }
 
@@ -416,7 +416,7 @@ public class JSONReader {
   }
 
   private void setGameSettings() {
-    String vPath = "gameSettings" + getLanguage();
+    String vPath = "gameSettings";
 
     Map vGameSettings = ((Map) aJsonObject.get(vPath));
 
@@ -634,7 +634,7 @@ public class JSONReader {
   }
 
   private void setPlayerInformation() {
-    String vPath = "player" + getLanguage();
+    String vPath = "player";
     Map vPlayer = ((Map) aJsonObject.get(vPath));
     getPlayerAttributes(vPlayer);
   }
@@ -737,7 +737,7 @@ public class JSONReader {
   }
 
   private void setAllWelcomeText() {
-    String vPath = "printWelcome" + getLanguage();
+    String vPath = "printWelcome";
     Map vText = ((Map) aJsonObject.get(vPath));
     aWelcomeText = (String) vText.get("welcomeText");
     aEndWelcomeText = (String) vText.get("endWelcomeText");
@@ -752,7 +752,7 @@ public class JSONReader {
   }
 
   private void setCredit() {
-    String vPath = "credit" + getLanguage();
+    String vPath = "credit";
     Map vCredit = ((Map) aJsonObject.get(vPath));
     aLine1 = (String) vCredit.get("line1");
     aLine2 = (String) vCredit.get("line2");
@@ -1172,7 +1172,7 @@ public class JSONReader {
   }
 
   private void setPotionInformation() {
-    String vPath = "potion" + getLanguage();
+    String vPath = "potion";
     Map vPotion = ((Map) aJsonObject.get(vPath));
 
     aPotionName = (String) vPotion.get("name");
@@ -1193,7 +1193,7 @@ public class JSONReader {
   }
 
   private void setItem1Information() {
-    String vPath = "item1" + getLanguage();
+    String vPath = "item1";
     Map vItem1 = ((Map) aJsonObject.get(vPath));
 
     aItem1Name = (String) vItem1.get("name");
@@ -1234,7 +1234,7 @@ public class JSONReader {
   }
 
   private void setItem2Information() {
-    String vPath = "item2" + getLanguage();
+    String vPath = "item2";
     Map vItem2 = ((Map) aJsonObject.get(vPath));
 
     aItem2Name = (String) vItem2.get("name");
@@ -1275,7 +1275,7 @@ public class JSONReader {
   }
 
   private void setItem3Information() {
-    String vPath = "item3" + getLanguage();
+    String vPath = "item3";
     Map vItem3 = ((Map) aJsonObject.get(vPath));
 
     aItem3Name = (String) vItem3.get("name");
@@ -1316,7 +1316,7 @@ public class JSONReader {
   }
 
   private void setItem4Information() {
-    String vPath = "item4" + getLanguage();
+    String vPath = "item4";
     Map vItem4 = ((Map) aJsonObject.get(vPath));
 
     aItem4Name = (String) vItem4.get("name");
@@ -1357,7 +1357,7 @@ public class JSONReader {
   }
 
   private void setItem5Information() {
-    String vPath = "item5" + getLanguage();
+    String vPath = "item5";
     Map vItem5 = ((Map) aJsonObject.get(vPath));
 
     aItem5Name = (String) vItem5.get("name");
@@ -1398,7 +1398,7 @@ public class JSONReader {
   }
 
   private void setNPC1Information() {
-    String vPath = "npc1" + getLanguage();
+    String vPath = "npc1";
     Map vNPC1 = ((Map) aJsonObject.get(vPath));
 
     aNPC1Name = (String) vNPC1.get("name");
@@ -1508,7 +1508,7 @@ public class JSONReader {
   }
 
   private void setNPC2Information() {
-    String vPath = "npc2" + getLanguage();
+    String vPath = "npc2";
     Map vNPC2 = ((Map) aJsonObject.get(vPath));
 
     aNPC2Name = (String) vNPC2.get("name");
@@ -1618,7 +1618,7 @@ public class JSONReader {
   }
 
   private void setNPC3Information() {
-    String vPath = "npc3" + getLanguage();
+    String vPath = "npc3";
     Map vNPC3 = ((Map) aJsonObject.get(vPath));
 
     aNPC3Name = (String) vNPC3.get("name");
@@ -1728,7 +1728,7 @@ public class JSONReader {
   }
 
   private void setNPC4Information() {
-    String vPath = "npc4" + getLanguage();
+    String vPath = "npc4";
     Map vNPC4 = ((Map) aJsonObject.get(vPath));
 
     aNPC4Name = (String) vNPC4.get("name");
