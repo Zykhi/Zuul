@@ -404,7 +404,7 @@ public class JSONReader {
   public void setLanguage() {
     Scanner vScanner;
     try {
-      vScanner = new Scanner(new File("language.txt"));
+      vScanner = new Scanner(new File("language/language.txt"));
       aLanguage = vScanner.nextLine();
     } catch (FileNotFoundException e) {
       e.printStackTrace();

@@ -1543,7 +1543,7 @@ public class UserInterface implements ActionListener {
   private void changeLanguage(String pLanguage, String pMessage) {
     PrintWriter writer;
     try {
-      writer = new PrintWriter("language.txt");
+      writer = new PrintWriter("language/language.txt");
       writer.print(pLanguage);
       writer.close();
     } catch (FileNotFoundException e) {
