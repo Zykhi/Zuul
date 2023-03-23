@@ -1350,9 +1350,9 @@ public class UserInterface implements ActionListener {
       for (int i = vOutput.length; i < 8; i++) {
         vButtons[i].addActionListener(this);
       }
-      this.println("What do you want to drop ?");
+      this.println(aJsonReader.getDropWhat());
     } else {
-      this.println("Your inventory is empty");
+      this.println(aJsonReader.getInventoryEmpty());
     }
   }
 
@@ -1388,9 +1388,9 @@ public class UserInterface implements ActionListener {
       for (int i = vOutput.length; i < 8; i++) {
         vButtons[i].addActionListener(this);
       }
-      this.println("What do you want to give ?");
+      this.println(aJsonReader.getGiveWhat());
     } else {
-      this.println("Your inventory is empty");
+      this.println(aJsonReader.getInventoryEmpty());
     }
   }
 
@@ -1427,9 +1427,9 @@ public class UserInterface implements ActionListener {
       for (int i = vOutput.length; i < 8; i++) {
         vButtons[i].addActionListener(this);
       }
-      this.println("What do you want to take ?");
+      this.println(aJsonReader.getTakeWhat());
     } else {
-      this.println("There is nothing to take here");
+      this.println(aJsonReader.getNothingToTake());
     }
   }
 
@@ -1609,7 +1609,7 @@ public class UserInterface implements ActionListener {
       aRunButton.setText("Back");
       aRunButton.addActionListener(e -> exitBattleButton());
     } else {
-      this.printlnBattle("Your inventory is empty");
+      this.printlnBattle(aJsonReader.getInventoryEmpty());
     }
   }
 
@@ -1914,7 +1914,7 @@ public class UserInterface implements ActionListener {
             aSecond = 0;
             aMinute++;
           }
-          aGameTimer.setText("elapsed time : " + aMinute + " : " + aSecond);
+          aGameTimer.setText(aJsonReader.getElapsedTime() + aMinute + " : " + aSecond);
         }
       };
 

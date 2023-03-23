@@ -249,6 +249,16 @@ public class JSONReader {
   private String aCantGive;
   private String aFoundArtefact;
   private String aAllArtefact;
+  private String aYouAre;
+  private String aExits;
+  private String aItemInTheRoom;
+  private String aInventoryEmpty;
+  private String aInventory;
+  private String aDropWhat;
+  private String aGiveWhat;
+  private String aTakeWhat;
+  private String aNothingToTake;
+  private String aElapsedTime;
   private String aLine1;
   private String aLine2;
   private String aLine3;
@@ -836,6 +846,16 @@ public class JSONReader {
     aCantGive = (String) vText.get("cantGive");
     aFoundArtefact = (String) vText.get("foundArtefact");
     aAllArtefact = (String) vText.get("allArtefact");
+    aYouAre = (String) vText.get("youAre");
+    aExits = (String) vText.get("exits");
+    aItemInTheRoom = (String) vText.get("itemInTheRoom");
+    aInventoryEmpty = (String) vText.get("inventoryEmpty");
+    aInventory = (String) vText.get("inventory");
+    aDropWhat = (String) vText.get("dropWhat");
+    aGiveWhat = (String) vText.get("giveWhat");
+    aTakeWhat = (String) vText.get("takeWhat");
+    aNothingToTake = (String) vText.get("nothingToTake");
+    aElapsedTime = (String) vText.get("elapsedTime");
   }
 
   public String getGoWhere() {
@@ -960,6 +980,46 @@ public class JSONReader {
 
   public String getAllArtefact() {
     return aAllArtefact;
+  }
+
+  public String getYouAre() {
+    return aYouAre;
+  }
+
+  public String getExits() {
+    return aExits;
+  }
+
+  public String getItemInTheRoom() {
+    return aItemInTheRoom;
+  }
+
+  public String getInventoryEmpty() {
+    return aInventoryEmpty;
+  }
+
+  public String getInventory() {
+    return aInventory;
+  }
+
+  public String getDropWhat() {
+    return aDropWhat;
+  }
+
+  public String getGiveWhat() {
+    return aGiveWhat;
+  }
+
+  public String getTakeWhat() {
+    return aTakeWhat;
+  }
+
+  public String getNothingToTake() {
+    return aNothingToTake;
+  }
+
+  public String getElapsedTime() {
+    return aElapsedTime;
   }
 
   private void setCredit() {

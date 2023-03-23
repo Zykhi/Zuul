@@ -2,6 +2,8 @@ package pkg_Room;
 
 import java.util.HashMap;
 import java.util.Set;
+
+import pkg_Core.JSONReader;
 import pkg_Entity.Entity;
 import pkg_Item.Item;
 import pkg_Item.ItemList;
@@ -27,6 +29,7 @@ public class Room {
   private ItemList aItems;
   private String aImageName;
   private Entity aCharacter;
+  private JSONReader aJsonReader = new JSONReader();
   private int aNbrEntry;
 
   /**
@@ -65,7 +68,7 @@ public class Room {
    */
   public String getLongDescription() {
     return (
-      "You are " +
+      aJsonReader.getYouAre() +
       aDescription +
       ".\n" +
       getExitString() +
@@ -106,7 +109,7 @@ public class Room {
    *         "Exits: north west"
    */
   public String getExitString() {
-    String vExitString = "Exits : ";
+    String vExitString = aJsonReader.getExits();
     Set<String> vKeys = aExits.keySet();
     for (String vExit : vKeys) {
       vExitString += " " + vExit;

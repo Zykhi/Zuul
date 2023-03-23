@@ -3,6 +3,8 @@ package pkg_Item;
 import java.util.HashMap;
 import java.util.Set;
 
+import pkg_Core.JSONReader;
+
 /**
  * Item list class -
  * 
@@ -12,6 +14,7 @@ import java.util.Set;
 public class ItemList {
     private HashMap<String, Item> aItems;
     private double aWeight;
+    private JSONReader aJsonReader = new JSONReader();
 
     /**
      * Constructor of item list
@@ -47,7 +50,7 @@ public class ItemList {
      *         "Items : sword shield"
      */
     public String getItemString() {
-        String vItemString = "Items in the room :";
+        String vItemString = aJsonReader.getItemInTheRoom();
         Set<String> vKeys = aItems.keySet();
         for (String vItem : vKeys) {
             vItemString += " " + vItem;
@@ -62,9 +65,9 @@ public class ItemList {
      */
     public String getInventoryString() {
         if (this.aItems.isEmpty()) {
-            return "Your inventory is empty";
+            return aJsonReader.getInventoryEmpty();
         } else {
-            StringBuilder vInventoryBuilder = new StringBuilder("Your inventory : ");
+            StringBuilder vInventoryBuilder = new StringBuilder(aJsonReader.getInventory());
             Set<String> vKeys = aItems.keySet();
             for (String vS : vKeys) {
                 vInventoryBuilder.append(" " + vS);
@@ -80,9 +83,9 @@ public class ItemList {
      */
     public String getInventoryFightableString() {
         if (this.aItems.isEmpty()) {
-            return "Your inventory is empty";
+            return aJsonReader.getInventoryEmpty();
         } else {
-            StringBuilder vInventoryBuilder = new StringBuilder("Your inventory : ");
+            StringBuilder vInventoryBuilder = new StringBuilder(aJsonReader.getInventory());
             Set<String> vKeys = aItems.keySet();
             for (String vS : vKeys) {
                 if (aItems.get(vS).isFightableItem() == true) {

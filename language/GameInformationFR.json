@@ -85,7 +85,17 @@
     "giveWeddingRing": "Vous avez retrouvé ma bague ! Merci !",
     "cantGive" : "Vous ne pouvez pas donner ça !",
     "foundArtefact" : "Vous avez trouvé un artefact ! Il en reste ",
-    "allArtefact": "Vous avez trouvé tous les artefacts ! Vous pouvez maintenant sortir du donjon !"
+    "allArtefact": "Vous avez trouvé tous les artefacts ! Vous pouvez maintenant sortir du donjon !",
+    "youAre" : "Vous êtes ",
+    "exits" : "Sorties : ",
+    "itemInTheRoom" : "Objets dans la pièce : ",
+    "inventoryEmpty": "Votre inventaire est vide !",
+    "inventory": "Inventaire : ",
+    "dropWhat" : "Qu'est-ce que vous voulez lacher ?",
+    "giveWhat" : "Qu'est-ce que vous voulez donner ?",
+    "takeWhat" : "Qu'est-ce que vous voulez prendre ?",
+    "nothingToTake": "Il n'y a rien à prendre ici !",
+    "elapsedTime": "Temps écoulé : "
   },
 
   "credit": {

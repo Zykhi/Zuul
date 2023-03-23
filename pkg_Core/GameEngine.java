@@ -358,7 +358,7 @@ public class GameEngine {
             this.aPlayer.give(pCommandLine);
             break;
           default:
-            this.aGui.println("I don't know what you mean...");
+            this.aGui.println(aJsonReader.getDontKnow());
             break;
         }
       } catch (Exception pE) {
@@ -635,7 +635,7 @@ public class GameEngine {
         this.aGui.println(pE.getMessage());
       }
     } else {
-      this.aGui.println("This command need a second word");
+      this.aGui.println(aJsonReader.getSecondWordNeeded());
     }
   }
 

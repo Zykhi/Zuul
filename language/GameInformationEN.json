@@ -85,7 +85,17 @@
     "giveWeddingRing": "You found the wedding ring! Thank gods, here is a gift for you. \nThis is an eboo, a companion that can help you during your adventure",
     "cantGive" : "You can't give that!",
     "foundArtefact" : "You found an artefact! \nThere are still some left ",
-    "allArtefact": "You found all the artefact! \n You are now able to leave the dungeon. You stopped the curse"
+    "allArtefact": "You found all the artefact! \n You are now able to leave the dungeon. You stopped the curse",
+    "youAre": "You are ",
+    "exits" : "Exits : ",
+    "itemInTheRoom" : "Items in the room : ",
+    "inventoryEmpty": "Your inventory is empty",
+    "inventory": "Inventory : ",
+    "dropWhat" : "What do you want to drop ?",
+    "giveWhat" : "What do you want to give ?",
+    "takeWhat" : "What do you want to take ?",
+    "nothingToTake": "There is nothing to take",
+    "elapsedTime": "Elapsed time : "
   },
 
   "credit": {
