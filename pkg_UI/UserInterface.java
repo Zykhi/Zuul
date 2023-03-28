@@ -36,6 +36,9 @@ import javax.swing.Timer;
 import org.javadev.effects.FadeAnimation;
 import org.javadev.effects.IrisAnimation;
 import org.javadev.layout.AnimatingCardLayout;
+
+import com.formdev.flatlaf.FlatLightLaf;
+
 import pkg_Command.Parser;
 import pkg_Core.GameEngine;
 import pkg_Core.JSONReader;
@@ -177,6 +180,7 @@ public class UserInterface implements ActionListener {
    */
   public UserInterface(final GameEngine pGameEngine) {
     this.aEngine = pGameEngine;
+    FlatLightLaf.setup();
     this.aJsonReader = new JSONReader();
     aIrisanimation = new IrisAnimation();
     aFadeanimation = new FadeAnimation();
@@ -1738,6 +1742,7 @@ public class UserInterface implements ActionListener {
         if (vCurrentHP < aPlayHP) {
           aPlayHP--;
           pManager.setValue(aPlayHP);
+          updateHealthBarColor(pManager);
         } else if (vCurrentHP <= 0) {
           aPlayHP = 0;
         } else {
@@ -1757,6 +1762,7 @@ public class UserInterface implements ActionListener {
         if (vCurrentHP < aEniHP) {
           aEniHP--;
           pManager.setValue(aEniHP);
+          updateHealthBarColor(pManager);
         } else if (vCurrentHP <= 0) {
           aEniHP = 0;
         } else {
@@ -1765,6 +1771,16 @@ public class UserInterface implements ActionListener {
       }
     );
     vTimer.start();
+  }
+
+  private void updateHealthBarColor(JProgressBar pManager) {
+    if (pManager.getValue() < pManager.getMaximum() / 4) {
+      pManager.setForeground(Color.RED);
+    } else if (pManager.getValue() < pManager.getMaximum() / 2) {
+      pManager.setForeground(Color.ORANGE);
+    } else {
+      pManager.setForeground(Color.GREEN);
+    }
   }
 
   private void hit(JLabel pSprite) {
@@ -1873,6 +1889,8 @@ public class UserInterface implements ActionListener {
     for (int i = 0; i < vClips.length; i++) {
       if (vClips[i] != null) {
         vClips[i].start();
+        vClips[i].setFramePosition(0);
+        setVolume(1f, vClips[i]);
       }
     }
   }
@@ -1885,6 +1903,8 @@ public class UserInterface implements ActionListener {
     for (int i = 0; i < vClips.length; i++) {
       if (vClips[i] != null) {
         vClips[i].stop();
+        vClips[i].setFramePosition(0);
+        setVolume(0.0001f, vClips[i]);
       }
     }
   }
