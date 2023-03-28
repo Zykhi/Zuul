@@ -1844,7 +1844,7 @@ public class UserInterface implements ActionListener {
     Clip[] vClips = { aClip, aDialogClip };
     for (int i = 0; i < vClips.length; i++) {
       if (vClips[i] != null) {
-        setVolume(1f, vClips[i]);
+        vClips[i].start();
       }
     }
   }
@@ -1856,7 +1856,7 @@ public class UserInterface implements ActionListener {
     Clip[] vClips = { aClip, aDialogClip };
     for (int i = 0; i < vClips.length; i++) {
       if (vClips[i] != null) {
-        setVolume(0.0001f, vClips[i]);
+        vClips[i].stop();
       }
     }
   }
