@@ -198,6 +198,7 @@ public class UserInterface implements ActionListener {
     FlatLightLaf.setup();
     UIManager.put("Button.arc", 20);
     UIManager.put("TextComponent.arc", 20);
+    UIManager.put("ProgressBar.arc", 20);
 
     UIManager.put("ScrollBar.thumbArc", 999);
     UIManager.put("ScrollBar.thumbInsets", new Insets(2, 2, 2, 2));
@@ -903,13 +904,13 @@ public class UserInterface implements ActionListener {
 
     JPanel vMovementButtonPanel = new JPanel();
     JPanel vCenterButtonPanel = new JPanel();
-    vCenterButtonPanel.setLayout(new GridLayout(1, 2));
+    vCenterButtonPanel.setLayout(new GridLayout(1, 2, 5, 5));
     vCenterButtonPanel.setBackground(Color.DARK_GRAY);
     vCenterButtonPanel.add(this.aUpButton);
     vCenterButtonPanel.add(this.aDownButton);
 
     vMovementButtonPanel.setPreferredSize(new Dimension(365, 87));
-    vMovementButtonPanel.setLayout(new BorderLayout());
+    vMovementButtonPanel.setLayout(new BorderLayout(5,5));
     vMovementButtonPanel.setBackground(Color.DARK_GRAY);
     vMovementButtonPanel.add(this.aNorthButton, BorderLayout.NORTH);
     vMovementButtonPanel.add(this.aWestButton, BorderLayout.WEST);
@@ -921,7 +922,7 @@ public class UserInterface implements ActionListener {
 
     JPanel vActionButtonPanel = new JPanel();
     vActionButtonPanel.setPreferredSize(new Dimension(294, 87));
-    vActionButtonPanel.setLayout(new GridLayout(3, 3));
+    vActionButtonPanel.setLayout(new GridLayout(3, 3, 5, 5));
     vActionButtonPanel.setBackground(Color.DARK_GRAY);
     vActionButtonPanel.add(this.aBackButton);
     vActionButtonPanel.add(this.aHelpButton);
@@ -1035,7 +1036,7 @@ public class UserInterface implements ActionListener {
     vBattleButtonPanel.setOpaque(false);
     vBattleButtonPanel.setSize(vBattleButtonPanel.getPreferredSize());
     vBattleButtonPanel.setLocation(650, 565);
-    vBattleButtonPanel.setLayout(new GridLayout(2, 2));
+    vBattleButtonPanel.setLayout(new GridLayout(2, 2, 5,5));
     vBattleButtonPanel.add(aAttackButton);
     vBattleButtonPanel.add(aBagButton);
     vBattleButtonPanel.add(aDefendButton);
