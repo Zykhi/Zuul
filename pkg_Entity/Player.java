@@ -468,6 +468,7 @@ public class Player extends Entity {
       this.aCurrentRoom.getCharacter().isFightable()
     ) {
       this.aGui.startBattleUI();
+      this.aGui.clearBattleArea();
       this.aGui.playBattleRoomSound();
       this.aGui.showBattlePanel();
       showFullCharacter();
