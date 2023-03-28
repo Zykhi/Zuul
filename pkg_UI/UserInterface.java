@@ -1,5 +1,6 @@
 package pkg_UI;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -7,6 +8,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -33,12 +36,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
+import javax.swing.UIManager;
 import org.javadev.effects.FadeAnimation;
 import org.javadev.effects.IrisAnimation;
 import org.javadev.layout.AnimatingCardLayout;
-
-import com.formdev.flatlaf.FlatLightLaf;
-
 import pkg_Command.Parser;
 import pkg_Core.GameEngine;
 import pkg_Core.JSONReader;
@@ -180,7 +181,7 @@ public class UserInterface implements ActionListener {
    */
   public UserInterface(final GameEngine pGameEngine) {
     this.aEngine = pGameEngine;
-    FlatLightLaf.setup();
+    setupUI();
     this.aJsonReader = new JSONReader();
     aIrisanimation = new IrisAnimation();
     aFadeanimation = new FadeAnimation();
@@ -191,6 +192,16 @@ public class UserInterface implements ActionListener {
     this.aSoundToggle = true;
     this.enable(false);
   } // UserInterface(.)
+
+  //Set UI
+  private void setupUI() {
+    FlatLightLaf.setup();
+    UIManager.put("Button.arc", 20);
+    UIManager.put("TextComponent.arc", 20);
+
+    UIManager.put("ScrollBar.thumbArc", 999);
+    UIManager.put("ScrollBar.thumbInsets", new Insets(2, 2, 2, 2));
+  }
 
   // print methods
 
@@ -1066,13 +1077,19 @@ public class UserInterface implements ActionListener {
     showBackGroundImage();
 
     JPanel vButtonsPanel = new JPanel();
+    GridBagConstraints vConstraints = new GridBagConstraints();
+    vConstraints.insets = new Insets(0, 0, 5, 0);
+    vConstraints.weightx = 1.0;
+    vConstraints.weighty = 0.25;
+    vConstraints.gridwidth = GridBagConstraints.REMAINDER;
+    vConstraints.fill = GridBagConstraints.BOTH;
     vButtonsPanel.setOpaque(false);
     vButtonsPanel.setPreferredSize(new Dimension(201, 150));
     vButtonsPanel.setSize(vButtonsPanel.getPreferredSize());
-    vButtonsPanel.setLayout(new GridLayout(3, 1));
-    vButtonsPanel.add(aPlay);
-    vButtonsPanel.add(aSetting);
-    vButtonsPanel.add(aQuit);
+    vButtonsPanel.setLayout(new GridBagLayout());
+    vButtonsPanel.add(aPlay, vConstraints);
+    vButtonsPanel.add(aSetting, vConstraints);
+    vButtonsPanel.add(aQuit, vConstraints);
     vButtonsPanel.setLocation(438, 400);
 
     JLabel vTitle = new JLabel(aJsonReader.getGameName());
@@ -1104,14 +1121,20 @@ public class UserInterface implements ActionListener {
     showSettingBackground();
 
     JPanel vButtonsPanel = new JPanel();
+    GridBagConstraints vConstraints = new GridBagConstraints();
+    vConstraints.insets = new Insets(0, 0, 5, 0);
+    vConstraints.weightx = 1.0;
+    vConstraints.weighty = 0.25;
+    vConstraints.gridwidth = GridBagConstraints.REMAINDER;
+    vConstraints.fill = GridBagConstraints.BOTH;
     vButtonsPanel.setOpaque(false);
     vButtonsPanel.setPreferredSize(new Dimension(201, 200));
     vButtonsPanel.setSize(vButtonsPanel.getPreferredSize());
-    vButtonsPanel.setLayout(new GridLayout(4, 1));
-    vButtonsPanel.add(aSound);
-    vButtonsPanel.add(aDevMode);
-    vButtonsPanel.add(aLanguage);
-    vButtonsPanel.add(aBack);
+    vButtonsPanel.setLayout(new GridBagLayout());
+    vButtonsPanel.add(aSound, vConstraints);
+    vButtonsPanel.add(aDevMode, vConstraints);
+    vButtonsPanel.add(aLanguage, vConstraints);
+    vButtonsPanel.add(aBack, vConstraints);
     vButtonsPanel.setLocation(438, 400);
 
     JLabel vTitle = new JLabel(aJsonReader.getSettingButton());
@@ -1140,13 +1163,19 @@ public class UserInterface implements ActionListener {
     showSoundBackground();
 
     JPanel vButtonsPanel = new JPanel();
+    GridBagConstraints vConstraints = new GridBagConstraints();
+    vConstraints.insets = new Insets(0, 0, 5, 0);
+    vConstraints.weightx = 1.0;
+    vConstraints.weighty = 0.25;
+    vConstraints.gridwidth = GridBagConstraints.REMAINDER;
+    vConstraints.fill = GridBagConstraints.BOTH;
     vButtonsPanel.setOpaque(false);
     vButtonsPanel.setPreferredSize(new Dimension(201, 150));
     vButtonsPanel.setSize(vButtonsPanel.getPreferredSize());
-    vButtonsPanel.setLayout(new GridLayout(3, 1));
-    vButtonsPanel.add(aSoundOn);
-    vButtonsPanel.add(aSoundOff);
-    vButtonsPanel.add(aBack2);
+    vButtonsPanel.setLayout(new GridBagLayout());
+    vButtonsPanel.add(aSoundOn, vConstraints);
+    vButtonsPanel.add(aSoundOff, vConstraints);
+    vButtonsPanel.add(aBack2, vConstraints);
     vButtonsPanel.setLocation(438, 400);
 
     JLabel vTitle = new JLabel(aJsonReader.getSoundButton());
@@ -1172,13 +1201,19 @@ public class UserInterface implements ActionListener {
     showLanguageBackground();
 
     JPanel vButtonsPanel = new JPanel();
+    GridBagConstraints vConstraints = new GridBagConstraints();
+    vConstraints.insets = new Insets(0, 0, 5, 0);
+    vConstraints.weightx = 1.0;
+    vConstraints.weighty = 0.25;
+    vConstraints.gridwidth = GridBagConstraints.REMAINDER;
+    vConstraints.fill = GridBagConstraints.BOTH;
     vButtonsPanel.setOpaque(false);
     vButtonsPanel.setPreferredSize(new Dimension(201, 150));
     vButtonsPanel.setSize(vButtonsPanel.getPreferredSize());
-    vButtonsPanel.setLayout(new GridLayout(3, 1));
-    vButtonsPanel.add(aEnglish);
-    vButtonsPanel.add(aFrench);
-    vButtonsPanel.add(aBack3);
+    vButtonsPanel.setLayout(new GridBagLayout());
+    vButtonsPanel.add(aEnglish, vConstraints);
+    vButtonsPanel.add(aFrench, vConstraints);
+    vButtonsPanel.add(aBack3, vConstraints);
     vButtonsPanel.setLocation(438, 400);
 
     JLabel vTitle = new JLabel(aJsonReader.getLanguageButton());
