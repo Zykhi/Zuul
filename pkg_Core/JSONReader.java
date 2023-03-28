@@ -60,6 +60,32 @@ public class JSONReader {
   private long aMenuSizeFont;
   private String aMainMenuFont;
   private long aTitleSizeFont;
+  private String aNorth;
+  private String aSouth;
+  private String aEast;
+  private String aWest;
+  private String aUp;
+  private String aDown;
+
+  //Commands Words
+  private String aHelpCommandWord;
+  private String aGoCommandWord;
+  private String aQuitCommandWord;
+  private String aLookCommandWord;
+  private String aEatCommandWord;
+  private String aBackCommandWord;
+  private String aTestCommandWord;
+  private String aTakeCommandWord;
+  private String aDropCommandWord;
+  private String aInventoryCommandWord;
+  private String aChargeCommandWord;
+  private String aFireCommandWord;
+  private String aExitCommandWord;
+  private String aAleaCommandWord;
+  private String aFightCommandWord;
+  private String aLeaveCommandWord;
+  private String aUseCommandWord;
+  private String aGiveCommandWord;
 
   //Player
   private String aPlayerName;
@@ -400,7 +426,9 @@ public class JSONReader {
     try {
       this.aJsonReader =
         new JSONParser()
-          .parse(new FileReader("language/GameInformation" + getLanguage() + ".json"));
+          .parse(
+            new FileReader("language/GameInformation" + getLanguage() + ".json")
+          );
     } catch (IOException | ParseException e) {
       e.printStackTrace();
     }
@@ -412,6 +440,7 @@ public class JSONReader {
 
   public void setGameInformation() {
     setGameSettings();
+    setCommandsWords();
 
     //Player information
     setPlayerInformation();
@@ -508,6 +537,12 @@ public class JSONReader {
     aMenuSizeFont = (long) vGameSettings.get("menuSizeFont");
     aMainMenuFont = (String) vGameSettings.get("mainMenuFont");
     aTitleSizeFont = (long) vGameSettings.get("titleSizeFont");
+    aNorth = (String) vGameSettings.get("north");
+    aEast = (String) vGameSettings.get("east");
+    aSouth = (String) vGameSettings.get("south");
+    aWest = (String) vGameSettings.get("west");
+    aUp = (String) vGameSettings.get("up");
+    aDown = (String) vGameSettings.get("down");
   }
 
   public String getGameName() {
@@ -678,6 +713,129 @@ public class JSONReader {
     return (float) aTitleSizeFont;
   }
 
+  public String getNorth() {
+    return aNorth;
+  }
+
+  public String getEast() {
+    return aEast;
+  }
+
+  public String getSouth() {
+    return aSouth;
+  }
+
+  public String getWest() {
+    return aWest;
+  }
+
+  public String getUp() {
+    return aUp;
+  }
+
+  public String getDown() {
+    return aDown;
+  }
+
+  private void setCommandsWords() {
+    String vPath = "commandsWords";
+    Map vCommandsWords = ((Map) aJsonObject.get(vPath));
+    getCommandsWords(vCommandsWords);
+  }
+
+  private void getCommandsWords(Map pCommandsWords){
+    aHelpCommandWord = (String) pCommandsWords.get("helpCommandWord");
+    aGoCommandWord = (String) pCommandsWords.get("goCommandWord");
+    aQuitCommandWord = (String) pCommandsWords.get("quitCommandWord");
+    aLookCommandWord = (String) pCommandsWords.get("lookCommandWord");
+    aEatCommandWord = (String) pCommandsWords.get("eatCommandWord");
+    aBackCommandWord = (String) pCommandsWords.get("backCommandWord");
+    aTestCommandWord = (String) pCommandsWords.get("testCommandWord");
+    aDropCommandWord = (String) pCommandsWords.get("dropCommandWord");
+    aTakeCommandWord = (String) pCommandsWords.get("takeCommandWord");
+    aInventoryCommandWord = (String) pCommandsWords.get("inventoryCommandWord");
+    aChargeCommandWord = (String) pCommandsWords.get("chargeCommandWord");
+    aFireCommandWord = (String) pCommandsWords.get("fireCommandWord");
+    aExitCommandWord = (String) pCommandsWords.get("exitCommandWord");
+    aAleaCommandWord = (String) pCommandsWords.get("aleaCommandWord");
+    aGiveCommandWord = (String) pCommandsWords.get("giveCommandWord");
+    aFightCommandWord = (String) pCommandsWords.get("fightCommandWord");
+    aLeaveCommandWord = (String) pCommandsWords.get("leaveCommandWord");
+    aUseCommandWord = (String) pCommandsWords.get("useCommandWord");
+  }
+
+  public String getHelpCommandWord() {
+    return aHelpCommandWord;
+  }
+
+  public String getGoCommandWord() {
+    return aGoCommandWord;
+  }
+
+  public String getQuitCommandWord() {
+    return aQuitCommandWord;
+  }
+
+  public String getLookCommandWord() {
+    return aLookCommandWord;
+  }
+
+  public String getEatCommandWord() {
+    return aEatCommandWord;
+  }
+
+  public String getBackCommandWord() {
+    return aBackCommandWord;
+  }
+
+  public String getTestCommandWord() {
+    return aTestCommandWord;
+  }
+
+  public String getDropCommandWord() {
+    return aDropCommandWord;
+  }
+
+  public String getTakeCommandWord() {
+    return aTakeCommandWord;
+  }
+
+  public String getInventoryCommandWord() {
+    return aInventoryCommandWord;
+  }
+
+  public String getChargeCommandWord() {
+    return aChargeCommandWord;
+  }
+
+  public String getFireCommandWord() {
+    return aFireCommandWord;
+  }
+
+  public String getExitCommandWord() {
+    return aExitCommandWord;
+  }
+
+  public String getAleaCommandWord() {
+    return aAleaCommandWord;
+  }
+
+  public String getGiveCommandWord() {
+    return aGiveCommandWord;
+  }
+
+  public String getFightCommandWord() {
+    return aFightCommandWord;
+  }
+
+  public String getLeaveCommandWord() {
+    return aLeaveCommandWord;
+  }
+
+  public String getUseCommandWord() {
+    return aUseCommandWord;
+  }
+
   private void setPlayerInformation() {
     String vPath = "player";
     Map vPlayer = ((Map) aJsonObject.get(vPath));
@@ -796,7 +954,7 @@ public class JSONReader {
     return aEndWelcomeText;
   }
 
-  private void setAllHelpText(){
+  private void setAllHelpText() {
     String vPath = "printHelp";
     Map vText = ((Map) aJsonObject.get(vPath));
     aHelpText = (String) vText.get("helpText");
@@ -811,7 +969,7 @@ public class JSONReader {
     return aEndHelpText;
   }
 
-  private void setGameText(){
+  private void setGameText() {
     String vPath = "gameText";
     Map vText = ((Map) aJsonObject.get(vPath));
 
@@ -1062,6 +1220,13 @@ public class JSONReader {
     return aLine7;
   }
 
+  /**
+   * @brief Sets the information for the room named room1.
+   *
+   * This function sets the name, description, and image for the room named
+   * room1. It also sets the exits for the room.
+   *
+   */
   private void setRoom1Information() {
     String vPath = "room1";
     Map vRoom1 = ((Map) aJsonObject.get(vPath));
@@ -1076,10 +1241,19 @@ public class JSONReader {
     return aRoom1Name;
   }
 
+  /**
+   * Gets the description of the first room in the game.
+   * @return the description of the first room in the game.
+   */
   public String getRoom1Description() {
     return aRoom1Description;
   }
 
+  /**
+   * This method returns the image for room 1.
+   * 
+   * @return aRoom1Image the image for room 1.
+   */
   public String getRoom1Image() {
     return aRoom1Image;
   }
@@ -1109,8 +1283,8 @@ public class JSONReader {
   }
 
   private void setRoom2Information() {
-    String vPath = "room2" + getLanguage();
-    Map vRoom2 = ((Map) aJsonObject.get("room2"));
+    String vPath = "room2";
+    Map vRoom2 = ((Map) aJsonObject.get(vPath));
 
     aRoom2Name = (String) vRoom2.get("roomName");
     aRoom2Description = (String) vRoom2.get("roomDescription");

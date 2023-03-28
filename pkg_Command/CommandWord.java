@@ -1,4 +1,7 @@
 package pkg_Command;
+
+import pkg_Core.JSONReader;
+
 /**
  * Representations for all the valid command words for the game
  * along with a string in a particular language.
@@ -9,13 +12,14 @@ package pkg_Command;
 public enum CommandWord {
     // A value for each command word, plus one for unrecognised
     // commands.
-    HELP("help"), GO("go"), QUIT("quit"), LOOK("look"), EAT("eat"), BACK("back"),
+    HELP(""), GO("go"), QUIT("quit"), LOOK("look"), EAT("eat"), BACK("back"),
     TEST("test"), TAKE("take"), DROP("drop"), INVENTORY("inventory"), UNKNOWN("?"),
     CHARGE("charge"), FIRE("fire"), EXIT("exit"), ALEA("alea"), FIGHT("fight"),
     LEAVE("leave"), USE("use"), GIVE("give");
 
     // The command string.
     private String aCommandString;
+    static JSONReader aJsonReader = new JSONReader();
 
     /**
      * Initialise with the corresponding command word.
@@ -32,4 +36,5 @@ public enum CommandWord {
     public String toString() {
         return aCommandString;
     }
+
 }

@@ -135,60 +135,60 @@ public class GameEngine {
     vMainMenu.setExit("play", vRoom1);
 
     //Room 1 exits
-    vRoom1.setExit("north", aRooms.get(aJsonReader.getRoom1NorthExit()));
-    vRoom1.setExit("south", aRooms.get(aJsonReader.getRoom1SouthExit()));
-    vRoom1.setExit("east", aRooms.get(aJsonReader.getRoom1EastExit()));
-    vRoom1.setExit("west", aRooms.get(aJsonReader.getRoom1WestExit()));
-    vRoom1.setExit("up", aRooms.get(aJsonReader.getRoom1UpExit()));
-    vRoom1.setExit("down", aRooms.get(aJsonReader.getRoom1DownExit()));
+    vRoom1.setExit(aJsonReader.getNorth(), aRooms.get(aJsonReader.getRoom1NorthExit()));
+    vRoom1.setExit(aJsonReader.getSouth(), aRooms.get(aJsonReader.getRoom1SouthExit()));
+    vRoom1.setExit(aJsonReader.getEast(), aRooms.get(aJsonReader.getRoom1EastExit()));
+    vRoom1.setExit(aJsonReader.getWest(), aRooms.get(aJsonReader.getRoom1WestExit()));
+    vRoom1.setExit(aJsonReader.getUp(), aRooms.get(aJsonReader.getRoom1UpExit()));
+    vRoom1.setExit(aJsonReader.getDown(), aRooms.get(aJsonReader.getRoom1DownExit()));
 
     //Room 2 exits
-    vRoom2.setExit("north", aRooms.get(aJsonReader.getRoom2NorthExit()));
-    vRoom2.setExit("south", aRooms.get(aJsonReader.getRoom2SouthExit()));
-    vRoom2.setExit("east", aRooms.get(aJsonReader.getRoom2EastExit()));
-    vRoom2.setExit("west", aRooms.get(aJsonReader.getRoom2WestExit()));
-    vRoom2.setExit("up", aRooms.get(aJsonReader.getRoom2UpExit()));
-    vRoom2.setExit("down", aRooms.get(aJsonReader.getRoom2DownExit()));
+    vRoom2.setExit(aJsonReader.getNorth(), aRooms.get(aJsonReader.getRoom2NorthExit()));
+    vRoom2.setExit(aJsonReader.getSouth(), aRooms.get(aJsonReader.getRoom2SouthExit()));
+    vRoom2.setExit(aJsonReader.getEast(), aRooms.get(aJsonReader.getRoom2EastExit()));
+    vRoom2.setExit(aJsonReader.getWest(), aRooms.get(aJsonReader.getRoom2WestExit()));
+    vRoom2.setExit(aJsonReader.getUp(), aRooms.get(aJsonReader.getRoom2UpExit()));
+    vRoom2.setExit(aJsonReader.getDown(), aRooms.get(aJsonReader.getRoom2DownExit()));
 
     //Room 3 exits
-    vRoom3.setExit("north", aRooms.get(aJsonReader.getRoom3NorthExit()));
-    vRoom3.setExit("south", aRooms.get(aJsonReader.getRoom3SouthExit()));
-    vRoom3.setExit("east", aRooms.get(aJsonReader.getRoom3EastExit()));
-    vRoom3.setExit("west", aRooms.get(aJsonReader.getRoom3WestExit()));
-    vRoom3.setExit("up", aRooms.get(aJsonReader.getRoom3UpExit()));
-    vRoom3.setExit("down", aRooms.get(aJsonReader.getRoom3DownExit()));
+    vRoom3.setExit(aJsonReader.getNorth(), aRooms.get(aJsonReader.getRoom3NorthExit()));
+    vRoom3.setExit(aJsonReader.getSouth(), aRooms.get(aJsonReader.getRoom3SouthExit()));
+    vRoom3.setExit(aJsonReader.getEast(), aRooms.get(aJsonReader.getRoom3EastExit()));
+    vRoom3.setExit(aJsonReader.getWest(), aRooms.get(aJsonReader.getRoom3WestExit()));
+    vRoom3.setExit(aJsonReader.getUp(), aRooms.get(aJsonReader.getRoom3UpExit()));
+    vRoom3.setExit(aJsonReader.getDown(), aRooms.get(aJsonReader.getRoom3DownExit()));
 
     //Room 4 exits
-    vRoom4.setExit("north", aRooms.get(aJsonReader.getRoom4NorthExit()));
-    vRoom4.setExit("south", aRooms.get(aJsonReader.getRoom4SouthExit()));
-    vRoom4.setExit("east", aRooms.get(aJsonReader.getRoom4EastExit()));
-    vRoom4.setExit("west", aRooms.get(aJsonReader.getRoom4WestExit()));
-    vRoom4.setExit("up", aRooms.get(aJsonReader.getRoom4UpExit()));
-    vRoom4.setExit("down", aRooms.get(aJsonReader.getRoom4DownExit()));
+    vRoom4.setExit(aJsonReader.getNorth(), aRooms.get(aJsonReader.getRoom4NorthExit()));
+    vRoom4.setExit(aJsonReader.getSouth(), aRooms.get(aJsonReader.getRoom4SouthExit()));
+    vRoom4.setExit(aJsonReader.getEast(), aRooms.get(aJsonReader.getRoom4EastExit()));
+    vRoom4.setExit(aJsonReader.getWest(), aRooms.get(aJsonReader.getRoom4WestExit()));
+    vRoom4.setExit(aJsonReader.getUp(), aRooms.get(aJsonReader.getRoom4UpExit()));
+    vRoom4.setExit(aJsonReader.getDown(), aRooms.get(aJsonReader.getRoom4DownExit()));
 
     //Room 5 exits
-    vRoom5.setExit("north", aRooms.get(aJsonReader.getRoom5NorthExit()));
-    vRoom5.setExit("south", aRooms.get(aJsonReader.getRoom5SouthExit()));
-    vRoom5.setExit("east", aRooms.get(aJsonReader.getRoom5EastExit()));
-    vRoom5.setExit("west", aRooms.get(aJsonReader.getRoom5WestExit()));
-    vRoom5.setExit("up", aRooms.get(aJsonReader.getRoom5UpExit()));
-    vRoom5.setExit("down", aRooms.get(aJsonReader.getRoom5DownExit()));
+    vRoom5.setExit(aJsonReader.getNorth(), aRooms.get(aJsonReader.getRoom5NorthExit()));
+    vRoom5.setExit(aJsonReader.getSouth(), aRooms.get(aJsonReader.getRoom5SouthExit()));
+    vRoom5.setExit(aJsonReader.getEast(), aRooms.get(aJsonReader.getRoom5EastExit()));
+    vRoom5.setExit(aJsonReader.getWest(), aRooms.get(aJsonReader.getRoom5WestExit()));
+    vRoom5.setExit(aJsonReader.getUp(), aRooms.get(aJsonReader.getRoom5UpExit()));
+    vRoom5.setExit(aJsonReader.getDown(), aRooms.get(aJsonReader.getRoom5DownExit()));
 
     //Room 6 exits
-    vRoom6.setExit("north", aRooms.get(aJsonReader.getRoom6NorthExit()));
-    vRoom6.setExit("south", aRooms.get(aJsonReader.getRoom6SouthExit()));
-    vRoom6.setExit("east", aRooms.get(aJsonReader.getRoom6EastExit()));
-    vRoom6.setExit("west", aRooms.get(aJsonReader.getRoom6WestExit()));
-    vRoom6.setExit("up", aRooms.get(aJsonReader.getRoom6UpExit()));
-    vRoom6.setExit("down", aRooms.get(aJsonReader.getRoom6DownExit()));
+    vRoom6.setExit(aJsonReader.getNorth(), aRooms.get(aJsonReader.getRoom6NorthExit()));
+    vRoom6.setExit(aJsonReader.getSouth(), aRooms.get(aJsonReader.getRoom6SouthExit()));
+    vRoom6.setExit(aJsonReader.getEast(), aRooms.get(aJsonReader.getRoom6EastExit()));
+    vRoom6.setExit(aJsonReader.getWest(), aRooms.get(aJsonReader.getRoom6WestExit()));
+    vRoom6.setExit(aJsonReader.getUp(), aRooms.get(aJsonReader.getRoom6UpExit()));
+    vRoom6.setExit(aJsonReader.getDown(), aRooms.get(aJsonReader.getRoom6DownExit()));
 
     //Room 7 exits
-    vRoom7.setExit("north", aRooms.get(aJsonReader.getRoom7NorthExit()));
-    vRoom7.setExit("south", aRooms.get(aJsonReader.getRoom7SouthExit()));
-    vRoom7.setExit("east", aRooms.get(aJsonReader.getRoom7EastExit()));
-    vRoom7.setExit("west", aRooms.get(aJsonReader.getRoom7WestExit()));
-    vRoom7.setExit("up", aRooms.get(aJsonReader.getRoom7UpExit()));
-    vRoom7.setExit("down", aRooms.get(aJsonReader.getRoom7DownExit()));
+    vRoom7.setExit(aJsonReader.getNorth(), aRooms.get(aJsonReader.getRoom7NorthExit()));
+    vRoom7.setExit(aJsonReader.getSouth(), aRooms.get(aJsonReader.getRoom7SouthExit()));
+    vRoom7.setExit(aJsonReader.getEast(), aRooms.get(aJsonReader.getRoom7EastExit()));
+    vRoom7.setExit(aJsonReader.getWest(), aRooms.get(aJsonReader.getRoom7WestExit()));
+    vRoom7.setExit(aJsonReader.getUp(), aRooms.get(aJsonReader.getRoom7UpExit()));
+    vRoom7.setExit(aJsonReader.getDown(), aRooms.get(aJsonReader.getRoom7DownExit()));
   }
 
   /**

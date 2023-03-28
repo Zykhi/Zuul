@@ -41,7 +41,34 @@
     "battleSizeFont": 24,
     "menuSizeFont": 25,
     "mainMenuFont": "font/dpcomic.ttf",
-    "titleSizeFont": 85
+    "titleSizeFont": 85,
+    "north" : "nord",
+    "east" : "est",
+    "south" : "sud",
+    "west" : "ouest",
+    "up" : "haut",
+    "down" : "bas"
+  },
+
+  "commandsWords":{
+    "helpCommandWord": "aide",
+    "goCommandWord": "aller",
+    "quitCommandWord": "quitter",
+    "lookCommandWord": "regarder",
+    "eatCommandWord": "manger",
+    "backCommandWord": "retour",
+    "testCommandWord": "test",
+    "dropCommandWord": "lacher",
+    "takeCommandWord": "prendre",
+    "inventoryCommandWord": "inventaire",
+    "chargeCommandWord": "charge",
+    "fireCommandWord": "feu",
+    "exitCommandWord": "sortir",
+    "aleaCommandWord": "alea",
+    "giveCommandWord": "donner",
+    "fightCommandWord": "combat",
+    "leaveCommandWord": "partir",
+    "useCommandWord": "utiliser"
   },
 
   "printWelcome": {

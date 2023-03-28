@@ -299,7 +299,7 @@ public class UserInterface implements ActionListener {
     this.printBattle(pText + "\n");
   } // println(.)
 
-  public void slowPrintBattle(final String pText){
+  public void slowPrintBattle(final String pText) {
     slowPrinter(pText, 30, aBattleLog);
   }
 
@@ -792,22 +792,36 @@ public class UserInterface implements ActionListener {
     this.aRunButton.addActionListener(e -> runButtonMethod());
 
     // set action to write differents names
-    this.aQuitButton.setActionCommand("quit");
-    this.aNorthButton.setActionCommand("go north");
-    this.aSouthButton.setActionCommand("go south");
-    this.aEastButton.setActionCommand("go east");
-    this.aWestButton.setActionCommand("go west");
-    this.aUpButton.setActionCommand("go up");
-    this.aDownButton.setActionCommand("go down");
-    this.aBackButton.setActionCommand("back");
-    this.aHelpButton.setActionCommand("help");
-    this.aDropButton.setActionCommand("drop");
-    this.aTakeButton.setActionCommand("take");
-    this.aGiveButton.setActionCommand("give");
-    this.aChargeButton.setActionCommand("charge");
-    this.aInventoryButton.setActionCommand("inventory");
-    this.aBattleButton.setActionCommand("fight");
-    this.aPlay.setActionCommand("go play");
+    this.aQuitButton.setActionCommand(aJsonReader.getQuitCommandWord());
+    this.aNorthButton.setActionCommand(
+        aJsonReader.getGoCommandWord() + " " + aJsonReader.getNorth()
+      );
+    this.aSouthButton.setActionCommand(
+        aJsonReader.getGoCommandWord() + " " + aJsonReader.getSouth()
+      );
+    this.aEastButton.setActionCommand(
+        aJsonReader.getGoCommandWord() + " " + aJsonReader.getEast()
+      );
+    this.aWestButton.setActionCommand(
+        aJsonReader.getGoCommandWord() + " " + aJsonReader.getWest()
+      );
+    this.aUpButton.setActionCommand(
+        aJsonReader.getGoCommandWord() + " " + aJsonReader.getUp()
+      );
+    this.aDownButton.setActionCommand(
+        aJsonReader.getGoCommandWord() + " " + aJsonReader.getDown()
+      );
+    this.aBackButton.setActionCommand(aJsonReader.getBackCommandWord());
+    this.aHelpButton.setActionCommand(aJsonReader.getHelpCommandWord());
+    this.aDropButton.setActionCommand(aJsonReader.getDropCommandWord());
+    this.aTakeButton.setActionCommand(aJsonReader.getTakeCommandWord());
+    this.aGiveButton.setActionCommand(aJsonReader.getGiveCommandWord());
+    this.aChargeButton.setActionCommand(aJsonReader.getChargeCommandWord());
+    this.aInventoryButton.setActionCommand(
+        aJsonReader.getInventoryCommandWord()
+      );
+    this.aBattleButton.setActionCommand(aJsonReader.getFightCommandWord());
+    this.aPlay.setActionCommand(aJsonReader.getGoCommandWord() + " play");
   }
 
   /**
@@ -1337,15 +1351,17 @@ public class UserInterface implements ActionListener {
       String[] vOutput = aEngine.getCurrentInventoryItemsString().split(" ");
       for (int i = 0; i < vOutput.length; i++) {
         vButtons[i].setText(vOutput[i]);
-        vButtons[i].setActionCommand("drop " + vOutput[i]);
+        vButtons[i].setActionCommand(
+            aJsonReader.getDropCommandWord() + " " + vOutput[i]
+          );
       }
       for (int i = vOutput.length; i < 8; i++) {
         vButtons[i].setText("");
         vButtons[i].setActionCommand("");
         vButtons[i].removeActionListener(this);
       }
-      aBattleButton.setText("exit");
-      aBattleButton.setActionCommand("exit");
+      aBattleButton.setText(aJsonReader.getExitCommandWord());
+      aBattleButton.setActionCommand(aJsonReader.getExitCommandWord());
       aBattleButton.addActionListener(e -> exitButtonMethod());
       for (int i = vOutput.length; i < 8; i++) {
         vButtons[i].addActionListener(this);
@@ -1375,15 +1391,17 @@ public class UserInterface implements ActionListener {
       String[] vOutput = aEngine.getCurrentInventoryItemsString().split(" ");
       for (int i = 0; i < vOutput.length; i++) {
         vButtons[i].setText(vOutput[i]);
-        vButtons[i].setActionCommand("give " + vOutput[i]);
+        vButtons[i].setActionCommand(
+            aJsonReader.getGiveCommandWord() + " " + vOutput[i]
+          );
       }
       for (int i = vOutput.length; i < 8; i++) {
         vButtons[i].setText("");
         vButtons[i].setActionCommand("");
         vButtons[i].removeActionListener(this);
       }
-      aBattleButton.setText("exit");
-      aBattleButton.setActionCommand("exit");
+      aBattleButton.setText(aJsonReader.getExitCommandWord());
+      aBattleButton.setActionCommand(aJsonReader.getExitCommandWord());
       aBattleButton.addActionListener(e -> exitButtonMethod());
       for (int i = vOutput.length; i < 8; i++) {
         vButtons[i].addActionListener(this);
@@ -1414,15 +1432,17 @@ public class UserInterface implements ActionListener {
       String[] vOutput = aEngine.getCurrentRoomItemsString().split(" ");
       for (int i = 0; i < vOutput.length; i++) {
         vButtons[i].setText(vOutput[i]);
-        vButtons[i].setActionCommand("take " + vOutput[i]);
+        vButtons[i].setActionCommand(
+            aJsonReader.getTakeCommandWord() + " " + vOutput[i]
+          );
       }
       for (int i = vOutput.length; i < 8; i++) {
         vButtons[i].setText("");
         vButtons[i].setActionCommand("");
         vButtons[i].removeActionListener(this);
       }
-      aBattleButton.setText("exit");
-      aBattleButton.setActionCommand("exit");
+      aBattleButton.setText(aJsonReader.getExitCommandWord());
+      aBattleButton.setActionCommand(aJsonReader.getExitCommandWord());
       aBattleButton.addActionListener(e -> exitButtonMethod());
       for (int i = vOutput.length; i < 8; i++) {
         vButtons[i].addActionListener(this);
@@ -1448,15 +1468,15 @@ public class UserInterface implements ActionListener {
     aInventoryButton.setText(aJsonReader.getInventoryButton());
     aBattleButton.setText(aJsonReader.getFightButton());
 
-    aQuitButton.setActionCommand("quit");
-    aBackButton.setActionCommand("back");
-    aHelpButton.setActionCommand("help");
-    aDropButton.setActionCommand("drop");
-    aTakeButton.setActionCommand("take");
-    aGiveButton.setActionCommand("give");
-    aChargeButton.setActionCommand("charge");
-    aInventoryButton.setActionCommand("inventory");
-    aBattleButton.setActionCommand("fight");
+    aQuitButton.setActionCommand(aJsonReader.getQuitCommandWord());
+    aBackButton.setActionCommand(aJsonReader.getBackCommandWord());
+    aHelpButton.setActionCommand(aJsonReader.getHelpCommandWord());
+    aDropButton.setActionCommand(aJsonReader.getDropCommandWord());
+    aTakeButton.setActionCommand(aJsonReader.getTakeCommandWord());
+    aGiveButton.setActionCommand(aJsonReader.getGiveCommandWord());
+    aChargeButton.setActionCommand(aJsonReader.getChargeCommandWord());
+    aInventoryButton.setActionCommand(aJsonReader.getInventoryCommandWord());
+    aBattleButton.setActionCommand(aJsonReader.getFightCommandWord());
   }
 
   /**
@@ -1598,7 +1618,9 @@ public class UserInterface implements ActionListener {
       removeAL(vButtons);
       for (int i = 0; i < vOutput.length; i++) {
         vButtons[i].setText(vOutput[i]);
-        vButtons[i].setActionCommand("use " + vOutput[i]);
+        vButtons[i].setActionCommand(
+            aJsonReader.getUseCommandWord() + " " + vOutput[i]
+          );
         vButtons[i].addActionListener(this);
       }
       for (int i = vOutput.length; i < 3; i++) {
@@ -1654,50 +1676,56 @@ public class UserInterface implements ActionListener {
   public void updateBattleUI() {
     if (!aEngine.getPlayer().isMissed() && !aEngine.getPlayer().isDead()) {
       hit(aEntityFullImage);
-      aEngine.getPlayer().playerAttackString(aEngine.getPlayer().getPlayerMove());
+      aEngine
+        .getPlayer()
+        .playerAttackString(aEngine.getPlayer().getPlayerMove());
 
-    Timer vBattle1Timer = new Timer(
-      2000,
-      e -> {
-        updateEniHealthBar(aEngine.getEnemyHP(), aEnemyHP);
-        ((Timer) e.getSource()).stop();
-      }
-    );
-    vBattle1Timer.start();
-    }
-    if(!aEngine.getEnemy().isMissed() && !aEngine.getEnemy().isDead()){
-    Timer vBattle2Timer = new Timer(
-      4000,
-      e -> {
-        hit(aPlayerFullImage);
-        aEngine.getPlayer().enemyAttackString(aEngine.getPlayer().getEniMove());
-        ((Timer) e.getSource()).stop();
-      }
-    );
-    vBattle2Timer.start();
-
-    Timer vBattle3Timer = new Timer(
-      6000,
-      e -> {
-        updatePlayerHealthBar(aEngine.getPlayerHP(), aPlayerHP);
-        ((Timer) e.getSource()).stop();
-      }
-    );
-    vBattle3Timer.start();
-    }
-
-    if(!aEngine.getEnemy().isDead() && !aEngine.getEnemy().isAlreadyMidHPTalk()){
-    Timer vBattle4Timer = new Timer(
-      8000,
-      e -> {
-        if (aEngine.getEnemyHP() < aEngine.getMaxEnemyHP() / 2) {
-          printlnBattle(aEngine.getMidHPDialogue());
-          aEngine.getEnemy().setAlreadyMidHPTalk(true);
+      Timer vBattle1Timer = new Timer(
+        2000,
+        e -> {
+          updateEniHealthBar(aEngine.getEnemyHP(), aEnemyHP);
+          ((Timer) e.getSource()).stop();
         }
-        ((Timer) e.getSource()).stop();
-      }
-    );
-    vBattle4Timer.start();
+      );
+      vBattle1Timer.start();
+    }
+    if (!aEngine.getEnemy().isMissed() && !aEngine.getEnemy().isDead()) {
+      Timer vBattle2Timer = new Timer(
+        4000,
+        e -> {
+          hit(aPlayerFullImage);
+          aEngine
+            .getPlayer()
+            .enemyAttackString(aEngine.getPlayer().getEniMove());
+          ((Timer) e.getSource()).stop();
+        }
+      );
+      vBattle2Timer.start();
+
+      Timer vBattle3Timer = new Timer(
+        6000,
+        e -> {
+          updatePlayerHealthBar(aEngine.getPlayerHP(), aPlayerHP);
+          ((Timer) e.getSource()).stop();
+        }
+      );
+      vBattle3Timer.start();
+    }
+
+    if (
+      !aEngine.getEnemy().isDead() && !aEngine.getEnemy().isAlreadyMidHPTalk()
+    ) {
+      Timer vBattle4Timer = new Timer(
+        8000,
+        e -> {
+          if (aEngine.getEnemyHP() < aEngine.getMaxEnemyHP() / 2) {
+            printlnBattle(aEngine.getMidHPDialogue());
+            aEngine.getEnemy().setAlreadyMidHPTalk(true);
+          }
+          ((Timer) e.getSource()).stop();
+        }
+      );
+      vBattle4Timer.start();
     }
   }
 
@@ -1914,7 +1942,9 @@ public class UserInterface implements ActionListener {
             aSecond = 0;
             aMinute++;
           }
-          aGameTimer.setText(aJsonReader.getElapsedTime() + aMinute + " : " + aSecond);
+          aGameTimer.setText(
+            aJsonReader.getElapsedTime() + aMinute + " : " + aSecond
+          );
         }
       };
 
