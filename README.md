@@ -52,6 +52,23 @@ This game is built in Java
 
 This is a game maker
 
+### Prerequisites
+This game maker use 3 external library
+```ssh
+json-simple-1.1.1
+```
+```ssh
+flatlaf-3.2.5
+```
+```ssh
+AnimatingCardLayout
+```
+and Git LFS for the storage of sound
+
+```ssh
+$git lfs fetch
+$git lfs pull
+```
 
 ### Use the game maker
 
